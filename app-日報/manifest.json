@@ -1,0 +1,24 @@
+{
+    "app": "48",
+    "scope": "ALL",
+    "desktop": {
+        "js": [
+            "js/addBackButtonToDetailView.js",
+            "js/getCummulative.js"
+        ],
+        "css": [
+            "css/editView.css",
+            "css/detailView.css"
+        ]
+    },
+    "mobile": {
+        "js": [
+            "js/addBackButtonToDetailView.js",
+            "js/getCummulative.js"
+        ],
+        "css": [
+            "css/editView.css",
+            "css/detailView.css"
+        ]
+    }
+}

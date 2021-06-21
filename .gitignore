@@ -106,3 +106,4 @@ dist
 #custom
 *.bat
 *.ps1
+*.csv
