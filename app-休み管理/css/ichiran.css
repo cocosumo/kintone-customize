@@ -1,0 +1,54 @@
+.cell-yasumi {
+    background-repeat: no-repeat;
+    background-size: 50px;
+    background-position: center;
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.cell-yasumi.oneday {
+    background-image: url('https://dl.dropbox.com/s/g8abwublq6y1y3i/yasumi.png');
+    
+}
+
+.cell-yasumi.half-am {
+    background-image: url('https://dl.dropbox.com/s/eb5ru8wr4hfany5/yasumi-am.png?dl=0');
+    background-color: rgba(0, 255, 0, 0.1);
+}
+
+.cell-yasumi.half-pm {
+    background-image: url('https://dl.dropbox.com/s/b1u755qxh6qry4j/yasumi-pm.png?dl=0');
+    background-color: rgba(0, 0, 255, 0.1);
+}
+
+#calendar {
+    width: 80%;
+    margin: auto;
+}
+
+.fc-daygrid-day {
+    cursor: pointer;
+}
+
+ .fc-header-toolbar{
+    display: none !important;
+} 
+
+/* #calendar-self{
+    position: absolute;
+    top:-20px;
+    left: 30%;
+    display: inline-block;
+    
+} 
+ */
+.custom-btn-submit{
+    font-weight: bolder !important;
+}
+
+.remaining-yasumi {
+    padding-left: 0;
+}
+
+.calendar-menu-button-gaia {
+    padding-left: 5%;
+}
