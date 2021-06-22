@@ -1,0 +1,43 @@
+/* tbody tr td:nth-child(-n+2){
+    background-color: #3498db;
+} */
+
+.negative-row {
+   background-color: #F3B9AD;
+    
+}
+
+.negative-row td {
+
+    border : 0;
+}
+
+
+
+.sama {
+    font-size: 24px;
+    position: absolute;
+    font-weight: bold;
+    top : 45%;
+}
+
+
+
+  .tooltip-title {
+      font-weight: bolder;
+      font-size: 20px;
+  }
+
+  .tooltip {
+      font-size: 36px;
+  }
+
+  .tooltip-content {
+    align-items: center;
+    text-justify: inter-word;
+    width: 120%;
+  }
+
+  .tooltip-content table{
+      text-align: left;
+  }
