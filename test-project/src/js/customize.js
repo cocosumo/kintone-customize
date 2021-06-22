@@ -3,7 +3,7 @@ import "regenerator-runtime/runtime";
 
 
 kintone.events.on('app.record.detail.show', event => {
-    alert('Webpack loaded');
+    console.log('Webpack loaded');
 
     return event;
 });
