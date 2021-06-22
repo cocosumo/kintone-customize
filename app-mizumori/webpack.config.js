@@ -4,7 +4,7 @@ module.exports = {
   mode: "development",
 
   entry: {
-    "customize": "./src/js/customize.js"
+    "customize": "./index.js"
   },
 
   output: {
