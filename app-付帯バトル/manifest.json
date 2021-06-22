@@ -1,0 +1,22 @@
+{
+    "app": "33",
+    "scope": "ALL",
+    "desktop": {
+        "js": [
+            "https://unpkg.com/@kintone/rest-api-client@latest/umd/KintoneRestAPIClient.min.js",
+            "js/sendNewRecordToChatwork.js"
+        ],
+        "css": [
+
+        ]
+    },
+    "mobile": {
+        "js": [
+            "https://unpkg.com/@kintone/rest-api-client@latest/umd/KintoneRestAPIClient.min.js",
+            "js/sendNewRecordToChatwork.js"
+        ],
+        "css": [
+
+        ]
+    }
+}
