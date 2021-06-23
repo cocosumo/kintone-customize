@@ -1,6 +1,6 @@
 
 import ReactDOM from "react-dom";
-import TableToolTip from "./src/components/Layout/TableToolTip";
+import TableToolTip from "./components/Layout/TableToolTip";
 
 //import MyImage from './assets/dog.jpg';
 //import './index.css';

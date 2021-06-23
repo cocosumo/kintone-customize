@@ -3,7 +3,8 @@
     "scope": "ALL",
     "desktop": {
         "js": [
-            "sample.js"
+            "sample.js",
+            
         ],
         "css": [
         ]
