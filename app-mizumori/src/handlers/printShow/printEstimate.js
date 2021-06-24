@@ -22,7 +22,7 @@ async function printEstimate() {
   
   //フォント埋め込み
   const font = await pdfDoc.embedFont(url);
-  console.log(url);
+
   //PDFに1ページ追加
   const page = pdfDoc.addPage();
   //印字
