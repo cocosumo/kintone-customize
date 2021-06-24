@@ -4,7 +4,7 @@ module.exports = {
   mode: "development",
 
   entry: {
-    "customize": "./src/index.js"
+    "customize": "./src/app.js"
   },
 
   output: {
@@ -24,7 +24,11 @@ module.exports = {
         use: {
           loader: 'babel-loader', // https://webpack.js.org/loaders/babel-loader/#root
           options: {
-            presets: ['@babel/preset-react', '@babel/preset-env']
+            presets: [
+              ['@babel/preset-react', {
+                "runtime": "automatic"
+              }]
+            ]
 
           }
         }

@@ -1,16 +1,16 @@
 {
-    "app": "40",
+    "app": "85",
     "scope": "ALL",
     "desktop": {
         "js": [
             "./dist/js/customize.js",
             "https://unpkg.com/@popperjs/core@2",
             "https://unpkg.com/tippy.js@6",
-            "https://dl.dropbox.com/s/djkiwmfn89emzxi/customCalculate.js?dl=0",
-            "https://dl.dropbox.com/s/92ho07drrcakd8k/dropdown.js?dl=0",
-            "https://dl.dropbox.com/s/usx1zkqitm8dk5j/addedRow.js?dl=0",
-            "https://dl.dropbox.com/s/h0qs73yrmw4cpbu/print.js?dl=0",
-            "https://dl.dropbox.com/s/2r0m0k8ofonatem/record_details.js?dl=0"
+            "./src/legacy/calcTotal.js",
+            "./src/legacy/dropdown.js",
+            "./src/legacy/addedRow.js",
+            "./src/legacy/print.js",
+            "./src/legacy/record_details.js"
         ],
         "css": [
             "https://unpkg.com/tippy.js@6/animations/scale.css",
