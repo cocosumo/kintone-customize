@@ -3,7 +3,8 @@
 import ReactDOM from "react-dom";
 import TableToolTip from "./components/Layout/TableToolTip";
 
-import { getSpaceElement, onPrintShow } from './kintone/app';
+import { getSpaceElement, onPrintShow } from './kintone/api';
+import { printShowHandler } from './handlers/printShowHandler';
 
 //import MyImage from './assets/dog.jpg';
 //import './index.css';
@@ -11,11 +12,6 @@ import { getSpaceElement, onPrintShow } from './kintone/app';
 
 (function () {
  
-
-  const printShowHandler = (event) => {
-    console.log('PRINT with react');
-    console.log(event);
-  };
 
   const recordShowHandler = (event) =>{
       console.log("welcome to reacts");
