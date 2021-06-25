@@ -1,15 +1,24 @@
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom';
 import './printShowHandler.css';
-import { Fragment } from 'react';
+import {Fragment} from 'react';
 
 import Button from '../components/UI/Button';
-import printEstimate from "./printShow/printEstimate";
-import printShowRootElement from "./printShow/printShowRootElement";
+//  import createPDF from "./printShow/createPDF";
+import modifyPDF from './printShow/modifyPDF';
+import printShowRootElement from './printShow/printShowRootElement';
 
+let record;
+
+const setRecord = (kintoneRecord) => {
+  record = record || kintoneRecord;
+};
+
+const getRecord = () => record;
 
 export const printShowHandler = (event) => {
-     ReactDOM.render(
-        <Fragment>
-            <Button onPrint={printEstimate}>Custom Print</Button>
-        </Fragment>, printShowRootElement()); 
+  setRecord(event.record);
+  ReactDOM.render(
+      <Fragment>
+        <Button onPrint={() => modifyPDF(getRecord())}>Custom Print</Button>
+      </Fragment>, printShowRootElement());
 };

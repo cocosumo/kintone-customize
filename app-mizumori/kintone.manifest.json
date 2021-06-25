@@ -9,7 +9,6 @@
             "./src/legacy/calcTotal.js",
             "./src/legacy/dropdown.js",
             "./src/legacy/addedRow.js",
-            "./src/legacy/print.js",
             "./src/legacy/record_details.js"
         ],
         "css": [
