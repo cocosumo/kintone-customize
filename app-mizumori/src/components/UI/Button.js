@@ -6,7 +6,7 @@ const Button = (props) => {
     onClick={props.onPrint}
     id={props.id}
     className={`${styles.button} ${props.className || ''} `} >
-    props.children
+    {props.children}
   </button>;
 };
 
