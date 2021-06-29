@@ -1,7 +1,6 @@
 import {PDFDocument, rgb} from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import downloadjs from 'downloadjs';
-import fontURL from '../../assets/fonts/ipaexg.ttf';
 import {
   toCurrency,
   sanitize,
@@ -29,12 +28,12 @@ async function modifyPDF(records) {
   const url = 'https://dl.dropbox.com/s/9hxfzp3hjyyijdf/%E8%A6%8B%E7%A9%8D%E3%82%8A%E9%9B%9B%E5%BD%A2_202106250914.pdf?dl=0';
   const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
   const textColor = rgb(0, 0, 0);
-  const pdfDoc = await PDFDocument.load(existingPdfBytes);
+  const pdfDoc = await PDFDocument.load(existingPdfBßytes);
   pdfDoc.registerFontkit(fontkit);
 
   //  const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-  const font = await pdfDoc.embedFont(fontURL);
+  const font = await pdfDoc.embedFont('https://dl.dropbox.com/s/ywc9c3yhojuwpli/ipaexg.ttf?dl=0');
 
   const pages = pdfDoc.getPages();
   const firstPage = pages[0];

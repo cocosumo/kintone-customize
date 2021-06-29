@@ -1,7 +1,6 @@
 import {PDFDocument, rgb} from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import downloadjs from 'downloadjs';
-import fontURL from '../../assets/fonts/ipaexg.ttf';
 
 // ボタン押下時の処理
 async function createPDF() {
@@ -16,7 +15,6 @@ async function createPDF() {
 
   //  const url = 'https://dl.dropbox.com/s/ywc9c3yhojuwpli/ipaexg.ttf';
 
-  const url = fontURL;
 
   //  フォントを読み込んでバイト配列で保持
   //  const fontBytes = await fetch(url).then((res) => res.arrayBuffer());
