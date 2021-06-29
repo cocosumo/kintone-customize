@@ -17,8 +17,9 @@ const getRecord = () => record;
 
 export const printShowHandler = (event) => {
   setRecord(event.record);
+  let pdfWindow = window.open("https://www.google.com", "_blank");
   ReactDOM.render(
       <Fragment>
-        <Button onPrint={() => modifyPDF(getRecord())}>Custom Print</Button>
+        <Button onPrint={() => modifyPDF(getRecord(), pdfWindow)}>Custom Print</Button>
       </Fragment>, printShowRootElement());
 };

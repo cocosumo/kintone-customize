@@ -7,7 +7,9 @@ import {
   isNumeric,
 } from '../../helpers/customStrings';
 
-async function modifyPDF(records) {
+import fontBytes from '../../assets/fonts/ipaexg.ttf'
+
+async function modifyPDF(records, pdfWindow) {
   console.log(records);
   /* Destruction Records */
   let {
@@ -25,15 +27,15 @@ async function modifyPDF(records) {
   taxAmount = toCurrency(taxAmount);
 
 
-  const url = 'https://dl.dropbox.com/s/9hxfzp3hjyyijdf/%E8%A6%8B%E7%A9%8D%E3%82%8A%E9%9B%9B%E5%BD%A2_202106250914.pdf?dl=0';
-  const existingPdfBytes = await fetch(url).then((res) => res.arrayBuffer());
+  const templateUrl = 'https://dl.dropbox.com/s/9hxfzp3hjyyijdf/%E8%A6%8B%E7%A9%8D%E3%82%8A%E9%9B%9B%E5%BD%A2_202106250914.pdf?dl=0';
+  const existingPdfBytes = await fetch(templateUrl).then((res) => res.arrayBuffer());
   const textColor = rgb(0, 0, 0);
-  const pdfDoc = await PDFDocument.load(existingPdfBßytes);
+  const pdfDoc = await PDFDocument.load(existingPdfBytes);
   pdfDoc.registerFontkit(fontkit);
 
   //  const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-
-  const font = await pdfDoc.embedFont('https://dl.dropbox.com/s/ywc9c3yhojuwpli/ipaexg.ttf?dl=0');
+  // const fontBytes = await fetch('https://dl.dropbox.com/s/ywc9c3yhojuwpli/ipaexg.ttf?dl=0').then((res) => res.arrayBuffer());
+  const font = await pdfDoc.embedFont(fontBytes);
 
   const pages = pdfDoc.getPages();
   const firstPage = pages[0];
@@ -117,7 +119,7 @@ async function modifyPDF(records) {
   }, table, firstPage,
   {
     x: 55,
-    y: 514.5,
+    y: 557,
     font: font,
     size: 12,
     color: textColor,
@@ -125,6 +127,8 @@ async function modifyPDF(records) {
   });
 
   const pdfBytes = await pdfDoc.save();
+  console.log(typeof pdfBytes);
+  //openPDF(pdfBytes);
   downloadjs(pdfBytes, `${customerName}.pdf`, 'application/pdf');
 }
 
@@ -173,7 +177,7 @@ function drawTable( keys, srcTable, page, props ) {
       // drawRectangle(page, currentX, rowY, rowProp.width, props.rowHeight);
     }
 
-    rowY += props.rowHeight;
+    rowY -= props.rowHeight;
   });
 }
 
@@ -209,5 +213,13 @@ function adjustedX(text, font, size, rightBoundX) {
   console.log(font.widthOfTextAtSize(text, size));
   return result;
 }
+
+function openPDF(pdfBase64){
+  
+  console.log(pdfWindow);
+  pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " + encodePDF(pdfBase64) + "'></iframe>")
+}
+
+                    
 
 export default modifyPDF;
