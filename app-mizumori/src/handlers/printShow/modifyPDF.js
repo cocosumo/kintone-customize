@@ -9,7 +9,7 @@ import {
 
 import fontBytes from '../../assets/fonts/ipaexg.ttf'
 
-async function modifyPDF(records, pdfWindow) {
+async function modifyPDF(records) {
   console.log(records);
   /* Destruction Records */
   let {
@@ -128,8 +128,10 @@ async function modifyPDF(records, pdfWindow) {
 
   const pdfBytes = await pdfDoc.save();
   console.log(typeof pdfBytes);
-  //openPDF(pdfBytes);
-  downloadjs(pdfBytes, `${customerName}.pdf`, 'application/pdf');
+  //openPDF(pdfBytes, pdfWindow);
+
+  return pdfBytes;
+  //downloadjs(pdfBytes, `${customerName}.pdf`, 'application/pdf');
 }
 
 function drawTable( keys, srcTable, page, props ) {
@@ -214,7 +216,7 @@ function adjustedX(text, font, size, rightBoundX) {
   return result;
 }
 
-function openPDF(pdfBase64){
+function openPDF(pdfBase64, pdfWindow){
   
   console.log(pdfWindow);
   pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " + encodePDF(pdfBase64) + "'></iframe>")
