@@ -1,13 +1,13 @@
 import {PDFDocument, rgb} from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
-import downloadjs from 'downloadjs';
+// import downloadjs from 'downloadjs';
 import {
   toCurrency,
   sanitize,
   isNumeric,
 } from '../../helpers/customStrings';
 
-import fontBytes from '../../assets/fonts/ipaexg.ttf'
+import fontBytes from '../../assets/fonts/ipaexg.ttf';
 
 async function modifyPDF(records) {
   console.log(records);
@@ -28,7 +28,8 @@ async function modifyPDF(records) {
 
 
   const templateUrl = 'https://dl.dropbox.com/s/9hxfzp3hjyyijdf/%E8%A6%8B%E7%A9%8D%E3%82%8A%E9%9B%9B%E5%BD%A2_202106250914.pdf?dl=0';
-  const existingPdfBytes = await fetch(templateUrl).then((res) => res.arrayBuffer());
+  const existingPdfBytes = await fetch(templateUrl).
+      then((res) => res.arrayBuffer());
   const textColor = rgb(0, 0, 0);
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
   pdfDoc.registerFontkit(fontkit);
@@ -128,10 +129,10 @@ async function modifyPDF(records) {
 
   const pdfBytes = await pdfDoc.save();
   console.log(typeof pdfBytes);
-  //openPDF(pdfBytes, pdfWindow);
+  // openPDF(pdfBytes, pdfWindow);
 
   return pdfBytes;
-  //downloadjs(pdfBytes, `${customerName}.pdf`, 'application/pdf');
+  // downloadjs(pdfBytes, `${customerName}.pdf`, 'application/pdf');
 }
 
 function drawTable( keys, srcTable, page, props ) {
@@ -216,12 +217,5 @@ function adjustedX(text, font, size, rightBoundX) {
   return result;
 }
 
-function openPDF(pdfBase64, pdfWindow){
-  
-  console.log(pdfWindow);
-  pdfWindow.document.write("<iframe width='100%' height='100%' src='data:application/pdf;base64, " + encodePDF(pdfBase64) + "'></iframe>")
-}
-
-                    
 
 export default modifyPDF;
