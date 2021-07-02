@@ -18,9 +18,10 @@
         "react"
     ],
     "rules": {
-        "react/react-in-js-scope" : 0,
+        "react/react-in-jsx-scope" : 0,
         "react/prop-types" : 0,
         "require-jsdoc" : 0
+
     }
-    
+
 }
