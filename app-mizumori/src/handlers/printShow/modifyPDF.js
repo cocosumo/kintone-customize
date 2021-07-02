@@ -1,11 +1,8 @@
+/* eslint-disable require-jsdoc */
 import {PDFDocument, rgb} from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 // import downloadjs from 'downloadjs';
-import {
-  toCurrency,
-  sanitize,
-  isNumeric,
-} from '../../helpers/customStrings';
+import {toCurrency, sanitize, isNumeric} from '../../helpers/customStrings';
 
 import fontBytes from '../../assets/fonts/ipaexg.ttf';
 
@@ -26,10 +23,11 @@ async function modifyPDF(records) {
   amountBeforeTax = toCurrency(amountBeforeTax);
   taxAmount = toCurrency(taxAmount);
 
-
-  const templateUrl = 'https://dl.dropbox.com/s/9hxfzp3hjyyijdf/%E8%A6%8B%E7%A9%8D%E3%82%8A%E9%9B%9B%E5%BD%A2_202106250914.pdf?dl=0';
-  const existingPdfBytes = await fetch(templateUrl).
-      then((res) => res.arrayBuffer());
+  const templateUrl =
+    'https://dl.dropbox.com/s/9hxfzp3hjyyijdf/%E8%A6%8B%E7%A9%8D%E3%82%8A%E9%9B%9B%E5%BD%A2_202106250914.pdf?dl=0';
+  const existingPdfBytes = await fetch(templateUrl).then((res) =>
+    res.arrayBuffer(),
+  );
   const textColor = rgb(0, 0, 0);
   const pdfDoc = await PDFDocument.load(existingPdfBytes);
   pdfDoc.registerFontkit(fontkit);
@@ -72,11 +70,7 @@ async function modifyPDF(records) {
 
   /* 税込み金額金額 */
   firstPage.drawText(amountAfterTax, {
-    x: adjustedX(
-        amountAfterTax,
-        font,
-        16,
-        320),
+    x: adjustedX(amountAfterTax, font, 16, 320),
     y: 672,
     size: 16,
     font: font,
@@ -85,11 +79,7 @@ async function modifyPDF(records) {
 
   /* 税抜き金額 */
   firstPage.drawText(amountBeforeTax, {
-    x: adjustedX(
-        amountBeforeTax,
-        font,
-        12,
-        320),
+    x: adjustedX(amountBeforeTax, font, 12, 320),
     y: 650,
     size: 12,
     font: font,
@@ -98,34 +88,34 @@ async function modifyPDF(records) {
 
   /* 税額 */
   firstPage.drawText(taxAmount, {
-    x: adjustedX(
-        taxAmount,
-        font,
-        12,
-        320),
+    x: adjustedX(taxAmount, font, 12, 320),
     y: 632,
     size: 12,
     font: font,
     color: textColor,
   });
 
-  drawTable( {
-    '大項目': {x: 0, width: 75},
-    '中項目': {x: 80, width: 75},
-    '部材名': {x: 160, width: 75},
-    '数量': {x: 245, width: 16},
-    '単位': {x: 275, width: 16},
-    '単価': {x: 305, width: 52},
-    '金額': {x: 370, width: 53},
-  }, table, firstPage,
-  {
-    x: 55,
-    y: 557,
-    font: font,
-    size: 12,
-    color: textColor,
-    rowHeight: 20.7,
-  });
+  drawTable(
+      {
+        大項目: {x: 0, width: 75},
+        中項目: {x: 80, width: 75},
+        部材名: {x: 160, width: 75},
+        数量: {x: 245, width: 16},
+        単位: {x: 275, width: 16},
+        単価: {x: 305, width: 52},
+        金額: {x: 370, width: 53},
+      },
+      table,
+      firstPage,
+      {
+        x: 55,
+        y: 557,
+        font: font,
+        size: 12,
+        color: textColor,
+        rowHeight: 20.7,
+      },
+  );
 
   const pdfBytes = await pdfDoc.save();
   console.log(typeof pdfBytes);
@@ -135,19 +125,19 @@ async function modifyPDF(records) {
   // downloadjs(pdfBytes, `${customerName}.pdf`, 'application/pdf');
 }
 
-function drawTable( keys, srcTable, page, props ) {
+function drawTable(keys, srcTable, page, props) {
   let rowY = props.y;
   const rowX = props.x;
   console.log(props.font.widthOfTextAtSize('text', props.size));
-  srcTable.forEach(({value: row})=>{
+  srcTable.forEach(({value: row}) => {
     for (const [col, rowProp] of Object.entries(keys)) {
       const text = sanitize(row[col]['value']);
 
       /* Resolve x position */
-      const currentX = (rowX + rowProp.x);
+      const currentX = rowX + rowProp.x;
       const resolvedX = isNumeric(text.replace(',', '')) ?
-        (adjustedX(text, props.font, props.size, currentX + rowProp.width)) :
-        (currentX );
+        adjustedX(text, props.font, props.size, currentX + rowProp.width) :
+        currentX;
       /* End X resolve */
 
       /* Resolve Font Size */
@@ -160,13 +150,13 @@ function drawTable( keys, srcTable, page, props ) {
       /* End Resolve Font Size */
 
       /* resosolve Y */
-      const resolvedY = verticalAlign(rowY,
+      const resolvedY = verticalAlign(
+          rowY,
           props.rowHeight,
           props.font,
           resolvedFontSize,
       );
       /* End resolve Y */
-
 
       page.drawText(text, {
         x: resolvedX,
@@ -206,7 +196,7 @@ function adjustFontSize(text, width, font, fontSize) {
 
 function verticalAlign(y, height, font, fontSize) {
   const textHeight = font.heightAtSize(fontSize);
-  const result = (height / 2) - (textHeight / 2) + y;
+  const result = height / 2 - textHeight / 2 + y;
 
   return result;
 }
@@ -216,6 +206,5 @@ function adjustedX(text, font, size, rightBoundX) {
   console.log(font.widthOfTextAtSize(text, size));
   return result;
 }
-
 
 export default modifyPDF;

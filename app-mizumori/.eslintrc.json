@@ -18,9 +18,9 @@
         "react"
     ],
     "rules": {
-        "react/react-in-jsx-scope" : 0,
+        "react/react-in-js-scope" : 0,
         "react/prop-types" : 0,
-        "require-jsdoc" : 0,
-        "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }]
+        "require-jsdoc" : 0
     }
+    
 }
