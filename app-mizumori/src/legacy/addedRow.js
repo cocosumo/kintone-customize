@@ -8,7 +8,7 @@
   const events = [
     // "app.record.edit.show",
     // "app.record.create.show",
-    // test
+    // test lang
   ];
 
   fields.forEach((field) => {
