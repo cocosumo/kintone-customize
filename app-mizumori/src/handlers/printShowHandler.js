@@ -15,12 +15,11 @@ const setRecord = (kintoneRecord) => {
 
 const getRecord = () => record;
 
-const windowOpen = async () => {
+const printPDF = async () => {
   const pdfWindow = window.open('');
   const pdfResult = await modifyPDF(getRecord());
   const file = new Blob([pdfResult], {type: 'application/pdf;base64'});
   const fileURL = URL.createObjectURL(file);
-  // window.open(fileURL);
   pdfWindow.document.write(
       `<iframe width='100%' height='100%' src=' ${fileURL} '></iframe>`,
   );
@@ -32,6 +31,6 @@ export const printShowHandler = (event) => {
 
   ReactDOM.render(
       <Fragment>
-        <Button onPrint={windowOpen}>Custom Print</Button>
+        <Button onPrint={printPDF}>Custom Print</Button>
       </Fragment>, printShowRootElement());
 };

@@ -207,4 +207,5 @@ function adjustedX(text, font, size, rightBoundX) {
   return result;
 }
 
+
 export default modifyPDF;

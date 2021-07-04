@@ -109,3 +109,5 @@ dist
 *.csv
 package.json/
 */package.json
+app-customerRecords/package-lock.json
+app-customerRecords/webpack.config.js
