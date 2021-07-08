@@ -1,9 +1,8 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
+kintone.events.on('app.record.detail.show', (event) => {
+  console.log('Webpack loaded');
 
-kintone.events.on('app.record.detail.show', event => {
-    console.log('Webpack loaded');
-
-    return event;
+  return event;
 });

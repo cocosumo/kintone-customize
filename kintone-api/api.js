@@ -13,9 +13,18 @@ export const onIndexShow = [
   'mobile.app.record.index.show',
 ];
 
-export const getSpaceElement = (spaceId, eventType) => (eventType.includes('mobile')
-  ? kintone.mobile.app.record.getSpaceElement(spaceId)
-  : kintone.app.record.getSpaceElement(spaceId));
+/* Record View */
+export const getSpaceElement = (spaceId, eventType) => (
+  eventType.includes('mobile')
+    ? kintone.mobile.app.record.getSpaceElement(spaceId)
+    : kintone.app.record.getSpaceElement(spaceId));
+
+/* List View */
+export const getHeaderMenuSpaceElement = (eventType) => (
+  eventType.includes('mobile')
+    ? kintone.mobile.app.getHeaderMenuSpaceElement()
+    : kintone.app.getHeaderMenuSpaceElement()
+);
 
 export const getPrintViewHeader = () => {
   const headerElement = document.getElementsByClassName('print-header-gaia')[0];
