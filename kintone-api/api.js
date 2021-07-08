@@ -8,11 +8,14 @@ export const onPrintShow = [
   'mobile.app.record.print.show',
 ];
 
-export const getSpaceElement = (spaceId, eventType) => {
-  return eventType.includes('mobile') ?
-    kintone.mobile.app.record.getSpaceElement(spaceId) :
-    kintone.app.record.getSpaceElement(spaceId);
-};
+export const onIndexShow = [
+  'app.record.index.show',
+  'mobile.app.record.index.show',
+];
+
+export const getSpaceElement = (spaceId, eventType) => (eventType.includes('mobile')
+  ? kintone.mobile.app.record.getSpaceElement(spaceId)
+  : kintone.app.record.getSpaceElement(spaceId));
 
 export const getPrintViewHeader = () => {
   const headerElement = document.getElementsByClassName('print-header-gaia')[0];
@@ -23,5 +26,3 @@ export const getPrintViewHeader = () => {
 
   return headerElement.appendChild(rootNode); */
 };
-
-
