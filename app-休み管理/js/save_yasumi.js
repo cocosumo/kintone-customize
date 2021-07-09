@@ -5,7 +5,6 @@ let userId;
 let userStore;
 let userRole;
 let menuSpace;
-let headerSpace;
 let cloneRecords;
 let calendarMenu;
 let thisMonth;
@@ -39,7 +38,7 @@ const vals = {
 
 // console.log('yasumi-kanri');
 
-(function () {
+(() => {
   moment.locale('ja');
 
   const events = ['app.record.index.show', 'mobile.app.record.index.show'];
@@ -47,15 +46,67 @@ const vals = {
   /*  var url = new URL(window.location);
     console.log(url.searchParams.get("comment")); */
 
+  const getUserInfo = (userName) => {
+    const body = {
+      app: 34,
+      query: `文字列＿氏名 like "${userName}" limit 1`,
+    };
+    console.log(body);
+    return kintone.api(
+      kintone.api.url('/k/v1/records', true),
+      'GET',
+      body,
+    );
+  };
+
+  const getSettings = async () => {
+    const body = {
+      app: settingsAppId,
+      query: `コード = "${appId}" limit 1`,
+    };
+    const resp = await kintone.api(
+      kintone.api.url('/k/v1/records', true),
+      'GET',
+      body,
+    );
+
+    return resp;
+  };
+
+  const initializeDOM = (eventType) => {
+    // console.log(eventType);
+    /* Get calendarMenu */
+    if (eventType.includes('mobile')) {
+      calendarMenu = $(kintone.mobile.app.getHeaderSpaceElement());
+    } else {
+      calendarMenu = $('.calendar-menu-gaia');
+    }
+  };
+
+  const addCustomElements = async (eventType) => {
+    menuSpace = $(kintone.app.getHeaderMenuSpaceElement());
+    if (menuSpace.children().length === 0) {
+      menuSpace.append('<div class="bootstrap" id="calendar-self"></div>');
+      menuSpace.children('#calendar-self').load(`https://dl.dropbox.com/s/ul5wsw9vw9n6gwq/calendar-self-menuspace.html?dl=0&pid${new Date().getTime()}`);
+    }
+
+    if (calendarMenu.children().length === 0 || !eventType.includes('mobile')) {
+      calendarMenu.append('<span class="calendar-menu-button-gaia " title="休み">残りの休み : </span>');
+      calendarMenu.append('<span id="remaining-yasumi-val" class="calendar-menu-button-gaia remaining-yasumi" title="休み">0</span>');
+    }
+
+    // headerSpace.children('#calendar-self-header').load('https://dl.dropbox.com/s/bdptxdt4ckdbzrv/calendar-self-header.html?dl=0' + new Date().getTime());
+  };
+
   kintone.events.on(events, async (event) => {
     const eventType = event.type;
     const { viewId } = event;
     const user = await kintone.getLoginUser();
-    // console.log(event);
+
     const userInfo = await getUserInfo(user.name);
 
     /* If userInfo is empty, stop script */
-    if (!userInfo.length) return;
+    if (!userInfo) return;
 
     const { records } = event;
     userId = userInfo.records[0].$id.value;
@@ -63,7 +114,7 @@ const vals = {
     userRole = userInfo.records[0]['役職'].value;
     settings = settings || (await getSettings()).records['0']['設定'].value;
 
-    if (viewId == '8970') {
+    if (viewId === 8970) {
       let originalCalendar = $('.calendar-table-gaia');
       if (eventType.includes('mobile')) {
         // console.log('mobile version.');
@@ -80,7 +131,7 @@ const vals = {
 
     return event;
   });
-}());
+})();
 
 function putById(id, record_time) {
   // console.log(record_time, 'put', id);
@@ -141,16 +192,6 @@ function getClass(cell) {
   return result;
 }
 
-function initializeDOM(eventType) {
-  // console.log(eventType);
-  /* Get calendarMenu */
-  if (eventType.includes('mobile')) {
-    calendarMenu = $(kintone.mobile.app.getHeaderSpaceElement());
-  } else {
-    calendarMenu = $('.calendar-menu-gaia');
-  }
-}
-
 function getMaxYasumi(days) {
   let result;
 
@@ -189,21 +230,6 @@ function getYasumiDaysFromSettings(settings, initialDate) {
   }
 
   return 0;
-}
-
-async function addCustomElements(eventType) {
-  menuSpace = $(kintone.app.getHeaderMenuSpaceElement());
-  if (menuSpace.children().length == 0) {
-    menuSpace.append('<div class="bootstrap" id="calendar-self"></div>');
-    menuSpace.children('#calendar-self').load(`https://dl.dropbox.com/s/ul5wsw9vw9n6gwq/calendar-self-menuspace.html?dl=0&pid${new Date().getTime()}`);
-  }
-
-  if (calendarMenu.children().length === 0 || !eventType.includes('mobile')) {
-    calendarMenu.append('<span class="calendar-menu-button-gaia " title="休み">残りの休み : </span>');
-    calendarMenu.append('<span id="remaining-yasumi-val" class="calendar-menu-button-gaia remaining-yasumi" title="休み">0</span>');
-  }
-
-  // headerSpace.children('#calendar-self-header').load('https://dl.dropbox.com/s/bdptxdt4ckdbzrv/calendar-self-header.html?dl=0' + new Date().getTime());
 }
 
 function hideOriginal(originalCalendar) {
@@ -267,7 +293,6 @@ function setRemainingYasumi(num) {
 }
 
 /* OH UTILITIES */
-
 async function processEachDate(records) {
   cloneRecords = JSON.parse(JSON.stringify(records)); // clone orignal records to local obj
 
@@ -343,7 +368,7 @@ async function processClick(cloned_record, clicked_cell) {
   setRemainingYasumi(remainingYasumi);
 }
 
-function calcRemainingYasumi(clicked_cell) {
+function calcRemainingYasumi(clickedCell) {
   // console.log(cloneRecords);
   let total = 0;
   for (const [key, value] of Object.entries(cloneRecords)) {
@@ -459,22 +484,9 @@ async function addDate(selectedDate, yasumi_time) {
       },
     },
   };
-  return await kintone.api(
+  return kintone.api(
     kintone.api.url('/k/v1/record.json', true),
     'POST',
-    body,
-  );
-}
-
-function getUserInfo(userName) {
-  const body = {
-    app: 34,
-    query: `文字列＿氏名 = "${userName}" limit 1`,
-  };
-
-  return kintone.api(
-    kintone.api.url('/k/v1/records', true),
-    'GET',
     body,
   );
 }
@@ -484,20 +496,6 @@ async function getRecord(selectedDate) {
     app: appId,
     query: `休み日 = "${selectedDate}" limit 1`,
     fields: ['$id', 'ルックアップ＿店舗名'],
-  };
-  const resp = await kintone.api(
-    kintone.api.url('/k/v1/records', true),
-    'GET',
-    body,
-  );
-
-  return resp;
-}
-
-async function getSettings() {
-  const body = {
-    app: settingsAppId,
-    query: `コード = "${appId}" limit 1`,
   };
   const resp = await kintone.api(
     kintone.api.url('/k/v1/records', true),
