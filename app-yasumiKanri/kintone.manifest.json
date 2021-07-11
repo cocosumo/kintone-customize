@@ -8,11 +8,11 @@
             "https://js.cybozu.com/fullcalendar/v5.6.0/main.min.js",
             "https://js.cybozu.com/fullcalendar/v5.6.0/locale/locales-all.min.js",
             "https://cdn.jsdelivr.net/npm/sweetalert2@11",
-            "js/save_yasumi.js"
+            "src/legacy/saveYasumi.js"
         ],
         "css": [
             "https://js.cybozu.com/fullcalendar/v5.6.0/main.min.css",
-            "css/ichiran.css"
+            "src/css/ichiran.css"
         ]
     },
     "mobile": {
@@ -22,11 +22,11 @@
             "https://js.cybozu.com/fullcalendar/v5.6.0/main.min.js",
             "https://js.cybozu.com/fullcalendar/v5.6.0/locale/locales-all.min.js",
             "https://cdn.jsdelivr.net/npm/sweetalert2@11",
-            "js/save_yasumi.js"
+            "src/legacy/saveYasumi.js"
         ],
         "css": [
             "https://js.cybozu.com/fullcalendar/v5.6.0/main.min.css",
-            "css/ichiran.css"
+            "src/css/ichiran.css"
         ]
     }
 }
