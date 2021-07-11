@@ -47,6 +47,7 @@ const vals = {
     console.log(url.searchParams.get("comment")); */
 
   const getUserInfo = (userName) => {
+    
     const body = {
       app: 34,
       query: `文字列＿氏名 like "${userName}" limit 1`,
@@ -60,6 +61,7 @@ const vals = {
   };
 
   const getSettings = async () => {
+
     const body = {
       app: settingsAppId,
       query: `コード = "${appId}" limit 1`,
@@ -158,6 +160,7 @@ function putById(id, record_time) {
   console.log(body);
 
   kintone.api(kintone.api.url('/k/v1/record', true), 'PUT', body, (resp) => {
+
     // calcRemainingYasumi();
     // console.log(resp);
   }, (error) => {
@@ -193,6 +196,7 @@ function getClass(cell) {
 }
 
 function getMaxYasumi(days) {
+
   let result;
 
   switch (days) {
