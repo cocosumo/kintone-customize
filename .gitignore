@@ -109,3 +109,4 @@ dist
 *.csv
 package.json/
 */package.json
+*/package-lock.json
