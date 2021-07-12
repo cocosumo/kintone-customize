@@ -1,0 +1,20 @@
+{
+    "app": "86",
+    "scope":"ALL",
+    "desktop":{
+        "js":[
+            "sample.js"
+        ],
+        "css":[
+
+        ]
+    },
+    "mobile": {
+        "js":[
+
+        ],
+        "css":[
+
+        ]
+    }
+}
