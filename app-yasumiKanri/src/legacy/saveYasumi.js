@@ -193,6 +193,7 @@ const yasumiVals = {
       kintone.api.url('/k/v1/record.json', true),
       'POST',
       body,
+      console.log("sss");
     );
   };
 
