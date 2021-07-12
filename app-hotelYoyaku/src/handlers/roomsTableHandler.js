@@ -1,10 +1,11 @@
 import renderRoomsTable from '../helper/context';
 
-const onEditShowHandler = (event) => {
+const roomsTableHandler = (event) => {
+  console.log('Rooms Table Changed.');
   const { record } = event;
-
   renderRoomsTable(record);
+
   return event;
 };
 
-export default onEditShowHandler;
+export default roomsTableHandler;

@@ -18,11 +18,19 @@ export const onIndexShow = [
   'mobile.app.record.index.show',
 ];
 
+export const onFieldChange = (fields) => [].concat(fields).reduce(
+  (acc, curr) => acc.concat(
+    `app.record.edit.change.${curr}`,
+    `mobile.app.record.edit.change.${curr}`,
+  ), [],
+);
+
 /* Record View */
 export const getSpaceElement = (spaceId, eventType) => (
   eventType.includes('mobile')
     ? kintone.mobile.app.record.getSpaceElement(spaceId)
-    : kintone.app.record.getSpaceElement(spaceId));
+    : kintone.app.record.getSpaceElement(spaceId)
+);
 
 /* List View */
 export const getHeaderMenuSpaceElement = (eventType) => (
