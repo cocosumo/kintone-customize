@@ -1,5 +1,5 @@
 /* Kintone App API
-This combiles desktop and mobile API's
+This combines desktop and mobile API's
 Author: Lorenz Ras
 */
 

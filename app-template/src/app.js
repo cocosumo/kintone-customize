@@ -1,5 +1,5 @@
 import { onIndexShow } from '../../kintone-api/api';
-import onIndexShowHandler from './eventHandlers/onIndexShowHandler';
+import onIndexShowHandler from './pages/onIndexShowHandler';
 
 (() => {
   kintone.events.on(onIndexShow, onIndexShowHandler);
