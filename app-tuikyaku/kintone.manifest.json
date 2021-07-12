@@ -3,7 +3,7 @@
     "scope":"ALL",
     "desktop":{
         "js":[
-            "sample.js"
+            "./dist/js/customize.js"
         ],
         "css":[
 
