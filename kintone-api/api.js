@@ -3,6 +3,11 @@ This combines desktop and mobile API's
 Author: Lorenz Ras
 */
 
+export const onEdit = [
+  'app.record.edit.show',
+  'mobile.app.record.edit.show',
+];
+
 export const onPrintShow = [
   'app.record.print.show',
   'mobile.app.record.print.show',
@@ -26,12 +31,8 @@ export const getHeaderMenuSpaceElement = (eventType) => (
     : kintone.app.getHeaderMenuSpaceElement()
 );
 
+/* Print View */
 export const getPrintViewHeader = () => {
   const headerElement = document.getElementsByClassName('print-header-gaia')[0];
   return headerElement;
-
-  /* const rootNode = document.createElement('div');
-  rootNode.id = 'rootHeader';
-
-  return headerElement.appendChild(rootNode); */
 };
