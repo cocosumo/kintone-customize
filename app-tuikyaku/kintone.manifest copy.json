@@ -1,0 +1,18 @@
+{
+    "app": "84",
+    "scope": "ALL",
+    "desktop": {
+        "js": [
+            "./dist/js/customize.js"
+        ],
+        "css": [
+
+        ]
+    },
+    "mobile": {
+        "js": [
+        ],
+        "css": [
+        ]
+    }
+}
