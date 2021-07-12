@@ -14,7 +14,7 @@
       "ecmaVersion": 12,
       "sourceType": "module"
   },
-  "ignorePatterns": ["**/dist/*/*.js", "**/vendor/*.js"],
+  "ignorePatterns": ["**/dist/*/*.js", "**/vendor/*.js", "**/scripts/*" ],
   "plugins": [
       "react"
   ],
