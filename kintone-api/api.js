@@ -53,3 +53,11 @@ export const getPrintViewHeader = () => {
   const headerElement = document.getElementsByClassName('print-header-gaia')[0];
   return headerElement;
 };
+
+export const getAppId = () => {
+  const url = window.location.href;
+  console.log(url);
+  return url.includes('mobile')
+    ? kintone.mobile.app.getId()
+    : kintone.app.getId();
+};
