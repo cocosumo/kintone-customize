@@ -8,6 +8,13 @@ export const onEdit = [
   'mobile.app.record.edit.show',
 ];
 
+export const onCreate = [
+  'app.record.create.show',
+  'mobile.app.create.edit.show',
+];
+
+export const onEditOrCreate = onEdit.concat(onCreate);
+
 export const onPrintShow = [
   'app.record.print.show',
   'mobile.app.record.print.show',
@@ -22,6 +29,8 @@ export const onFieldChange = (fields) => [].concat(fields).reduce(
   (acc, curr) => acc.concat(
     `app.record.edit.change.${curr}`,
     `mobile.app.record.edit.change.${curr}`,
+    `app.app.record.create.change.${curr}`,
+    `mobile.app.record.create.change.${curr}`,
   ), [],
 );
 
