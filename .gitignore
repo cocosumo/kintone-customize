@@ -107,5 +107,4 @@ dist
 *.bat
 *.ps1
 *.csv
-package.json/
-*/package.json
+*.sh

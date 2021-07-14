@@ -1,0 +1,8 @@
+#!/bin/bash
+# init
+function pause(){
+   read -p "$*"
+}
+
+kintone-customize-uploader --base-url rdmuhwtt6gx7.cybozu.com --username ***** --password ***** --watch ./kintone.manifest.json
+pause 'press enter'

@@ -1,0 +1,54 @@
+{
+    "name": "car-reservation",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node scripts/npm-start.js",
+        "upload": "kintone-customize-uploader --base-url rdmuhwtt6gx7.cybozu.com --watch ./kintone.manifest.json",
+        "develop": "npm run build -- --watch",
+        "build": "webpack",
+        "build:prod": "webpack --mode production"
+    },
+    "keywords": [
+        "Autoprefixer",
+        "PostCSS",
+        "Webpack",
+        "React",
+        "Babel"
+    ],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/cli": "^7.14.5",
+        "@babel/core": "^7.14.6",
+        "@babel/preset-env": "^7.14.7",
+        "@babel/preset-react": "^7.14.5",
+        "@kintone/customize-uploader": "^4.0.6",
+        "autoprefixer": "^10.2.6",
+        "babel-loader": "^8.2.2",
+        "core-js": "^3.15.0",
+        "css-loader": "^5.2.6",
+        "eslint": "^7.2.0",
+        "eslint-config-airbnb": "^18.2.1",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-jsx-a11y": "^6.4.1",
+        "eslint-plugin-react": "^7.21.5",
+        "eslint-plugin-react-hooks": "^1.7.0",
+        "file-loader": "^6.2.0",
+        "html-webpack-plugin": "^5.3.1",
+        "npm-run-all": "^4.1.5",
+        "postcss": "^8.3.5",
+        "postcss-loader": "^6.1.0",
+        "regenerator-runtime": "^0.13.7",
+        "style-loader": "^2.0.0",
+        "url-loader": "^4.1.1",
+        "webpack": "^5.40.0",
+        "webpack-cli": "^4.7.2",
+        "webpack-dev-server": "^3.11.2"
+    },
+    "dependencies": {
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2"
+    }
+}
