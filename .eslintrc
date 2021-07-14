@@ -23,15 +23,6 @@
         "react"
     ],
     "rules": {
-        "no-param-reassign": [
-            "error",
-            {
-                "props": true,
-                "ignorePropertyModificationsForRegex": [
-                    "^bar"
-                ]
-            }
-        ],
         "react/react-in-jsx-scope": 0,
         "react/prop-types": 0,
         "require-jsdoc": 0,

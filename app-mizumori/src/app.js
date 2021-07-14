@@ -1,20 +1,19 @@
 // import React from 'react';
-'use strict';
+
 import ReactDOM from 'react-dom';
 import TableToolTip from './components/Layout/TableToolTip';
 
-import {getSpaceElement, onPrintShow} from './kintone/api';
-import {printShowHandler} from './handlers/printShowHandler';
+import { getSpaceElement, onPrintShow } from './kintone/api';
+import { printShowHandler } from './handlers/printShowHandler';
 
 // import MyImage from './assets/dog.jpg';
 // import './index.css';
 
-
-(function() {
+(function () {
   const recordShowHandler = (event) => {
     console.log('welcome to reacts');
     ReactDOM.render(<TableToolTip />,
-        getSpaceElement('tableTooltip', event.type));
+      getSpaceElement('tableTooltip', event.type));
   };
 
   kintone.events.on([
@@ -29,5 +28,4 @@ import {printShowHandler} from './handlers/printShowHandler';
   kintone.events.on([
     onPrintShow,
   ], (event) => printShowHandler(event));
-})();
-
+}());
