@@ -1,10 +1,25 @@
 .table {
-    min-width: 163px;
-    height: 48px;
-    text-align: center;
-    color : #3498db;
-    margin : 0 8px 0 8px;
-    border: 1px solid #e3e7e8;
-    background-color: #f7f9fa;
-    box-shadow: 1px 1px 1px #fff inset;
+    align-self: center;
+    padding: 4px 8px;
+    text-indent: initial;
+}
+
+.table_header {
+    background-color: #3498db;
+    border-color: #3498db;
+    height: 40px;
+    color: #fff;
+    box-sizing: border-box;
+    text-align: left;
+    font-weight: 400;
+    font-size: 12px;
+    white-space: nowrap;
+    border-width: 2px 2px 2px 0 !important;
+}
+
+.table_tr {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }

@@ -1,4 +1,5 @@
 const carsAppId = 38;
+
 let cars;
 
 const successHandler = (resp) => {
@@ -25,5 +26,5 @@ const fetchCars = () => {
 };
 
 export const getCarNumbers = () => cars.records.map(({ 号車 }) => 号車.value);
-
+export const getCars = () => cars.records.map(({ 号車, 店舗 }) => ([号車.value, 店舗.value]));
 export default fetchCars;
