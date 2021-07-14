@@ -104,7 +104,7 @@ dist
 .tern-port
 
 #custom
-*.ba
+*.bat
 *.ps1
 *.csv
 *.sh
