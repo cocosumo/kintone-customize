@@ -1,6 +1,7 @@
 import { fetchConflictByCarAndDate } from '../backend/fetchReservations';
 
 const getConflictReservations = async (record) => {
+  
   const { value: carNumber } = record.号車;
   const { value: startDateTime } = record.開始;
   const { value: endDateTime } = record.終了;

@@ -4,6 +4,7 @@ import { getSpaceElement } from '../../../kintone-api/api';
 import AvailableCars from '../components/containers/AvailableCars';
 
 const renderAvailableCarsContainer = ({ 号車 }) => {
+  
   ReactDOM.render(
     <AvailableCars initialCar={号車.value} />, getSpaceElement('available-cars'),
   );
