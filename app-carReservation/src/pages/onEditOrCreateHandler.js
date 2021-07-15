@@ -3,14 +3,15 @@ import fetchCars from '../backend/fetchCars';
 import { getSpaceElement } from '../../../kintone-api/api';
 import AvailableCars from '../components/containers/AvailableCars';
 
-const renderAvailableCarsContainer = () => {
+const renderAvailableCarsContainer = ({ 号車 }) => {
   ReactDOM.render(
-    <AvailableCars />, getSpaceElement('available-cars'),
+    <AvailableCars initialCar={号車.value} />, getSpaceElement('available-cars'),
   );
 };
 
 const onEditOrCreateHandler = (event) => {
-  renderAvailableCarsContainer();
+  const { record } = event;
+  renderAvailableCarsContainer(record);
   fetchCars();
   return event;
 };
