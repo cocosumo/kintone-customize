@@ -13,6 +13,18 @@ export const onCreate = [
   'mobile.app.create.edit.show',
 ];
 
+export const onEditSubmit = [
+  'app.record.edit.submit',
+  'mobile.app.edit.create.submit',
+];
+
+export const onCreateSubmit = [
+  'app.record.create.submit',
+  'mobile.app.record.create.submit',
+];
+
+export const onEditOrCreateSubmit = onEditSubmit.concat(onCreateSubmit);
+
 export const onEditOrCreate = onEdit.concat(onCreate);
 
 export const onPrintShow = [
@@ -29,7 +41,7 @@ export const onFieldChange = (fields) => [].concat(fields).reduce(
   (acc, curr) => acc.concat(
     `app.record.edit.change.${curr}`,
     `mobile.app.record.edit.change.${curr}`,
-    `app.app.record.create.change.${curr}`,
+    `app.record.create.change.${curr}`,
     `mobile.app.record.create.change.${curr}`,
   ), [],
 );
@@ -57,7 +69,6 @@ export const getPrintViewHeader = () => {
 
 export const getAppId = () => {
   const url = window.location.href;
-  console.log(url);
   return url.includes('mobile')
     ? kintone.mobile.app.getId()
     : kintone.app.getId();

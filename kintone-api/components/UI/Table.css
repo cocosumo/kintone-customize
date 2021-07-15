@@ -1,4 +1,4 @@
-table.react {
+table.react.table {
   height: 40px;
   box-sizing: border-box;
   text-align: left;
@@ -14,18 +14,18 @@ table.react td {
   border-width: 1px 1px 1px 1px !important;
 }
 
-.react thead {
+table.react thead {
   background-color: #3498db;
   border-color: #3498db;
   color: #fff;
   text-align: center;
 }
-.react thead th {
+table.react thead th {
   padding: 8px;
 }
 
 
-.react tbody td {
+table.react tbody td {
   padding-left: 8px;
   padding-right: 8px;
   padding-top: 4px;

@@ -1,5 +1,5 @@
 import { getCarNumbers, getCars } from '../backend/fetchCars';
-import { fetchConflict } from '../backend/fetchReservations';
+import { fetchConflictByDate } from '../backend/fetchReservations';
 import getUniqueValues, { arrayDiff } from '../helper/recordOperations';
 import isValidTimeDuration from '../helper/validations/isValidTimeDuration';
 
@@ -22,7 +22,7 @@ const showAvailableCars = async (start, end) => {
     e.value = s.value;
   }
 
-  const conflictReservations = await fetchConflict(s.value, e.value);
+  const conflictReservations = await fetchConflictByDate(s.value, e.value);
 
   return resolveAvailableCars(conflictReservations);
 };

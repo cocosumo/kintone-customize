@@ -4,12 +4,13 @@ import Message from '../../../../kintone-api/components/UI/Message';
 import Table from '../../../../kintone-api/components/UI/Table';
 import getAvailableCars from '../../handlers/getAvailableCars';
 
-const triggerFields = ['開始', '終了', '店舗'];
+const onChangeTriggers = onFieldChange(['開始', '終了', '店舗']);
 
 const AvailableCars = (props) => {
   const { initialCar } = props;
   const [availableCars, setAvailableCars] = useState([]);
   const [currentCar, setCurrentCar] = useState(initialCar);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   const onChangeTriggersHandler = (event) => {
     const { value: selectedCar } = event.record.号車;
@@ -17,22 +18,18 @@ const AvailableCars = (props) => {
     getAvailableCars(event).then(
       (value) => setAvailableCars(value),
     );
-
-    kintone.events.off(onFieldChange(triggerFields));
+    setIsInitialRender(false);
+    kintone.events.off(onChangeTriggers);
     return event;
   };
+  kintone.events.on(onChangeTriggers, onChangeTriggersHandler);
 
-  const otherAvaiableCars = availableCars.filter((car) => {
-    console.log(car);
-    return car[0] !== currentCar;
-  });
-
+  const otherAvailableCars = availableCars.filter((car) => car[0] !== currentCar);
   const isSelectedCarAvailable = availableCars.some((car) => car[0] === currentCar);
-  const isOtherCarsAvailable = otherAvaiableCars.length > 0;
-
-  kintone.events.on(onFieldChange(triggerFields), onChangeTriggersHandler);
+  const isOtherCarsAvailable = otherAvailableCars.length > 0;
 
   return (
+    !isInitialRender && (
     <>
       <Message isSuccess={isSelectedCarAvailable}>
         {isSelectedCarAvailable && <>選択された車と期間は予約可能です。</>}
@@ -48,11 +45,11 @@ const AvailableCars = (props) => {
       {isOtherCarsAvailable && (
       <Table
         headers={['号車', '店舗']}
-        rows={otherAvaiableCars}
+        rows={otherAvailableCars}
       />
       )}
-
     </>
+    )
   );
 };
 

@@ -1,38 +1,22 @@
 import { getAppId } from '../../../kintone-api/api';
 
-const successHandler = (resp) => {
-  console.log(resp);
-};
-
-const errorHandler = (error) => {
-  console.warn(error);
-};
-
-const fetchReservations = () => {
+const fetchReservations = (condition = '') => {
   const body = {
     app: getAppId(),
+    query: condition,
   };
-
-  kintone.api(
-    kintone.api.url('/k/v1/records', true),
-    'GET',
-    body,
-    successHandler,
-    errorHandler,
-  );
-};
-
-export const fetchConflict = async (start, end) => {
-  const body = {
-    app: getAppId(),
-    query: `開始 <= "${end}" and 終了 >= "${start}" `,
-  };
-
   return kintone.api(
     kintone.api.url('/k/v1/records', true),
     'GET',
     body,
   );
 };
+
+export const fetchConflictByDate = (start, end) => fetchReservations(
+  `開始 <= "${end}" and 終了 >= "${start}" `,
+);
+export const fetchConflictByCarAndDate = (carNumber, start, end, recordId) => fetchReservations(
+  `$id!="${recordId}"and 号車="${carNumber}" and 開始 <= "${end}" and 終了 >= "${start}" `,
+);
 
 export default fetchReservations;
