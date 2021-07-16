@@ -1,6 +1,7 @@
 import styles from './Button.module.css';
 
 const Button = ({
+
   onClickHandler, className, id, children,
 }) => (
   <button
