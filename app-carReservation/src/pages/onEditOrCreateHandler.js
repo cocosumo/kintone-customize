@@ -16,6 +16,7 @@ const renderAvailableCarsContainer = async (record) => {
 const onEditOrCreateHandler = (event) => {
   const { record } = event;
   renderAvailableCarsContainer(record);
+  console.log(event.type);
 
   return event;
 };

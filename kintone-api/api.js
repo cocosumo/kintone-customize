@@ -10,12 +10,12 @@ export const onEdit = [
 
 export const onCreate = [
   'app.record.create.show',
-  'mobile.app.create.edit.show',
+  'mobile.app.record.create.show',
 ];
 
 export const onEditSubmit = [
   'app.record.edit.submit',
-  'mobile.app.edit.create.submit',
+  'mobile.app.record.edit.submit',
 ];
 
 export const onCreateSubmit = [
@@ -49,14 +49,14 @@ export const onFieldChange = (fields) => [].concat(fields).reduce(
 /* Record View */
 export const getSpaceElement = (spaceId) => {
   const url = window.location.href;
-  return url.includes('mobile')
+  return url.includes('k/m')
     ? kintone.mobile.app.record.getSpaceElement(spaceId)
     : kintone.app.record.getSpaceElement(spaceId);
 };
 
 /* List View */
 export const getHeaderMenuSpaceElement = (eventType) => (
-  eventType.includes('mobile')
+  eventType.includes('k/m')
     ? kintone.mobile.app.getHeaderMenuSpaceElement()
     : kintone.app.getHeaderMenuSpaceElement()
 );
@@ -69,7 +69,7 @@ export const getPrintViewHeader = () => {
 
 export const getAppId = () => {
   const url = window.location.href;
-  return url.includes('mobile')
+  return url.includes('k/m')
     ? kintone.mobile.app.getId()
     : kintone.app.getId();
 };

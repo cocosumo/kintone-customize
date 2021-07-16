@@ -4,7 +4,7 @@ import Table from '../../../../kintone-api/components/UI/Table';
 import getConflictReservations from '../../helper/getConflictReservations';
 import { onFieldChange } from '../../../../kintone-api/api';
 import isValidTimeDuration from '../../helper/validations/isValidTimeDuration';
-import displayInvalidDatesError from '../../helper/validations/displayInvalidDatesError';
+import { showInvalidDatesError } from '../../helper/showAlert';
 
 const onChangeTriggers = onFieldChange(['開始', '終了', '店舗']);
 const extractBasicCarDetails = ({ レコード番号, 号車, 店舗 }) => {
@@ -32,7 +32,7 @@ const AvailableCarsV2 = (props) => {
         });
     } else {
       終了.value = 開始.value; // reset
-      displayInvalidDatesError();
+      showInvalidDatesError();
     }
 
     return event;
@@ -60,7 +60,7 @@ const AvailableCarsV2 = (props) => {
     <>
       <Message isSuccess={isSelectedCarAvailable}>
         {isSelectedCarAvailable && <>【Success！】予約可能です。</>}
-        {!isSelectedCarAvailable && isCarSelected && <>【Failed…】指定の期間で予約出来ませんでした。</>}
+        {!isSelectedCarAvailable && isCarSelected && <>【Failed…】指定の期間で予約出来ません。</>}
         {!isSelectedCarAvailable && !isCarSelected && <>【Failed…】車を選択してください。</>}
         {isOtherCarsAvailable && (
           <>

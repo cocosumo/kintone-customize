@@ -7,4 +7,5 @@ import onEditOrCreateSubmitHandler from './handlers/onEditOrCreateSubmitHandler'
   kintone.events.on(onIndexShow, onIndexShowHandler);
   kintone.events.on(onEditOrCreate, onEditOrCreateHandler);
   kintone.events.on(onEditOrCreateSubmit, onEditOrCreateSubmitHandler);
+  console.log(onEditOrCreate);
 })();
