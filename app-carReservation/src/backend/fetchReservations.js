@@ -16,7 +16,11 @@ export const fetchConflictByDate = (start, end) => fetchReservations(
   `開始 <= "${end}" and 終了 >= "${start}" `,
 );
 export const fetchConflictByCarAndDate = (carNumber, start, end, recordId) => fetchReservations(
-  `$id!="${recordId}"and 号車="${carNumber}" and 開始 <= "${end}" and 終了 >= "${start}" `,
+  `$id!="${recordId}" and 号車="${carNumber}" and 開始 <= "${end}" and 終了 >= "${start}" `,
+);
+
+export const fetchConflictByDateExceptId = (start, end, recordId) => fetchReservations(
+  `$id!="${recordId}" and 開始 <= "${end}" and 終了 >= "${start}" `,
 );
 
 export default fetchReservations;

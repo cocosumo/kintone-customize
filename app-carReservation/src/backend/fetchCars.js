@@ -2,26 +2,16 @@ const carsAppId = 38;
 
 let cars;
 
-const successHandler = (resp) => {
-  cars = resp;
-};
-
-const errorHandler = (error) => {
-  console.warn(error);
-};
-
 const fetchCars = () => {
   console.log('Fetching cars.', carsAppId);
   const body = {
     app: carsAppId,
   };
 
-  kintone.api(
+  return kintone.api(
     kintone.api.url('/k/v1/records', true),
     'GET',
     body,
-    successHandler,
-    errorHandler,
   );
 };
 
