@@ -14,7 +14,7 @@ const onIndexShowHandler = (event) => {
   const { referrer } = document;
   const headerMenuSpace = getHeaderMenuSpaceElement(event.type);
 
-  if (!referrer) setToOwnCustomers(userName);
+  if (!referrer) setToOwnCustomers();
 
   $(headerMenuSpace).append('<div id=\'header-menu\'></div>');
 
