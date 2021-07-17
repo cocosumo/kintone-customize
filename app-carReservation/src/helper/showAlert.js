@@ -6,8 +6,8 @@ export const showError = (title, msg) => {
 
 export const showInvalidDatesError = () => {
   showError(
-    '終了日が開始日より前です',
-    'スケジュールの終了日が開始日より前の日付になっています。  終了日には開始日以降の日付を指定して下さい',
+    "That's wrong...",
+    '終了日が開始日より前の日付になっています。終了日は開始日以降の日付を指定して下さい。',
   );
 };
 
