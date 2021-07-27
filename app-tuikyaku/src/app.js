@@ -12,7 +12,7 @@
   kintone.events.on('app.record.index.show', (event) => {
     const view = 5522965; // 一覧のID
     const appId = kintone.app.getId(); // アプリID
-    const field = 'ドロップダウン'; // 上記アプリの必要なドロップダウンのフィールドコード
+    // const field = '文字列＿氏名'; // 上記アプリの必要なドロップダウンのフィールドコード
 
     // 指定の一覧以外このJSを実行しない
     if (event.viewId !== view) {
@@ -40,20 +40,26 @@
     const ini = document.createElement('option');
     ini.value = userName;
     ini.innerText = userName;
-    console.log(userName);
+    console.log('ユーザ名の取得 :', userName);
     document.getElementById('my_select_button').appendChild(ini);
 
-    // プルダウンメニューの要素を設定する
+    // プルダウンメニューの要素を設定する- ID:34 = 社員名簿
     const APP_ID = 34;
     const params = {
       app: APP_ID,
-      query: '氏名',
     };
     // kintone REST API リクエストを送信する
-    kintone.api(kintone.api.url('/k/v1/app/form/fields', true), 'GET', params, (res) => {
-      // const { options } = res.properties[field];
-      // console.log(options);
+    kintone.api(kintone.api.url('/k/v1/records', true), 'GET', params, (res) => {
+      console.log(res);
+      const { options } = res.properties['文字列＿氏名'].value;
+      console.log(options);
       // 設定項目の数だけ選択肢として追加
+      Object.keys(options).forEach((op) => {
+        const o = document.createElement('option');
+        o.value = options[op].label;
+        o.innerText = options[op].label;
+        document.getElementById('my_select_button').appendChild(o);
+      });
     }, (er) => {
       // エラーの場合はコンソールに出力
       console.log(er);
