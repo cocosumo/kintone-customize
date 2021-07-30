@@ -1,3 +1,5 @@
+import getRecords from './func/getrecords';
+
 (() => {
   kintone.events.on('app.record.edit.show', (event) => {
     // [レコード編集画面]対象のレコードの編集を無効にする
@@ -11,8 +13,8 @@
   });
   kintone.events.on('app.record.index.show', (event) => {
     const view = 5522965; // 一覧のID
-    const appId = kintone.app.getId(); // アプリID
-    // const field = '文字列＿氏名'; // 上記アプリの必要なドロップダウンのフィールドコード
+    // const appId = kintone.app.getId(); // アプリID
+    const field = '文字列＿氏名'; // 上記アプリの必要なドロップダウンのフィールドコード
 
     // 指定の一覧以外このJSを実行しない
     if (event.viewId !== view) {
@@ -36,7 +38,7 @@
     // ログインユーザー情報の取得
     const userName = kintone.getLoginUser().name;
 
-    // 初期値を追加（必要なければ消す）
+    // 初期値を追加
     const ini = document.createElement('option');
     ini.value = userName;
     ini.innerText = userName;
@@ -44,25 +46,46 @@
     document.getElementById('my_select_button').appendChild(ini);
 
     // プルダウンメニューの要素を設定する- ID:34 = 社員名簿
+    // 社員名簿のレコードを取得する
     const APP_ID = 34;
     const params = {
       app: APP_ID,
+      // filterCond: '確度 in ("A") and 見込み時期 >= THIS_YEAR()',
+      // sortConds: ['小計 desc', '会社名 asc'],
+      fields: [field],
     };
+
     // kintone REST API リクエストを送信する
-    kintone.api(kintone.api.url('/k/v1/records', true), 'GET', params, (res) => {
-      console.log(res);
-      const { options } = res.properties['文字列＿氏名'].value;
-      console.log(options);
+    kintone.api(kintone.api.url('/k/v1/records.json', true), 'GET', params, (resp) => {
+      // success
+      console.log('respのログ', resp);
+      const Employees = resp.records;
+
       // 設定項目の数だけ選択肢として追加
-      Object.keys(options).forEach((op) => {
-        const o = document.createElement('option');
-        o.value = options[op].label;
-        o.innerText = options[op].label;
-        document.getElementById('my_select_button').appendChild(o);
+      Employees.forEach((Employee) => {
+        console.log(Employee.文字列＿氏名.value);
+        const listitems = document.createElement('option');
+        listitems.value = Employee.文字列＿氏名.value;
+        listitems.innerText = Employee.文字列＿氏名.value;
+        document.getElementById('my_select_button').appendChild(listitems);
+        console.log(listitems);
       });
     }, (er) => {
-      // エラーの場合はコンソールに出力
+      // error
       console.log(er);
     });
+
+    // ドロップダウン変更時の処理
+    myselect.onchange = () => {
+      const member = document.getElementById('my_select_button').value;
+      const query = `${field} in ("${member}")`;
+      console.log(query);
+      // location.href = location.origin + location.pathname +
+      //  `?view=${view}&query=` + encodeURI(query);
+    };
+
+    // getRecords(params).then((resp) => {
+    //   console.log(resp);
+    // });
   });
 })();
