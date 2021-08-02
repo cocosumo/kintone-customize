@@ -1,6 +1,6 @@
 /* Kintone App API
 This combines desktop and mobile API's
-Author: Lorenz Ras
+Author: Yumenootetsudai 社内開発者
 */
 
 export const onEdit = [
@@ -18,12 +18,23 @@ export const onEditSubmit = [
   'mobile.app.record.edit.submit',
 ];
 
+export const onEditSubmitSuccess = [
+  'app.record.edit.submit.success',
+  'mobile.app.record.edit.submit.success',
+];
+
 export const onCreateSubmit = [
   'app.record.create.submit',
   'mobile.app.record.create.submit',
 ];
 
+export const onCreateSubmitSuccess = [
+  'app.record.create.submit.success',
+  'mobile.app.record.create.submit.success',
+];
+
 export const onEditOrCreateSubmit = onEditSubmit.concat(onCreateSubmit);
+export const onEditOrCreateSubmitSuccess = onEditSubmitSuccess.concat(onCreateSubmitSuccess);
 
 export const onEditOrCreate = onEdit.concat(onCreate);
 
