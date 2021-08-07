@@ -7,7 +7,7 @@ import generateMessage from './generateMessage';
 */
 
 const cwToken = '7bc795ef967064f642aa70956cde3cad';
-const roomId = '213232379';
+const roomId = '6732051';
 
 const sendResultToChatWork = (event) => {
   const message = generateMessage(event);
