@@ -84,3 +84,12 @@ export const getAppId = () => {
     ? kintone.mobile.app.getId()
     : kintone.app.getId();
 };
+
+export const setFieldShown = (fieldCode, isShown) => {
+  const url = window.location.href;
+  if (url.includes('k/m')) {
+    kintone.mobile.app.record.setFieldShown(fieldCode, isShown);
+  } else {
+    kintone.app.record.setFieldShown(fieldCode, isShown);
+  }
+};
