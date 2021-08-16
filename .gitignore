@@ -108,3 +108,4 @@ dist
 *.ps1
 *.csv
 *.sh
+*.xlsx

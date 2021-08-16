@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import TableToolTip from './components/Layout/TableToolTip';
 
 import { getSpaceElement, onPrintShow } from './kintone/api';
-import { printShowHandler } from './handlers/printShowHandler';
+/* import { printShowHandler } from './handlers/printShowHandler'; */
+import printShowHandler from './handlers/printShowHandler';
 
 // import MyImage from './assets/dog.jpg';
 // import './index.css';

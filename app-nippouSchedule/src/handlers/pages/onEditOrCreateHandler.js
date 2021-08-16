@@ -1,5 +1,5 @@
-import { setFieldShown } from '../../../kintone-api/api';
-import renderReportRoot from '../components/roots/renderReportRoot';
+import { setFieldShown } from '../../../../kintone-api/api';
+import renderReportRoot from '../../components/roots/renderReportRoot';
 
 const initialize = () => {
   setFieldShown('reportTable', false);

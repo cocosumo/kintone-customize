@@ -13,13 +13,13 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.json'],
+    extensions: ['.js', '.json', '.jsx'],
   },
 
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader', // https://webpack.js.org/loaders/babel-loader/#root

@@ -1,8 +1,7 @@
-import { onEditOrCreate, onIndexShow } from '../../kintone-api/api';
-import onIndexShowHandler from './pages/onIndexShowHandler';
-import onEditOrCreateHandler from './pages/onEditOrCreateHandler';
+import { onEditOrCreate, onFieldChange } from '../../kintone-api/api';
+import onDateChangeHandler from './handlers/fieldChange/onDateChangeHandler';
+import onEditOrCreateHandler from './handlers/pages/onEditOrCreateHandler';
 
 (() => {
-  kintone.events.on(onIndexShow, onIndexShowHandler);
   kintone.events.on(onEditOrCreate, onEditOrCreateHandler);
 })();

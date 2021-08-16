@@ -48,6 +48,11 @@ export const onIndexShow = [
   'mobile.app.record.index.show',
 ];
 
+/**
+* フィールド値を変化イベント
+* @param {string|array} fields フィルドコード
+* @returns {array} イベントの配列
+*/
 export const onFieldChange = (fields) => [].concat(fields).reduce(
   (acc, curr) => acc.concat(
     `app.record.edit.change.${curr}`,
@@ -57,7 +62,9 @@ export const onFieldChange = (fields) => [].concat(fields).reduce(
   ), [],
 );
 
-/* Record View */
+/**
+ * Record View
+ * */
 export const getSpaceElement = (spaceId) => {
   const url = window.location.href;
   return url.includes('k/m')
@@ -65,19 +72,26 @@ export const getSpaceElement = (spaceId) => {
     : kintone.app.record.getSpaceElement(spaceId);
 };
 
-/* List View */
+/**
+ * List View
+ * */
 export const getHeaderMenuSpaceElement = (eventType) => (
   eventType.includes('k/m')
     ? kintone.mobile.app.getHeaderMenuSpaceElement()
     : kintone.app.getHeaderMenuSpaceElement()
 );
 
-/* Print View */
+/**
+ * Print View
+ * */
 export const getPrintViewHeader = () => {
   const headerElement = document.getElementsByClassName('print-header-gaia')[0];
   return headerElement;
 };
 
+/**
+ * アプリのIDを取得
+ * */
 export const getAppId = () => {
   const url = window.location.href;
   return url.includes('k/m')
@@ -85,6 +99,11 @@ export const getAppId = () => {
     : kintone.app.getId();
 };
 
+/**
+* 要素を表示・非表示
+* @param fieldCode {string} 要素のフィールドコード
+* @param isShown {boolean} trueは表示、falseは非表示
+*/
 export const setFieldShown = (fieldCode, isShown) => {
   const url = window.location.href;
   if (url.includes('k/m')) {
