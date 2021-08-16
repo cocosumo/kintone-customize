@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import TextAreaInput from '../UI/TextAreaInput';
 import TimeInput from '../UI/TimeInput';
 
 const MySwal = withReactContent(Swal);
@@ -8,6 +9,7 @@ const InputForm = ({ selectedTime }) => (
   <>
     <TimeInput label="開始" id="startTime" selectedTime={selectedTime} />
     <TimeInput label="終了" id="endTime" />
+
   </>
 );
 
