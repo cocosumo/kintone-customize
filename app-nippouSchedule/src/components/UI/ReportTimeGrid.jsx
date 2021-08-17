@@ -1,21 +1,27 @@
 import { useState } from 'react';
 import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
-import eventInput from '../modals/eventInput';
+import showInputModal from '../modals/showInputModal';
 
 const ReportTimeGrid = () => {
   const [reportDate, setReportDate] = useState();
+  const [events, setEvents] = useState([]);
 
   const onDateChangeHandler = ({ record }) => {
     const rd = record.reportDate.value;
     setReportDate(rd);
   };
+
   const bindToDate = () => {
     kintone.events.on(onFieldChange('reportDate'), onDateChangeHandler);
   };
-  const onTimeSelected = (info) => {
+
+  const onTimeSelected = async (info) => {
     // showModal
-    eventInput(info);
+    const inputModal = await showInputModal(info);
+    const { value: newEvent, isConfirmed } = inputModal;
+    console.log(isConfirmed);
+    setEvents([...events, newEvent]);
   };
 
   return (
@@ -23,6 +29,7 @@ const ReportTimeGrid = () => {
       selectedDate={reportDate}
       didMountHandler={bindToDate}
       onClickDateHandler={onTimeSelected}
+      events={events}
     />
   );
 };
