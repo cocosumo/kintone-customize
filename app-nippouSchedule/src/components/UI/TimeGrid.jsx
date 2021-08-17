@@ -3,8 +3,6 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import jaLocale from '@fullcalendar/core/locales/ja';
 import interactionPlugin from '@fullcalendar/interaction';
 
-const eventsList = [];
-
 const TimeGrid = ({
   selectedDate,
   didMountHandler,
