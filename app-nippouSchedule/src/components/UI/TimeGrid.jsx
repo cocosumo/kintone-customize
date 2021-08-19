@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 import FullCalendar from '@fullcalendar/react'; // must go before plugins
 import timeGridPlugin from '@fullcalendar/timegrid';
 import jaLocale from '@fullcalendar/core/locales/ja';
@@ -14,8 +15,8 @@ const TimeGrid = ({
     locale={jaLocale}
     plugins={[timeGridPlugin, interactionPlugin]}
     initialView="timeGridDay"
-    slotMinTime="09:00:00"
-    slotMaxTime="20:00:00"
+    slotMinTime="08:00:00"
+    slotMaxTime="21:00:00"
     validRange={{
       start: selectedDate,
       end: selectedDate,
@@ -23,9 +24,18 @@ const TimeGrid = ({
     headerToolbar={false}
     height="auto"
     viewDidMount={didMountHandler}
-    dateClick={onClickDate}
+    selectable={true}
+    select={onClickDate}
+    // dateClick={onClickDate}
     events={events}
     eventClick={onClickEvent}
+    businessHours={{
+      startTime: '9:00',
+      endTime: '20:00',
+    }}
+    eventConstraint="businessHours"
+    selectConstraint="businessHours"
+
   />
 );
 
