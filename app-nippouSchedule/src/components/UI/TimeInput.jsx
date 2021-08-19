@@ -1,24 +1,21 @@
 import { DateTime } from 'luxon';
-import FullWidth from '../containers/FullWidth';
-import styles from './TimeInput.module.css';
-
 
 const TimeInput = ({ id, label, selectedTime }) => {
   const initialValue = DateTime.fromISO(selectedTime).toLocaleString(DateTime.TIME_24_SIMPLE);
 
   return (
-    <FullWidth>
-      <label htmlFor={label} className={styles.Label}>
+    <>
+      <label htmlFor={id} className="form__label">
         {label}
         :
       </label>
       <input
         type="time"
         id={id}
-        className={styles.Input}
+        className="form__input form__input_text-single"
         defaultValue={initialValue}
       />
-    </FullWidth>
+    </>
   );
 };
 

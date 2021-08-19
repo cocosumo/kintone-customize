@@ -3,16 +3,29 @@ import withReactContent from 'sweetalert2-react-content';
 import { DateTime } from 'luxon';
 import TextAreaInput from '../UI/TextAreaInput';
 import TimeInput from '../UI/TimeInput';
+import FormContainer from '../containers/FormContainer';
+import FullWidth from '../containers/FullWidth';
+import Dropdown from '../UI/Dropdown';
+import getValue from '../../helpers/DOM';
 
 const MySwal = withReactContent(Swal);
 
-const InputForm = ({ selectedTime }) => (
-  <>
-    <TimeInput label="開始" id="startTime" selectedTime={selectedTime} />
-    <TimeInput label="終了" id="endTime" />
+const InputForm = ({ selectedTime }) => {
+  const {
+    start, end, actionType, actionDetails,
+  } = selectedTime;
 
-  </>
-);
+  return (
+    <FullWidth>
+      <FormContainer>
+        <Dropdown label="区分" id="actionType" initialValue={actionType} />
+        <TimeInput label="開始" id="startTime" selectedTime={start} />
+        <TimeInput label="終了" id="endTime" selectedTime={end} />
+        <TextAreaInput label="行動" id="actionDetails" initialValue={actionDetails} />
+      </FormContainer>
+    </FullWidth>
+  );
+};
 
 const getHour = (time) => time.substring(0, 2);
 const getMinutes = (time) => time.substring(3, 5);
@@ -26,27 +39,40 @@ const toISO = (time, dateStr) => {
   return modifiedDate.toISO();
 };
 
-const preConfirmHandler = (dateStr) => {
-  const startTime = (document.getElementById('startTime').value);
-  const endTime = (document.getElementById('endTime').value);
+const preConfirmHandler = ({ start }) => {
+  const startTime = getValue('#startTime');
+  const endTime = getValue('#endTime');
+  const actionType = getValue('#actionType');
+  const actionDetails = getValue('#actionDetails');
+  const selectedOption = $('#actionType').find('option:selected');
 
   return {
-    start: toISO(startTime, dateStr),
-    end: toISO(endTime, dateStr),
+    id: (actionType + startTime + endTime).replace(':', ''),
+    title: actionType,
+    start: toISO(startTime, start),
+    end: toISO(endTime, start),
+    backgroundColor: selectedOption.attr('data-bgcolor'),
+    textColor: selectedOption.attr('data-color'),
+    description: actionDetails,
+    editable: true,
   };
 };
 
-const eventInput = ({ dateStr }) => {
-  const isClickedValidTime = dateStr.length > 10;
-
-  if (!isClickedValidTime) return false;
+const eventInput = (event) => {
+  const eventObject = {
+    start: event.dateStr || event.startStr || null,
+    end: event.endStr || null,
+    actionType: event.title || null,
+    actionDetails: event.description || null,
+  };
 
   return MySwal.fire({
     title: <p>行動</p>,
     showCancelButton: true,
-    html: <InputForm selectedTime={dateStr} />,
+    html: <InputForm selectedTime={eventObject} />,
     focusConfirm: false,
-    preConfirm: () => preConfirmHandler(dateStr),
+    heightAuto: false,
+    preConfirm: () => preConfirmHandler(eventObject),
   });
 };
 

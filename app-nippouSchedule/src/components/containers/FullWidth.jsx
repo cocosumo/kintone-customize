@@ -1,5 +1,7 @@
+import styles from './fullWidth.module.css';
+
 const FullWidth = ({ children }) => (
-  <div>
+  <div className={styles.fullWidth}>
     {children}
   </div>
 );

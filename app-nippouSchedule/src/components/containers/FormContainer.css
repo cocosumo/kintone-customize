@@ -1,0 +1,39 @@
+.form {
+  box-sizing: border-box;
+  display: block;
+  width: 80%;
+  margin: auto;
+}
+
+.form__label {
+  display: block;
+  font-size: 16px;
+  text-align: left;
+  padding: 0;
+}
+
+.form__input {
+  display: block;
+  border: 1px solid #ccc;
+  color: #333;
+  margin: 0.5em 0 1em 0;
+  outline: 0;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  font-family: sans-serif;
+}
+
+.form__input_text-single {
+  width: calc(100% - 20px - 1rem);
+}
+
+.form__input_text-area {
+  width: calc(100% - 20px - 1rem);
+
+}
+
+.form__input_dropdown {
+  padding: 0.7rem;
+  width: 100%;
+
+}

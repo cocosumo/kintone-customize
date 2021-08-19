@@ -1,5 +1,5 @@
-import { onEditOrCreate, onFieldChange } from '../../kintone-api/api';
-import onDateChangeHandler from './handlers/fieldChange/onDateChangeHandler';
+import { onEditOrCreate } from '../../kintone-api/api';
+// import onDateChangeHandler from './handlers/fieldChange/onDateChangeHandler';
 import onEditOrCreateHandler from './handlers/pages/onEditOrCreateHandler';
 
 (() => {
