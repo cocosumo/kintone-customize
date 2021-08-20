@@ -4,8 +4,6 @@ import onSubmitHandler from '../../handlers/onSubmitHandler';
 import { onEditOrCreateSubmit } from '../../../../kintone-api/api';
 import actionTypeData from '../../static/actionTypeData';
 
-/* Store */
-
 const setKintoneSubmitEvent = (allEvents) => {
   kintone.events.off(onEditOrCreateSubmit);
   kintone.events.on(onEditOrCreateSubmit, (event) => onSubmitHandler(event, allEvents));
@@ -13,7 +11,9 @@ const setKintoneSubmitEvent = (allEvents) => {
 
 const dateTimeISO = (selectedDate, time) => DateTime.fromISO(`${selectedDate}T${time}:00.000`).toISO();
 
-const kintoneToFCEvents = ({ record }) => {
+const kintoneToFCEvents = ({ type: eventType, record }) => {
+  if (eventType.includes('create')) return [];
+
   const {
     reportTable: { value: reportTable },
     reportDate: { value: reportDate },

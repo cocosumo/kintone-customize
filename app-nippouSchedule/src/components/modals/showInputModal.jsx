@@ -73,6 +73,7 @@ const eventInput = (event) => {
     html: <InputForm selectedTime={eventObject} />,
     focusConfirm: false,
     heightAuto: false,
+    showCloseButton: true,
     preConfirm: () => getInputHandler(eventObject),
   });
 };

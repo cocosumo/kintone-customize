@@ -1,12 +1,12 @@
 const actionTypeData = () => [
   {
     type: '接客',
-    bgColor: 'pink',
-    color: '#333',
+    bgColor: '#ea9eb6', // pink
+    color: 'white',
   },
   {
     type: 'デスクワーク',
-    bgColor: 'blue',
+    bgColor: '#039be5', // blue
     color: 'white',
   },
   {
@@ -16,12 +16,12 @@ const actionTypeData = () => [
   },
   {
     type: '自分の時間',
-    bgColor: 'purple',
+    bgColor: '#8e24aa', // purple
     color: 'white',
   },
   {
     type: 'その他',
-    bgColor: 'green',
+    bgColor: '#81d742', // green
     color: 'white',
   },
 ];

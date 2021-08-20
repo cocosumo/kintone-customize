@@ -1,0 +1,15 @@
+.fc .fc-event-main {
+  padding-left: 0.5rem;
+}
+
+.fc .fc-timegrid-event-harness {
+  min-height: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: box-shadow 0.3s ease-in-out;
+
+}
+
+.fc .fc-timegrid-event-harness:hover {
+
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}

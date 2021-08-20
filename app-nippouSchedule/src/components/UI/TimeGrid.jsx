@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react'; // must go before plugins
 import timeGridPlugin from '@fullcalendar/timegrid';
 import jaLocale from '@fullcalendar/core/locales/ja';
 import interactionPlugin from '@fullcalendar/interaction';
+import './TimeGrid.css';
 
 const TimeGrid = ({
   selectedDate,
@@ -40,6 +41,7 @@ const TimeGrid = ({
       }}
       eventConstraint="businessHours"
       selectConstraint="businessHours"
+      eventBorderColor="white"
     />
   );
 };

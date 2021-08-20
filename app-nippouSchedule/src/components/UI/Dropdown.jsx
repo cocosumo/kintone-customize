@@ -12,7 +12,7 @@ const Dropdown = ({ id, label, initialValue }) => {
       {type}
     </option>
   ));
-  console.log(initialValue);
+
   return (
     <>
       <label htmlFor={id} className="form__label">
