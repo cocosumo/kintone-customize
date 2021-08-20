@@ -3,6 +3,7 @@ import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
 import showInputModal from '../modals/showInputModal';
 import { EventsContext } from '../context/EventsProvider';
+import { deleteEventById, replaceEvent } from '../../helpers/DOM';
 
 const Report = () => {
   const [reportDate, setReportDate] = useState();
@@ -22,13 +23,8 @@ const Report = () => {
 
     if (isConfirmed) {
       if (isEventClicked) {
-        const modifiedEvents = [...allEvents];
-        // delete modified event
-        modifiedEvents.splice(
-          modifiedEvents.findIndex(({ id }) => id === info.id), 1,
-        );
-        // concat inputed event
-        setAllEvents([...modifiedEvents, newEvent]);
+        const modifiedEvents = replaceEvent(allEvents, newEvent, info.id);
+        setAllEvents(modifiedEvents);
       } else {
         setAllEvents(allEvents.concat(newEvent));
       }
@@ -38,6 +34,9 @@ const Report = () => {
   const onClickEventHandler = (info, isEventClicked) => {
     onClickDateHandler(info.event, isEventClicked);
   };
+  const eventResizeHandler = (info) => {
+    console.log(info.oldEvent.id);
+  };
 
   return (
     <TimeGrid
@@ -45,6 +44,7 @@ const Report = () => {
       didMountHandler={bindToDate}
       onClickDate={(info) => onClickDateHandler(info, false)}
       onClickEvent={(info) => onClickEventHandler(info, true)}
+      eventResize={eventResizeHandler}
       events={allEvents}
     />
   );

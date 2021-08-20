@@ -9,6 +9,7 @@ const TimeGrid = ({
   didMountHandler,
   onClickDate,
   onClickEvent,
+  eventResize,
   events,
 }) => (
   <FullCalendar
@@ -26,7 +27,7 @@ const TimeGrid = ({
     viewDidMount={didMountHandler}
     selectable={true}
     select={onClickDate}
-    // dateClick={onClickDate}
+    eventResize={eventResize}
     events={events}
     eventClick={onClickEvent}
     businessHours={{

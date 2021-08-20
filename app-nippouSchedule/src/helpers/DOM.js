@@ -11,4 +11,15 @@ const getValue = (selector) => {
   return value;
 };
 
+export const deleteEventById = (baseArray, modifiedId) => {
+  const modifiedArray = [...baseArray];
+  modifiedArray.splice(modifiedArray.findIndex(({ id }) => id === modifiedId), 1);
+
+  return modifiedArray;
+};
+
+export const replaceEvent = (baseArray, newEvent, modifiedId) => [
+  deleteEventById(baseArray, modifiedId), newEvent,
+];
+
 export default getValue;
