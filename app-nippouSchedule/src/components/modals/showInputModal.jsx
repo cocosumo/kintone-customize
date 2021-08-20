@@ -77,6 +77,7 @@ const eventInput = (event) => {
     heightAuto: false,
     showCloseButton: true,
     showDenyButton: true,
+    denyButtonText: '削除',
     preDeny: () => areYouSure(),
     preConfirm: () => getInputHandler(eventObject),
   });
