@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 const getValue = (selector) => {
   const prefix = selector.substring(0, 1);
   const s = selector.substring(1);
@@ -12,14 +14,25 @@ const getValue = (selector) => {
 };
 
 export const deleteEventById = (baseArray, modifiedId) => {
-  const modifiedArray = [...baseArray];
-  modifiedArray.splice(modifiedArray.findIndex(({ id }) => id === modifiedId), 1);
+  const modifiedArray = baseArray;
+
+  const index = baseArray.findIndex(({ id }) => id === modifiedId);
+  modifiedArray.splice(index, 1);
 
   return modifiedArray;
 };
 
-export const replaceEvent = (baseArray, newEvent, modifiedId) => [
-  deleteEventById(baseArray, modifiedId), newEvent,
-];
+export const replaceEvent = (baseArray, newEvent, modifiedId) => {
+  const newState = [
+    ...deleteEventById(baseArray, modifiedId),
+    newEvent,
+  ];
+
+  return newState;
+};
+
+export const timeTo24Format = (isoDate) => DateTime
+  .fromISO(isoDate)
+  .toLocaleString(DateTime.TIME_24_SIMPLE);
 
 export default getValue;

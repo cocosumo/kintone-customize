@@ -1,8 +1,8 @@
-import { DateTime } from 'luxon';
+import { timeTo24Format } from '../../helpers/DOM';
 
 const TimeInput = ({ id, label, selectedTime }) => {
-  const initialValue = DateTime.fromISO(selectedTime).toLocaleString(DateTime.TIME_24_SIMPLE);
-
+  // const initialValue = DateTime.fromISO(selectedTime).toLocaleString(DateTime.TIME_24_SIMPLE);
+  const initialValue = timeTo24Format(selectedTime);
   return (
     <>
       <label htmlFor={id} className="form__label">

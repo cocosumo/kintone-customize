@@ -1,8 +1,10 @@
 import { setFieldShown } from '../../../../kintone-api/api';
 import renderReportRoot from '../../components/roots/renderReportRoot';
 
+const DEBUG_MODE = true;
+
 const initialize = () => {
-  setFieldShown('reportTable', false);
+  setFieldShown('reportTable', DEBUG_MODE);
 };
 
 const onEditOrCreateHandler = (event) => {

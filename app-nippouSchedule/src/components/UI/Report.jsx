@@ -3,7 +3,7 @@ import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
 import showInputModal from '../modals/showInputModal';
 import { EventsContext } from '../context/EventsProvider';
-import { deleteEventById, replaceEvent } from '../../helpers/DOM';
+import { replaceEvent, timeTo24Format } from '../../helpers/DOM';
 
 const Report = () => {
   const [reportDate, setReportDate] = useState();
@@ -34,8 +34,28 @@ const Report = () => {
   const onClickEventHandler = (info, isEventClicked) => {
     onClickDateHandler(info.event, isEventClicked);
   };
-  const eventResizeHandler = (info) => {
-    console.log(info.oldEvent.id);
+
+  const eventChangeHandler = (info) => {
+    const startTime = timeTo24Format(info.event.startStr);
+    const endTime = timeTo24Format(info.event.endStr);
+    const eventTitle = info.event.title;
+    const buildIdString = (eventTitle + startTime + endTime).replace(/:/g, '');
+    const oldEventId = info.oldEvent.id;
+
+    const newEvent = {
+      id: buildIdString,
+      title: info.event.title,
+      start: info.event.startStr,
+      end: info.event.endStr,
+      backgroundColor: info.event.backgroundColor,
+      textColor: info.event.textColor,
+      description: info.event.description,
+      editable: true,
+    };
+
+    const modifiedEvents = replaceEvent(allEvents, newEvent, oldEventId);
+
+    setAllEvents(modifiedEvents);
   };
 
   return (
@@ -44,7 +64,7 @@ const Report = () => {
       didMountHandler={bindToDate}
       onClickDate={(info) => onClickDateHandler(info, false)}
       onClickEvent={(info) => onClickEventHandler(info, true)}
-      eventResize={eventResizeHandler}
+      eventChange={eventChangeHandler}
       events={allEvents}
     />
   );

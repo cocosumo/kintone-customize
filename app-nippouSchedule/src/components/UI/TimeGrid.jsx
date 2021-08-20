@@ -9,35 +9,39 @@ const TimeGrid = ({
   didMountHandler,
   onClickDate,
   onClickEvent,
-  eventResize,
+  eventChange,
   events,
-}) => (
-  <FullCalendar
-    locale={jaLocale}
-    plugins={[timeGridPlugin, interactionPlugin]}
-    initialView="timeGridDay"
-    slotMinTime="08:00:00"
-    slotMaxTime="21:00:00"
-    validRange={{
-      start: selectedDate,
-      end: selectedDate,
-    }}
-    headerToolbar={false}
-    height="auto"
-    viewDidMount={didMountHandler}
-    selectable={true}
-    select={onClickDate}
-    eventResize={eventResize}
-    events={events}
-    eventClick={onClickEvent}
-    businessHours={{
-      startTime: '9:00',
-      endTime: '20:00',
-    }}
-    eventConstraint="businessHours"
-    selectConstraint="businessHours"
-
-  />
-);
+}) => {
+  console.log(events, 'timegrid');
+  return (
+    <FullCalendar
+      locale={jaLocale}
+      plugins={[timeGridPlugin, interactionPlugin]}
+      initialView="timeGridDay"
+      slotMinTime="08:00:00"
+      slotMaxTime="21:00:00"
+      validRange={{
+        start: selectedDate,
+        end: selectedDate,
+      }}
+      headerToolbar={false}
+      height="auto"
+      viewDidMount={didMountHandler}
+      selectable={true}
+      select={onClickDate}
+      eventResize={eventChange}
+      eventDrop={eventChange}
+      events={events}
+      eventClick={onClickEvent}
+      businessHours={{
+        daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+        startTime: '9:00',
+        endTime: '20:00',
+      }}
+      eventConstraint="businessHours"
+      selectConstraint="businessHours"
+    />
+  );
+};
 
 export default TimeGrid;

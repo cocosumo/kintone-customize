@@ -39,15 +39,16 @@ const toISO = (time, dateStr) => {
   return modifiedDate.toISO();
 };
 
-const preConfirmHandler = ({ start }) => {
+const getInputHandler = ({ start }) => {
   const startTime = getValue('#startTime');
   const endTime = getValue('#endTime');
   const actionType = getValue('#actionType');
   const actionDetails = getValue('#actionDetails');
   const selectedOption = $('#actionType').find('option:selected');
+  const buildIdString = (actionType + startTime + endTime).replace(/:/g, '');
 
   return {
-    id: (actionType + startTime + endTime).replace(':', ''),
+    id: buildIdString,
     title: actionType,
     start: toISO(startTime, start),
     end: toISO(endTime, start),
@@ -72,7 +73,7 @@ const eventInput = (event) => {
     html: <InputForm selectedTime={eventObject} />,
     focusConfirm: false,
     heightAuto: false,
-    preConfirm: () => preConfirmHandler(eventObject),
+    preConfirm: () => getInputHandler(eventObject),
   });
 };
 

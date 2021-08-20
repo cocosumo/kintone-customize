@@ -6,11 +6,11 @@ import FullWidth from '../containers/FullWidth';
 import EventsProvider from '../context/EventsProvider';
 import Report from '../UI/Report';
 
-const renderReportRoot = async (events) => {
+const renderReportRoot = async (event) => {
   ReactDOM.render(
-    <EventsProvider>
+    <EventsProvider event={event}>
       <FullWidth>
-        <Report events={events} />
+        <Report />
       </FullWidth>
     </EventsProvider>,
     getSpaceElement('reportRoot'),
