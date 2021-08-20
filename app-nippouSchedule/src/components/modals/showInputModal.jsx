@@ -7,6 +7,8 @@ import FormContainer from '../containers/FormContainer';
 import FullWidth from '../containers/FullWidth';
 import Dropdown from '../UI/Dropdown';
 import getValue from '../../helpers/DOM';
+import actionTypeData from '../../static/actionTypeData';
+import areYouSure from './areYouSure';
 
 const MySwal = withReactContent(Swal);
 
@@ -44,16 +46,16 @@ const getInputHandler = ({ start }) => {
   const endTime = getValue('#endTime');
   const actionType = getValue('#actionType');
   const actionDetails = getValue('#actionDetails');
-  const selectedOption = $('#actionType').find('option:selected');
   const buildIdString = (actionType + startTime + endTime).replace(/:/g, '');
-
+  const data = actionTypeData().find(({ type }) => type === actionType);
+  const { bgColor, color } = data;
   return {
     id: buildIdString,
     title: actionType,
     start: toISO(startTime, start),
     end: toISO(endTime, start),
-    backgroundColor: selectedOption.attr('data-bgcolor'),
-    textColor: selectedOption.attr('data-color'),
+    backgroundColor: bgColor,
+    textColor: color,
     description: actionDetails,
     editable: true,
   };
@@ -74,6 +76,8 @@ const eventInput = (event) => {
     focusConfirm: false,
     heightAuto: false,
     showCloseButton: true,
+    showDenyButton: true,
+    preDeny: () => areYouSure(),
     preConfirm: () => getInputHandler(eventObject),
   });
 };

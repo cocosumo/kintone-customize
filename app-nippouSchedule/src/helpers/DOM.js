@@ -6,7 +6,7 @@ const getValue = (selector) => {
   let value;
   switch (prefix) {
     case '#':
-      value = document.getElementById(s).value;
+      value = document.getElementById(s).value || document.getElementById(s).innerText;
       break;
     default:
   }

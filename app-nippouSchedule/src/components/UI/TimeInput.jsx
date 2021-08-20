@@ -11,6 +11,8 @@ const TimeInput = ({ id, label, selectedTime }) => {
       </label>
       <input
         type="time"
+        min="09:00"
+        max="18:00"
         id={id}
         className="form__input form__input_text-single"
         defaultValue={initialValue}
