@@ -1,5 +1,3 @@
-import { DateTime } from 'luxon';
-
 const getValue = (selector) => {
   const prefix = selector.substring(0, 1);
   const s = selector.substring(1);
@@ -30,9 +28,5 @@ export const replaceEvent = (baseArray, newEvent, modifiedId) => {
 
   return newState;
 };
-
-export const timeTo24Format = (isoDate) => DateTime
-  .fromISO(isoDate)
-  .toLocaleString(DateTime.TIME_24_SIMPLE);
 
 export default getValue;

@@ -6,7 +6,7 @@ import { EventsContext } from '../context/EventsProvider';
 import { replaceEvent } from '../../helpers/DOM';
 import { timeTo24Format } from '../../helpers/Time';
 
-const Report = ({ selectedDate }) => {
+const MaterialReport = ({ selectedDate }) => {
   const [reportDate, setReportDate] = useState(selectedDate);
   const [allEvents, setAllEvents] = useContext(EventsContext);
   const onDateChangeHandler = ({ record }) => {
@@ -71,4 +71,4 @@ const Report = ({ selectedDate }) => {
   );
 };
 
-export default Report;
+export default MaterialReport;

@@ -1,33 +1,12 @@
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { DateTime } from 'luxon';
-import TextAreaInput from '../UI/TextAreaInput';
-import TimeInput from '../UI/TimeInput';
-import FormContainer from '../containers/FormContainer';
-import FullWidth from '../containers/FullWidth';
-import Dropdown from '../UI/Dropdown';
 import getValue from '../../helpers/DOM';
 import actionTypeData from '../../static/actionTypeData';
 import areYouSure from './areYouSure';
+import EventInputForm from '../forms/EventInputForm';
 
 const MySwal = withReactContent(Swal);
-
-const InputForm = ({ selectedTime }) => {
-  const {
-    start, end, actionType, actionDetails,
-  } = selectedTime;
-
-  return (
-    <FullWidth>
-      <FormContainer>
-        <Dropdown label="区分" id="actionType" initialValue={actionType} />
-        <TimeInput label="開始" id="startTime" selectedTime={start} />
-        <TimeInput label="終了" id="endTime" selectedTime={end} />
-        <TextAreaInput label="行動" id="actionDetails" initialValue={actionDetails} />
-      </FormContainer>
-    </FullWidth>
-  );
-};
 
 const getHour = (time) => time.substring(0, 2);
 const getMinutes = (time) => time.substring(3, 5);
@@ -61,7 +40,7 @@ const getInputHandler = ({ start }) => {
   };
 };
 
-const eventInput = (event) => {
+const eventInputModal = (event, handler, isEventClicked) => {
   const eventObject = {
     start: event.dateStr || event.startStr || null,
     end: event.endStr || null,
@@ -70,17 +49,22 @@ const eventInput = (event) => {
   };
 
   return MySwal.fire({
-    title: <p>行動</p>,
     showCancelButton: true,
-    html: <InputForm selectedTime={eventObject} />,
-    focusConfirm: false,
+    // html: <InputForm selectedTime={eventObject} />,
+    html: <EventInputForm selectedTime={eventObject} />,
+    focusConfirm: true,
     heightAuto: false,
+    reverseButtons: true,
     showCloseButton: true,
     showDenyButton: true,
     denyButtonText: '削除',
-    preDeny: () => areYouSure(),
-    preConfirm: () => getInputHandler(eventObject),
+    preDeny: async () => {
+      const { isConfirmed } = await areYouSure();
+      if (!isConfirmed) return eventInputModal(event, handler, isEventClicked);
+      return false;
+    },
+    preConfirm: () => handler(event, getInputHandler(eventObject), isEventClicked),
   });
 };
 
-export default eventInput;
+export default eventInputModal;

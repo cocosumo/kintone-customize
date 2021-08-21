@@ -13,12 +13,13 @@ const TimeGrid = ({
   eventChange,
   events,
 }) => {
-  console.log(events, 'timegrid');
+  console.log(selectedDate);
   return (
     <FullCalendar
       locale={jaLocale}
       plugins={[timeGridPlugin, interactionPlugin]}
       initialView="timeGridDay"
+      initialDate={selectedDate}
       slotMinTime="08:00:00"
       slotMaxTime="21:00:00"
       validRange={{
@@ -45,5 +46,4 @@ const TimeGrid = ({
     />
   );
 };
-
 export default TimeGrid;

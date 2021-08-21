@@ -1,4 +1,4 @@
-import { timeTo24Format } from '../helpers/DOM';
+import { timeTo24Format } from '../helpers/Time';
 
 const fieldValue = (type, value) => ({ type, value });
 

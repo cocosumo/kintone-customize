@@ -10,7 +10,7 @@ const renderReportRoot = async (event) => {
   ReactDOM.render(
     <EventsProvider event={event}>
       <FullWidth>
-        <Report />
+        <Report selectedDate={event.record.reportDate.value} />
       </FullWidth>
     </EventsProvider>,
     getSpaceElement('reportRoot'),

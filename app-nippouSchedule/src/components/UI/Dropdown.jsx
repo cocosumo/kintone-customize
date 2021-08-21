@@ -8,17 +8,14 @@ const Dropdown = ({ id, label, initialValue }) => {
     value: type,
     label: type,
   }));
-  console.log(initialValue);
-  const defaultValue = initialValue ? { value: initialValue, label: initialValue } : options[0];
 
+  const defaultValue = initialValue ? { value: initialValue, label: initialValue } : options[0];
+  console.log(initialValue, 'hello');
   return (
     <>
       <label htmlFor={id} className="form__label">
         {label}
       </label>
-      {/* <select id={id} defaultValue={initialValue} className="form__input form__input_dropdown">
-        {options}
-      </select> */}
       <Select
         id={id}
         isSearchable={false}
