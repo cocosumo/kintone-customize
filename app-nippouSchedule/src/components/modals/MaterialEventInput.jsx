@@ -2,7 +2,9 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { useState } from 'react';
+import { Grid } from '@material-ui/core';
 import EventInputForm from '../forms/EventInputForm';
 import { ISOtoDATE } from '../../helpers/Time';
 
@@ -20,6 +22,8 @@ const MaterialEventInput = ({
   open, onFormClose, selectedTime, optionsData,
 }) => {
   const selectedFCEvent = reduceEvent(selectedTime);
+  const selectedId = selectedTime.id;
+  const isEventPressed = Boolean(selectedId);
   const [startTime, setStartTime] = useState(ISOtoDATE(selectedFCEvent.startTime));
   const [endTime, setEndTime] = useState(ISOtoDATE(selectedFCEvent.endTime));
   const [actionType, setActionType] = useState(
@@ -27,10 +31,10 @@ const MaterialEventInput = ({
   );
   const [actionDetails, setActionDetails] = useState(selectedFCEvent.actionDetails);
   const [isError, setIsError] = useState();
-
+  console.log(selectedId);
   const changeStartTimeHandler = (value) => {
     if (!value) {
-      setStartTime('08:00');
+      setStartTime('');
       setEndTime(null);
     } else {
       setStartTime(value);
@@ -68,11 +72,12 @@ const MaterialEventInput = ({
   };
 
   return (
+
     <Dialog
       open={open}
       onClose={() => onFormClose(false)}
       fullWidth
-      maxWidth="sm"
+      maxWidth="xs"
     >
       <DialogContent>
         <EventInputForm
@@ -83,16 +88,44 @@ const MaterialEventInput = ({
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => onFormClose(false)}>キャンセル</Button>
-        <Button
-          disabled={isError}
-          variant="contained"
-          onClick={() => onFormClose(newEvent)}
+
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="baseline"
         >
-          保存
-        </Button>
+          <Grid>
+            {isEventPressed && (
+            <Button
+              variant="outlined"
+              startIcon={<DeleteIcon />}
+              onClick={() => onFormClose({ closeMethod: 'delete', data: { id: selectedId } })}
+            >
+              削除
+            </Button>
+            )}
+          </Grid>
+          <Grid>
+
+            <Button
+              onClick={() => onFormClose({ closeMethod: 'cancel' })}
+            >
+              キャンセル
+            </Button>
+            <Button
+              disabled={isError}
+              variant="contained"
+              onClick={() => onFormClose({ closeMethod: 'save', data: newEvent })}
+            >
+              保存
+            </Button>
+          </Grid>
+        </Grid>
+
       </DialogActions>
     </Dialog>
+
   );
 };
 

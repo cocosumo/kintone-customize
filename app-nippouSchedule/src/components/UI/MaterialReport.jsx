@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
 import { EventsContext } from '../context/EventsProvider';
-import { replaceEvent } from '../../helpers/DOM';
+import { deleteEventById, replaceEvent } from '../../helpers/DOM';
 import { timeTo24Format } from '../../helpers/Time';
 import MaterialEventInput from '../modals/MaterialEventInput';
 import actionTypeData from '../../static/actionTypeData';
@@ -60,8 +60,6 @@ const MaterialReport = ({ selectedDate }) => {
       editable: true,
     };
 
-    console.log(newEvent);
-
     if (oldEventId) {
       const modifiedEvents = replaceEvent(allEvents, newEvent, oldEventId);
       setAllEvents(modifiedEvents);
@@ -70,11 +68,23 @@ const MaterialReport = ({ selectedDate }) => {
     }
   };
 
-  const onFormCloseHandler = (newEvent) => {
-    if (newEvent) {
-      eventChangeHandler(newEvent);
-    }
+  const deleteEventHandler = (id) => {
+    const reducedEvents = deleteEventById(allEvents, id);
+    console.log(reducedEvents, id);
+    setAllEvents(reducedEvents);
+  };
 
+  const onFormCloseHandler = ({ closeMethod, data }) => {
+    switch (closeMethod) {
+      case 'save':
+        eventChangeHandler(data);
+        break;
+      case 'delete':
+        deleteEventHandler(data.id);
+        break;
+      default:
+        break;
+    }
     setIsFormOpen(false);
   };
 

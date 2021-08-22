@@ -8,7 +8,7 @@ const MaterialText = ({
   <Box
     component="form"
     sx={{
-      marginTop: '1em',
+      marginTop: '0.3em',
       minWidth: 200,
     }}
     noValidate

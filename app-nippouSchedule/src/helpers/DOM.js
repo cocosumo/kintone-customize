@@ -12,11 +12,11 @@ const getValue = (selector) => {
 };
 
 export const deleteEventById = (baseArray, modifiedId) => {
-  const modifiedArray = baseArray;
+  const modifiedArray = [...baseArray];
 
   const index = baseArray.findIndex(({ id }) => id === modifiedId);
   modifiedArray.splice(index, 1);
-
+  console.log(modifiedArray, baseArray);
   return modifiedArray;
 };
 

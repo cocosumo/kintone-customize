@@ -1,4 +1,3 @@
-import FormContainer from '../containers/FormContainer';
 import MateriaTimePicker from '../UI/MaterialTimePicker';
 import MaterialSelect from '../UI/MaterialSelect';
 import './form.css';
@@ -34,7 +33,7 @@ const EventInputForm = ({
     startTime, endTime, actionType, actionDetails,
   } = FCEventContents;
   return (
-    <FormContainer>
+    <>
       <MaterialSelect id="actionType" label="区分" value={actionType} onChange={setActionType} optionsData={optionsData} />
       <MateriaTimePicker
         id="startTime"
@@ -56,7 +55,7 @@ const EventInputForm = ({
         setIsError={setIsError}
       />
       <MaterialText id="actionDetails" label="行動" value={actionDetails} onChange={setActionDetails} />
-    </FormContainer>
+    </>
   );
 };
 export default EventInputForm;

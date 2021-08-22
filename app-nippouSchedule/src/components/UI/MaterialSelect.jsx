@@ -13,7 +13,10 @@ const MaterialSelect = ({
 
   return (
     <Box sx={{ minWidth: 120, marginTop: '1em' }}>
-      <FormControl fullWidth>
+      <FormControl
+        fullWidth
+        variant="standard"
+      >
         <InputLabel id={`${{ id }}-label`}>{label}</InputLabel>
         <Select
           labelId={`${{ id }}-label`}
@@ -21,6 +24,7 @@ const MaterialSelect = ({
           value={value}
           label={label}
           onChange={onChange}
+
         >
           {options}
         </Select>
