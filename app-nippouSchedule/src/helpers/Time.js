@@ -2,9 +2,16 @@ import { DateTime } from 'luxon';
 
 export const ISOtoDATE = (dateStr) => DateTime.fromISO(dateStr);
 
-export const timeTo24Format = (dateStr) => (
-  ISOtoDATE(dateStr)
-    .toLocaleString(DateTime.TIME_24_SIMPLE)).padStart(5, '0');
+export const timeTo24Format = (date) => {
+  const dateTime = (typeof (date) === 'string')
+    ? ISOtoDATE(date)
+    : date;
+
+  return (
+    dateTime
+      .toLocaleString(DateTime.TIME_24_SIMPLE)).padStart(5, '0');
+};
+
 export const luxonTime = (
   {
     year, month, day, hour, minute,

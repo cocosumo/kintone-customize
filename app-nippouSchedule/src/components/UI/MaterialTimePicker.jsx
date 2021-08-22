@@ -2,16 +2,36 @@
 import AdapterLuxon from '@material-ui/lab/AdapterLuxon';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import TextField from '@material-ui/core/TextField';
-
 import TimePicker from '@material-ui/lab/TimePicker';
-import { Box, FormControl } from '@material-ui/core';
+import { Alert, Box, FormControl } from '@material-ui/core';
+import { useState } from 'react';
+import { timeTo24Format } from '../../helpers/Time';
 
 const MaterialTimePicker = ({
-  id, value, label, minTime, maxTime, onChange,
+  id, value, label, minTime, maxTime, onChange, isRequired, setIsError,
 }) => {
-  const onChangeHandler = (newValue) => {
-    onChange(newValue);
+  const [error, setError] = useState();
+
+  const errorHandler = (reason) => {
+    switch (reason) {
+      case 'invalidDate':
+        setError('無効な時間です');
+        break;
+      case 'maxTime':
+        setError(`${timeTo24Format(maxTime)}まで設定してください`);
+        break;
+      case 'minTime':
+        setError(`開始時間（${timeTo24Format(minTime)}）から設定してください`);
+        break;
+      default:
+        setError(null);
+        break;
+    }
+
+    setIsError(Boolean(reason));
   };
+
+  const isError = Boolean(error);
 
   return (
     <Box sx={{ minWidth: 120, marginTop: '1em' }}>
@@ -22,11 +42,19 @@ const MaterialTimePicker = ({
             label={label}
             value={value}
             showToolbar
-            onChange={onChangeHandler}
-            renderInput={(params) => <TextField id={id} {...params} />}
+            onChange={onChange}
+            onError={errorHandler}
+            renderInput={(params) => (
+              <TextField
+                id={id}
+                required={isRequired}
+                {...params}
+              />
+            )}
             minTime={minTime}
             maxTime={maxTime}
           />
+          {isError && <Alert severity="error">{error}</Alert>}
         </LocalizationProvider>
       </FormControl>
     </Box>

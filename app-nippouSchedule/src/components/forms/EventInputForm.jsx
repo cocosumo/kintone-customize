@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import FullWidth from '../containers/FullWidth';
 import FormContainer from '../containers/FormContainer';
 import MateriaTimePicker from '../UI/MaterialTimePicker';
 import MaterialSelect from '../UI/MaterialSelect';
 import './form.css';
 import MaterialText from '../UI/MaterialText';
-import { luxonTime, ISOtoDATE } from '../../helpers/Time';
+import { luxonTime } from '../../helpers/Time';
 
 /**
  * Prop => Event Object
@@ -23,50 +21,42 @@ import { luxonTime, ISOtoDATE } from '../../helpers/Time';
  * share the same requirements.
  *  */
 
-const EventInputForm = ({ selectedTime }) => {
+const EventInputForm = ({
+  onChangeHandlers,
+  FCEventContents,
+  optionsData,
+  setIsError,
+}) => {
+  const [
+    setStartTime, setEndTime, setActionType, setActionDetails,
+  ] = onChangeHandlers;
   const {
-    start, end, actionType, actionDetails,
-  } = selectedTime;
-
-  const [startTime, setStartTime] = useState(ISOtoDATE(start));
-  const [endTime, setEndTime] = useState(ISOtoDATE(end));
-
-  const changeStartTimeHandler = (value) => {
-    setStartTime(value);
-    if (value > endTime) {
-      setEndTime(value);
-    }
-  };
-  const changeEndTimeHandler = (value) => {
-    const validValue = startTime > value ? startTime : value;
-
-    setEndTime(validValue);
-  };
-
+    startTime, endTime, actionType, actionDetails,
+  } = FCEventContents;
   return (
-    <FullWidth>
-      <FormContainer>
-        <MaterialSelect id="actionType" label="区分" initialValue={actionType} />
-        <MateriaTimePicker
-          id="startTime"
-          value={startTime}
-          label="開始"
-          minTime={luxonTime({ hour: 8 })}
-          maxTime={luxonTime({ hour: 20 })}
-          onChange={changeStartTimeHandler}
-        />
-        <MateriaTimePicker
-          id="endTime"
-          label="終了"
-          value={endTime}
-          minTime={startTime || ISOtoDATE(start)}
-          maxTime={luxonTime({ hour: 20 })}
-          onChange={changeEndTimeHandler}
-        />
-        <MaterialText id="actionDetails" label="行動" initialValue={actionDetails} />
-      </FormContainer>
-    </FullWidth>
+    <FormContainer>
+      <MaterialSelect id="actionType" label="区分" value={actionType} onChange={setActionType} optionsData={optionsData} />
+      <MateriaTimePicker
+        id="startTime"
+        value={startTime}
+        label="開始"
+        minTime={luxonTime({ hour: 8 })}
+        maxTime={luxonTime({ hour: 20 })}
+        onChange={setStartTime}
+        setIsError={setIsError}
+        isRequired
+      />
+      <MateriaTimePicker
+        id="endTime"
+        label="終了"
+        value={endTime}
+        minTime={luxonTime({ hour: startTime.hour, minute: startTime.minute })}
+        maxTime={luxonTime({ hour: 20 })}
+        onChange={setEndTime}
+        setIsError={setIsError}
+      />
+      <MaterialText id="actionDetails" label="行動" value={actionDetails} onChange={setActionDetails} />
+    </FormContainer>
   );
 };
-
 export default EventInputForm;

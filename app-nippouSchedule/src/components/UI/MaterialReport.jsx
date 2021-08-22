@@ -1,14 +1,18 @@
 import { useContext, useState } from 'react';
 import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
-import eventInputModal from '../modals/eventInputModal';
 import { EventsContext } from '../context/EventsProvider';
 import { replaceEvent } from '../../helpers/DOM';
 import { timeTo24Format } from '../../helpers/Time';
+import MaterialEventInput from '../modals/MaterialEventInput';
+import actionTypeData from '../../static/actionTypeData';
 
 const MaterialReport = ({ selectedDate }) => {
   const [reportDate, setReportDate] = useState(selectedDate);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedTime, setSelectedTime] = useState();
   const [allEvents, setAllEvents] = useContext(EventsContext);
+
   const onDateChangeHandler = ({ record }) => {
     const rd = record.reportDate.value;
     setReportDate(rd);
@@ -18,18 +22,18 @@ const MaterialReport = ({ selectedDate }) => {
     kintone.events.on(onFieldChange('reportDate'), onDateChangeHandler);
   };
 
-  const onConfirmEventInputHandler = (info, newEvent, isEventClicked) => {
-    // const { value: newEvent } = inputModal;
+  /*   const onConfirmEventInputHandler = (info, newEvent, isEventClicked) => {
     if (isEventClicked) {
       const modifiedEvents = replaceEvent(allEvents, newEvent, info.id);
       setAllEvents(modifiedEvents);
     } else {
       setAllEvents(allEvents.concat(newEvent));
     }
-  };
+  }; */
 
-  const onClickDateHandler = async (info, isEventClicked) => {
-    eventInputModal(info, onConfirmEventInputHandler, isEventClicked);
+  const onClickDateHandler = async (info) => {
+    setSelectedTime(info);
+    setIsFormOpen(true);
   };
 
   const onClickEventHandler = (info, isEventClicked) => {
@@ -37,37 +41,62 @@ const MaterialReport = ({ selectedDate }) => {
   };
 
   const eventChangeHandler = (info) => {
-    const startTime = timeTo24Format(info.event.startStr);
-    const endTime = timeTo24Format(info.event.endStr);
-    const eventTitle = info.event.title;
+    const startTime = timeTo24Format(info.startTime || info.event.startStr);
+    const endTime = timeTo24Format(info.endTime || info.event.endStr);
+    const eventTitle = info.actionType || info.event.title;
     const buildIdString = (eventTitle + startTime + endTime).replace(/:/g, '');
-    const oldEventId = info.oldEvent.id;
+    const oldEventId = info.id || info.oldEvent?.id;
+    const colorData = actionTypeData().find(({ type }) => type === eventTitle);
+    const { bgColor, color } = colorData;
 
     const newEvent = {
       id: buildIdString,
-      title: info.event.title,
-      start: info.event.startStr,
-      end: info.event.endStr,
-      backgroundColor: info.event.backgroundColor,
-      textColor: info.event.textColor,
-      description: info.event.description,
+      title: eventTitle,
+      start: info.startTime?.toJSDate().toISOString() || info.event.startStr,
+      end: info.endTime?.toJSDate().toISOString() || info.event.endStr,
+      backgroundColor: bgColor,
+      textColor: color,
+      description: info.actionDetails || info.event?.extendedProps.description,
       editable: true,
     };
 
-    const modifiedEvents = replaceEvent(allEvents, newEvent, oldEventId);
+    console.log(newEvent);
 
-    setAllEvents(modifiedEvents);
+    if (oldEventId) {
+      const modifiedEvents = replaceEvent(allEvents, newEvent, oldEventId);
+      setAllEvents(modifiedEvents);
+    } else {
+      setAllEvents(allEvents.concat(newEvent));
+    }
+  };
+
+  const onFormCloseHandler = (newEvent) => {
+    if (newEvent) {
+      eventChangeHandler(newEvent);
+    }
+
+    setIsFormOpen(false);
   };
 
   return (
-    <TimeGrid
-      selectedDate={reportDate}
-      didMountHandler={bindToDate}
-      onClickDate={(info) => onClickDateHandler(info, false)}
-      onClickEvent={(info) => onClickEventHandler(info, true)}
-      eventChange={eventChangeHandler}
-      events={allEvents}
-    />
+    <>
+      <TimeGrid
+        selectedDate={reportDate}
+        didMountHandler={bindToDate}
+        onClickDate={(info) => onClickDateHandler(info, false)}
+        onClickEvent={(info) => onClickEventHandler(info, true)}
+        eventChange={eventChangeHandler}
+        events={allEvents}
+      />
+      {isFormOpen && (
+      <MaterialEventInput
+        open={isFormOpen}
+        onFormClose={onFormCloseHandler}
+        selectedTime={selectedTime}
+        optionsData={actionTypeData()}
+      />
+      )}
+    </>
   );
 };
 
