@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -5,18 +6,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useState } from 'react';
 import { Grid, DialogTitle } from '@material-ui/core';
+import Draggable from 'react-draggable';
+import Paper from '@material-ui/core/Paper';
 import EventInputForm from '../forms/EventInputForm';
 import { ISOtoDATE } from '../../helpers/Time';
-
-const reduceEvent = (s) => {
-  if (!s) return {};
-  return {
-    startTime: s.dateStr || s.startStr || null,
-    endTime: s.endStr || null,
-    actionType: s.title || null,
-    actionDetails: s.extendedProps?.description || null,
-  };
-};
+import { reduceEvent } from '../../helpers/DOM';
 
 const MaterialEventInput = ({
   open, onFormClose, selectedTime, optionsData,
@@ -31,6 +25,13 @@ const MaterialEventInput = ({
   );
   const [actionDetails, setActionDetails] = useState(selectedFCEvent.actionDetails);
   const [isError, setIsError] = useState();
+
+  const PaperComponent = (props) => (
+    <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+
+      <Paper {...props} />
+    </Draggable>
+  );
 
   const changeStartTimeHandler = (value) => {
     if (!value) {
@@ -79,6 +80,8 @@ const MaterialEventInput = ({
       fullWidth
       maxWidth="xs"
       hideBackdrop
+      PaperComponent={PaperComponent}
+      aria-labelledby="draggable-dialog-title"
     >
       <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title" />
       <DialogContent>

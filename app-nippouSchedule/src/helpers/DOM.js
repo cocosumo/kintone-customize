@@ -1,3 +1,13 @@
+export const reduceEvent = (s) => {
+  if (!s) return {};
+  return {
+    startTime: s.dateStr || s.startStr || null,
+    endTime: s.endStr || null,
+    actionType: s.title || null,
+    actionDetails: s.extendedProps?.description || null,
+  };
+};
+
 const getValue = (selector) => {
   const prefix = selector.substring(0, 1);
   const s = selector.substring(1);
