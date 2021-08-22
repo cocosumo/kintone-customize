@@ -3,12 +3,17 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import CircleIcon from '@material-ui/icons/Circle';
+import CircleTwoToneIcon from '@material-ui/icons/CircleTwoTone';
 
 const MaterialSelect = ({
   id, label, value, onChange, optionsData,
 }) => {
-  const options = optionsData.map(({ type }) => (
-    <MenuItem key={type} value={type}>{type}</MenuItem>
+  const options = optionsData.map(({ type, bgColor }) => (
+    <MenuItem key={type} value={type}>
+      <CircleTwoToneIcon sx={{ color: bgColor, fontSize: '1em', marginRight: 1 }} />
+      {type}
+    </MenuItem>
   ));
 
   return (

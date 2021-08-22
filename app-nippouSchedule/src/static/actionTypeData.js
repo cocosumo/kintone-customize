@@ -11,7 +11,7 @@ const actionTypeData = () => [
   },
   {
     type: '反響の時間',
-    bgColor: 'yellow',
+    bgColor: '#ffff8d',
     color: '#333',
   },
   {
@@ -21,7 +21,7 @@ const actionTypeData = () => [
   },
   {
     type: 'その他',
-    bgColor: '#81d742', // green
+    bgColor: '#4ca456', // green
     color: 'white',
   },
 ];

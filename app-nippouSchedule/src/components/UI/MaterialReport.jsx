@@ -70,7 +70,7 @@ const MaterialReport = ({ selectedDate }) => {
 
   const deleteEventHandler = (id) => {
     const reducedEvents = deleteEventById(allEvents, id);
-    console.log(reducedEvents, id);
+
     setAllEvents(reducedEvents);
   };
 

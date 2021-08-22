@@ -4,7 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, DialogTitle } from '@material-ui/core';
 import EventInputForm from '../forms/EventInputForm';
 import { ISOtoDATE } from '../../helpers/Time';
 
@@ -31,7 +31,7 @@ const MaterialEventInput = ({
   );
   const [actionDetails, setActionDetails] = useState(selectedFCEvent.actionDetails);
   const [isError, setIsError] = useState();
-  console.log(selectedId);
+
   const changeStartTimeHandler = (value) => {
     if (!value) {
       setStartTime('');
@@ -75,16 +75,19 @@ const MaterialEventInput = ({
 
     <Dialog
       open={open}
-      onClose={() => onFormClose(false)}
+      onBackdropClick={() => onFormClose({ closeMethod: 'cancel' })}
       fullWidth
       maxWidth="xs"
+      hideBackdrop
     >
+      <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title" />
       <DialogContent>
         <EventInputForm
           onChangeHandlers={changeHandlers}
           FCEventContents={newEvent}
           optionsData={optionsData}
           setIsError={setIsError}
+
         />
       </DialogContent>
       <DialogActions>

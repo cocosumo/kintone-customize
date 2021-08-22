@@ -16,7 +16,7 @@ export const deleteEventById = (baseArray, modifiedId) => {
 
   const index = baseArray.findIndex(({ id }) => id === modifiedId);
   modifiedArray.splice(index, 1);
-  console.log(modifiedArray, baseArray);
+
   return modifiedArray;
 };
 

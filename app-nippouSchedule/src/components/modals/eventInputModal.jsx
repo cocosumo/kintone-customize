@@ -50,7 +50,7 @@ const eventInputModal = (event, handler, isEventClicked) => {
 
   return MySwal.fire({
     showCancelButton: true,
-    // html: <InputForm selectedTime={eventObject} />,
+
     html: <EventInputForm selectedTime={eventObject} />,
     focusConfirm: true,
     heightAuto: false,
