@@ -65,8 +65,8 @@ const MaterialReport = ({ selectedDate }) => {
     setAllEvents(reducedEvents);
   };
 
-  const onFormCloseHandler = ({ closeMethod, event, data }) => {
-    window.scrollTo(0, event.pageY);
+  const onFormCloseHandler = ({ closeMethod, data }) => {
+    window.scrollTo(0, window.pageYOffset);
     switch (closeMethod) {
       case 'save':
         eventChangeHandler(data);
