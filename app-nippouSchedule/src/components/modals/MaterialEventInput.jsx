@@ -68,8 +68,9 @@ const MaterialEventInput = ({
 
     <Dialog
       open={open}
-      onBackdropClick={(event) => onFormClose({ closeMethod: 'cancel', event })}
       maxWidth="xs"
+      onBackdropClick={(event) => onFormClose({ closeMethod: 'cancel', event })}
+      /* TransitionProps={{ onExited: exitedHandler }} */
     >
       <DialogTitle />
       <DialogContent>
@@ -98,6 +99,7 @@ const MaterialEventInput = ({
             >
               削除
             </Button>
+
             )}
           </Grid>
           <Grid>
@@ -107,6 +109,7 @@ const MaterialEventInput = ({
             >
               キャンセル
             </Button>
+
             <Button
               disabled={isError}
               variant="contained"

@@ -11,6 +11,7 @@ const MaterialReport = ({ selectedDate }) => {
   const [reportDate, setReportDate] = useState(selectedDate);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedTime, setSelectedTime] = useState();
+  const [pageY, setPageY] = useState();
   const [allEvents, setAllEvents] = useContext(EventsContext);
 
   const onDateChangeHandler = ({ record }) => {
@@ -25,6 +26,7 @@ const MaterialReport = ({ selectedDate }) => {
   const onClickDateHandler = async (info) => {
     setSelectedTime(info);
     setIsFormOpen(true);
+    setPageY(window.pageYOffset);
   };
 
   const onClickEventHandler = (info) => {
@@ -65,8 +67,12 @@ const MaterialReport = ({ selectedDate }) => {
     setAllEvents(reducedEvents);
   };
 
-  const onFormCloseHandler = ({ closeMethod, data }) => {
-    window.scrollTo(0, window.pageYOffset);
+  const onFormCloseHandler = ({ closeMethod, event, data }) => {
+    setTimeout(() => {
+      console.log(window.pageYOffset, 'test');
+      window.scrollTo(0, pageY);
+    }, 0);
+    console.log(pageY);
     switch (closeMethod) {
       case 'save':
         eventChangeHandler(data);
