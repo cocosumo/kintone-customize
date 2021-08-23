@@ -41,7 +41,6 @@ const MaterialTimePicker = ({
             ampm={false}
             label={label}
             value={value}
-            showToolbar
             onChange={onChange}
             onError={errorHandler}
             renderInput={(params) => (

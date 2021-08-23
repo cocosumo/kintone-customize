@@ -22,22 +22,13 @@ const MaterialReport = ({ selectedDate }) => {
     kintone.events.on(onFieldChange('reportDate'), onDateChangeHandler);
   };
 
-  /*   const onConfirmEventInputHandler = (info, newEvent, isEventClicked) => {
-    if (isEventClicked) {
-      const modifiedEvents = replaceEvent(allEvents, newEvent, info.id);
-      setAllEvents(modifiedEvents);
-    } else {
-      setAllEvents(allEvents.concat(newEvent));
-    }
-  }; */
-
   const onClickDateHandler = async (info) => {
     setSelectedTime(info);
     setIsFormOpen(true);
   };
 
-  const onClickEventHandler = (info, isEventClicked) => {
-    onClickDateHandler(info.event, isEventClicked);
+  const onClickEventHandler = (info) => {
+    onClickDateHandler(info.event);
   };
 
   const eventChangeHandler = (info) => {
@@ -74,7 +65,8 @@ const MaterialReport = ({ selectedDate }) => {
     setAllEvents(reducedEvents);
   };
 
-  const onFormCloseHandler = ({ closeMethod, data }) => {
+  const onFormCloseHandler = ({ closeMethod, event, data }) => {
+    window.scrollTo(0, event.pageY);
     switch (closeMethod) {
       case 'save':
         eventChangeHandler(data);
@@ -93,12 +85,13 @@ const MaterialReport = ({ selectedDate }) => {
       <TimeGrid
         selectedDate={reportDate}
         didMountHandler={bindToDate}
-        onClickDate={(info) => onClickDateHandler(info, false)}
-        onClickEvent={(info) => onClickEventHandler(info, true)}
+        onClickDate={(info) => onClickDateHandler(info)}
+        onClickEvent={(info) => onClickEventHandler(info)}
         eventChange={eventChangeHandler}
         events={allEvents}
       />
-      {isFormOpen && (
+      {isFormOpen
+      && (
       <MaterialEventInput
         open={isFormOpen}
         onFormClose={onFormCloseHandler}

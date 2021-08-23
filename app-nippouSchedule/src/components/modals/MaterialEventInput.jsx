@@ -6,8 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useState } from 'react';
 import { Grid, DialogTitle } from '@material-ui/core';
-import Draggable from 'react-draggable';
-import Paper from '@material-ui/core/Paper';
+
 import EventInputForm from '../forms/EventInputForm';
 import { ISOtoDATE } from '../../helpers/Time';
 import { reduceEvent } from '../../helpers/DOM';
@@ -16,7 +15,7 @@ const MaterialEventInput = ({
   open, onFormClose, selectedTime, optionsData,
 }) => {
   const selectedFCEvent = reduceEvent(selectedTime);
-  const selectedId = selectedTime.id;
+  const selectedId = selectedTime?.id;
   const isEventPressed = Boolean(selectedId);
   const [startTime, setStartTime] = useState(ISOtoDATE(selectedFCEvent.startTime));
   const [endTime, setEndTime] = useState(ISOtoDATE(selectedFCEvent.endTime));
@@ -25,13 +24,6 @@ const MaterialEventInput = ({
   );
   const [actionDetails, setActionDetails] = useState(selectedFCEvent.actionDetails);
   const [isError, setIsError] = useState();
-
-  const PaperComponent = (props) => (
-    <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-
-      <Paper {...props} />
-    </Draggable>
-  );
 
   const changeStartTimeHandler = (value) => {
     if (!value) {
@@ -65,7 +57,7 @@ const MaterialEventInput = ({
   ];
 
   const newEvent = {
-    id: selectedTime.id,
+    id: selectedTime?.id,
     startTime,
     endTime,
     actionType,
@@ -76,14 +68,10 @@ const MaterialEventInput = ({
 
     <Dialog
       open={open}
-      onBackdropClick={() => onFormClose({ closeMethod: 'cancel' })}
-      fullWidth
+      onBackdropClick={(event) => onFormClose({ closeMethod: 'cancel', event })}
       maxWidth="xs"
-      hideBackdrop
-      PaperComponent={PaperComponent}
-      aria-labelledby="draggable-dialog-title"
     >
-      <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title" />
+      <DialogTitle />
       <DialogContent>
         <EventInputForm
           onChangeHandlers={changeHandlers}

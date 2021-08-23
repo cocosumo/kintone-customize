@@ -1,0 +1,8 @@
+body {
+  overflow: visible !important;
+  position: static !important;
+}
+
+body .MuiModal-root .MuiDialog-root{
+  overflow: hidden !important;
+}
