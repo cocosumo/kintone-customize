@@ -2,10 +2,11 @@ import { useContext, useState } from 'react';
 import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
 import { EventsContext } from '../context/EventsProvider';
-import { deleteEventById, replaceEvent } from '../../helpers/DOM';
-import { timeTo24Format } from '../../helpers/Time';
+import { deleteEventById, replaceEvent, scrollTo } from '../../helpers/DOM';
+import { isPast, timeTo24Format } from '../../helpers/Time';
 import MaterialEventInput from '../modals/MaterialEventInput';
 import actionTypeData from '../../static/actionTypeData';
+import Title from './Title';
 
 const MaterialReport = ({ selectedDate }) => {
   const [reportDate, setReportDate] = useState(selectedDate);
@@ -13,6 +14,8 @@ const MaterialReport = ({ selectedDate }) => {
   const [selectedTime, setSelectedTime] = useState();
   const [pageY, setPageY] = useState();
   const [allEvents, setAllEvents] = useContext(EventsContext);
+
+  const scheduleType = isPast(reportDate) ? '当日何をしましたか。' : '予定を登録しますね。';
 
   const onDateChangeHandler = ({ record }) => {
     const rd = record.reportDate.value;
@@ -67,12 +70,8 @@ const MaterialReport = ({ selectedDate }) => {
     setAllEvents(reducedEvents);
   };
 
-  const onFormCloseHandler = ({ closeMethod, event, data }) => {
-    setTimeout(() => {
-      console.log(window.pageYOffset, 'test');
-      window.scrollTo(0, pageY);
-    }, 0);
-    console.log(pageY);
+  const onFormCloseHandler = ({ closeMethod, data }) => {
+    scrollTo(pageY);
     switch (closeMethod) {
       case 'save':
         eventChangeHandler(data);
@@ -88,6 +87,7 @@ const MaterialReport = ({ selectedDate }) => {
 
   return (
     <>
+      <Title>{scheduleType}</Title>
       <TimeGrid
         selectedDate={reportDate}
         didMountHandler={bindToDate}

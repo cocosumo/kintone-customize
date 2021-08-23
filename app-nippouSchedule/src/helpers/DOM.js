@@ -39,4 +39,10 @@ export const replaceEvent = (baseArray, newEvent, modifiedId) => {
   return newState;
 };
 
+export const scrollTo = (y) => {
+  setTimeout(() => {
+    window.scrollTo(0, y);
+  }, 0);
+};
+
 export default getValue;

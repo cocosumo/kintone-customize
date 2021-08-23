@@ -17,3 +17,5 @@ export const luxonTime = (
     year, month, day, hour, minute,
   },
 ) => DateTime.utc(year || 1, month || 1, day || 1, hour || 0, minute || 0);
+
+export const isPast = (dateTime) => (ISOtoDATE(dateTime).startOf('day') <= DateTime.now().startOf('day'));
