@@ -16,8 +16,6 @@ const initialize = ({ record, type }) => {
   if (type.includes('create')) {
     scheduleType.value = resolveSchedType(reportDate.value);
   }
-
-  console.log(resolveSchedType(reportDate.value), type);
 };
 
 const onEditOrCreateHandler = (event) => {

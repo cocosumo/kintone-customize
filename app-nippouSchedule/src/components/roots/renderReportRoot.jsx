@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom';
 
 import { getSpaceElement } from '../../../../kintone-api/api';
-
 import FullWidth from '../containers/FullWidth';
 import EventsProvider from '../../static/EventsProvider';
 import MaterialReport from '../UI/MaterialReport';
@@ -14,7 +13,6 @@ const renderReportRoot = async (event) => {
       </FullWidth>
     </EventsProvider>,
     getSpaceElement('reportRoot'),
-
   );
 };
 
