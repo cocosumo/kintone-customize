@@ -6,11 +6,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useState } from 'react';
 import { Grid, DialogTitle } from '@material-ui/core';
-
 import EventInputForm from '../forms/EventInputForm';
 import { ISOtoDATE } from '../../helpers/Time';
 import { reduceEvent } from '../../helpers/DOM';
 import actionTypeData from '../../static/actionTypeData';
+import { CloseButton } from '../UI/MaterialActionButtons';
 
 const EventEditDialog = ({
   open, onFormClose, selectedTime,
@@ -65,15 +65,30 @@ const EventEditDialog = ({
     actionDetails,
   };
 
+  // const fullScreen = useMediaQuery(useTheme().breakpoints.down('md'));
+
+  const TitleBar = () => (
+    <DialogTitle sx={{ py: 1, pr: 1 }}>
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-end"
+        alignItems="baseline"
+      >
+        <CloseButton onClick={(event) => onFormClose({ closeMethod: 'cancel', event })} />
+      </Grid>
+    </DialogTitle>
+  );
+
   return (
 
     <Dialog
       open={open}
       maxWidth="xs"
       onBackdropClick={(event) => onFormClose({ closeMethod: 'cancel', event })}
-      /* TransitionProps={{ onExited: exitedHandler }} */
+
     >
-      <DialogTitle />
+      <TitleBar />
       <DialogContent>
         <EventInputForm
           onChangeHandlers={changeHandlers}
@@ -105,12 +120,14 @@ const EventEditDialog = ({
           <Grid>
 
             <Button
+              sx={{ fontSize: 16 }}
               onClick={() => onFormClose({ closeMethod: 'cancel' })}
             >
               キャンセル
             </Button>
 
             <Button
+              sx={{ fontSize: 16 }}
               disabled={isError}
               variant="contained"
               onClick={() => onFormClose({ closeMethod: 'save', data: newEvent })}

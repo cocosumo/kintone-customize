@@ -8,7 +8,7 @@ const MaterialText = ({
   <Box
     component="form"
     sx={{
-      marginTop: '0.3em',
+      marginTop: '1em',
       minWidth: 200,
     }}
     noValidate
@@ -23,6 +23,8 @@ const MaterialText = ({
         onChange={onChange}
         multiline
         variant="standard"
+        InputProps={{ style: { fontSize: 16 } }}
+        InputLabelProps={{ style: { fontSize: 16 } }}
       />
     </FormControl>
   </Box>

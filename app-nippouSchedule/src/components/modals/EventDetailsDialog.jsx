@@ -2,34 +2,29 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import {
-  DialogTitle, Grid, IconButton, Typography,
+  DialogTitle, Grid, Typography,
 } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import CircleIcon from '@material-ui/icons/Circle';
 import DescriptionIcon from '@material-ui/icons/Description';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { reduceEvent } from '../../helpers/DOM';
 import { getOptionData } from '../../static/actionTypeData';
 import { timeTo24Format } from '../../helpers/Time';
+import { EditButton, CloseButton, DeleteButton } from '../UI/MaterialActionButtons';
 
-const CustomButton = ({ sx, onClick, icon }) => (
-  <IconButton sx={sx} onClick={onClick}>
-    {icon}
-  </IconButton>
-);
-
-const CloseButton = ({ onClick }) => (
-  <CustomButton sx={{ ml: 1 }} onClick={onClick} icon={<CloseIcon />} />
-);
-
-const EditButton = ({ onClick }) => (
-  <CustomButton sx={{ ml: 1 }} onClick={onClick} icon={<EditIcon />} />
-);
-
-const DeleteButton = ({ onClick }) => (
-  <CustomButton sx={{ ml: 1 }} onClick={onClick} icon={<DeleteIcon />} />
-);
+const theme = createTheme();
+theme.typography.h5 = {
+  fontSize: '2rem',
+  [theme.breakpoints.up('md')]: {
+    fontSize: '2rem',
+  },
+};
+theme.typography.subtitle1 = {
+  fontSize: '1rem',
+  [theme.breakpoints.up('md')]: {
+    fontSize: '1rem',
+  },
+};
 
 const TitleBar = ({ onClose, onDelete, onEdit }) => (
   <DialogTitle sx={{ py: 1, pr: 1 }}>
@@ -45,8 +40,9 @@ const TitleBar = ({ onClose, onDelete, onEdit }) => (
     </Grid>
   </DialogTitle>
 );
+
 const TimeRange = ({ startTime, endTime }) => (
-  <Typography sx={{ display: 'block', pt: 0.25 }} variant="subtitle2">
+  <Typography sx={{ display: 'block', pt: 0.25 }} variant="subtitle1">
     {timeTo24Format(startTime)}
     ～
     {timeTo24Format(endTime)}
@@ -80,7 +76,7 @@ const Description = ({ actionDetails }) => (
       <DescriptionIcon sx={{ mt: 0.5, fontSize: '1', mr: 2 }} />
     </Grid>
     <Grid>
-      <Typography variant="subtitle1">
+      <Typography variant="h6">
         {actionDetails}
       </Typography>
     </Grid>
@@ -109,24 +105,26 @@ const EventDetailsDialog = ({ selectedTime, onDetailsClose }) => {
   const notEmptyActionDetails = Boolean(actionDetails);
 
   return (
-    <Dialog
-      open
-      fullWidth
-      maxWidth="xs"
-      onBackdropClick={onCloseHandler}
-    >
-      <TitleBar
-        onClose={onCloseHandler}
-        onEdit={onEditHandler}
-        onDelete={onDeleteHandler}
-        eventId={selectedId}
-      />
-      <DialogContent>
-        <Content actionType={actionType} startTime={startTime} endTime={endTime} />
-        {notEmptyActionDetails && <Description actionDetails={actionDetails} />}
-      </DialogContent>
-      <DialogActions />
-    </Dialog>
+    <ThemeProvider theme={theme}>
+      <Dialog
+        open
+        fullWidth
+        maxWidth="xs"
+        onBackdropClick={onCloseHandler}
+      >
+        <TitleBar
+          onClose={onCloseHandler}
+          onEdit={onEditHandler}
+          onDelete={onDeleteHandler}
+          eventId={selectedId}
+        />
+        <DialogContent>
+          <Content actionType={actionType} startTime={startTime} endTime={endTime} />
+          {notEmptyActionDetails && <Description actionDetails={actionDetails} />}
+        </DialogContent>
+        <DialogActions />
+      </Dialog>
+    </ThemeProvider>
   );
 };
 

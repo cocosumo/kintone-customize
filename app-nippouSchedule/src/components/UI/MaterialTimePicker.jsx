@@ -3,8 +3,11 @@ import AdapterLuxon from '@material-ui/lab/AdapterLuxon';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import TextField from '@material-ui/core/TextField';
 import TimePicker from '@material-ui/lab/TimePicker';
-import { Alert, Box, FormControl } from '@material-ui/core';
+import {
+  Alert, Box, FormControl,
+} from '@material-ui/core';
 import { useState } from 'react';
+
 import { timeTo24Format } from '../../helpers/Time';
 
 const MaterialTimePicker = ({
@@ -49,10 +52,12 @@ const MaterialTimePicker = ({
                 variant="standard"
                 required={isRequired}
                 {...params}
+                InputLabelProps={{ style: { fontSize: 16 } }}
               />
             )}
             minTime={minTime}
             maxTime={maxTime}
+            InputProps={{ style: { fontSize: 20 } }}
           />
           {isError && <Alert severity="error">{error}</Alert>}
         </LocalizationProvider>

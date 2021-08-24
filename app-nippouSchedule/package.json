@@ -61,6 +61,7 @@
         "@material-ui/icons": "^5.0.0-beta.4",
         "@material-ui/lab": "^5.0.0-alpha.43",
         "@material-ui/styled-engine-sc": "^5.0.0-beta.1",
+        "@material-ui/styles": "^5.0.0-beta.4",
         "luxon": "^2.0.2",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
