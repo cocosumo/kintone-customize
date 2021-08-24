@@ -8,6 +8,7 @@ import EventDetailsDialog from '../modals/EventDetailsDialog';
 import actionTypeData from '../../static/actionTypeData';
 import Title from './Title';
 import EventEditDialog from '../modals/EventEditDialog';
+import SimplePopper, { EventDetailsPopper } from '../poppers/EventDetailsPopper';
 
 const MaterialReport = ({ selectedDate }) => {
   const [reportDate, setReportDate] = useState(selectedDate);
@@ -16,6 +17,7 @@ const MaterialReport = ({ selectedDate }) => {
   const [selectedTime, setSelectedTime] = useState();
   const [pageY, setPageY] = useState();
   const [allEvents, setAllEvents] = useContext(EventsContext);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const scheduleType = isPast(reportDate) ? '当日何をしましたか。' : '予定を登録しますね。';
 
@@ -38,7 +40,9 @@ const MaterialReport = ({ selectedDate }) => {
     setIsFormOpen(true);
   };
 
-  const onClickEventHandler = (info) => {
+  const onClickEventHandler = (placement) => (info) => {
+    console.log(info);
+    setAnchorEl(info.el);
     onClickCalendarHandler(info.event);
     setIsDetailsOpen(true);
   };
@@ -110,11 +114,13 @@ const MaterialReport = ({ selectedDate }) => {
   return (
     <>
       <Title>{scheduleType}</Title>
+      <SimplePopper />
+      <EventDetailsPopper id="eventDetails" open={isDetailsOpen} anchorEl={anchorEl} />
       <TimeGrid
         selectedDate={reportDate}
         didMountHandler={bindToDate}
         onClickTime={(info) => onClickTimeHandler(info)}
-        onClickEvent={(info) => onClickEventHandler(info)}
+        onClickEvent={onClickEventHandler('left')}
         eventChange={eventChangeHandler}
         events={allEvents}
       />
@@ -126,14 +132,15 @@ const MaterialReport = ({ selectedDate }) => {
         selectedTime={selectedTime}
       />
       )}
-      {isDetailsOpen
+      {/* {isDetailsOpen
       && (
       <EventDetailsDialog
         open={isDetailsOpen}
         onDetailsClose={onDetailsCloseHandler}
         selectedTime={selectedTime}
       />
-      )}
+      )} */}
+
     </>
   );
 };

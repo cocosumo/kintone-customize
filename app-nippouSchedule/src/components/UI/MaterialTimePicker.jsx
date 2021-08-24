@@ -46,6 +46,7 @@ const MaterialTimePicker = ({
             cancelText="キャンセル"
             okText="保存"
             onError={errorHandler}
+            showToolbar
             renderInput={(params) => (
               <TextField
                 id={id}

@@ -94,7 +94,7 @@ const EventEditDialog = ({
       open={open}
       maxWidth="xs"
       onBackdropClick={(event) => onFormClose({ closeMethod: 'cancel', event })}
-
+      hideBackdrop
     >
       <TitleBar />
       <DialogContent>

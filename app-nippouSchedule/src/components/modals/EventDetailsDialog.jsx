@@ -111,6 +111,7 @@ const EventDetailsDialog = ({ selectedTime, onDetailsClose }) => {
         fullWidth
         maxWidth="xs"
         onBackdropClick={onCloseHandler}
+        hideBackdrop
       >
         <TitleBar
           onClose={onCloseHandler}
