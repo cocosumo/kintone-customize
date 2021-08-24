@@ -10,6 +10,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CircleIcon from '@material-ui/icons/Circle';
 import DescriptionIcon from '@material-ui/icons/Description';
 import { reduceEvent } from '../../helpers/DOM';
+import { getOptionData } from '../../static/actionTypeData';
+import { timeTo24Format } from '../../helpers/Time';
 
 const CustomButton = ({ sx, onClick, icon }) => (
   <IconButton sx={sx} onClick={onClick}>
@@ -29,7 +31,7 @@ const DeleteButton = ({ onClick }) => (
   <CustomButton sx={{ ml: 1 }} onClick={onClick} icon={<DeleteIcon />} />
 );
 
-const TitleBar = ({ onCloseHandler }) => (
+const TitleBar = ({ onClose, onDelete, onEdit }) => (
   <DialogTitle sx={{ py: 1, pr: 1 }}>
     <Grid
       container
@@ -37,44 +39,66 @@ const TitleBar = ({ onCloseHandler }) => (
       justifyContent="flex-end"
       alignItems="baseline"
     >
-      <EditButton />
-      <DeleteButton />
-      <CloseButton onClick={onCloseHandler} />
+      <EditButton onClick={onEdit} />
+      <DeleteButton onClick={onDelete} />
+      <CloseButton onClick={onClose} />
     </Grid>
   </DialogTitle>
 );
-const TimeRange = () => <Typography sx={{ display: 'block', pt: 0.25 }} variant="subtitle2">8月 24日 (火曜日)⋅午前9:30～10:30</Typography>;
-
-const Content = () => (
-  <Grid sx={{ color: '#3c4043' }} container direction="row">
-    <Grid>
-      <CircleIcon sx={{ mt: 0.5, fontSize: '1.5em', mr: 2 }} />
-    </Grid>
-    <Grid>
-      <Typography variant="h5">
-        接客
-      </Typography>
-      <TimeRange />
-    </Grid>
-  </Grid>
+const TimeRange = ({ startTime, endTime }) => (
+  <Typography sx={{ display: 'block', pt: 0.25 }} variant="subtitle2">
+    {timeTo24Format(startTime)}
+    ～
+    {timeTo24Format(endTime)}
+  </Typography>
 );
 
-const Description = () => (
+const Content = ({ startTime, endTime, actionType }) => {
+  const { bgColor } = getOptionData(actionType);
+
+  return (
+    <Grid sx={{ color: '#3c4043' }} container direction="row">
+      <Grid>
+        <CircleIcon sx={{
+          color: bgColor, mt: 0.5, fontSize: '1.5em', mr: 2,
+        }}
+        />
+      </Grid>
+      <Grid>
+        <Typography variant="h5">
+          {actionType}
+        </Typography>
+        <TimeRange startTime={startTime} endTime={endTime} />
+      </Grid>
+    </Grid>
+  );
+};
+
+const Description = ({ actionDetails }) => (
   <Grid sx={{ color: '#3c4043', mt: 2 }} container direction="row">
     <Grid>
       <DescriptionIcon sx={{ mt: 0.5, fontSize: '1', mr: 2 }} />
     </Grid>
     <Grid>
       <Typography variant="subtitle1">
-        heeloooo
+        {actionDetails}
       </Typography>
     </Grid>
   </Grid>
 );
 
-const EventDetailsDialog = ({ selectedTime, optionsData, onFormClose }) => {
+const EventDetailsDialog = ({ selectedTime, onDetailsClose }) => {
+  const selectedId = selectedTime?.id;
   const onCloseHandler = (event) => {
-    onFormClose({ closeMethod: 'cancel', event });
+    onDetailsClose({ closeMethod: 'cancel', event });
+  };
+
+  const onDeleteHandler = (event) => {
+    onDetailsClose({ closeMethod: 'delete', data: { id: selectedId } }, event);
+  };
+
+  const onEditHandler = (event) => {
+    onDetailsClose({ closeMethod: 'edit' }, event);
   };
 
   const selectedFCEvent = reduceEvent(selectedTime);
@@ -82,7 +106,8 @@ const EventDetailsDialog = ({ selectedTime, optionsData, onFormClose }) => {
     actionType, startTime, endTime, actionDetails,
   } = selectedFCEvent;
 
-  console.log(selectedFCEvent);
+  const notEmptyActionDetails = Boolean(actionDetails);
+
   return (
     <Dialog
       open
@@ -90,10 +115,15 @@ const EventDetailsDialog = ({ selectedTime, optionsData, onFormClose }) => {
       maxWidth="xs"
       onBackdropClick={onCloseHandler}
     >
-      <TitleBar onCloseHandler={onCloseHandler} />
+      <TitleBar
+        onClose={onCloseHandler}
+        onEdit={onEditHandler}
+        onDelete={onDeleteHandler}
+        eventId={selectedId}
+      />
       <DialogContent>
         <Content actionType={actionType} startTime={startTime} endTime={endTime} />
-        <Description />
+        {notEmptyActionDetails && <Description actionDetails={actionDetails} />}
       </DialogContent>
       <DialogActions />
     </Dialog>

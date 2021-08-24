@@ -3,6 +3,7 @@ import MaterialSelect from '../UI/MaterialSelect';
 import './form.css';
 import MaterialText from '../UI/MaterialText';
 import { luxonTime } from '../../helpers/Time';
+import actionTypeData from '../../static/actionTypeData';
 
 /**
  * Prop => Event Object
@@ -23,7 +24,6 @@ import { luxonTime } from '../../helpers/Time';
 const EventInputForm = ({
   onChangeHandlers,
   FCEventContents,
-  optionsData,
   setIsError,
 }) => {
   const [
@@ -34,7 +34,7 @@ const EventInputForm = ({
   } = FCEventContents;
   return (
     <>
-      <MaterialSelect id="actionType" label="区分" value={actionType} onChange={setActionType} optionsData={optionsData} />
+      <MaterialSelect id="actionType" label="区分" value={actionType} onChange={setActionType} optionsData={actionTypeData()} />
       <MateriaTimePicker
         id="startTime"
         value={startTime}

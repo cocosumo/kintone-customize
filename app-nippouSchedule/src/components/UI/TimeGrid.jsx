@@ -8,7 +8,7 @@ import './TimeGrid.css';
 const TimeGrid = ({
   selectedDate,
   didMountHandler,
-  onClickDate,
+  onClickTime,
   onClickEvent,
   eventChange,
   events,
@@ -34,7 +34,7 @@ const TimeGrid = ({
     height="auto"
     viewDidMount={didMountHandler}
     selectable={true}
-    select={onClickDate}
+    select={onClickTime}
     eventResize={eventChange}
     eventDrop={eventChange}
     events={events}

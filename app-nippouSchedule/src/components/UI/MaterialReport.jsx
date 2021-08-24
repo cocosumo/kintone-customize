@@ -8,10 +8,12 @@ import { isPast, timeTo24Format } from '../../helpers/Time';
 import EventDetailsDialog from '../modals/EventDetailsDialog';
 import actionTypeData from '../../static/actionTypeData';
 import Title from './Title';
+import EventEditDialog from '../modals/EventEditDialog';
 
 const MaterialReport = ({ selectedDate }) => {
   const [reportDate, setReportDate] = useState(selectedDate);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [selectedTime, setSelectedTime] = useState();
   const [pageY, setPageY] = useState();
   const [allEvents, setAllEvents] = useContext(EventsContext);
@@ -27,14 +29,19 @@ const MaterialReport = ({ selectedDate }) => {
     kintone.events.on(onFieldChange('reportDate'), onDateChangeHandler);
   };
 
-  const onClickDateHandler = async (info) => {
+  const onClickCalendarHandler = async (info) => {
     setSelectedTime(info);
-    setIsFormOpen(true);
     setPageY(window.pageYOffset);
   };
 
+  const onClickTimeHandler = async (info) => {
+    onClickCalendarHandler(info);
+    setIsFormOpen(true);
+  };
+
   const onClickEventHandler = (info) => {
-    onClickDateHandler(info.event);
+    onClickCalendarHandler(info.event);
+    setIsDetailsOpen(true);
   };
 
   const eventChangeHandler = (info) => {
@@ -86,26 +93,47 @@ const MaterialReport = ({ selectedDate }) => {
     setIsFormOpen(false);
   };
 
+  const onDetailsCloseHandler = ({ closeMethod, data }) => {
+    switch (closeMethod) {
+      case 'delete':
+        deleteEventHandler(data.id);
+        break;
+      case 'edit':
+        onClickTimeHandler(selectedTime);
+        break;
+      default:
+        break;
+    }
+
+    setIsDetailsOpen(false);
+  };
+
   return (
     <>
       <Title>{scheduleType}</Title>
       <TimeGrid
         selectedDate={reportDate}
         didMountHandler={bindToDate}
-        onClickDate={(info) => onClickDateHandler(info)}
+        onClickTime={(info) => onClickTimeHandler(info)}
         onClickEvent={(info) => onClickEventHandler(info)}
         eventChange={eventChangeHandler}
         events={allEvents}
       />
       {isFormOpen
       && (
-      <EventDetailsDialog
+      <EventEditDialog
         open={isFormOpen}
         onFormClose={onFormCloseHandler}
         selectedTime={selectedTime}
-        optionsData={actionTypeData()}
       />
-
+      )}
+      {isDetailsOpen
+      && (
+      <EventDetailsDialog
+        open={isDetailsOpen}
+        onDetailsClose={onDetailsCloseHandler}
+        selectedTime={selectedTime}
+      />
       )}
     </>
   );

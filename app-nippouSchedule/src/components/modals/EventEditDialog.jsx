@@ -10,9 +10,10 @@ import { Grid, DialogTitle } from '@material-ui/core';
 import EventInputForm from '../forms/EventInputForm';
 import { ISOtoDATE } from '../../helpers/Time';
 import { reduceEvent } from '../../helpers/DOM';
+import actionTypeData from '../../static/actionTypeData';
 
 const EventEditDialog = ({
-  open, onFormClose, selectedTime, optionsData,
+  open, onFormClose, selectedTime,
 }) => {
   const selectedFCEvent = reduceEvent(selectedTime);
   const selectedId = selectedTime?.id;
@@ -20,7 +21,7 @@ const EventEditDialog = ({
   const [startTime, setStartTime] = useState(ISOtoDATE(selectedFCEvent.startTime));
   const [endTime, setEndTime] = useState(ISOtoDATE(selectedFCEvent.endTime));
   const [actionType, setActionType] = useState(
-    selectedFCEvent.actionType || optionsData[0].type,
+    selectedFCEvent.actionType || actionTypeData()[0].type,
   );
   const [actionDetails, setActionDetails] = useState(selectedFCEvent.actionDetails);
   const [isError, setIsError] = useState();
@@ -77,7 +78,6 @@ const EventEditDialog = ({
         <EventInputForm
           onChangeHandlers={changeHandlers}
           FCEventContents={newEvent}
-          optionsData={optionsData}
           setIsError={setIsError}
 
         />

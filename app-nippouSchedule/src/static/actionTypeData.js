@@ -26,4 +26,7 @@ const actionTypeData = () => [
   },
 ];
 
+export const getOptionData = (actionType) => actionTypeData()
+  .find(({ type }) => type === actionType);
+
 export default actionTypeData;
