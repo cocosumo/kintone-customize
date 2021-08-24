@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-props-no-spreading */
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,7 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useState } from 'react';
 import { Grid, DialogTitle } from '@material-ui/core';
 import EventInputForm from '../forms/EventInputForm';
-import { ISOtoDATE } from '../../helpers/Time';
+import { dateTimeLuxon, ISOtoDATE, timeTo24Format } from '../../helpers/Time';
 import { reduceEvent } from '../../helpers/DOM';
 import actionTypeData from '../../static/actionTypeData';
 import { CloseButton } from '../UI/MaterialActionButtons';
@@ -16,6 +17,7 @@ const EventEditDialog = ({
   open, onFormClose, selectedTime,
 }) => {
   const selectedFCEvent = reduceEvent(selectedTime);
+  const initialDate = selectedTime?._context?.options.initialDate;
   const selectedId = selectedTime?.id;
   const isEventPressed = Boolean(selectedId);
   const [startTime, setStartTime] = useState(ISOtoDATE(selectedFCEvent.startTime));
@@ -24,22 +26,28 @@ const EventEditDialog = ({
     selectedFCEvent.actionType || actionTypeData()[0].type,
   );
   const [actionDetails, setActionDetails] = useState(selectedFCEvent.actionDetails);
-  const [isError, setIsError] = useState();
+  const [errorCount, setErrorCount] = useState(0);
 
   const changeStartTimeHandler = (value) => {
     if (!value) {
-      setStartTime('');
-      setEndTime(null);
+      setStartTime(0);
     } else {
       setStartTime(value);
-      if (value > endTime) {
+      if (!value.invalid && value > endTime) {
         setEndTime(value);
       }
     }
   };
   const changeEndTimeHandler = (value) => {
-    const validValue = startTime > value ? startTime : value;
-    setEndTime(validValue);
+    if (value === null) {
+      setEndTime(null);
+    } else if (initialDate) {
+      let validValue = dateTimeLuxon(initialDate, timeTo24Format(value));
+      validValue = startTime > validValue ? startTime : validValue;
+      setEndTime(validValue);
+    } else {
+      setEndTime(value);
+    }
   };
 
   const changeActionTypeHandler = (el) => {
@@ -93,7 +101,7 @@ const EventEditDialog = ({
         <EventInputForm
           onChangeHandlers={changeHandlers}
           FCEventContents={newEvent}
-          setIsError={setIsError}
+          setErrorCount={setErrorCount}
 
         />
       </DialogContent>
@@ -128,7 +136,7 @@ const EventEditDialog = ({
 
             <Button
               sx={{ fontSize: 16 }}
-              disabled={isError}
+              disabled={Boolean(errorCount)}
               variant="contained"
               onClick={() => onFormClose({ closeMethod: 'save', data: newEvent })}
             >

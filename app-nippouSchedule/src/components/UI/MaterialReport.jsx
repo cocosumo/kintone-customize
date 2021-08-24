@@ -107,8 +107,6 @@ const MaterialReport = ({ selectedDate }) => {
     setIsDetailsOpen(false);
   };
 
-  console.log(allEvents);
-
   return (
     <>
       <Title>{scheduleType}</Title>

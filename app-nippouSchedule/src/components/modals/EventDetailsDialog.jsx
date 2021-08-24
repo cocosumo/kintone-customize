@@ -85,6 +85,11 @@ const Description = ({ actionDetails }) => (
 
 const EventDetailsDialog = ({ selectedTime, onDetailsClose }) => {
   const selectedId = selectedTime?.id;
+  const selectedFCEvent = reduceEvent(selectedTime);
+  const {
+    actionType, startTime, endTime, actionDetails,
+  } = selectedFCEvent;
+
   const onCloseHandler = (event) => {
     onDetailsClose({ closeMethod: 'cancel', event });
   };
@@ -96,11 +101,6 @@ const EventDetailsDialog = ({ selectedTime, onDetailsClose }) => {
   const onEditHandler = (event) => {
     onDetailsClose({ closeMethod: 'edit' }, event);
   };
-
-  const selectedFCEvent = reduceEvent(selectedTime);
-  const {
-    actionType, startTime, endTime, actionDetails,
-  } = selectedFCEvent;
 
   const notEmptyActionDetails = Boolean(actionDetails);
 

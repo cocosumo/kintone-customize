@@ -4,14 +4,14 @@ import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import TextField from '@material-ui/core/TextField';
 import TimePicker from '@material-ui/lab/TimePicker';
 import {
-  Alert, Box, FormControl,
+  Box, FormControl,
 } from '@material-ui/core';
 import { useState } from 'react';
 
 import { timeTo24Format } from '../../helpers/Time';
 
 const MaterialTimePicker = ({
-  id, value, label, minTime, maxTime, onChange, isRequired, setIsError,
+  id, value, label, minTime, maxTime, onChange, isRequired, setErrorCount,
 }) => {
   const [error, setError] = useState();
 
@@ -31,10 +31,8 @@ const MaterialTimePicker = ({
         break;
     }
 
-    setIsError(Boolean(reason));
+    setErrorCount((prev) => prev + (reason ? 1 : -1));
   };
-
-  const isError = Boolean(error);
 
   return (
     <Box sx={{ minWidth: 120, marginTop: '1em' }}>
@@ -45,6 +43,8 @@ const MaterialTimePicker = ({
             label={label}
             value={value}
             onChange={onChange}
+            cancelText="キャンセル"
+            okText="保存"
             onError={errorHandler}
             renderInput={(params) => (
               <TextField
@@ -53,13 +53,13 @@ const MaterialTimePicker = ({
                 required={isRequired}
                 {...params}
                 InputLabelProps={{ style: { fontSize: 16 } }}
+                helperText={error}
               />
             )}
             minTime={minTime}
             maxTime={maxTime}
             InputProps={{ style: { fontSize: 20 } }}
           />
-          {isError && <Alert severity="error">{error}</Alert>}
         </LocalizationProvider>
       </FormControl>
     </Box>
