@@ -19,3 +19,5 @@ export const luxonTime = (
 ) => DateTime.utc(year || 1, month || 1, day || 1, hour || 0, minute || 0);
 
 export const isPast = (dateTime) => (ISOtoDATE(dateTime).startOf('day') <= DateTime.now().startOf('day'));
+
+export const resolveSchedType = (dateTime) => (isPast(dateTime) ? '実際の行動' : '予定の行動');

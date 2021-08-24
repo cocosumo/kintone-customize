@@ -18,7 +18,7 @@ const MaterialText = ({
       <TextField
         id={id}
         label={label}
-        placeholder={`こちらに${label}を入力してください`}
+        placeholder={`${label}を入力してください`}
         value={value || ''}
         onChange={onChange}
         multiline

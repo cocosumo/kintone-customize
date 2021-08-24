@@ -4,7 +4,7 @@ import { onFieldChange } from '../../../../kintone-api/api';
 import { EventsContext } from '../context/EventsProvider';
 import { deleteEventById, replaceEvent, scrollTo } from '../../helpers/DOM';
 import { isPast, timeTo24Format } from '../../helpers/Time';
-import MaterialEventInput from '../modals/MaterialEventInput';
+import EventEditDialog from '../modals/EventEditDialog';
 import actionTypeData from '../../static/actionTypeData';
 import Title from './Title';
 
@@ -98,7 +98,7 @@ const MaterialReport = ({ selectedDate }) => {
       />
       {isFormOpen
       && (
-      <MaterialEventInput
+      <EventEditDialog
         open={isFormOpen}
         onFormClose={onFormCloseHandler}
         selectedTime={selectedTime}

@@ -24,7 +24,13 @@ const TimeGrid = ({
       start: selectedDate,
       end: selectedDate,
     }}
-    headerToolbar={false}
+    headerToolbar={
+      {
+        left: 'title',
+        center: '',
+        end: false,
+      }
+    }
     height="auto"
     viewDidMount={didMountHandler}
     selectable={true}

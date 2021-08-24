@@ -46,6 +46,7 @@ const MaterialTimePicker = ({
             renderInput={(params) => (
               <TextField
                 id={id}
+                variant="standard"
                 required={isRequired}
                 {...params}
               />

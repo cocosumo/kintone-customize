@@ -11,7 +11,7 @@ import EventInputForm from '../forms/EventInputForm';
 import { ISOtoDATE } from '../../helpers/Time';
 import { reduceEvent } from '../../helpers/DOM';
 
-const MaterialEventInput = ({
+const EventEditDialog = ({
   open, onFormClose, selectedTime, optionsData,
 }) => {
   const selectedFCEvent = reduceEvent(selectedTime);
@@ -126,4 +126,4 @@ const MaterialEventInput = ({
   );
 };
 
-export default MaterialEventInput;
+export default EventEditDialog;

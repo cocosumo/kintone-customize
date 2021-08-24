@@ -3,6 +3,8 @@ This combines desktop and mobile API's
 Author: Yumenootetsudai 社内開発者
 */
 
+export const isMobile = () => (window.location.href).includes('k/m');
+
 export const onEdit = [
   'app.record.edit.show',
   'mobile.app.record.edit.show',
@@ -105,8 +107,7 @@ export const getAppId = () => {
 * @param isShown {boolean} trueは表示、falseは非表示
 */
 export const setFieldShown = (fieldCode, isShown) => {
-  const url = window.location.href;
-  if (url.includes('k/m')) {
+  if (isMobile()) {
     kintone.mobile.app.record.setFieldShown(fieldCode, isShown);
   } else {
     kintone.app.record.setFieldShown(fieldCode, isShown);
