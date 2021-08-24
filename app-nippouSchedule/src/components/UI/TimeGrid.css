@@ -1,5 +1,11 @@
 
 
+.fc  .fc-timegrid, .row-gaia {
+  user-select: none !important;  
+  -webkit-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
 .fc .fc-event-main {
   padding-left: 0.5rem;
 }
