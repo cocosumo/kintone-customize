@@ -10,8 +10,8 @@ const initialize = ({ record, type }) => {
   const { reportDate, scheduleType } = record;
 
   setFieldShown('reportTable', DEBUG_MODE);
-  reportDate.disabled = true;
-  scheduleType.disabled = true;
+  reportDate.disabled = !DEBUG_MODE;
+  scheduleType.disabled = !DEBUG_MODE;
 
   if (type.includes('create')) {
     scheduleType.value = resolveSchedType(reportDate.value);

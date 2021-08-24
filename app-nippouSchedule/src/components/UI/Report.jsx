@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
 import eventInputModal from '../modals/eventInputModal';
-import { EventsContext } from '../context/EventsProvider';
+import { EventsContext } from '../../static/EventsProvider';
 import { replaceEvent } from '../../helpers/DOM';
 import { timeTo24Format } from '../../helpers/Time';
 

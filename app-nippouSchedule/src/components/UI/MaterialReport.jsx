@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
-import { EventsContext } from '../context/EventsProvider';
+import { EventsContext } from '../../static/EventsProvider';
 import { deleteEventById, replaceEvent, scrollTo } from '../../helpers/DOM';
 import { isPast, timeTo24Format } from '../../helpers/Time';
 // import EventEditDialog from '../modals/EventEditDialog';
