@@ -17,16 +17,17 @@ const EventEditDialog = ({
   open, onFormClose, selectedTime,
 }) => {
   const selectedFCEvent = reduceEvent(selectedTime);
-  const initialDate = selectedTime?._context?.options.initialDate;
+  // const initialDate = selectedTime?._context?.options.initialDate;
   const selectedId = selectedTime?.id;
   const isEventPressed = Boolean(selectedId);
+  const initialEndTime = ISOtoDATE(selectedFCEvent.endTime);
   const [startTime, setStartTime] = useState(ISOtoDATE(selectedFCEvent.startTime));
-  const [endTime, setEndTime] = useState(ISOtoDATE(selectedFCEvent.endTime));
+  const [endTime, setEndTime] = useState(initialEndTime.invalid ? startTime : initialEndTime);
   const [actionType, setActionType] = useState(
     selectedFCEvent.actionType || actionTypeData()[0].type,
   );
   const [actionDetails, setActionDetails] = useState(selectedFCEvent.actionDetails);
-  const [errorCount, setErrorCount] = useState(0);
+  const [errorFields, setErrorFields] = useState({});
 
   const changeStartTimeHandler = (value) => {
     if (!value) {
@@ -39,15 +40,7 @@ const EventEditDialog = ({
     }
   };
   const changeEndTimeHandler = (value) => {
-    if (value === null) {
-      setEndTime(null);
-    } else if (initialDate) {
-      let validValue = dateTimeLuxon(initialDate, timeTo24Format(value));
-      validValue = startTime > validValue ? startTime : validValue;
-      setEndTime(validValue);
-    } else {
-      setEndTime(value);
-    }
+    setEndTime(value);
   };
 
   const changeActionTypeHandler = (el) => {
@@ -100,8 +93,9 @@ const EventEditDialog = ({
       <DialogContent>
         <EventInputForm
           onChangeHandlers={changeHandlers}
+          onChangeEndTime={changeEndTimeHandler}
           FCEventContents={newEvent}
-          setErrorCount={setErrorCount}
+          setErrorFields={setErrorFields}
 
         />
       </DialogContent>
@@ -136,7 +130,7 @@ const EventEditDialog = ({
 
             <Button
               sx={{ fontSize: 16 }}
-              disabled={Boolean(errorCount)}
+              disabled={Boolean(Object.keys(errorFields).length)}
               variant="contained"
               onClick={() => onFormClose({ closeMethod: 'save', data: newEvent })}
             >

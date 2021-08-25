@@ -24,7 +24,8 @@ import actionTypeData from '../../static/actionTypeData';
 const EventInputForm = ({
   onChangeHandlers,
   FCEventContents,
-  setErrorCount,
+  setErrorFields,
+  onChangeEndTime,
 }) => {
   const [
     setStartTime, setEndTime, setActionType, setActionDetails,
@@ -43,7 +44,7 @@ const EventInputForm = ({
         minTime={luxonTime({ hour: 8 })}
         maxTime={luxonTime({ hour: 20 })}
         onChange={setStartTime}
-        setErrorCount={setErrorCount}
+        setErrorFields={setErrorFields}
         isRequired
       />
       <MateriaTimePicker
@@ -52,8 +53,8 @@ const EventInputForm = ({
         value={endTime}
         minTime={luxonTime({ hour: (startTime?.hour || 9), minute: (startTime?.minute || 0) })}
         maxTime={luxonTime({ hour: 20 })}
-        onChange={setEndTime}
-        setErrorCount={setErrorCount}
+        onChange={onChangeEndTime}
+        setErrorFields={setErrorFields}
       />
       <MaterialText id="actionDetails" label="行動" value={actionDetails} onChange={setActionDetails} />
     </>

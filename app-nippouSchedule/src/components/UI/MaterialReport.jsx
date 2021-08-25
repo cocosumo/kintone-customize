@@ -36,12 +36,12 @@ const MaterialReport = ({ selectedDate }) => {
   };
 
   const onClickTimeHandler = async (info) => {
+    setIsDetailsOpen(false);
     onClickCalendarHandler(info);
     setIsFormOpen(true);
   };
 
-  const onClickEventHandler = (placement) => (info) => {
-    console.log(info);
+  const onClickEventHandler = () => (info) => {
     setAnchorEl(info.el);
     onClickCalendarHandler(info.event);
     setIsDetailsOpen(true);
@@ -114,8 +114,15 @@ const MaterialReport = ({ selectedDate }) => {
   return (
     <>
       <Title>{scheduleType}</Title>
-      <SimplePopper />
-      <EventDetailsPopper id="eventDetails" open={isDetailsOpen} anchorEl={anchorEl} />
+      {isDetailsOpen && (
+      <EventDetailsPopper
+        id="eventDetails"
+        open={isDetailsOpen}
+        anchorEl={anchorEl}
+        onDetailsClose={onDetailsCloseHandler}
+        selectedTime={selectedTime}
+      />
+      )}
       <TimeGrid
         selectedDate={reportDate}
         didMountHandler={bindToDate}

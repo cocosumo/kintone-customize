@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { timeTo24Format } from '../../helpers/Time';
 
 const MaterialTimePicker = ({
-  id, value, label, minTime, maxTime, onChange, isRequired, setErrorCount,
+  id, value, label, minTime, maxTime, onChange, isRequired, setErrorFields,
 }) => {
   const [error, setError] = useState();
 
@@ -31,9 +31,16 @@ const MaterialTimePicker = ({
         break;
     }
 
-    setErrorCount((prev) => prev + (reason ? 1 : -1));
+    setErrorFields((prev) => {
+      const temp = { ...prev };
+      if (reason) {
+        temp[label] = label;
+        return temp;
+      }
+      delete temp[label];
+      return temp;
+    });
   };
-
   return (
     <Box sx={{ minWidth: 120, marginTop: '1em' }}>
       <FormControl fullWidth>
@@ -42,7 +49,9 @@ const MaterialTimePicker = ({
             ampm={false}
             label={label}
             value={value}
-            onChange={onChange}
+            onChange={(newValue) => {
+              onChange(newValue);
+            }}
             cancelText="キャンセル"
             okText="保存"
             onError={errorHandler}
@@ -52,9 +61,9 @@ const MaterialTimePicker = ({
                 id={id}
                 variant="standard"
                 required={isRequired}
-                {...params}
                 InputLabelProps={{ style: { fontSize: 16 } }}
                 helperText={error}
+                {...params}
               />
             )}
             minTime={minTime}

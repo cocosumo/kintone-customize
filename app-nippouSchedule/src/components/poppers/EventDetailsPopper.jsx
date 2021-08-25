@@ -1,42 +1,114 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
 import Box from '@material-ui/core/Box';
 import Popper from '@material-ui/core/Popper';
+import {
+  Paper, Fade, Typography, Grid,
+} from '@material-ui/core';
+import CircleIcon from '@material-ui/icons/Circle';
+import DescriptionIcon from '@material-ui/icons/Description';
+import TitleBar from '../UI/TitleBar';
+import { timeTo24Format } from '../../helpers/Time';
+import { reduceEvent } from '../../helpers/DOM';
+import { getOptionData } from '../../static/actionTypeData';
 
-export const EventDetailsPopper = ({ id, open, anchorEl }) => (
-  <Popper
-    id={id}
-    open={open}
-    anchorEl={anchorEl}
-    placement="bottom"
-    disablePortal
-    modifiers={[
-      {
-        name: 'flip',
-        enabled: true,
-        options: {
-          altBoundary: true,
-          rootBoundary: 'viewport',
-          padding: 8,
-        },
-      },
-      {
-        name: 'preventOverflow',
-        enabled: true,
-        options: {
-          altAxis: true,
-          altBoundary: false,
-          tether: true,
-          rootBoundary: 'document',
-          padding: 8,
-        },
-      },
-    ]}
-  >
-    <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
-      The content of the Popper.
-    </Box>
-  </Popper>
+const TimeRange = ({ startTime, endTime }) => (
+  <Typography sx={{ display: 'block', pt: 0.25 }} variant="subtitle1">
+    {timeTo24Format(startTime)}
+    ～
+    {timeTo24Format(endTime)}
+  </Typography>
 );
+
+const Content = ({ startTime, endTime, actionType }) => {
+  const { bgColor } = getOptionData(actionType);
+
+  return (
+    <Grid sx={{ color: '#3c4043' }} container direction="row">
+      <Grid>
+        <CircleIcon sx={{
+          color: bgColor, mt: 0.5, fontSize: '1.5em', mr: 2,
+        }}
+        />
+      </Grid>
+      <Grid>
+        <Typography variant="h5">
+          {actionType}
+        </Typography>
+        <TimeRange startTime={startTime} endTime={endTime} />
+      </Grid>
+    </Grid>
+  );
+};
+
+const Description = ({ actionDetails }) => (
+  <Grid sx={{ color: '#3c4043', mt: 2 }} container direction="row">
+    <Grid>
+      <DescriptionIcon sx={{ mt: 0.5, fontSize: '1', mr: 2 }} />
+    </Grid>
+    <Grid>
+      <Typography variant="h6">
+        {actionDetails}
+      </Typography>
+    </Grid>
+  </Grid>
+);
+
+export const EventDetailsPopper = ({
+  id, open, anchorEl, selectedTime, onDetailsClose,
+}) => {
+  const selectedId = selectedTime?.id;
+  const selectedFCEvent = reduceEvent(selectedTime);
+  const {
+    actionType, startTime, endTime, actionDetails,
+  } = selectedFCEvent;
+  const notEmptyActionDetails = Boolean(actionDetails);
+
+  return (
+
+    <Popper
+      id={id}
+      open={open}
+      anchorEl={anchorEl}
+      placement="right"
+      style={{ zIndex: 1900 }}
+      modifiers={[
+        {
+          name: 'flip',
+          enabled: true,
+          options: {
+            fallbackPlacements: ['top', 'right', 'bottom'],
+            padding: 8,
+          },
+        },
+      ]}
+      transition
+    >
+
+      {({ TransitionProps }) => (
+
+        <Fade {...TransitionProps} timeout={350}>
+          <Paper>
+            <Box sx={{
+              pt: 1, pb: 2, pl: 2, pr: 1,
+            }}
+            >
+              <TitleBar
+                onEdit={(event) => onDetailsClose({ closeMethod: 'edit' }, event)}
+                onDelete={(event) => onDetailsClose({ closeMethod: 'delete', data: { id: selectedId } }, event)}
+                onClose={onDetailsClose}
+              />
+              <Content actionType={actionType} startTime={startTime} endTime={endTime} />
+              {notEmptyActionDetails && <Description actionDetails={actionDetails} />}
+            </Box>
+          </Paper>
+        </Fade>
+      )}
+
+    </Popper>
+
+  );
+};
 
 export default function SimplePopper() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -46,11 +118,10 @@ export default function SimplePopper() {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popper' : undefined;
 
   return (
     <div>
-      <button aria-describedby={id} type="button" onClick={handleClick}>
+      <button type="button" onClick={handleClick}>
         Toggle Popper
       </button>
       <EventDetailsPopper id={id} open={open} anchorEl={anchorEl} />
