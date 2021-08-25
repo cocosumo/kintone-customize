@@ -8,10 +8,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useState } from 'react';
 import { Grid, DialogTitle } from '@material-ui/core';
 import EventInputForm from '../forms/EventInputForm';
-import { dateTimeLuxon, ISOtoDATE, timeTo24Format } from '../../helpers/Time';
 import { reduceEvent } from '../../helpers/DOM';
 import actionTypeData from '../../static/actionTypeData';
 import { CloseButton } from '../UI/MaterialActionButtons';
+import { ISOtoDATE } from '../../helpers/Time';
 
 const EventEditDialog = ({
   open, onFormClose, selectedTime,
@@ -34,6 +34,7 @@ const EventEditDialog = ({
       setStartTime(0);
     } else {
       setStartTime(value);
+      console.log(Boolean(value > endTime), value, endTime);
       if (!value.invalid && value > endTime) {
         setEndTime(value);
       }

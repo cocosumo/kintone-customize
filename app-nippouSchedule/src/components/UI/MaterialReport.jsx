@@ -73,6 +73,8 @@ const MaterialReport = ({ selectedDate }) => {
     } else {
       setAllEvents(allEvents.concat(newEvent));
     }
+
+    setIsDetailsOpen(false);
   };
 
   const deleteEventHandler = (id) => {
