@@ -4,12 +4,18 @@ import { getSpaceElement } from '../../../../kintone-api/api';
 import FullWidth from '../containers/FullWidth';
 import EventsProvider from '../../static/EventsProvider';
 import MaterialReport from '../UI/MaterialReport';
+import Title from '../UI/Title';
+import { resolveTitle } from '../../helpers/converters';
 
 const renderReportRoot = async (event) => {
+  const { record } = event;
+  const title = resolveTitle(event);
+
   ReactDOM.render(
     <EventsProvider event={event}>
       <FullWidth>
-        <MaterialReport selectedDate={event.record.reportDate.value} />
+        <Title>{title}</Title>
+        <MaterialReport selectedDate={record.reportDate.value} />
       </FullWidth>
     </EventsProvider>,
     getSpaceElement('reportRoot'),

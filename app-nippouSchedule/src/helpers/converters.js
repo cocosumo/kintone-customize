@@ -1,5 +1,16 @@
-import { dateTimeISO } from './Time';
+import { dateTimeISO, isPast } from './Time';
 import actionTypeData from '../static/actionTypeData';
+
+export const resolveTitle = (event) => {
+  const { type: eventType, record } = event;
+  const { scheduleType, reportDate } = record;
+
+  if (eventType.includes('edit')) {
+    return `${scheduleType.value}を編集中です。`;
+  }
+
+  return isPast(reportDate.value) ? '当日何をしましたか。' : '予定を登録しますね。';
+};
 
 const kintoneToFCEvents = ({ type: eventType, record }) => {
   if (eventType.includes('create')) return [];

@@ -7,7 +7,6 @@ const setToOwnCustomers = () => {
   const userName = user.name;
   const url = `https://rdmuhwtt6gx7.cybozu.com/k/84/?view=5522967&query=(担当名%20like%20"${userName}")`;
   window.location.href = url;
-  console.log('setting to own customer');
 };
 
 const onIndexShowHandler = (event) => {

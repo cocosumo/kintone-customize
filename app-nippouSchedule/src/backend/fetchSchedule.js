@@ -1,3 +1,5 @@
+import { getAppId } from '../../../kintone-api/api';
+
 const fetchSchedules = (condition = '') => {
   const body = {
     app: getAppId(),
@@ -10,8 +12,11 @@ const fetchSchedules = (condition = '') => {
   );
 };
 
-export const fetchScheduleOnDate = (carNumber, start, end, recordId) => fetchReservations(
-  `$id!="${recordId}" and 号車="${carNumber}" and 開始 <= "${end}" and 終了 >= "${start}" `,
+export const fetchScheduleOnDate = (selectedDate) => fetchSchedules(
+  `reportDate <= "${selectedDate}" `,
 );
+/* export const fetchScheduleOnDate = (carNumber, start, end, recordId) => fetchReservations(
+  `$id!="${recordId}" and 号車="${carNumber}" and 開始 <= "${end}" and 終了 >= "${start}" `,
+); */
 
 export default fetchSchedules;

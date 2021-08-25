@@ -31,12 +31,12 @@ const Content = ({ startTime, endTime, actionType }) => {
         }}
         />
       </Grid>
-      <Grid>
+      <Box>
         <Typography variant="h5">
           {actionType}
         </Typography>
         <TimeRange startTime={startTime} endTime={endTime} />
-      </Grid>
+      </Box>
     </Grid>
   );
 };
@@ -46,8 +46,8 @@ const Description = ({ actionDetails }) => (
     <Grid>
       <DescriptionIcon sx={{ mt: 0.5, fontSize: '1', mr: 2 }} />
     </Grid>
-    <Grid>
-      <Typography variant="h6">
+    <Grid sx={{ color: '#3c4043', overflow: 'hidden' }}>
+      <Typography sx={{ display: 'inline', wordWrap: 'break-word' }}>
         {actionDetails}
       </Typography>
     </Grid>
@@ -90,7 +90,7 @@ export const EventDetailsPopper = ({
         <Fade {...TransitionProps} timeout={350}>
           <Paper>
             <Box sx={{
-              pt: 1, pb: 2, pl: 2, pr: 1,
+              pt: 1, pb: 2, pl: 2, pr: 1, maxWidth: 320,
             }}
             >
               <TitleBar

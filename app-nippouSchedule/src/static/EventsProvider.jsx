@@ -1,7 +1,8 @@
-import { useState, createContext } from 'react';
+import { useState, createContext, useEffect } from 'react';
 import onSubmitHandler from '../handlers/onSubmitHandler';
 import { onEditOrCreateSubmit } from '../../../kintone-api/api';
 import kintoneToFCEvents from '../helpers/converters';
+import { fetchScheduleOnDate } from '../backend/fetchSchedule';
 
 const setKintoneSubmitEvent = (allEvents) => {
   kintone.events.off(onEditOrCreateSubmit);
@@ -10,9 +11,13 @@ const setKintoneSubmitEvent = (allEvents) => {
 
 export const EventsContext = createContext();
 
-export default function EventsProvider({ event, children }) {
+const EventsProvider = ({ event, children }) => {
   const [allEvents, setAllEvents] = useState(kintoneToFCEvents(event));
   const value = [allEvents, setAllEvents];
+  useEffect(async () => {
+    const kintoneEvents = await fetchScheduleOnDate(event.record.reportDate.value);
+    console.log(kintoneEvents);
+  }, []);
 
   setKintoneSubmitEvent(allEvents);
 
@@ -21,4 +26,6 @@ export default function EventsProvider({ event, children }) {
       {children}
     </EventsContext.Provider>
   );
-}
+};
+
+export default EventsProvider;

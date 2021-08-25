@@ -3,12 +3,11 @@ import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
 import { EventsContext } from '../../static/EventsProvider';
 import { deleteEventById, replaceEvent, scrollTo } from '../../helpers/DOM';
-import { isPast, timeTo24Format } from '../../helpers/Time';
-import EventDetailsDialog from '../modals/EventDetailsDialog';
+import { timeTo24Format } from '../../helpers/Time';
+
 import actionTypeData from '../../static/actionTypeData';
-import Title from './Title';
 import EventEditDialog from '../modals/EventEditDialog';
-import SimplePopper, { EventDetailsPopper } from '../poppers/EventDetailsPopper';
+import { EventDetailsPopper } from '../poppers/EventDetailsPopper';
 
 const MaterialReport = ({ selectedDate }) => {
   const [reportDate, setReportDate] = useState(selectedDate);
@@ -19,7 +18,7 @@ const MaterialReport = ({ selectedDate }) => {
   const [allEvents, setAllEvents] = useContext(EventsContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const scheduleType = isPast(reportDate) ? '当日何をしましたか。' : '予定を登録しますね。';
+  // const scheduleType = isPast(reportDate) ? '当日何をしましたか。' : '予定を登録しますね。';
 
   const onDateChangeHandler = ({ record }) => {
     const rd = record.reportDate.value;
@@ -115,7 +114,8 @@ const MaterialReport = ({ selectedDate }) => {
 
   return (
     <>
-      <Title>{scheduleType}</Title>
+      {/* <Title>{scheduleType}</Title> */}
+
       {isDetailsOpen && (
       <EventDetailsPopper
         id="eventDetails"
