@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Grid, DialogTitle } from '@material-ui/core';
 import EventInputForm from '../forms/EventInputForm';
 import { reduceEvent } from '../../helpers/DOM';
-import actionTypeData from '../../static/actionTypeData';
+import actionTypeData from '../../store/actionTypeData';
 import { CloseButton } from '../UI/MaterialActionButtons';
 import { ISOtoDATE } from '../../helpers/Time';
 

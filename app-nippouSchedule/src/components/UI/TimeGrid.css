@@ -1,7 +1,7 @@
 
 
 .fc  .fc-timegrid, .row-gaia {
-  user-select: none !important;  
+  user-select: none !important;
   -webkit-user-select: none !important;
   -ms-user-select: none !important;
 }
@@ -20,4 +20,19 @@
 .fc .fc-timegrid-event-harness:hover {
 
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.fc .fc-planned-action {
+  opacity: 20%;
+  transition: all 0.3s ease-in-out;
+  z-index: 100;
+}
+
+.fc .fc-planned-action:hover {
+  opacity: 100%;
+
+}
+
+.fc .fc-confirmed-action {
+  opacity: 100%;
 }

@@ -18,12 +18,10 @@ export const luxonTime = (
   },
 ) => DateTime.utc(year || 1, month || 1, day || 1, hour || 0, minute || 0);
 
-export const isPast = (dateTime) => {
-  console.log((ISOtoDATE(dateTime).startOf('day')), DateTime.now().startOf('day'));
+export const isPast = (dateTime) =>
+// console.log((ISOtoDATE(dateTime).startOf('day')), DateTime.now().startOf('day'));
 
-  return (ISOtoDATE(dateTime).startOf('day') <= DateTime.now().startOf('day'));
-};
-
+  (ISOtoDATE(dateTime).startOf('day') <= DateTime.now().startOf('day'));
 export const dateTimeLuxon = (selectedDate, time) => DateTime.fromISO(`${selectedDate}T${time}:00.000`);
 
 export const dateTimeISO = (selectedDate, time) => dateTimeLuxon(selectedDate, time).toISO();

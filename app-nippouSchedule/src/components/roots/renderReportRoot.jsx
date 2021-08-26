@@ -2,10 +2,10 @@ import ReactDOM from 'react-dom';
 
 import { getSpaceElement } from '../../../../kintone-api/api';
 import FullWidth from '../containers/FullWidth';
-import EventsProvider from '../../static/EventsProvider';
+import EventsProvider from '../../store/EventsProvider';
 import MaterialReport from '../UI/MaterialReport';
 import Title from '../UI/Title';
-import { resolveTitle } from '../../helpers/converters';
+import { resolveTitle } from '../../helpers/FCUtils';
 
 const renderReportRoot = async (event) => {
   const { record } = event;

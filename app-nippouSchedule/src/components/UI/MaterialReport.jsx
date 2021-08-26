@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react';
 import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
-import { EventsContext } from '../../static/EventsProvider';
+import { EventsContext } from '../../store/EventsProvider';
 import { deleteEventById, replaceEvent, scrollTo } from '../../helpers/DOM';
 import { timeTo24Format } from '../../helpers/Time';
 
-import actionTypeData from '../../static/actionTypeData';
+import actionTypeData from '../../store/actionTypeData';
 import EventEditDialog from '../modals/EventEditDialog';
 import { EventDetailsPopper } from '../poppers/EventDetailsPopper';
 

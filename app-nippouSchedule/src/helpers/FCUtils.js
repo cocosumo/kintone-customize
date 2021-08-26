@@ -1,5 +1,5 @@
 import { dateTimeISO, isPast } from './Time';
-import actionTypeData from '../static/actionTypeData';
+import actionTypeData from '../store/actionTypeData';
 
 export const resolveTitle = (event) => {
   const { type: eventType, record } = event;
@@ -8,15 +8,12 @@ export const resolveTitle = (event) => {
   if (eventType.includes('edit')) {
     return `${scheduleType.value}を編集中です。`;
   }
-
   return isPast(reportDate.value) ? '当日何をしましたか。' : '予定を登録しますね。';
 };
 
-const kintoneToFCEvents = ({ type: eventType, record }) => {
-  if (eventType.includes('create')) return [];
-
+const kintoneToFCEvents = (record, isPlan) => {
   const {
-    reportTable: { value: reportTable },
+    reportTable: { value: reportTable = [] },
     reportDate: { value: reportDate },
   } = record;
 
@@ -32,13 +29,18 @@ const kintoneToFCEvents = ({ type: eventType, record }) => {
       title: actionType.value,
       start: dateTimeISO(reportDate, startTime.value),
       end: dateTimeISO(reportDate, endTime.value),
+      classNames: [isPlan ? 'fc-planned-action' : 'fc-confirmed-action'],
       backgroundColor: bgColor,
       textColor: color,
       description: actionDetails.value,
+      isPlan: Boolean(isPlan),
       editable: true,
     };
   });
+
   return fcEvents;
 };
+
+export const confirmedActions = (allEvents) => allEvents.filter(({ isPlan }) => !isPlan);
 
 export default kintoneToFCEvents;

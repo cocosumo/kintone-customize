@@ -10,7 +10,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import TitleBar from '../UI/TitleBar';
 import { timeTo24Format } from '../../helpers/Time';
 import { reduceEvent } from '../../helpers/DOM';
-import { getOptionData } from '../../static/actionTypeData';
+import { getOptionData } from '../../store/actionTypeData';
 
 const TimeRange = ({ startTime, endTime }) => (
   <Typography sx={{ display: 'block', pt: 0.25 }} variant="subtitle1">

@@ -8,7 +8,7 @@ import CircleIcon from '@material-ui/icons/Circle';
 import DescriptionIcon from '@material-ui/icons/Description';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { reduceEvent } from '../../helpers/DOM';
-import { getOptionData } from '../../static/actionTypeData';
+import { getOptionData } from '../../store/actionTypeData';
 import { timeTo24Format } from '../../helpers/Time';
 import { EditButton, CloseButton, DeleteButton } from '../UI/MaterialActionButtons';
 

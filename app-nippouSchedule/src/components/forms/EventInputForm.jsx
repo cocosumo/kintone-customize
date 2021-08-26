@@ -3,7 +3,7 @@ import MaterialSelect from '../UI/MaterialSelect';
 import './form.css';
 import MaterialText from '../UI/MaterialText';
 import { luxonTime } from '../../helpers/Time';
-import actionTypeData from '../../static/actionTypeData';
+import actionTypeData from '../../store/actionTypeData';
 
 /**
  * Prop => Event Object

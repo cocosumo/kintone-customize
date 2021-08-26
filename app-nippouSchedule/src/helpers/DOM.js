@@ -1,3 +1,8 @@
+import { getAppId, isMobile } from '../../../kintone-api/api';
+
+/* Consolidate both fcDate and fcEvent Objects
+  in a function
+*/
 export const reduceEvent = (s) => {
   if (!s) return {};
   return {
@@ -8,7 +13,7 @@ export const reduceEvent = (s) => {
   };
 };
 
-const getValue = (selector) => {
+export const getValue = (selector) => {
   const prefix = selector.substring(0, 1);
   const s = selector.substring(1);
   let value;
@@ -45,4 +50,10 @@ export const scrollTo = (y) => {
   }, 0);
 };
 
-export default getValue;
+export const redirectToRecordId = (id) => {
+  const baseURL = 'https://rdmuhwtt6gx7.cybozu.com/k/';
+  const appId = getAppId();
+  const device = isMobile() ? '/m/' : '';
+  const fullURL = `${baseURL}${device}${appId}/show#record=${id}&mode=edit`;
+  window.location.replace(fullURL);
+};

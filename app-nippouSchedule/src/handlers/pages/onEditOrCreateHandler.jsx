@@ -2,7 +2,10 @@
 import { setFieldShown } from '../../../../kintone-api/api';
 import renderReportRoot from '../../components/roots/renderReportRoot';
 import { resolveSchedType } from '../../helpers/Time';
+import { fetchSchedOnDateAndPlan } from '../../backend/fetchSchedule';
+
 import './body.css';
+import { redirectToRecordId } from '../../helpers/DOM';
 
 const DEBUG_MODE = false;
 
@@ -18,8 +21,23 @@ const initialize = ({ record, type }) => {
   }
 };
 
+const checkExistingRecord = async ({
+  type, record: { scheduleType, reportDate },
+}) => {
+  if (type.includes('create')) {
+    const existingRecord = await fetchSchedOnDateAndPlan(reportDate.value, scheduleType.value);
+    const isExist = Boolean(existingRecord);
+    if (isExist) {
+      const { $id: { value: recordId } } = existingRecord;
+      redirectToRecordId(recordId);
+    }
+  }
+};
+
 const onEditOrCreateHandler = (event) => {
   initialize(event);
+  checkExistingRecord(event);
+
   renderReportRoot(event);
   return event;
 };

@@ -6,7 +6,7 @@
     "scripts": {
         "start": "node scripts/npm-start.js",
         "upload": "kintone-customize-uploader --base-url rdmuhwtt6gx7.cybozu.com --watch ./kintone.manifest.json",
-        "develop": "npm run build -- --watch",
+        "dev": "npm run build -- --watch",
         "build": "webpack",
         "build:prod": "webpack --mode production",
         "prod": "webpack --mode production -- --watch"
