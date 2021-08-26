@@ -1,22 +1,27 @@
-import { useState, createContext, useEffect } from 'react';
+import { useState, createContext } from 'react';
 import onSubmitHandler from '../handlers/onSubmitHandler';
 import { onEditOrCreateSubmit } from '../../../kintone-api/api';
 import kintoneToFCEvents, { confirmedActions } from '../helpers/FCUtils';
 
-const setKintoneSubmitEvent = (actions) => {
-  kintone.events.off(onEditOrCreateSubmit);
-  kintone.events.on(onEditOrCreateSubmit, (event) => onSubmitHandler(
-    event, actions,
-  ));
+const setKintoneSubmitEvent = (actions, name) => {
+  const handler = (event) => onSubmitHandler(
+    event, actions, name,
+  );
+
+  kintone.events.off(onEditOrCreateSubmit, handler);
+  kintone.events.on(onEditOrCreateSubmit, handler);
 };
 
 export const EventsContext = createContext();
 
-const EventsProvider = ({ event, children }) => {
+const EventsProvider = ({ event, name, children }) => {
   const { type, record } = event;
-  const initialEvents = type.includes('create') ? [] : kintoneToFCEvents(record);
+
+  const initialEvents = type.includes('create') ? [] : kintoneToFCEvents(record, false, name);
 
   const [allEvents, setAllEvents] = useState(initialEvents);
+
+  setKintoneSubmitEvent(confirmedActions(allEvents), name);
 
   /* useEffect(async () => {
     const { scheduleType, reportDate } = record;
@@ -31,8 +36,8 @@ const EventsProvider = ({ event, children }) => {
     }
   }, []); */
 
-  setKintoneSubmitEvent(confirmedActions(allEvents));
-
+  // setKintoneSubmitEvent(confirmedActions(allEvents),name);
+  console.log(allEvents);
   return (
     <EventsContext.Provider value={[allEvents, setAllEvents]}>
       {children}
