@@ -2,34 +2,36 @@ import { timeTo24Format } from '../helpers/Time';
 
 const fieldValue = (type, value) => ({ type, value });
 
-const convertToKintoneTable = (value) => {
+const convertToKintoneTable = (value, name) => {
   const result = value.map(({
-    title, start, end, description, actionId,
-  }) => ({
-    id: null,
-    value: {
-      actionType: fieldValue('SINGLE_LINE_TEXT', title),
-      startTime: fieldValue('TIME', timeTo24Format(start)),
-      endTime: fieldValue('TIME', timeTo24Format(end)),
-      actionDetails: fieldValue('SINGLE_LINE_TEXT', description),
-      actionId: fieldValue('SINGLE_LINE_TEXT', actionId || ''),
-    },
-  }));
-  console.log(result);
+    title, start, end, description,
+  }) => {
+    console.log(timeTo24Format(start), name);
+    return ({
+      id: null,
+      value: {
+        [`${name}ActionType`]: fieldValue('SINGLE_LINE_TEXT', title),
+        [`${name}StartTime`]: fieldValue('TIME', timeTo24Format(start)),
+        [`${name}EndTime`]: fieldValue('TIME', timeTo24Format(end)),
+        [`${name}ActionDetails`]: fieldValue('SINGLE_LINE_TEXT', description),
+      },
+    });
+  });
+
   return result;
 };
 
-const updateTable = (origContents, newEvents) => {
-  const newContents = convertToKintoneTable(newEvents);
+const updateTable = (origContents, newEvents, name) => {
+  const newContents = convertToKintoneTable(newEvents, name);
   origContents.splice(0, origContents.length);
   newContents.forEach((el) => origContents.push(el));
 };
 
-const onSubmitHandler = (event, newEvents) => {
+const onSubmitHandler = (event, newEvents, name) => {
   const { record } = event;
-  const { reportTable: { value: reportTable } } = record;
+  const { [`${name}Table`]: { value: subTable } } = record;
 
-  updateTable(reportTable, newEvents);
+  updateTable(subTable, newEvents, name);
 
   return event;
 };

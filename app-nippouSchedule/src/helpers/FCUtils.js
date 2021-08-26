@@ -11,16 +11,23 @@ export const resolveTitle = (event) => {
   return isPast(reportDate.value) ? '当日何をしましたか。' : '予定を登録しますね。';
 };
 
-const kintoneToFCEvents = (record, isPlan) => {
+const kintoneToFCEvents = (record, isPlan, name) => {
   const {
-    reportTable: { value: reportTable = [] },
-    reportDate: { value: reportDate },
+    [`${name}Table`]: { value: subTable = [] },
+    [`${name}Date`]: { value: reportDate },
   } = record;
 
-  const fcEvents = reportTable.map(({ value }) => {
+  const fcEvents = subTable.filter(({ value }) => {
+    const { [`${name}ActionType`]: actionType } = value;
+    return Boolean((actionType.value).length);
+  }).map(({ value }) => {
     const {
-      actionType, startTime, endTime, actionDetails,
+      [`${name}ActionType`]: actionType,
+      [`${name}StartTime`]: startTime,
+      [`${name}EndTime`]: endTime,
+      [`${name}ActionDetails`]: actionDetails,
     } = value;
+
     const buildIdString = (actionType.value + startTime.value + endTime.value).replace(/:/g, '');
     const data = actionTypeData().find(({ type }) => type === actionType.value);
     const { bgColor, color } = data;
