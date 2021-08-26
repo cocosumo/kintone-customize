@@ -121,8 +121,6 @@ const MaterialReport = ({ selectedDate }) => {
 
   return (
     <>
-      {/* <Title>{scheduleType}</Title> */}
-
       {isDetailsOpen && (
       <EventDetailsPopper
         id="eventDetails"

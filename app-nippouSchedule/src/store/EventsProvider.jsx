@@ -2,7 +2,6 @@ import { useState, createContext, useEffect } from 'react';
 import onSubmitHandler from '../handlers/onSubmitHandler';
 import { onEditOrCreateSubmit } from '../../../kintone-api/api';
 import kintoneToFCEvents, { confirmedActions } from '../helpers/FCUtils';
-import { fetchSchedPlanOnDate } from '../backend/fetchSchedule';
 
 const setKintoneSubmitEvent = (actions) => {
   kintone.events.off(onEditOrCreateSubmit);
@@ -19,7 +18,7 @@ const EventsProvider = ({ event, children }) => {
 
   const [allEvents, setAllEvents] = useState(initialEvents);
 
-  useEffect(async () => {
+  /* useEffect(async () => {
     const { scheduleType, reportDate } = record;
 
     if ((scheduleType.value).includes('予定')) return;
@@ -30,7 +29,7 @@ const EventsProvider = ({ event, children }) => {
       kintoneToFCEvents(plannedRecord, true);
       setAllEvents([...allEvents, ...kintoneToFCEvents(plannedRecord, true)]);
     }
-  }, []);
+  }, []); */
 
   setKintoneSubmitEvent(confirmedActions(allEvents));
 
