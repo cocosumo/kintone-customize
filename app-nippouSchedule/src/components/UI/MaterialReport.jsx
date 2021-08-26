@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import TimeGrid from './TimeGrid';
 import { onFieldChange } from '../../../../kintone-api/api';
 import { EventsContext } from '../../store/EventsProvider';
@@ -17,6 +17,7 @@ const MaterialReport = ({ selectedDate }) => {
   const [pageY, setPageY] = useState();
   const [allEvents, setAllEvents] = useContext(EventsContext);
   const [anchorEl, setAnchorEl] = useState(null);
+  const clickedEventId = useRef(null);
 
   // const scheduleType = isPast(reportDate) ? '当日何をしましたか。' : '予定を登録しますね。';
 
@@ -43,7 +44,13 @@ const MaterialReport = ({ selectedDate }) => {
   const onClickEventHandler = () => (info) => {
     setAnchorEl(info.el);
     onClickCalendarHandler(info.event);
-    setIsDetailsOpen(true);
+    setIsDetailsOpen((prev) => {
+      if (prev && clickedEventId.current === info.event.id) {
+        return false;
+      }
+      clickedEventId.current = info.event.id;
+      return true;
+    });
   };
 
   const eventChangeHandler = (info) => {
