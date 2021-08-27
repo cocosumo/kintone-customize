@@ -17,17 +17,17 @@ export const fetchOnDate = (selectedDate) => fetchRecords(
   `reportDate = "${selectedDate}" `,
 );
 
-export const fetchPlanOnDate = async (selectedDate) => (fetchRecords(
-  `plansDate = "${selectedDate}" and 作成者 in ("${getUserName()}") limit 1`,
+export const fetchPlanOnDate = async (selectedDate, creator) => (fetchRecords(
+  `plansDate = "${selectedDate}" and creator="${creator || getUserName()}" limit 1`,
 ));
 
-export const fetchReportOnDate = async (selectedDate) => (fetchRecords(
-  `reportDate = "${selectedDate}" and 作成者 in ("${getUserName()}") limit 1`,
+export const fetchReportOnDate = async (selectedDate, creator) => (fetchRecords(
+  `reportDate = "${selectedDate}" and creator ="${creator || getUserName()}" limit 1`,
 ));
 
-export const getMonthRecords = (date) => {
+export const getMonthRecords = (date, creator) => {
   console.log(date);
-  return fetchRecords(`作成者 in ("${getUserName()}")
+  return fetchRecords(`creator = "${creator || getUserName()}"
                             and reportDate >= "${startOfMonth(date)}"
                             and reportDate <= "${endOfMonth(date)}"`);
 };

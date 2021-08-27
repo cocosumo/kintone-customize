@@ -22,10 +22,10 @@ const initialize = ({ record }) => {
 };
 
 const checkExistingRecord = async ({
-  type, record: { reportDate },
+  type, record: { reportDate, creator },
 }) => {
   if (type.includes('create')) {
-    const existingRecord = (await fetchReportOnDate(reportDate.value)).records[0];
+    const existingRecord = (await fetchReportOnDate(reportDate.value, creator.value)).records[0];
 
     const isExist = Boolean(existingRecord);
     if (isExist) {

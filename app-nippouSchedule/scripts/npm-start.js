@@ -1,6 +1,6 @@
 const runAll = require('npm-run-all');
 
-runAll(['develop', 'upload'], {
+runAll(['dev', 'upload'], {
   parallel: true,
   stdout: process.stdout,
   stdin: process.stdin,
