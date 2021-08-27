@@ -2,7 +2,7 @@
 import { setFieldShown } from '../../../../kintone-api/api';
 import renderApp from '../../components/roots/renderApp';
 
-import { fetchReportOnDate } from '../../backend/fetchSchedule';
+import { fetchReportOnDate } from '../../backend/fetchRecords';
 
 import './body.css';
 import { redirectToRecordId } from '../../helpers/DOM';
@@ -12,12 +12,10 @@ const DEBUG_MODE = false;
 const initialize = ({ record }) => {
   const { reportDate, scheduleType } = record;
 
+  setFieldShown('plansTable', DEBUG_MODE);
   setFieldShown('reportTable', DEBUG_MODE);
   reportDate.disabled = !DEBUG_MODE;
   scheduleType.disabled = !DEBUG_MODE;
-
-  setFieldShown('plansTable', DEBUG_MODE);
-
   /* if (type.includes('create')) {
     scheduleType.value = resolveSchedType(reportDate.value);
   } */

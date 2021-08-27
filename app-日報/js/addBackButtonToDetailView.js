@@ -1,22 +1,19 @@
-(function() {
-    "use strict";
+(function () {
+  kintone.events.on('app.record.detail.show', (event) => {
+    const { appId } = event;
+    const URL = `https://rdmuhwtt6gx7.cybozu.com/k/${appId}/ `;
 
-    kintone.events.on('app.record.detail.show', function(event) {
+    // Create a button
+    const myRecordButton = document.createElement('button');
+    myRecordButton.id = 'backButton';
+    myRecordButton.innerHTML = ' ⇐ 戻る';
 
-        let appId = event.appId;
-        let URL = `https://rdmuhwtt6gx7.cybozu.com/k/${appId}/ `;
+    // Set the button on the header
+    kintone.app.record.getHeaderMenuSpaceElement().appendChild(myRecordButton);
 
-        // Create a button
-        let myRecordButton = document.createElement('button');
-        myRecordButton.id = 'backButton';
-        myRecordButton.innerHTML = ' ⇐ 戻る';
-
-        // Set the button on the header
-        kintone.app.record.getHeaderMenuSpaceElement().appendChild(myRecordButton);
-        
-        /* Navigate to list view */
-        myRecordButton.onclick = function(){
-          window.location.href = URL;
-        };
-    });
-})();
+    /* Navigate to list view */
+    myRecordButton.onclick = function () {
+      window.location.href = URL;
+    };
+  });
+}());

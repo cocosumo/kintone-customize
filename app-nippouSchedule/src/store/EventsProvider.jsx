@@ -2,7 +2,7 @@ import { useState, createContext, useEffect } from 'react';
 import onSubmitHandler from '../handlers/onSubmitHandler';
 import { onEditOrCreateSubmit } from '../../../kintone-api/api';
 import kintoneToFCEvents, { confirmedActions } from '../helpers/FCUtils';
-import { fetchPlanOnDate } from '../backend/fetchSchedule';
+import { fetchPlanOnDate } from '../backend/fetchRecords';
 
 const setKintoneSubmitEvent = (actions, name) => {
   const handler = (event) => onSubmitHandler(
@@ -33,11 +33,7 @@ const EventsProvider = ({ event, name, children }) => {
         true,
         'plans',
       );
-      console.log(plannedEvents, 'Planned Events', name);
-      setAllEvents((prev) => {
-        console.log([...prev, ...plannedEvents]);
-        return [...prev, ...plannedEvents];
-      });
+      setAllEvents((prev) => [...prev, ...plannedEvents]);
     }
   }, []);
 

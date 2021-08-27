@@ -19,8 +19,20 @@ export const luxonTime = (
 ) => DateTime.utc(year || 1, month || 1, day || 1, hour || 0, minute || 0);
 
 export const isPast = (dateTime) => (ISOtoDATE(dateTime).startOf('day') <= DateTime.now().startOf('day'));
+
 export const dateTimeLuxon = (selectedDate, time) => DateTime.fromISO(`${selectedDate}T${time}:00.000`);
 
 export const dateTimeISO = (selectedDate, time) => dateTimeLuxon(selectedDate, time).toISO();
 
 export const resolveSchedType = (dateTime) => (isPast(dateTime) ? '実際の行動' : '予定の行動');
+
+export const adjustByDays = (date, days) => DateTime
+  .fromISO(date)
+  .plus({ days: [days] })
+  .toISODate();
+
+export const startOfUnit = (date, unit) => DateTime.fromISO(date).startOf(unit).toISODate();
+export const endOfUnit = (date, unit) => DateTime.fromISO(date).endOf(unit).toISODate();
+
+export const startOfMonth = (date) => startOfUnit(date, 'month');
+export const endOfMonth = (date) => endOfUnit(date, 'month');

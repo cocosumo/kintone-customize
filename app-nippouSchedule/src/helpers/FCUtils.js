@@ -12,12 +12,11 @@ export const resolveTitle = (event) => {
 };
 
 const kintoneToFCEvents = (record, isPlan, name) => {
+  if (!record) return [];
   const {
     [`${name}Table`]: { value: subTable = [] },
     [`${name}Date`]: { value: date },
   } = record;
-
-  console.log(date, name);
 
   const fcEvents = subTable.filter(({ value }) => {
     const { [`${name}ActionType`]: actionType } = value;
