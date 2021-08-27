@@ -5,18 +5,15 @@ const fieldValue = (type, value) => ({ type, value });
 const convertToKintoneTable = (value, name) => {
   const result = value.map(({
     title, start, end, description,
-  }) => {
-    console.log(timeTo24Format(start), name);
-    return ({
-      id: null,
-      value: {
-        [`${name}ActionType`]: fieldValue('SINGLE_LINE_TEXT', title),
-        [`${name}StartTime`]: fieldValue('TIME', timeTo24Format(start)),
-        [`${name}EndTime`]: fieldValue('TIME', timeTo24Format(end)),
-        [`${name}ActionDetails`]: fieldValue('SINGLE_LINE_TEXT', description),
-      },
-    });
-  });
+  }) => ({
+    id: null,
+    value: {
+      [`${name}ActionType`]: fieldValue('SINGLE_LINE_TEXT', title),
+      [`${name}StartTime`]: fieldValue('TIME', timeTo24Format(start)),
+      [`${name}EndTime`]: fieldValue('TIME', timeTo24Format(end)),
+      [`${name}ActionDetails`]: fieldValue('SINGLE_LINE_TEXT', description),
+    },
+  }));
 
   return result;
 };

@@ -1,7 +1,8 @@
-import { useState, createContext } from 'react';
+import { useState, createContext, useEffect } from 'react';
 import onSubmitHandler from '../handlers/onSubmitHandler';
 import { onEditOrCreateSubmit } from '../../../kintone-api/api';
 import kintoneToFCEvents, { confirmedActions } from '../helpers/FCUtils';
+import { fetchPlanOnDate } from '../backend/fetchSchedule';
 
 const setKintoneSubmitEvent = (actions, name) => {
   const handler = (event) => onSubmitHandler(
@@ -23,6 +24,23 @@ const EventsProvider = ({ event, name, children }) => {
 
   setKintoneSubmitEvent(confirmedActions(allEvents), name);
 
+  useEffect(async () => {
+    if (name === 'report') {
+      const { reportDate } = record;
+      /* Pull plans related to this report date */
+      const plannedEvents = kintoneToFCEvents(
+        (await fetchPlanOnDate(reportDate.value)).records[0],
+        true,
+        'plans',
+      );
+      console.log(plannedEvents, 'Planned Events', name);
+      setAllEvents((prev) => {
+        console.log([...prev, ...plannedEvents]);
+        return [...prev, ...plannedEvents];
+      });
+    }
+  }, []);
+
   /* useEffect(async () => {
     const { scheduleType, reportDate } = record;
 
@@ -37,7 +55,6 @@ const EventsProvider = ({ event, name, children }) => {
   }, []); */
 
   // setKintoneSubmitEvent(confirmedActions(allEvents),name);
-  console.log(allEvents);
   return (
     <EventsContext.Provider value={[allEvents, setAllEvents]}>
       {children}

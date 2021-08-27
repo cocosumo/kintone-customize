@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { setFieldShown } from '../../../../kintone-api/api';
 import renderApp from '../../components/roots/renderApp';
-import { fetchSchedOnDateAndPlan } from '../../backend/fetchSchedule';
+
+import { fetchReportOnDate } from '../../backend/fetchSchedule';
 
 import './body.css';
 import { redirectToRecordId } from '../../helpers/DOM';
@@ -23,10 +24,11 @@ const initialize = ({ record }) => {
 };
 
 const checkExistingRecord = async ({
-  type, record: { scheduleType, reportDate },
+  type, record: { reportDate },
 }) => {
   if (type.includes('create')) {
-    const existingRecord = await fetchSchedOnDateAndPlan(reportDate.value, scheduleType.value);
+    const existingRecord = (await fetchReportOnDate(reportDate.value)).records[0];
+
     const isExist = Boolean(existingRecord);
     if (isExist) {
       const { $id: { value: recordId } } = existingRecord;
@@ -38,7 +40,6 @@ const checkExistingRecord = async ({
 const onEditOrCreateHandler = (event) => {
   initialize(event);
   checkExistingRecord(event);
-
   renderApp(event);
   return event;
 };

@@ -1,6 +1,6 @@
-import { getAppId } from '../../../kintone-api/api';
+import { getAppId, getUserName } from '../../../kintone-api/api';
 
-const fetchSchedules = (condition = '') => {
+const fetchSchedules = (condition) => {
   const body = {
     app: getAppId(),
     query: condition,
@@ -16,14 +16,16 @@ export const fetchOnDate = (selectedDate) => fetchSchedules(
   `reportDate = "${selectedDate}" `,
 );
 
-export const fetchSchedOnDateAndPlan = async (selectedDate, type) => (await fetchSchedules(
-  `reportDate = "${selectedDate}" and scheduleType like "${type}" limit 1`,
-)).records[0];
+export const fetchPlanOnDate = async (selectedDate) => (fetchSchedules(
+  `plansDate = "${selectedDate}" and creator="${getUserName()}" limit 1`,
+));
 
-export const fetchSchedPlanOnDate = (selectedDate) => fetchSchedOnDateAndPlan(selectedDate, '予定');
+export const fetchReportOnDate = async (selectedDate) => (fetchSchedules(
+  `reportDate = "${selectedDate}" and creator="${getUserName()}" limit 1`,
+));
 
-export const isSchedExist = (selectedDate, type) => (
-  fetchSchedOnDateAndPlan(selectedDate, type)
+export const isSchedExist = (selectedDate) => (
+  fetchReportOnDate(selectedDate)
 );
 
 /* export const fetchScheduleOnDate = (carNumber, start, end, recordId) => fetchReservations(

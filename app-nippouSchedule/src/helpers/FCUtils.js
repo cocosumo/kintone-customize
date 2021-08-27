@@ -14,36 +14,40 @@ export const resolveTitle = (event) => {
 const kintoneToFCEvents = (record, isPlan, name) => {
   const {
     [`${name}Table`]: { value: subTable = [] },
-    [`${name}Date`]: { value: reportDate },
+    [`${name}Date`]: { value: date },
   } = record;
+
+  console.log(date, name);
 
   const fcEvents = subTable.filter(({ value }) => {
     const { [`${name}ActionType`]: actionType } = value;
     return Boolean((actionType.value).length);
-  }).map(({ value }) => {
-    const {
-      [`${name}ActionType`]: actionType,
-      [`${name}StartTime`]: startTime,
-      [`${name}EndTime`]: endTime,
-      [`${name}ActionDetails`]: actionDetails,
-    } = value;
+  }).map(
+    ({ value }) => {
+      const {
+        [`${name}ActionType`]: actionType,
+        [`${name}StartTime`]: startTime,
+        [`${name}EndTime`]: endTime,
+        [`${name}ActionDetails`]: actionDetails,
+      } = value;
 
-    const buildIdString = (actionType.value + startTime.value + endTime.value).replace(/:/g, '');
-    const data = actionTypeData().find(({ type }) => type === actionType.value);
-    const { bgColor, color } = data;
-    return {
-      id: buildIdString,
-      title: actionType.value,
-      start: dateTimeISO(reportDate, startTime.value),
-      end: dateTimeISO(reportDate, endTime.value),
-      classNames: [isPlan ? 'fc-planned-action' : 'fc-confirmed-action'],
-      backgroundColor: bgColor,
-      textColor: color,
-      description: actionDetails.value,
-      isPlan: Boolean(isPlan),
-      editable: true,
-    };
-  });
+      const buildIdString = (actionType.value + startTime.value + endTime.value).replace(/:/g, '');
+      const data = actionTypeData().find(({ type }) => type === actionType.value);
+      const { bgColor, color } = data;
+      return {
+        id: buildIdString,
+        title: actionType.value,
+        start: dateTimeISO(date, startTime.value),
+        end: dateTimeISO(date, endTime.value),
+        classNames: [isPlan ? 'fc-planned-action' : 'fc-confirmed-action'],
+        backgroundColor: bgColor,
+        textColor: color,
+        description: actionDetails.value,
+        isPlan: Boolean(isPlan),
+        editable: true,
+      };
+    },
+  );
 
   return fcEvents;
 };

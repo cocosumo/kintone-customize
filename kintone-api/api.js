@@ -113,3 +113,5 @@ export const setFieldShown = (fieldCode, isShown) => {
     kintone.app.record.setFieldShown(fieldCode, isShown);
   }
 };
+
+export const getUserName = () => (kintone.getLoginUser()).name;

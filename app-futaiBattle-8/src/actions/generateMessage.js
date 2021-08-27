@@ -1,6 +1,8 @@
 import { numberWithCommas } from '../../../kintone-api/utilities';
 
-const getOfficers = (officers) => officers.map(({ value: { 担当者名: { value: officer } } }) => officer).join(' と ');
+const getOfficers = (officers) => officers.map(
+  ({ value: { 担当者名: { value: officer } } }) => officer,
+).join(' と ');
 const getItems = (items) => items.map(
   ({
     value:
