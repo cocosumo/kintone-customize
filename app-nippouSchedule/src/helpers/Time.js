@@ -36,3 +36,16 @@ export const endOfUnit = (date, unit) => DateTime.fromISO(date).endOf(unit).toIS
 
 export const startOfMonth = (date) => startOfUnit(date, 'month');
 export const endOfMonth = (date) => endOfUnit(date, 'month');
+
+export const diffInDays = (start, end) => ISOtoDATE(end)
+  .diff(ISOtoDATE(start), 'days')
+  .toObject();
+
+export const isEndDateValid = (start, end) => ISOtoDATE(start) < ISOtoDATE(end);
+
+export const addDays = (date, num) => ISOtoDATE(date).plus({ days: num }).toISODate();
+
+export const getRangeInBetween = (start, end) => ({
+  midStart: addDays(start, 1),
+  midEnd: addDays(end, -1),
+});

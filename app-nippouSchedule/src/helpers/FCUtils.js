@@ -20,7 +20,7 @@ const kintoneToFCEvents = (record, isPlan, name) => {
 
   const fcEvents = subTable.filter(({ value }) => {
     const { [`${name}ActionType`]: actionType } = value;
-    return Boolean((actionType.value).length);
+    return Boolean((actionType.value || '').length);
   }).map(
     ({ value }) => {
       const {

@@ -53,7 +53,10 @@ export const scrollTo = (y) => {
 export const redirectToRecordId = (id) => {
   const baseURL = 'https://rdmuhwtt6gx7.cybozu.com/k/';
   const appId = getAppId();
-  const device = isMobile() ? '/m/' : '';
-  const fullURL = `${baseURL}${device}${appId}/show#record=${id}&mode=edit`;
+  const fullURL = isMobile()
+    ? `${baseURL}m/${appId}/show?record=${id}#mode=edit`
+    : `${baseURL}${appId}/show#record=${id}&mode=edit`;
+  /*  const fullURL = `${baseURL}${appId}/show#record=${id}&mode=edit`; */
+
   window.location.replace(fullURL);
 };

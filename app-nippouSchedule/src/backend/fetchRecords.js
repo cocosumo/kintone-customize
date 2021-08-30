@@ -25,32 +25,21 @@ export const fetchReportOnDate = async (selectedDate, creator) => (fetchRecords(
   `reportDate = "${selectedDate}" and creator ="${creator || getUserName()}" limit 1`,
 ));
 
-export const getMonthRecords = (date, creator) => {
-  console.log(date);
-  return fetchRecords(`creator = "${creator || getUserName()}"
-                            and reportDate >= "${startOfMonth(date)}"
-                            and reportDate <= "${endOfMonth(date)}"`);
-};
+export const fetchMonthRecords = (date, creator) => fetchRecords(
+  `creator = "${creator || getUserName()}"
+  and reportDate >= "${startOfMonth(date)}"
+  and reportDate <= "${endOfMonth(date)}"`,
+);
 
-/* function getMonthRecords(id, dateSumitted) {
-  const endOfMonth = moment(dateSumitted).clone().endOf('month').format('YYYY-MM-DD');
-  const startOfMonth = moment(dateSumitted).clone().startOf('month').format('YYYY-MM-DD');
-
-  const query = `${EID_FIELD} = ${id}
-                      and ${DATE_SUBMITTED_FIELD} >= "${startOfMonth}"
-                      and ${DATE_SUBMITTED_FIELD} <= "${endOfMonth}" `;
-  // console.log(query);
-
-  const paramGET = {
-    app: APP_ID,
-    query,
-    // 'totalCount' : true
+export const fetchFields = () => {
+  const body = {
+    app: getAppId(),
   };
-
-  return kinto */
-
-/* export const fetchScheduleOnDate = (carNumber, start, end, recordId) => fetchReservations(
-  `$id!="${recordId}" and 号車="${carNumber}" and 開始 <= "${end}" and 終了 >= "${start}" `,
-); */
+  return kintone.api(
+    kintone.api.url('/k/v1/app/form/fields', true),
+    'GET',
+    body,
+  );
+};
 
 export default fetchRecords;

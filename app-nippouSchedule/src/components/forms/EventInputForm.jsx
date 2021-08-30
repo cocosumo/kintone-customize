@@ -56,7 +56,7 @@ const EventInputForm = ({
         onChange={onChangeEndTime}
         setErrorFields={setErrorFields}
       />
-      <MaterialText id="actionDetails" label="行動" value={actionDetails} onChange={setActionDetails} />
+      <MaterialText id="actionDetails" label="詳細" value={actionDetails} onChange={setActionDetails} />
     </>
   );
 };

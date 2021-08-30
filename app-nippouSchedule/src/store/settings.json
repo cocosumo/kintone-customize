@@ -1,0 +1,32 @@
+[
+  {
+    "type": "接客",
+    "bgColor": "#ea9eb6",
+    "color": "white"
+  },
+  {
+    "type": "デスクワーク",
+    "bgColor": "#039be5",
+    "color": "white"
+  },
+  {
+    "type": "反響の時間",
+    "bgColor": "#ffff8d",
+    "color": "#333"
+  },
+  {
+    "type": "自分の時間",
+    "bgColor": "#8e24aa",
+    "color": "white"
+  },
+  {
+    "type": "研修・会議",
+    "bgColor": "#8CC63F",
+    "color": "white"
+  },
+  {
+    "type": "その他",
+    "bgColor": "#4ca456",
+    "color": "white"
+  }
+]

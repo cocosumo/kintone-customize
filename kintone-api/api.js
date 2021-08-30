@@ -5,6 +5,11 @@ Author: Yumenootetsudai 社内開発者
 
 export const isMobile = () => (window.location.href).includes('k/m');
 
+export const onDetailShow = [
+  'app.record.detail.show',
+  'mobile.app.record.detail.show',
+];
+
 export const onEdit = [
   'app.record.edit.show',
   'mobile.app.record.edit.show',
@@ -35,10 +40,10 @@ export const onCreateSubmitSuccess = [
   'mobile.app.record.create.submit.success',
 ];
 
+export const onEditOrCreate = onEdit.concat(onCreate);
+export const onDetailEditCreate = onDetailShow.concat(onEditOrCreate);
 export const onEditOrCreateSubmit = onEditSubmit.concat(onCreateSubmit);
 export const onEditOrCreateSubmitSuccess = onEditSubmitSuccess.concat(onCreateSubmitSuccess);
-
-export const onEditOrCreate = onEdit.concat(onCreate);
 
 export const onPrintShow = [
   'app.record.print.show',

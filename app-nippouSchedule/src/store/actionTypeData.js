@@ -20,6 +20,11 @@ const actionTypeData = () => [
     color: 'white',
   },
   {
+    type: '研修・会議',
+    bgColor: '#8CC63F', // purple
+    color: 'white',
+  },
+  {
     type: 'その他',
     bgColor: '#4ca456', // green
     color: 'white',

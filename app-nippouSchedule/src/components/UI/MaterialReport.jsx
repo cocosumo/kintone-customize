@@ -8,6 +8,7 @@ import { timeTo24Format } from '../../helpers/Time';
 import actionTypeData from '../../store/actionTypeData';
 import EventEditDialog from '../modals/EventEditDialog';
 import { EventDetailsPopper } from '../poppers/EventDetailsPopper';
+import { getSettings } from '../../backend/fetchSettings';
 
 const MaterialReport = ({ selectedDate }) => {
   const [reportDate, setReportDate] = useState(selectedDate);
@@ -61,6 +62,8 @@ const MaterialReport = ({ selectedDate }) => {
     const oldEventId = info.id || info.oldEvent?.id;
     const colorData = actionTypeData().find(({ type }) => type === eventTitle);
     const { bgColor, color } = colorData;
+
+    console.log(getSettings(), 'hello');
 
     const newEvent = {
       id: buildIdString,

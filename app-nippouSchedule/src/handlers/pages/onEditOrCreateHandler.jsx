@@ -1,9 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { setFieldShown } from '../../../../kintone-api/api';
 import renderApp from '../../components/roots/renderApp';
-
 import { fetchReportOnDate } from '../../backend/fetchRecords';
-
+import fetchSettings from '../../backend/fetchSettings';
 import './body.css';
 import { redirectToRecordId } from '../../helpers/DOM';
 
@@ -29,16 +28,37 @@ const checkExistingRecord = async ({
 
     const isExist = Boolean(existingRecord);
     if (isExist) {
-      const { $id: { value: recordId } } = existingRecord;
-      redirectToRecordId(recordId);
+      const { $id: { value: existingRecordId } } = existingRecord;
+
+      redirectToRecordId(existingRecordId);
+      return false;
     }
   }
+  return true;
+};
+
+const storeSettings = async () => {
+  const { 設定: { value: settings } } = (await fetchSettings())?.records[0];
+  if (!settings) return;
+
+  settings.forEach(({ value: row }) => {
+    const {
+      設定名: { value: key },
+      設定値: { value },
+    } = row;
+    console.log(row);
+    localStorage.setItem(key, value);
+  });
 };
 
 const onEditOrCreateHandler = (event) => {
   initialize(event);
-  checkExistingRecord(event);
-  renderApp(event);
+
+  if (checkExistingRecord(event)) {
+    storeSettings();
+    renderApp(event);
+  }
+
   return event;
 };
 
