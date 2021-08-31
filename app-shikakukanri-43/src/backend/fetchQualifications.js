@@ -13,4 +13,14 @@ export const getTakkenshiCountPerStore = async () => {
   }, {});
 };
 
+export const groupTakkenshiPerStore = async () => {
+  const takkenshi = (await fetchTakkenshi()).records;
+  return takkenshi.reduce((prev, curr) => {
+    const { 文字列＿店舗: { value: store } } = curr;
+    const newObj = { ...prev };
+    newObj[store] = (newObj[store] || []).concat({ ...curr });
+    return newObj;
+  }, {});
+};
+
 export default fetchQualifications;

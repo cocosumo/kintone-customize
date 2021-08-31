@@ -14,32 +14,35 @@ const RatioTable = ({
   employeeCountPerStore,
   takkenshiCountPerStore,
 }) => {
-  Object.entries(employeeCountPerStore).forEach(
-    ([key, value]) => console.log(key, value),
-  );
+  const row = [];
+  Object.entries(employeeCountPerStore).forEach(([key, value]) => {
+    const needCount = Math.ceil(value / 5);
+    const takkenshiCount = takkenshiCountPerStore[key];
+    const isEnough = takkenshiCount >= needCount;
+    row.push(
+      <TableRow sx={{ backgroundColor: isEnough ? 'white' : '#FFEBEE' }} key={key}>
+        <TableCell>{key}</TableCell>
+        <TableCell align="right">{value}</TableCell>
+        <TableCell align="right">{needCount}</TableCell>
+        <TableCell align="right">{takkenshiCount}</TableCell>
+      </TableRow>,
+    );
+  });
+
   return (
     <Container maxWidth="sm">
-      <TableContainer component={Paper}>
+      <TableContainer sx={{ margin: 2 }} component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
-            <TableRow>
-              <TableCell>店舗</TableCell>
-              <TableCell align="right">社員人数</TableCell>
-              <TableCell align="right">必要な宅建士人数</TableCell>
-              <TableCell align="right">宅建士人数</TableCell>
+            <TableRow sx={{ backgroundColor: '#3498db', color: '#FFF' }}>
+              <TableCell sx={{ color: 'white' }} component="th" scope="row">店舗</TableCell>
+              <TableCell sx={{ color: 'white' }} align="right">社員人数</TableCell>
+              <TableCell sx={{ color: 'white' }} align="right">必要な宅建士人数</TableCell>
+              <TableCell sx={{ color: 'white' }} align="right">宅建士人数</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-            </StyledTableRow>
-          ))} */}
+            {row}
           </TableBody>
         </Table>
       </TableContainer>
