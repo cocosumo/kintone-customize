@@ -5,12 +5,10 @@ import { EventsContext } from '../../store/EventsProvider';
 import { deleteEventById, replaceEvent, scrollTo } from '../../helpers/DOM';
 import { timeTo24Format } from '../../helpers/Time';
 
-import actionTypeData from '../../store/actionTypeData';
 import EventEditDialog from '../modals/EventEditDialog';
 import { EventDetailsPopper } from '../poppers/EventDetailsPopper';
-import { getSettings } from '../../backend/fetchSettings';
 
-const MaterialReport = ({ selectedDate }) => {
+const MaterialReport = ({ selectedDate, actionOptions }) => {
   const [reportDate, setReportDate] = useState(selectedDate);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -60,10 +58,11 @@ const MaterialReport = ({ selectedDate }) => {
     const eventTitle = info.actionType || info.event.title;
     const buildIdString = (eventTitle + startTime + endTime).replace(/:/g, '');
     const oldEventId = info.id || info.oldEvent?.id;
-    const colorData = actionTypeData().find(({ type }) => type === eventTitle);
-    const { bgColor, color } = colorData;
-
-    console.log(getSettings(), 'hello');
+    /* const colorData = actionTypeData().find(({ type }) => type === eventTitle);
+    const { bgColor, color } = colorData; */
+    const colorDate = actionOptions.find(({ type }) => type === eventTitle);
+    const { bgColor, color } = colorDate;
+    // console.log(getSettings(), 'hello');
 
     const newEvent = {
       id: buildIdString,

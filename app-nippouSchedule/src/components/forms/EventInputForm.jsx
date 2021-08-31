@@ -3,7 +3,7 @@ import MaterialSelect from '../UI/MaterialSelect';
 import './form.css';
 import MaterialText from '../UI/MaterialText';
 import { luxonTime } from '../../helpers/Time';
-import actionTypeData from '../../store/actionTypeData';
+import { getOptions } from '../../backend/fetchSettings';
 
 /**
  * Prop => Event Object
@@ -36,7 +36,7 @@ const EventInputForm = ({
 
   return (
     <>
-      <MaterialSelect id="actionType" label="区分" value={actionType} onChange={setActionType} optionsData={actionTypeData()} />
+      <MaterialSelect id="actionType" label="区分" value={actionType} onChange={setActionType} optionsData={getOptions()} />
       <MateriaTimePicker
         id="startTime"
         value={startTime}

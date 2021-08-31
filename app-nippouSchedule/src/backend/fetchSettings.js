@@ -14,8 +14,11 @@ const fetchSettings = () => {
   );
 };
 
-export const getSettings = () => JSON.parse(localStorage.getItem('選択肢'));
+export const getSettings = (key) => JSON.parse(localStorage.getItem(key));
 
-export const getActionTypeData = (actionName) => getSettings();
+export const getOptions = () => getSettings('選択肢');
+
+export const getActionTypeData = (actionName) => getSettings()
+  .find(({ type }) => type === actionName);
 
 export default fetchSettings;

@@ -34,7 +34,6 @@ const EventEditDialog = ({
       setStartTime(0);
     } else {
       setStartTime(value);
-      console.log(Boolean(value > endTime), value, endTime);
       if (!value.invalid && value > endTime) {
         setEndTime(value);
       }
@@ -66,8 +65,6 @@ const EventEditDialog = ({
     actionType,
     actionDetails,
   };
-
-  // const fullScreen = useMediaQuery(useTheme().breakpoints.down('md'));
 
   const TitleBar = () => (
     <DialogTitle sx={{ py: 1, pr: 1 }}>
