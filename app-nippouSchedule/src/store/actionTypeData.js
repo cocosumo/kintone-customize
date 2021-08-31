@@ -1,3 +1,5 @@
+/* Deprecated */
+
 const actionTypeData = () => [
   {
     type: '接客',

@@ -51,12 +51,12 @@ const EventEditDialog = ({
     setActionDetails(el.target.value);
   };
 
-  const changeHandlers = [
+  /* const changeHandlers = [
     changeStartTimeHandler,
     changeEndTimeHandler,
     changeActionTypeHandler,
     changeActionDetailsHandler,
-  ];
+  ]; */
 
   const newEvent = {
     id: selectedTime?.id,
@@ -90,8 +90,11 @@ const EventEditDialog = ({
       <TitleBar />
       <DialogContent>
         <EventInputForm
-          onChangeHandlers={changeHandlers}
+          // onChangeHandlers={changeHandlers}
+          onChangeStartTime={changeStartTimeHandler}
           onChangeEndTime={changeEndTimeHandler}
+          onChangeActionType={changeActionTypeHandler}
+          onChangeActionDetails={changeActionDetailsHandler}
           FCEventContents={newEvent}
           setErrorFields={setErrorFields}
 

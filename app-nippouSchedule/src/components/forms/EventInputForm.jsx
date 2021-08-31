@@ -22,28 +22,28 @@ import { getOptions } from '../../backend/fetchSettings';
  *  */
 
 const EventInputForm = ({
-  onChangeHandlers,
+
   FCEventContents,
   setErrorFields,
+  onChangeStartTime,
   onChangeEndTime,
+  onChangeActionType,
+  onChangeActionDetails,
 }) => {
-  const [
-    setStartTime, setEndTime, setActionType, setActionDetails,
-  ] = onChangeHandlers;
   const {
     startTime, endTime, actionType, actionDetails,
   } = FCEventContents;
 
   return (
     <>
-      <MaterialSelect id="actionType" label="区分" value={actionType} onChange={setActionType} optionsData={getOptions()} />
+      <MaterialSelect id="actionType" label="区分" value={actionType} onChange={onChangeActionType} optionsData={getOptions()} />
       <MateriaTimePicker
         id="startTime"
         value={startTime}
         label="開始"
         minTime={luxonTime({ hour: 8 })}
         maxTime={luxonTime({ hour: 20 })}
-        onChange={setStartTime}
+        onChange={onChangeStartTime}
         setErrorFields={setErrorFields}
         isRequired
       />
@@ -56,7 +56,7 @@ const EventInputForm = ({
         onChange={onChangeEndTime}
         setErrorFields={setErrorFields}
       />
-      <MaterialText id="actionDetails" label="詳細" value={actionDetails} onChange={setActionDetails} />
+      <MaterialText id="actionDetails" label="詳細" value={actionDetails} onChange={onChangeActionDetails} />
     </>
   );
 };

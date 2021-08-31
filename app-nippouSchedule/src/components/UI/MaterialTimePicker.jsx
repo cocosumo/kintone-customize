@@ -9,6 +9,7 @@ import {
 import { useState } from 'react';
 
 import { timeTo24Format } from '../../helpers/Time';
+import { isMobile } from '../../../../kintone-api/api';
 
 const MaterialTimePicker = ({
   id, value, label, minTime, maxTime, onChange, isRequired, setErrorFields,
@@ -47,6 +48,7 @@ const MaterialTimePicker = ({
         <LocalizationProvider dateAdapter={AdapterLuxon}>
           <TimePicker
             ampm={false}
+            orientation={isMobile() ? 'portrait' : 'landscape'}
             label={label}
             value={value}
             onChange={(newValue) => {

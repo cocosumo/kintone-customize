@@ -37,20 +37,6 @@ const EventsProvider = ({ event, name, children }) => {
     }
   }, []);
 
-  /* useEffect(async () => {
-    const { scheduleType, reportDate } = record;
-
-    if ((scheduleType.value).includes('予定')) return;
-
-    const plannedRecord = await fetchSchedPlanOnDate(reportDate.value);
-
-    if (plannedRecord) {
-      kintoneToFCEvents(plannedRecord, true);
-      setAllEvents([...allEvents, ...kintoneToFCEvents(plannedRecord, true)]);
-    }
-  }, []); */
-
-  // setKintoneSubmitEvent(confirmedActions(allEvents),name);
   return (
     <EventsContext.Provider value={[allEvents, setAllEvents]}>
       {children}
