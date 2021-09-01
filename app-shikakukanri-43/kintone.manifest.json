@@ -1,5 +1,5 @@
 {
-    "app": "107",
+    "app": "43",
     "scope": "ALL",
     "desktop": {
         "js": [
@@ -11,6 +11,7 @@
     },
     "mobile": {
         "js": [
+            "./dist/js/customize.js"
         ],
         "css": [
         ]

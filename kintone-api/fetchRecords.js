@@ -32,7 +32,7 @@ export const fetchUpTo500Records = (_params) => {
   const MAX_READ_LIMIT = 500;
 
   const params = _params || {};
-  const app = params.appId || kintone.app.getId();
+  const app = params.appId || getAppId();
   const { filterCond } = params;
   const { sortConds } = params;
   const limit = params.limit || -1;

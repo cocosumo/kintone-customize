@@ -4,6 +4,8 @@ Author: Yumenootetsudai 社内開発者
 */
 
 export const isMobile = () => (window.location.href).includes('k/m');
+export const device = () => (isMobile() ? 'k/m' : 'k');
+export const recordPath = (recordId) => (recordId ? `show${isMobile() ? '?' : '#'}record=${recordId}` : '');
 
 export const onDetailShow = [
   'app.record.detail.show',
@@ -120,3 +122,7 @@ export const setFieldShown = (fieldCode, isShown) => {
 };
 
 export const getUserName = () => (kintone.getLoginUser()).name;
+export const kintoneLink = ({ appId = getAppId(), recordId }) => {
+  const { protocol, hostname } = window.location;
+  return `${protocol}//${hostname}/${device()}/${appId}/${recordPath(recordId)}`;
+};
