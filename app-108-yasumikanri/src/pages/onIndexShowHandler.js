@@ -1,8 +1,16 @@
-/* eslint-disable no-unused-vars */
+import { render } from 'react-dom';
+import YasumiRegistry from '../forms/YasumiRegistry';
+
+const registrationViewId = 5523653;
+
+const renderRegistration = () => {
+  render(<YasumiRegistry />, document.getElementById('root'));
+};
+
 const onIndexShowHandler = (event) => {
-  const condition = kintone.app.getQueryCondition();
-  console.log(condition);
-  console.log('Index Page');
+  const { viewId } = event;
+
+  if (viewId === registrationViewId) { renderRegistration(); }
 };
 
 export default onIndexShowHandler;
