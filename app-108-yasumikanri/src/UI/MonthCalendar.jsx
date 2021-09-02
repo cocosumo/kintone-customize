@@ -15,14 +15,14 @@ const MonthCalendar = ({ clickDayHandler }) => {
       locale={jaLocale}
       fixedWeekCount={false}
       customButtons={{
-        myCustomButton: {
-          text: 'custom!',
+        remainingYasumi: {
+          text: `残りの休み: ${10}`,
         },
       }}
       headerToolbar={{
-        start: 'title', // will normally be on the left. if RTL, will be on the right
-        center: '',
-        end: 'today prev,next', // will normally be on the right. if RTL, will be on the left
+        start: 'title',
+        center: 'remainingYasumi',
+        end: 'today prev,next',
       }}
     />
   );

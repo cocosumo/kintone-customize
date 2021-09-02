@@ -1,5 +1,7 @@
 import { getAppId } from './api';
 
+const settingsAppId = 82;
+
 /**
 * レコードを取得 (100以下)
 * @param {
@@ -94,3 +96,10 @@ export const fetchUpTo500Records = (_params) => {
     });
   });
 };
+
+export const fetchSettings = (
+  appId = getAppId(),
+) => fetchUpTo100Records({
+  condition: `コード = "${appId}"`,
+  appId: settingsAppId,
+});
