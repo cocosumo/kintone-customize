@@ -4,11 +4,16 @@ import interactionPlugin from '@fullcalendar/interaction';
 import jaLocale from '@fullcalendar/core/locales/ja';
 import './MonthCalendar.css';
 
-const MonthCalendar = ({ clickDayHandler }) => {
-  console.log('rendered');
+const MonthCalendar = ({ remainingYasumi, clickDayHandler, datesSetHandler }) => {
+  console.log('rendered', remainingYasumi);
+  const dayRenderHandler = (args) => {
+    // console.log(args);
+  };
 
   return (
     <FullCalendar
+      datesSet={datesSetHandler}
+      dayCellDidMount={dayRenderHandler}
       dayCellClassNames={['day-cell']}
       plugins={[dayGridPlugin, interactionPlugin]}
       dateClick={clickDayHandler}
@@ -16,7 +21,7 @@ const MonthCalendar = ({ clickDayHandler }) => {
       fixedWeekCount={false}
       customButtons={{
         remainingYasumi: {
-          text: `残りの休み: ${10}`,
+          text: `残りの休み: ${remainingYasumi || 0}`,
         },
       }}
       headerToolbar={{
@@ -24,6 +29,15 @@ const MonthCalendar = ({ clickDayHandler }) => {
         center: 'remainingYasumi',
         end: 'today prev,next',
       }}
+      events={[
+        {
+          start: '2021-09-10T10:00:00',
+          allDay: true,
+          display: 'background',
+          classNames: ['day-all'],
+        },
+      ]}
+
     />
   );
 };

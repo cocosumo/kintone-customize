@@ -1,6 +1,18 @@
 import { getAppId } from './api';
 
 const settingsAppId = 82;
+const employeeListAppId = 34;
+
+export const fetchRecordById = ({ appId, recordId }) => {
+  const body = {
+    app: appId,
+    id: recordId,
+  };
+  return kintone.api(
+    kintone.api.url('/k/v1/record.json', true),
+    'GET', body,
+  );
+};
 
 /**
 * レコードを取得 (100以下)
@@ -102,4 +114,11 @@ export const fetchSettings = (
 ) => fetchUpTo100Records({
   condition: `コード = "${appId}"`,
   appId: settingsAppId,
+});
+
+export const fetchEmployeeById = (
+  employeeNumber,
+) => fetchRecordById({
+  appId: employeeListAppId,
+  recordId: employeeNumber,
 });
