@@ -21,8 +21,10 @@ const EventEditDialog = ({
   const selectedId = selectedTime?.id;
   const isEventPressed = Boolean(selectedId);
   const initialEndTime = ISOtoDATE(selectedFCEvent.endTime);
+
   const [startTime, setStartTime] = useState(ISOtoDATE(selectedFCEvent.startTime));
-  const [endTime, setEndTime] = useState(initialEndTime.invalid ? startTime : initialEndTime);
+  // const [endTime, setEndTime] = useState(initialEndTime.invalid ? startTime : initialEndTime);
+  const [endTime, setEndTime] = useState(initialEndTime);
   const [actionType, setActionType] = useState(
     selectedFCEvent.actionType || actionTypeData()[0].type,
   );
@@ -50,13 +52,6 @@ const EventEditDialog = ({
   const changeActionDetailsHandler = (el) => {
     setActionDetails(el.target.value);
   };
-
-  /* const changeHandlers = [
-    changeStartTimeHandler,
-    changeEndTimeHandler,
-    changeActionTypeHandler,
-    changeActionDetailsHandler,
-  ]; */
 
   const newEvent = {
     id: selectedTime?.id,

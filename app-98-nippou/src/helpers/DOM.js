@@ -1,13 +1,25 @@
 import { getAppId, isMobile } from '../../../kintone-api/api';
+import { addHours, diffInMinutes } from './Time';
 
 /* Consolidate both fcDate and fcEvent Objects
-  in a function
+  in a function and translates it to MUI.
 */
 export const reduceEvent = (s) => {
+  const resolveStartTime = s.dateStr || s.startStr || null;
+  let resolveEndTime = s.endStr || null;
+  const isEventClicked = Boolean(s.id);
+
+  if (!isEventClicked) {
+    const { minutes } = diffInMinutes(resolveStartTime, resolveEndTime);
+    if (minutes === 30) {
+      resolveEndTime = addHours(resolveStartTime, 1);
+    }
+  }
+
   if (!s) return {};
   return {
-    startTime: s.dateStr || s.startStr || null,
-    endTime: s.endStr || null,
+    startTime: resolveStartTime,
+    endTime: resolveEndTime,
     actionType: s.title || null,
     actionDetails: s.extendedProps?.description || null,
   };

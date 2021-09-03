@@ -41,11 +41,17 @@ export const diffInDays = (start, end) => ISOtoDATE(end)
   .diff(ISOtoDATE(start), 'days')
   .toObject();
 
+export const diffInMinutes = (start, end) => ISOtoDATE(end)
+  .diff(ISOtoDATE(start), 'minutes')
+  .toObject();
+
 export const isEndDateValid = (start, end) => ISOtoDATE(start) < ISOtoDATE(end);
 
-export const addDays = (date, num) => ISOtoDATE(date).plus({ days: num }).toISODate();
+export const addDays = (date, num) => ISOtoDATE(date).plus({ days: num });
+
+export const addHours = (date, num) => ISOtoDATE(date).plus({ hours: num });
 
 export const getRangeInBetween = (start, end) => ({
-  midStart: addDays(start, 1),
-  midEnd: addDays(end, -1),
+  midStart: addDays(start, 1).toISODate(),
+  midEnd: addDays(end, -1).toISODate(),
 });

@@ -18,7 +18,7 @@ const TimeGrid = ({
     plugins={[timeGridPlugin, interactionPlugin]}
     initialView="timeGridDay"
     initialDate={selectedDate}
-    slotMinTime="08:00:00"
+    slotMinTime="07:30:00"
     slotMaxTime="21:00:00"
     validRange={{
       start: selectedDate,
@@ -34,14 +34,16 @@ const TimeGrid = ({
     eventDrop={eventChange}
     events={events}
     eventClick={onClickEvent}
+    longPressDelay={50}
     businessHours={{
       daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
-      startTime: '9:00',
+      startTime: '8:00',
       endTime: '20:00',
     }}
     eventConstraint="businessHours"
     selectConstraint="businessHours"
     eventBorderColor="white"
+    forceEventDuration={true}
   />
 );
 export default TimeGrid;
