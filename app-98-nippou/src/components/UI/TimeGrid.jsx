@@ -34,7 +34,8 @@ const TimeGrid = ({
     eventDrop={eventChange}
     events={events}
     eventClick={onClickEvent}
-    longPressDelay={50}
+    longPressDelay={100}
+    eventLongPressDelay={1000}
     businessHours={{
       daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
       startTime: '8:00',
