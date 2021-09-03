@@ -13,9 +13,11 @@ const YasumiRegistry = () => {
   const clickDayHandler = (info) => {
     const { dateStr } = info;
     const dateRecords = yasumiRecords[dateStr];
-    const record = dateRecords.find(({ type }) => type === 'day-ordinary');
-    if (record) {
-      console.log(record);
+    if (dateRecords) {
+      const record = dateRecords.find(({ type }) => type === 'day-ordinary');
+      if (record) {
+        console.log(record);
+      }
     }
   };
 
