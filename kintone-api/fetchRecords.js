@@ -47,11 +47,13 @@ export const fetchUpTo500Records = (_params) => {
 
   const params = _params || {};
   const app = params.appId || getAppId();
-  const { filterCond } = params;
-  const { sortConds } = params;
+  const {
+    filterCond,
+    sortConds,
+    fields,
+  } = params;
   const limit = params.limit || -1;
   const offset = params.offset || 0;
-  const { fields } = params;
   let mydata = params.data;
 
   if (!mydata) {

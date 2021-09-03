@@ -1,11 +1,11 @@
 import { render } from 'react-dom';
 
-import YasumiRegistry from '../forms/YasumiRegistry';
+import YasumiRegistry from '../components/forms/YasumiRegistry';
 
 const registrationViewId = 5523653;
 
 const renderRegistration = async () => {
-  render(<YasumiRegistry maxYasumi={0} />, document.getElementById('root'));
+  render(<YasumiRegistry />, document.getElementById('root'));
 };
 
 const onIndexShowHandler = (event) => {

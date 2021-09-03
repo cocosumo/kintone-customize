@@ -3,22 +3,26 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import jaLocale from '@fullcalendar/core/locales/ja';
 import './MonthCalendar.css';
+import DayCell from './DayCell';
 
-const MonthCalendar = ({ remainingYasumi, clickDayHandler, datesSetHandler }) => {
-  console.log('rendered', remainingYasumi);
-  const dayRenderHandler = (args) => {
-    // console.log(args);
-  };
+const MonthCalendar = ({
+  remainingYasumi,
+  clickDayHandler,
+  datesSetHandler,
+  yasumiRecords,
+}) => {
+  const dayCellContentRender = (args) => <DayCell {...{ args, yasumiRecords }} />;
 
   return (
     <FullCalendar
+      dayCellContent={dayCellContentRender}
       datesSet={datesSetHandler}
-      dayCellDidMount={dayRenderHandler}
       dayCellClassNames={['day-cell']}
       plugins={[dayGridPlugin, interactionPlugin]}
       dateClick={clickDayHandler}
       locale={jaLocale}
       fixedWeekCount={false}
+      height="auto"
       customButtons={{
         remainingYasumi: {
           text: `残りの休み: ${remainingYasumi || 0}`,

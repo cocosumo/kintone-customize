@@ -30,6 +30,13 @@
         ],
         "react/react-in-jsx-scope": 0,
         "no-undef": 0,
-        "no-restricted-syntax": 0
+        "no-restricted-syntax": 0,
+        "no-param-reassign": [
+            "error",
+            {
+              "props": true,
+              "ignorePropertyModificationsFor": ["accu"]
+            }
+          ]
     }
 }
