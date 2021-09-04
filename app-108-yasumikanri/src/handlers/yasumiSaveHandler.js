@@ -1,5 +1,5 @@
 import { debounce } from '@material-ui/core';
-import { addYasumiRecords, deleteRecordByDates } from '../backend/yasumiKanri';
+import { addYasumiRecords, deleteRecordByDates, updateYasumiRecords } from '../backend/yasumiKanri';
 import { getOrdinaryYasumi } from '../helpers/converters';
 import refetchData from './refetchData';
 
@@ -39,7 +39,10 @@ const compareAndSaveRecords = async ({
       }
     },
   );
-  const promises = [addYasumiRecords(recordsToAdd)];
+  const promises = [
+    addYasumiRecords(recordsToAdd),
+    updateYasumiRecords(recordsToUpdate),
+  ];
   return Promise.allSettled(promises);
 };
 
@@ -60,6 +63,6 @@ const yasumiSaveHandler = debounce(async ({
   await refetchData({ currentMonth, setYasumiRecords, setSavedRecords });
 
   /* Add and Update */
-}, 1000);
+}, 1500);
 
 export default yasumiSaveHandler;

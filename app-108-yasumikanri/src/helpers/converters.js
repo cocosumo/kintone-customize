@@ -48,14 +48,22 @@ export const shiftToNext = (duration, remainingYasumi) => {
 
 export const resolveNewWeight = (prev, curr) => yasumiWeight(curr) - yasumiWeight(prev);
 
-export const toKintoneRecords = (unsavedRecords) => {
+const toKintoneRecord = ({ date, type, duration }) => {
   const eid = getEmployeeNumber();
-  return unsavedRecords.map(({ date, type, duration }) => ({
+  return {
     employeeNumber: { value: +eid },
     type: { value: getKintoneType(type) },
     duration: { value: getKintoneDuration(duration) },
     yasumiDate: { value: date },
-  }));
+  };
+};
+
+export const toKintoneRecords = (unsavedRecords) => {
+  const result = unsavedRecords.map((item) => {
+    const kr = toKintoneRecord(item);
+    return item.id ? { id: item.id, record: kr } : kr;
+  });
+  return result;
 };
 
 export const getOrdinaryYasumi = (rawRecord) => rawRecord.filter(({ type }) => type === 'day-ordinary');

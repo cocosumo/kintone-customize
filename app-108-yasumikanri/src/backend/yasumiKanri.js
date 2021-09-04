@@ -5,6 +5,7 @@ import {
 import { getEmployeeNumber } from './user';
 import deleteRecords from '../../../kintone-api/deleteRecords';
 import addRecords from '../../../kintone-api/addRecords';
+import updateRecords from '../../../kintone-api/updateRecords';
 
 const ownRecordFilter = `employeeNumber = "${getEmployeeNumber()}"`;
 
@@ -28,7 +29,6 @@ export const deleteRecordByDates = async (dates) => {
   if (!dates.length) return 'No Items to delete.';
 
   const datesToQuery = dates.map((item) => `yasumiDate = "${item}"`).join(' or ');
-  console.log(datesToQuery);
   const recordIds = (await fetchRecords({
     condition: [
       ownRecordFilter,
@@ -45,21 +45,15 @@ export const deleteRecordByDates = async (dates) => {
 
 export const addYasumiRecords = async (unsavedRecords) => {
   if (!unsavedRecords.length) return 'No records to add';
-  // const records = unsavedRecords.map({type, duration})
   const kintoneRecords = toKintoneRecords(unsavedRecords);
   return addRecords({ records: kintoneRecords });
 };
 
-/* export const addOrEditRecord = async (prev, curr) => {
-  console.log(prev, curr);
-  const recordsToAdd = [];
-  const recordsToUpdate = [];
-  console.log(curr.filter(({ type }) => type === 'day-ordinary'));
-  if (!prev) {
-    recordsToAdd.push();
-  }
-  return 'done';
-}; */
+export const updateYasumiRecords = async (unsavedRecords) => {
+  if (!unsavedRecords.length) return 'No records to update';
+  const kintoneRecords = toKintoneRecords(unsavedRecords);
+  return updateRecords({ records: kintoneRecords });
+};
 
 /*
 yasumiRecToObj(luxonDate)
