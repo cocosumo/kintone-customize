@@ -41,7 +41,7 @@ const compareAndSaveRecords = async ({
   );
   const promises = [
     addYasumiRecords(recordsToAdd),
-    updateYasumiRecords(recordsToUpdate),
+    updateYasumiRecords(recordsToUpdate, savedRecords),
   ];
   return Promise.allSettled(promises);
 };

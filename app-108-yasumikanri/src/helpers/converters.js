@@ -58,12 +58,14 @@ const toKintoneRecord = ({ date, type, duration }) => {
   };
 };
 
-export const toKintoneRecords = (unsavedRecords) => {
+export const getOrdinaryYasumi = (rawRecord) => rawRecord.filter(({ type }) => type === 'day-ordinary');
+
+export const toKintoneRecords = (unsavedRecords, savedRecords) => {
+  const fallbackId = (date, rid) => (rid || getOrdinaryYasumi(savedRecords[date])[0].id);
+
   const result = unsavedRecords.map((item) => {
     const kr = toKintoneRecord(item);
-    return item.id ? { id: item.id, record: kr } : kr;
+    return savedRecords ? { id: fallbackId(item.date, item.id), record: kr } : kr;
   });
   return result;
 };
-
-export const getOrdinaryYasumi = (rawRecord) => rawRecord.filter(({ type }) => type === 'day-ordinary');

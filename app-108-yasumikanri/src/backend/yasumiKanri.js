@@ -49,9 +49,10 @@ export const addYasumiRecords = async (unsavedRecords) => {
   return addRecords({ records: kintoneRecords });
 };
 
-export const updateYasumiRecords = async (unsavedRecords) => {
+export const updateYasumiRecords = async (unsavedRecords, savedRecords) => {
   if (!unsavedRecords.length) return 'No records to update';
-  const kintoneRecords = toKintoneRecords(unsavedRecords);
+  const kintoneRecords = toKintoneRecords(unsavedRecords, savedRecords);
+  console.log(kintoneRecords, 'updt');
   return updateRecords({ records: kintoneRecords });
 };
 
