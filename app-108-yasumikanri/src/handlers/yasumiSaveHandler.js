@@ -1,5 +1,5 @@
 import { debounce } from '@material-ui/core';
-import { addOrEditRecord, addYasumiRecords, deleteRecordByDates } from '../backend/yasumiKanri';
+import { addYasumiRecords, deleteRecordByDates } from '../backend/yasumiKanri';
 import { getOrdinaryYasumi } from '../helpers/converters';
 import refetchData from './refetchData';
 
@@ -17,6 +17,13 @@ const deleteRecords = async ({
   return deleteRecordByDates(datesToBeDeleted);
 };
 
+const pushToRecordsToSave = (recordsToSave, unsavedRecord, key) => {
+  const dayOrdinary = getOrdinaryYasumi(unsavedRecord);
+  if (dayOrdinary.length) {
+    recordsToSave.push({ ...{ date: key }, ...dayOrdinary[0] });
+  }
+};
+
 const compareAndSaveRecords = async ({
   newYasumiRecords,
   savedRecords,
@@ -26,13 +33,9 @@ const compareAndSaveRecords = async ({
   Object.keys(newYasumiRecords).forEach(
     (key) => {
       if (!savedRecords[key]) {
-        const dayOrdinary = getOrdinaryYasumi(newYasumiRecords[key]);
-        // newYasumiRecords[key].filter(({ type }) => type === 'day-ordinary');
-        if (dayOrdinary.length) {
-          recordsToAdd.push({ ...{ date: key }, ...dayOrdinary[0] });
-        }
+        pushToRecordsToSave(recordsToAdd, newYasumiRecords[key], key);
       } else if (JSON.stringify(newYasumiRecords[key]) !== JSON.stringify(savedRecords[key])) {
-
+        pushToRecordsToSave(recordsToUpdate, newYasumiRecords[key], key);
       }
     },
   );
