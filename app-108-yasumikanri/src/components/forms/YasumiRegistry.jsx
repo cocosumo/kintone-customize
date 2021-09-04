@@ -1,31 +1,35 @@
-import { useEffect, useState, useRef } from 'react';
+import {
+  useEffect, useState, useRef,
+} from 'react';
 import { Container } from '@material-ui/core';
 import MonthCalendar from '../UI/MonthCalendar';
 import { JSDToLux } from '../../helpers/time';
 import getYasumiCount from '../../backend/settings';
 import { yasumiRecToObj, yasumiUsed } from '../../backend/yasumiKanri';
+import yasumiChangeHandler from '../../handlers/yasumiChangeHandler';
 
 const YasumiRegistry = () => {
   const [remainingYasumi, setRemainingYasumi] = useState();
   const [yasumiRecords, setYasumiRecords] = useState();
+  const [savedRecords, setSavedRecords] = useState();
   const currentMonth = useRef();
 
   const clickDayHandler = (info) => {
-    const { dateStr } = info;
-    const dateRecords = yasumiRecords[dateStr];
-    if (dateRecords) {
-      const record = dateRecords.find(({ type }) => type === 'day-ordinary');
-      if (record) {
-        console.log(record);
-      }
-    }
+    yasumiChangeHandler({
+      info,
+      yasumiRecords,
+      setYasumiRecords,
+      remainingYasumi,
+      savedRecords,
+    });
   };
 
   const datesSetHandler = async ({ view }) => {
     const { currentStart } = view;
     currentMonth.current = JSDToLux(currentStart);
-
-    setYasumiRecords(await yasumiRecToObj(currentMonth.current));
+    const yasumiObjs = await yasumiRecToObj(currentMonth.current);
+    setYasumiRecords(yasumiObjs);
+    setSavedRecords(yasumiObjs);
   };
 
   useEffect(async () => {

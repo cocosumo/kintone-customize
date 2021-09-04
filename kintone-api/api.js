@@ -122,6 +122,7 @@ export const setFieldShown = (fieldCode, isShown) => {
 };
 
 export const getUserName = () => (kintone.getLoginUser()).name;
+
 export const kintoneLink = ({ appId = getAppId(), recordId }) => {
   const { protocol, hostname } = window.location;
   return `${protocol}//${hostname}/${device()}/${appId}/${recordPath(recordId)}`;

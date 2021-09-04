@@ -15,13 +15,13 @@ export const fetchRecordById = ({ appId, recordId }) => {
 };
 
 /**
-* レコードを取得 (100以下)
+* 制約まで取得
 * @param {
 *   @param appId アプリのID、デフォールトは当アプリ
 *   @param condition クエリ
 * }
 */
-export const fetchUpTo100Records = ({ condition = '', appId = getAppId() }) => {
+export const fetchRecords = ({ condition = '', appId = getAppId() }) => {
   const body = {
     app: appId,
     query: condition,
@@ -34,7 +34,7 @@ export const fetchUpTo100Records = ({ condition = '', appId = getAppId() }) => {
 };
 
 /**
-* レコードを取得 (500以下)
+* 再起で取得
 * @param {
 *   @param appId, アプリのID、デフォールトは当アプリ
 *   @param filterCond, クエリ
@@ -42,7 +42,7 @@ export const fetchUpTo100Records = ({ condition = '', appId = getAppId() }) => {
 *   @param limit, レコード数
 * }
 */
-export const fetchUpTo500Records = (_params) => {
+export const fetchAllRecords = (_params) => {
   const MAX_READ_LIMIT = 500;
 
   const params = _params || {};
