@@ -1,16 +1,60 @@
 import { debounce } from '@material-ui/core';
+import { addOrEditRecord, addYasumiRecords, deleteRecordByDates } from '../backend/yasumiKanri';
+import { getOrdinaryYasumi } from '../helpers/converters';
+import refetchData from './refetchData';
 
-const yasumiSaveHandler = debounce(({
+const deleteRecords = async ({
   newYasumiRecords,
   savedRecords,
 }) => {
-  console.log(savedRecords, newYasumiRecords);
-  /* Delete */
+  const datesToBeDeleted = [];
   Object.keys(savedRecords).forEach((key) => {
-    console.log(key, newYasumiRecords[key]);
+    if (!newYasumiRecords[key]) {
+      datesToBeDeleted.push(key);
+    }
   });
 
+  return deleteRecordByDates(datesToBeDeleted);
+};
+
+const compareAndSaveRecords = async ({
+  newYasumiRecords,
+  savedRecords,
+}) => {
+  const recordsToAdd = [];
+  const recordsToUpdate = [];
+  Object.keys(newYasumiRecords).forEach(
+    (key) => {
+      if (!savedRecords[key]) {
+        const dayOrdinary = getOrdinaryYasumi(newYasumiRecords[key]);
+        // newYasumiRecords[key].filter(({ type }) => type === 'day-ordinary');
+        if (dayOrdinary.length) {
+          recordsToAdd.push({ ...{ date: key }, ...dayOrdinary[0] });
+        }
+      } else if (JSON.stringify(newYasumiRecords[key]) !== JSON.stringify(savedRecords[key])) {
+
+      }
+    },
+  );
+  const promises = [addYasumiRecords(recordsToAdd)];
+  return Promise.allSettled(promises);
+};
+
+const yasumiSaveHandler = debounce(async ({
+  newYasumiRecords,
+  savedRecords,
+  currentMonth,
+  setYasumiRecords,
+  setSavedRecords,
+}) => {
+  const promises = [
+    deleteRecords({ savedRecords, newYasumiRecords }),
+    compareAndSaveRecords({ savedRecords, newYasumiRecords })];
+
+  const result = await Promise.allSettled(promises);
+  console.log(result);
   /* Add */
+  await refetchData({ currentMonth, setYasumiRecords, setSavedRecords });
 
   /* Add and Update */
 }, 1000);

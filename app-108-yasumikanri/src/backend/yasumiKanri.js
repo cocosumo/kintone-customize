@@ -1,8 +1,10 @@
 import { fetchRecords } from '../../../kintone-api/fetchRecords';
 import {
-  normDuration, normStatus, normType, yasumiWeight,
+  normDuration, normStatus, normType, toKintoneRecords, yasumiWeight,
 } from '../helpers/converters';
 import { getEmployeeNumber } from './user';
+import deleteRecords from '../../../kintone-api/deleteRecords';
+import addRecords from '../../../kintone-api/addRecords';
 
 const ownRecordFilter = `employeeNumber = "${getEmployeeNumber()}"`;
 
@@ -19,9 +21,45 @@ export const fetchYasumiRecords = async (luxonDate) => {
   });
 };
 
-export const deleteRecordByDate = () => {
+/**
+ * @param ISOString
+ */
+export const deleteRecordByDates = async (dates) => {
+  if (!dates.length) return 'No Items to delete.';
 
+  const datesToQuery = dates.map((item) => `yasumiDate = "${item}"`).join(' or ');
+  console.log(datesToQuery);
+  const recordIds = (await fetchRecords({
+    condition: [
+      ownRecordFilter,
+      datesToQuery,
+    ].join(' and '),
+    fields: ['$id'],
+  })).records.map(({ $id }) => $id.value);
+
+  if (recordIds) {
+    return deleteRecords({ ids: recordIds });
+  }
+  return 'No items to delete';
 };
+
+export const addYasumiRecords = async (unsavedRecords) => {
+  if (!unsavedRecords.length) return 'No records to add';
+  // const records = unsavedRecords.map({type, duration})
+  const kintoneRecords = toKintoneRecords(unsavedRecords);
+  return addRecords({ records: kintoneRecords });
+};
+
+/* export const addOrEditRecord = async (prev, curr) => {
+  console.log(prev, curr);
+  const recordsToAdd = [];
+  const recordsToUpdate = [];
+  console.log(curr.filter(({ type }) => type === 'day-ordinary'));
+  if (!prev) {
+    recordsToAdd.push();
+  }
+  return 'done';
+}; */
 
 /*
 yasumiRecToObj(luxonDate)

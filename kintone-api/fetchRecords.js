@@ -21,10 +21,15 @@ export const fetchRecordById = ({ appId, recordId }) => {
 *   @param condition クエリ
 * }
 */
-export const fetchRecords = ({ condition = '', appId = getAppId() }) => {
+export const fetchRecords = ({
+  condition = '',
+  appId = getAppId(),
+  fields = [],
+}) => {
   const body = {
     app: appId,
     query: condition,
+    fields,
   };
   return kintone.api(
     kintone.api.url('/k/v1/records', true),
@@ -99,7 +104,7 @@ export const fetchAllRecords = (_params) => {
       return mydata;
     }
     // 取得すべきレコードが残っている場合は、再帰呼び出しで残りのレコードを取得する
-    return fetchUpTo500Records({
+    return fetchAllRecords({
       app,
       filterCond,
       sortConds,
@@ -113,7 +118,7 @@ export const fetchAllRecords = (_params) => {
 
 export const fetchSettings = (
   appId = getAppId(),
-) => fetchUpTo100Records({
+) => fetchRecords({
   condition: `コード = "${appId}"`,
   appId: settingsAppId,
 });

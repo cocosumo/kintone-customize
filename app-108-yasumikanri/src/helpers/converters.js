@@ -1,3 +1,5 @@
+import { getEmployeeNumber } from '../backend/user';
+
 export const normDuration = {
   一日: 'day-whole',
   午前休み: 'day-am',
@@ -29,6 +31,7 @@ export const normStatus = {
 const getKeyByValue = (object, value) => Object.keys(object).find((key) => object[key] === value);
 
 export const getKintoneType = (type) => getKeyByValue(normType, type);
+export const getKintoneDuration = (duration) => getKeyByValue(normDuration, duration);
 
 export const shiftToNext = (duration, remainingYasumi) => {
   switch (duration) {
@@ -43,13 +46,16 @@ export const shiftToNext = (duration, remainingYasumi) => {
   }
 };
 
-export const resolveNewWeight = (prev, curr) => {
-  const p = yasumiWeight(prev);
-  const c = yasumiWeight(curr);
+export const resolveNewWeight = (prev, curr) => yasumiWeight(curr) - yasumiWeight(prev);
 
-  return c - p;
+export const toKintoneRecords = (unsavedRecords) => {
+  const eid = getEmployeeNumber();
+  return unsavedRecords.map(({ date, type, duration }) => ({
+    employeeNumber: { value: +eid },
+    type: { value: getKintoneType(type) },
+    duration: { value: getKintoneDuration(duration) },
+    yasumiDate: { value: date },
+  }));
 };
 
-// 1 0 = -1
-// 0 0.5 = 0.5
-// 0 1
+export const getOrdinaryYasumi = (rawRecord) => rawRecord.filter(({ type }) => type === 'day-ordinary');

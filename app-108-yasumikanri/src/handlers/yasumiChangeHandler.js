@@ -5,9 +5,11 @@ import yasumiSaveHandler from './yasumiSaveHandler';
 const yasumiChangeHandler = ({
   info,
   yasumiRecords,
-  setYasumiRecords,
   remainingYasumi,
   savedRecords,
+  currentMonth,
+  setYasumiRecords,
+  setSavedRecords,
 }) => {
   const { dateStr } = info;
   let newArray = yasumiRecords[dateStr] || [defaultRecord];
@@ -24,7 +26,7 @@ const yasumiChangeHandler = ({
       return item;
     }).filter(({ duration }) => Boolean(duration));
 
-    if ((remainingYasumi - weight) < 0) return;
+    if ((remainingYasumi - weight) < 0) return; // cancel change if no more remaining yasumi
 
     if (newArray.length) {
       setYasumiRecords((prev) => {
@@ -40,7 +42,14 @@ const yasumiChangeHandler = ({
       });
     }
   }
-  yasumiSaveHandler({ newYasumiRecords, savedRecords });
+
+  yasumiSaveHandler({
+    newYasumiRecords,
+    savedRecords,
+    currentMonth,
+    setYasumiRecords,
+    setSavedRecords,
+  });
   // process({ newYasumiRecords, savedRecords });
 };
 
