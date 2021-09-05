@@ -1,6 +1,6 @@
 import { fetchRecords } from '../../../kintone-api/fetchRecords';
 import {
-  normDuration, normStatus, normType, toKintoneRecords, yasumiWeight,
+  normDuration, normStatus, normType, toKintoneRecords, getYasumiWeight, getKintoneType,
 } from '../helpers/converters';
 import { getEmployeeNumber } from './user';
 import deleteRecords from '../../../kintone-api/deleteRecords';
@@ -23,16 +23,22 @@ export const fetchYasumiRecords = async (luxonDate) => {
 };
 
 /**
- * @param ISOString
+ * Delete record by dates.
+ * @param {String[]} dates - dates to be deleted.
+ * @param {string} employees[].name - The name of an employee.
+ * @param {string} employees[].department - The employee's department.
  */
 export const deleteRecordByDates = async (dates) => {
   if (!dates.length) return 'No Items to delete.';
 
   const datesToQuery = dates.map((item) => `yasumiDate = "${item}"`).join(' or ');
+  const typeToQuery = `type in ("${getKintoneType('day-ordinary')}")`;
+
   const recordIds = (await fetchRecords({
     condition: [
       ownRecordFilter,
-      datesToQuery,
+      typeToQuery,
+      `(${datesToQuery})`,
     ].join(' and '),
     fields: ['$id'],
   })).records.map(({ $id }) => $id.value);
@@ -93,7 +99,7 @@ export const yasumiUsed = (yasumiRecords) => {
   let result = 0;
   Object.values(yasumiRecords).forEach((val) => {
     const { duration = null } = val.find(({ type }) => type === 'day-ordinary') || [];
-    result += duration ? yasumiWeight(duration) : 0;
+    result += duration ? getYasumiWeight(duration) : 0;
   });
 
   return result;

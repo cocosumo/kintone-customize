@@ -6,7 +6,7 @@ export const normDuration = {
   午後休み: 'day-pm',
 };
 
-export const yasumiWeight = (duration) => {
+export const getYasumiWeight = (duration) => {
   switch (duration) {
     case 'day-whole': return 1;
     case 'day-am': return 0.5;
@@ -46,7 +46,7 @@ export const shiftToNext = (duration, remainingYasumi) => {
   }
 };
 
-export const resolveNewWeight = (prev, curr) => yasumiWeight(curr) - yasumiWeight(prev);
+export const resolveNewWeight = (prev, curr) => getYasumiWeight(curr) - getYasumiWeight(prev);
 
 const toKintoneRecord = ({ date, type, duration }) => {
   const eid = getEmployeeNumber();

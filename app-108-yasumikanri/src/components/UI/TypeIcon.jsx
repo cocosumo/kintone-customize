@@ -59,6 +59,15 @@ const resolveIcon = ({ type, duration, status }) => {
   return Processing;
 };
 
-const TypeIcon = ({ record }) => <img src={resolveIcon(record)} alt="type" width="100%" />;
+const TypeIcon = ({ record }) => (
+  <img
+    style={{
+      maxWidth: '100%',
+      maxHeight: '100%',
+    }}
+    src={resolveIcon(record)}
+    alt="type"
+  />
+);
 
 export default TypeIcon;

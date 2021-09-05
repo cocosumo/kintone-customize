@@ -1,11 +1,19 @@
 import { render } from 'react-dom';
+import { getEmployeeRole } from '../backend/user';
 
 import YasumiRegistry from '../components/forms/YasumiRegistry';
+import GlobalTheme from '../components/themes/GlobalTheme';
 
 const registrationViewId = 5523653;
 
 const renderRegistration = async () => {
-  render(<YasumiRegistry />, document.getElementById('root'));
+  localStorage.setItem('employeeRole', await getEmployeeRole());
+  render(
+    <GlobalTheme>
+      <YasumiRegistry />
+    </GlobalTheme>,
+    document.getElementById('root'),
+  );
 };
 
 const onIndexShowHandler = (event) => {

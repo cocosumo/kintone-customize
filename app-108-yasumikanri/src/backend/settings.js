@@ -1,5 +1,4 @@
 import { fetchSettings } from '../../../kintone-api/fetchRecords';
-import { getEmployeeRole } from './user';
 
 /* Plus 1 yasumi for support roles. */
 const yasumiDaysReference = {
@@ -9,15 +8,31 @@ const yasumiDaysReference = {
   28: 5,
 };
 
-const calcYasumiDays = async (luxonDate) => {
+const calcYasumiDays = (luxonDate) => {
   const monthDays = luxonDate.endOf('month').day;
   return yasumiDaysReference[monthDays];
 };
 
-const getYasumiCount = async (luxonDate) => {
-  let yasumiDays = 0;
+/* export const fetchMaxYasumiDays = async (luxonDate) => {
   const { year, month } = luxonDate;
-  const employeeRole = await getEmployeeRole();
+  const employeeRole = localStorage.getItem('employeeRole');
+  const {
+    設定: { value: settingsTable },
+  } = (await fetchSettings()).records[0];
+
+  const yasumiDaysSetting = settingsTable.find(({ value }) => {
+    const { 設定名: { value: settingsName } } = value;
+    return settingsName === `休み数_${year}`;
+  });
+
+  return (!yasumiDaysSetting
+    ? calcYasumiDays(luxonDate) : JSON.parse(yasumiDaysSetting?.value.設定値.value)[month]);
+}; */
+
+const getYasumiCount = async (luxonDate) => {
+  const { year, month } = luxonDate;
+
+  const employeeRole = localStorage.getItem('employeeRole');
 
   const {
     設定: { value: settingsTable },
@@ -28,10 +43,11 @@ const getYasumiCount = async (luxonDate) => {
     return settingsName === `休み数_${year}`;
   });
 
-  yasumiDays = !yasumiDaysSetting
-    ? 0 : yasumiDays = JSON.parse(yasumiDaysSetting?.value.設定値.value)[month];
-
-  return (yasumiDays || await calcYasumiDays(luxonDate)) + (employeeRole === 'サポート' ? 1 : 0);
+  const yasumiDays = !yasumiDaysSetting
+    ? 0
+    : JSON.parse(yasumiDaysSetting?.value.設定値.value)[month];
+  console.log('yasumi', yasumiDays);
+  return (yasumiDays || calcYasumiDays(luxonDate)) + (employeeRole === 'サポート' ? 1 : 0);
 };
 
 export default getYasumiCount;

@@ -1,4 +1,6 @@
-import { defaultRecord } from '../backend/yasumiKanri';
+/* eslint-disable no-param-reassign */
+import ReactDOM from 'react-dom';
+import { defaultRecord, yasumiUsed } from '../backend/yasumiKanri';
 import { resolveNewWeight, shiftToNext } from '../helpers/converters';
 import yasumiSaveHandler from './yasumiSaveHandler';
 
@@ -7,9 +9,13 @@ const yasumiChangeHandler = ({
   yasumiRecords,
   remainingYasumi,
   savedRecords,
+  maxYasumi,
   currentMonth,
+  setRemainingYasumi,
   setYasumiRecords,
-  setSavedRecords,
+  setErrorSnackOpen,
+  setSavedSnackOpen,
+  setWarningSnackOpen,
 }) => {
   const { dateStr } = info;
   let newArray = yasumiRecords[dateStr] || [defaultRecord];
@@ -26,29 +32,38 @@ const yasumiChangeHandler = ({
       return item;
     }).filter(({ duration }) => Boolean(duration));
 
-    if ((remainingYasumi - weight) < 0) return; // cancel change if no more remaining yasumi
-
-    if (newArray.length) {
-      setYasumiRecords((prev) => {
-        newYasumiRecords = { ...prev, [dateStr]: newArray };
-        return newYasumiRecords;
-      });
-    } else {
-      setYasumiRecords((prev) => {
-        const state = { ...prev };
-        delete state[dateStr];
-        newYasumiRecords = state;
-        return state;
-      });
+    if ((remainingYasumi - weight) < 0) {
+      setErrorSnackOpen(true);
+      return; // cancel change if no more remaining yasumi
     }
+
+    ReactDOM.unstable_batchedUpdates(() => {
+      if (newArray.length) {
+        setYasumiRecords((prev) => {
+          newYasumiRecords = { ...prev, [dateStr]: newArray };
+          return newYasumiRecords;
+        });
+      } else {
+        setYasumiRecords((prev) => {
+          const state = { ...prev };
+          delete state[dateStr];
+          newYasumiRecords = state;
+          return state;
+        });
+      }
+      setRemainingYasumi(maxYasumi.current - yasumiUsed(newYasumiRecords));
+    });
   }
 
   yasumiSaveHandler({
     newYasumiRecords,
     savedRecords,
     currentMonth,
+    maxYasumi,
+    setRemainingYasumi,
     setYasumiRecords,
-    setSavedRecords,
+    setSavedSnackOpen,
+    setWarningSnackOpen,
   });
   // process({ newYasumiRecords, savedRecords });
 };

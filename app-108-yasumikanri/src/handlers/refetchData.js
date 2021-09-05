@@ -1,9 +1,21 @@
-import { yasumiRecToObj } from '../backend/yasumiKanri';
+/* eslint-disable no-param-reassign */
+import ReactDOM from 'react-dom';
+import { yasumiRecToObj, yasumiUsed } from '../backend/yasumiKanri';
 
-const refetchData = async ({ currentMonth, setYasumiRecords, setSavedRecords }) => {
+const refetchData = async ({
+  currentMonth,
+  setYasumiRecords,
+  setRemainingYasumi,
+  savedRecords,
+  maxYasumi,
+}) => {
   const yasumiObjs = await yasumiRecToObj(currentMonth.current);
-  setYasumiRecords(yasumiObjs);
-  setSavedRecords(yasumiObjs);
+
+  savedRecords.current = yasumiObjs;
+  ReactDOM.unstable_batchedUpdates(() => {
+    setRemainingYasumi(maxYasumi.current - yasumiUsed(yasumiObjs));
+    setYasumiRecords(yasumiObjs);
+  });
 };
 
 export default refetchData;

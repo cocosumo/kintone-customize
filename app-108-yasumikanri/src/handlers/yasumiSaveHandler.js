@@ -1,4 +1,4 @@
-import { debounce } from '@material-ui/core';
+import { debounce } from 'lodash';
 import { addYasumiRecords, deleteRecordByDates, updateYasumiRecords } from '../backend/yasumiKanri';
 import { getOrdinaryYasumi } from '../helpers/converters';
 import refetchData from './refetchData';
@@ -49,20 +49,32 @@ const compareAndSaveRecords = async ({
 const yasumiSaveHandler = debounce(async ({
   newYasumiRecords,
   savedRecords,
+  maxYasumi,
   currentMonth,
+  setRemainingYasumi,
   setYasumiRecords,
-  setSavedRecords,
+  setSavedSnackOpen,
+  setWarningSnackOpen,
 }) => {
   const promises = [
-    deleteRecords({ savedRecords, newYasumiRecords }),
-    compareAndSaveRecords({ savedRecords, newYasumiRecords })];
+    deleteRecords({ savedRecords: savedRecords.current, newYasumiRecords }),
+    compareAndSaveRecords({ savedRecords: savedRecords.current, newYasumiRecords }),
+  ];
 
   const result = await Promise.allSettled(promises);
-  console.log(result);
+  const isSuccess = !JSON.stringify(result).includes('rejected');
+  setSavedSnackOpen(isSuccess);
+  setWarningSnackOpen(!isSuccess);
   /* Add */
-  await refetchData({ currentMonth, setYasumiRecords, setSavedRecords });
+  await refetchData({
+    currentMonth,
+    setYasumiRecords,
+    savedRecords,
+    setRemainingYasumi,
+    maxYasumi,
+  });
 
   /* Add and Update */
-}, 1500);
+}, 1000);
 
 export default yasumiSaveHandler;

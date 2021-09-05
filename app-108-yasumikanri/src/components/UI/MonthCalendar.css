@@ -18,10 +18,27 @@
 
 .fc-daygrid-day-number {
   width: 100%;
-  height: 100%;
 }
 
 
 .fc-daygrid-day-events {
   display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .fc-toolbar-title {
+    font-size: 1.5em !important;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .fc-toolbar-title {
+    font-size: 1em !important;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  .fc .fc-button {
+    font-size: 0.7em;
+  }
 }

@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 import { JSDToLux } from '../../helpers/time';
 import DayContent from './DayContent';
 import DayHeader from './DayHeader';
@@ -19,8 +19,9 @@ const DayCell = ({
   return (
     <Box style={{ margin: 'auto 0 auto 0', width: '100%' }}>
       <DayHeader {...{ dayNumberText }} />
-      {isExist && (<DayContent {...{ dayRecords }} />)}
-      {!isExist && (<Box sx={{ minHeight: '60px' }} />)}
+      <Box sx={{ height: 60 }}>
+        {isExist && (<DayContent {...{ dayRecords }} />)}
+      </Box>
     </Box>
   );
 };
