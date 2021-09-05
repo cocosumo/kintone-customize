@@ -1,26 +1,20 @@
 import {
-  useEffect, useState, useRef,
+  useState, useRef,
 } from 'react';
 import { Container } from '@mui/material';
 import MonthCalendar from '../UI/MonthCalendar';
 import { JSDToLux } from '../../helpers/time';
 import getYasumiCount from '../../backend/settings';
-import { yasumiUsed } from '../../backend/yasumiKanri';
+
 import yasumiChangeHandler from '../../handlers/yasumiChangeHandler';
 import refetchData from '../../handlers/refetchData';
-import AboveLimit from '../UI/snackbars/AboveLimit';
-import SavedSnack from '../UI/snackbars/Saved';
-import WarningSnack from '../UI/snackbars/ServerWaning';
+
 import deleteExcessYasumi from '../../handlers/deleteExcessYasumi';
+import ActivitySnack from '../UI/ActivitySnack';
 
 const YasumiRegistry = () => {
   const [yasumiRecords, setYasumiRecords] = useState();
-  // const [savedRecords, setSavedRecords] = useState();
-
-  /*   const [errorSnackOpen, setErrorSnackOpen] = useState();
-  const [savedSnackOpen, setSavedSnackOpen] = useState();
-  const [warningSnackOpen, setWarningSnackOpen] = useState(); */
-
+  const [snackOpen, setSnackOpen] = useState(false);
   const [snackType, setSnackType] = useState();
 
   const [remainingYasumi, setRemainingYasumi] = useState();
@@ -40,6 +34,7 @@ const YasumiRegistry = () => {
       setRemainingYasumi,
       setYasumiRecords,
       setSnackType,
+      setSnackOpen,
       // setErrorSnackOpen,
       // setSavedSnackOpen,
       // setWarningSnackOpen,
@@ -87,9 +82,10 @@ const YasumiRegistry = () => {
         yasumiRecords,
       }}
       />
-      <ErrorSnack open={errorSnackOpen} onClose={setErrorSnackOpen} />
+      <ActivitySnack open={snackOpen} onClose={setSnackOpen} snackType={snackType} />
+      {/* <ErrorSnack open={errorSnackOpen} onClose={setErrorSnackOpen} />
       <SavedSnack open={savedSnackOpen} onClose={setSavedSnackOpen} />
-      <WarningSnack open={warningSnackOpen} onClose={setWarningSnackOpen} />
+      <WarningSnack open={warningSnackOpen} onClose={setWarningSnackOpen} /> */}
 
     </Container>
   );

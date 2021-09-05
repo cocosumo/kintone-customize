@@ -3,11 +3,11 @@ import YumeSnack from './YumeSnack';
 const ActivitySnack = ({
   open,
   onClose,
-  type,
+  snackType,
 
 }) => {
   let snackProps = {};
-  switch (type) {
+  switch (snackType) {
     case 'aboveLimit':
       snackProps = {
         duration: 800,
@@ -15,7 +15,23 @@ const ActivitySnack = ({
         severity: 'error',
       };
       break;
-
+    case 'saveSuccess':
+      snackProps = {
+        duration: 2000,
+        message: '保存が出来ました。',
+        severity: 'success',
+      };
+      break;
+    case 'saveError':
+      snackProps = {
+        duration: 4000,
+        message: `保存に問題がありました。
+        ブラウザーを更新してください。それでも、問題がありましたら、
+        お手数ですが、次のリンクにて、ご連絡ください。
+        https://rdmuhwtt6gx7.cybozu.com/k/101/edit`,
+        severity: 'warning',
+      };
+      break;
     default:
       break;
   }
@@ -23,10 +39,11 @@ const ActivitySnack = ({
   const { duration, message, severity } = snackProps;
 
   return (
-    <YumeSnack {
-    ...{
-      open, onClose, duration, message, severity,
-    }}
+    <YumeSnack
+      open={open}
+      {...{
+        onClose, duration, message, severity, snackType,
+      }}
     />
   );
 };

@@ -53,8 +53,7 @@ const yasumiSaveHandler = debounce(async ({
   currentMonth,
   setRemainingYasumi,
   setYasumiRecords,
-  setSavedSnackOpen,
-  setWarningSnackOpen,
+  setSnackType,
 }) => {
   const promises = [
     deleteRecords({ savedRecords: savedRecords.current, newYasumiRecords }),
@@ -63,8 +62,7 @@ const yasumiSaveHandler = debounce(async ({
 
   const result = await Promise.allSettled(promises);
   const isSuccess = !JSON.stringify(result).includes('rejected');
-  setSavedSnackOpen(isSuccess);
-  setWarningSnackOpen(!isSuccess);
+  setSnackType(isSuccess ? 'saveSuccess' : 'saveErrors');
   /* Add */
   await refetchData({
     currentMonth,

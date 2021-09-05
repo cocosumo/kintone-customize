@@ -13,9 +13,8 @@ const yasumiChangeHandler = ({
   currentMonth,
   setRemainingYasumi,
   setYasumiRecords,
-  setErrorSnackOpen,
-  setSavedSnackOpen,
-  setWarningSnackOpen,
+  setSnackType,
+  setSnackOpen,
 }) => {
   const { dateStr } = info;
   let newArray = yasumiRecords[dateStr] || [defaultRecord];
@@ -33,7 +32,10 @@ const yasumiChangeHandler = ({
     }).filter(({ duration }) => Boolean(duration));
 
     if ((remainingYasumi - weight) < 0) {
-      setErrorSnackOpen(true);
+      ReactDOM.unstable_batchedUpdates(() => {
+        setSnackType('aboveLimit');
+        setSnackOpen(true);
+      });
       return; // cancel change if no more remaining yasumi
     }
 
@@ -62,8 +64,7 @@ const yasumiChangeHandler = ({
     maxYasumi,
     setRemainingYasumi,
     setYasumiRecords,
-    setSavedSnackOpen,
-    setWarningSnackOpen,
+    setSnackType,
   });
   // process({ newYasumiRecords, savedRecords });
 };
