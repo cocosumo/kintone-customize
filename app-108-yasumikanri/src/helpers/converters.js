@@ -95,6 +95,12 @@ export const snackDetails = (snackType) => {
         https://rdmuhwtt6gx7.cybozu.com/k/101/edit`,
         severity: 'warning',
       };
+    case 'deletedExcess':
+      return {
+        duration: 6000,
+        message: '休み数は上限に超えました。削除します。',
+        severity: 'warning',
+      };
 
     default: return {};
   }

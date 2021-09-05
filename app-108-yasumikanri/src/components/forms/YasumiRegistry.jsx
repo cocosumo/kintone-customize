@@ -16,11 +16,9 @@ const YasumiRegistry = () => {
 
   const [snackType, setSnackType] = useState();
   const [snackOpen, setSnackOpen] = useState(false);
-
   const [remainingYasumi, setRemainingYasumi] = useState();
   const currentMonth = useRef();
   const maxYasumi = useRef(0);
-  // const remainingYasumi = useRef(0);
   const savedRecords = useRef();
 
   const clickDayHandler = (info) => {
@@ -35,9 +33,6 @@ const YasumiRegistry = () => {
       setYasumiRecords,
       setSnackType,
       setSnackOpen,
-      // setErrorSnackOpen,
-      // setSavedSnackOpen,
-      // setWarningSnackOpen,
     });
   };
 
@@ -55,22 +50,16 @@ const YasumiRegistry = () => {
     });
   };
 
-  console.log('rerendered');
-
-  /*   useEffect(async () => {
-    if (yasumiRecords) {
-      remainingYasumi.current = maxYasumi.current - yasumiUsed(yasumiRecords);
-    }
-  }, [yasumiRecords]); */
-
   deleteExcessYasumi({
     remainingYasumi,
     yasumiRecords,
     currentMonth,
     savedRecords,
+    maxYasumi,
     setYasumiRecords,
     setRemainingYasumi,
-    maxYasumi,
+    setSnackType,
+    setSnackOpen,
   });
 
   return (

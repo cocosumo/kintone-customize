@@ -6,10 +6,12 @@ const deleteExcessYasumi = async ({
   remainingYasumi,
   yasumiRecords,
   currentMonth,
+  maxYasumi,
   setYasumiRecords,
   savedRecords,
   setRemainingYasumi,
-  maxYasumi,
+  setSnackType,
+  setSnackOpen,
 }) => {
   if (remainingYasumi < 0) {
     let excessYasumi = Math.abs(remainingYasumi);
@@ -29,6 +31,9 @@ const deleteExcessYasumi = async ({
     }
 
     await deleteRecordByDates(datesToBeDeleted);
+    setSnackType('deletedExcess');
+    setSnackOpen(true);
+
     refetchData({
       currentMonth,
       setYasumiRecords,
