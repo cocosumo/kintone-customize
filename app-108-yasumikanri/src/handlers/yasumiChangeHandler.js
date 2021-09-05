@@ -63,6 +63,7 @@ const yasumiChangeHandler = ({
     setRemainingYasumi,
     setYasumiRecords,
     setSnackType,
+    setSnackOpen,
   });
   // process({ newYasumiRecords, savedRecords });
 };

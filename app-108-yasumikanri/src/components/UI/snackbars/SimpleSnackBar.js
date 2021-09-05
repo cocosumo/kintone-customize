@@ -2,19 +2,14 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
+import { snackDetails } from '../../../helpers/converters';
 
 const SimpleSnackbar = ({
   open,
-  duration = 2000,
-  message = 'error',
-  severity = 'error',
+  snackType,
   setSnackOpen,
 }) => {
-  // const [open, setOpen] = React.useState(false);
-
-  /* const handleClick = () => {
-    setOpen(true);
-  }; */
+  const { duration, message, severity } = snackDetails(snackType);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {

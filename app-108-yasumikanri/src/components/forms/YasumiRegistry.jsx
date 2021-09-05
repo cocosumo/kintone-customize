@@ -8,9 +8,7 @@ import getYasumiCount from '../../backend/settings';
 
 import yasumiChangeHandler from '../../handlers/yasumiChangeHandler';
 import refetchData from '../../handlers/refetchData';
-
 import deleteExcessYasumi from '../../handlers/deleteExcessYasumi';
-import ActivitySnack from '../UI/ActivitySnack';
 import SimpleSnackbar from '../UI/snackbars/SimpleSnackBar';
 
 const YasumiRegistry = () => {
@@ -84,9 +82,8 @@ const YasumiRegistry = () => {
         yasumiRecords,
       }}
       />
-      {/* <ActivitySnack open={Boolean(snackType)} onClose={setSnackType} snackType={snackType} /> */}
 
-      <SimpleSnackbar open={snackOpen} setSnackOpen={setSnackOpen} />
+      <SimpleSnackbar open={snackOpen} setSnackOpen={setSnackOpen} snackType={snackType} />
     </Container>
   );
 };

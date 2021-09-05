@@ -69,3 +69,33 @@ export const toKintoneRecords = (unsavedRecords, savedRecords) => {
   });
   return result;
 };
+
+export const snackDetails = (snackType) => {
+  switch (snackType) {
+    case 'aboveLimit':
+      return {
+        duration: 800,
+        message: '上限です。',
+        severity: 'error',
+      };
+
+    case 'saveSuccess':
+      return {
+        duration: 2000,
+        message: '保存が出来ました。',
+        severity: 'success',
+      };
+
+    case 'saveError':
+      return {
+        duration: 4000,
+        message: `保存に問題がありました。
+        ブラウザーを更新してください。それでも、問題がありましたら、
+        お手数ですが、次のリンクにて、ご連絡ください。
+        https://rdmuhwtt6gx7.cybozu.com/k/101/edit`,
+        severity: 'warning',
+      };
+
+    default: return {};
+  }
+};
