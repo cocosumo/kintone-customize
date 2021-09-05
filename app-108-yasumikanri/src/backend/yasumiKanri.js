@@ -23,10 +23,37 @@ export const fetchYasumiRecords = async (luxonDate) => {
 };
 
 /**
+ * Find duplicate records that matches fields
+ * @param {Object{field: value}} .
+ */
+export const findDuplicate = async ({ type, yasumiDate }) => {
+  const typeQuery = `type in ("${type}")`;
+  const dateQuery = `yasumiDate = "${yasumiDate}"`;
+  const { records } = await fetchRecords({
+    condition: [
+      ownRecordFilter,
+      typeQuery,
+      dateQuery,
+    ].join(' and '),
+  });
+  return records;
+};
+
+/**
+ * Delete redundant records from duplicate records
+ * @param {Records[]} duplicateRecords, duplicate records that are more than one
+ */
+export const deleteRedundantRecords = (duplicateRecords) => {
+  const redundantRecords = duplicateRecords.slice(1);
+  if (redundantRecords.length) {
+    return deleteRecords({ ids: redundantRecords.map(({ $id: { value: id } }) => id) });
+  }
+  return false;
+};
+
+/**
  * Delete record by dates.
  * @param {String[]} dates - dates to be deleted.
- * @param {string} employees[].name - The name of an employee.
- * @param {string} employees[].department - The employee's department.
  */
 export const deleteRecordByDates = async (dates) => {
   if (!dates.length) return 'No Items to delete.';
@@ -76,6 +103,7 @@ Example Output
 }
 */
 export const yasumiRecToObj = async (luxonDate) => (
+
   await fetchYasumiRecords(luxonDate)).records.reduce((accu, curr) => {
   const {
     $id: { value: recordId },
@@ -85,7 +113,7 @@ export const yasumiRecToObj = async (luxonDate) => (
     ステータス: { value: status },
   } = curr;
 
-  accu[yasumiDate] = [].concat({
+  accu[yasumiDate] = (accu[yasumiDate] || []).concat({
     id: recordId,
     type: normType[yasumiType],
     duration: normDuration[duration],
