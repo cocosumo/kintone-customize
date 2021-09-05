@@ -32,10 +32,8 @@ const yasumiChangeHandler = ({
     }).filter(({ duration }) => Boolean(duration));
 
     if ((remainingYasumi - weight) < 0) {
-      ReactDOM.unstable_batchedUpdates(() => {
-        setSnackType('aboveLimit');
-        setSnackOpen(true);
-      });
+      setSnackType('aboveLimit');
+      setSnackOpen(true);
       return; // cancel change if no more remaining yasumi
     }
 

@@ -41,8 +41,9 @@ const ActivitySnack = ({
   return (
     <YumeSnack
       open={open}
+      onClose={onClose}
       {...{
-        onClose, duration, message, severity, snackType,
+        duration, message, severity, snackType,
       }}
     />
   );

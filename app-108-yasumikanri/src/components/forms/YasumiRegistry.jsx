@@ -11,11 +11,13 @@ import refetchData from '../../handlers/refetchData';
 
 import deleteExcessYasumi from '../../handlers/deleteExcessYasumi';
 import ActivitySnack from '../UI/ActivitySnack';
+import SimpleSnackbar from '../UI/snackbars/SimpleSnackBar';
 
 const YasumiRegistry = () => {
   const [yasumiRecords, setYasumiRecords] = useState();
-  const [snackOpen, setSnackOpen] = useState(false);
+
   const [snackType, setSnackType] = useState();
+  const [snackOpen, setSnackOpen] = useState(false);
 
   const [remainingYasumi, setRemainingYasumi] = useState();
   const currentMonth = useRef();
@@ -82,11 +84,9 @@ const YasumiRegistry = () => {
         yasumiRecords,
       }}
       />
-      <ActivitySnack open={snackOpen} onClose={setSnackOpen} snackType={snackType} />
-      {/* <ErrorSnack open={errorSnackOpen} onClose={setErrorSnackOpen} />
-      <SavedSnack open={savedSnackOpen} onClose={setSavedSnackOpen} />
-      <WarningSnack open={warningSnackOpen} onClose={setWarningSnackOpen} /> */}
+      {/* <ActivitySnack open={Boolean(snackType)} onClose={setSnackType} snackType={snackType} /> */}
 
+      <SimpleSnackbar open={snackOpen} setSnackOpen={setSnackOpen} />
     </Container>
   );
 };

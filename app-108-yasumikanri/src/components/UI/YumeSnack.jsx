@@ -12,7 +12,7 @@ const YumeSnack = ({
     onClose(false);
   };
 
-  const SlideTransition = (props) => <Slide {...props} onExited={handleClose} direction="down" />;
+  const SlideTransition = (props) => <Slide {...props} direction="down" />;
 
   return (
     <Snackbar
@@ -22,7 +22,7 @@ const YumeSnack = ({
       open={open}
       TransitionComponent={SlideTransition}
       autoHideDuration={duration || 2000}
-      onClose={onClose}
+      onClose={handleClose}
     >
       <MuiAlert sx={{ fontSize: 16 }} onClose={handleClose} variant="filled" severity={severity}>
         {message}
