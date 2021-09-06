@@ -1,14 +1,17 @@
 import { Box } from '@mui/material';
-import { JSDToLux } from '../../helpers/time';
+import { isWithinMonth, JSDToLux } from '../../helpers/time';
 import DayContent from './DayContent';
 import DayHeader from './DayHeader';
 
 const DayCell = ({
   args,
   yasumiRecords,
+  currentMonth,
 }) => {
   const { date, dayNumberText } = args;
-  const cellDate = JSDToLux(date).toISODate();
+  const luxDate = JSDToLux(date);
+  const cellDate = luxDate.toISODate();
+  const isRenderDate = isWithinMonth(currentMonth.current, luxDate);
   const isExist = yasumiRecords && yasumiRecords[cellDate];
   let dayRecords;
 
@@ -18,7 +21,7 @@ const DayCell = ({
 
   return (
     <Box style={{ margin: 'auto 0 auto 0', width: '100%' }}>
-      <DayHeader {...{ dayNumberText }} />
+      <DayHeader {...{ isRenderDate, dayNumberText }} />
       <Box sx={{ height: 60 }}>
         {isExist && (<DayContent {...{ dayRecords }} />)}
       </Box>

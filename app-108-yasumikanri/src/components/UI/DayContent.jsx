@@ -1,8 +1,21 @@
 import { Box } from '@mui/material';
+import { deleteRedundantType } from '../../backend/yasumiKanri';
 import TypeIcon from './TypeIcon';
 
 const DayContent = ({ dayRecords }) => {
-  const iconContent = dayRecords.map((record) => <TypeIcon key={record.type} {...{ record }} />);
+  let dayToRender = [...dayRecords];
+
+  /* Clean duplicates */
+  const redundantDayOrdinary = dayRecords.filter(({ type }) => type === 'day-ordinary');
+  if (redundantDayOrdinary.length > 1) {
+    deleteRedundantType(redundantDayOrdinary);
+    dayToRender = dayRecords.slice(0, 1);
+  }
+  /* End Clean duplicates */
+
+  const iconContent = dayToRender.map(
+    (record) => <TypeIcon key={record.type + record.id} {...{ record }} />,
+  );
 
   return (
     <Box sx={{

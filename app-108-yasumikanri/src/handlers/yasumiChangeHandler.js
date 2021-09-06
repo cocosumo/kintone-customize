@@ -27,7 +27,7 @@ const yasumiChangeHandler = ({
   setSnackOpen,
 }) => {
   const { dateStr } = info;
-  console.log(yasumiRecords[dateStr]);
+
   let newArray = yasumiRecords[dateStr] ? [...yasumiRecords[dateStr]] : [defaultRecord];
   let weight;
   let newDuration;
@@ -36,7 +36,6 @@ const yasumiChangeHandler = ({
   if (!availableTime) return;
 
   if (newArray) {
-    console.log(newArray);
     if (availableTime !== 'day-whole' && newArray.length === 1) newArray.unshift(defaultRecord); // newArray = newArray.concat(defaultRecord);
 
     newArray = [...newArray].map((item) => {

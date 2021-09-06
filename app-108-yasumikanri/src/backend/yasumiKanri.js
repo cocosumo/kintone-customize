@@ -138,6 +138,18 @@ export const deleteRedundantRecords = (duplicateRecords) => {
 };
 
 /**
+ * Delete redundant types
+ * @param {String[]} duplicateType, duplicate types
+ */
+export const deleteRedundantType = (duplicateType) => {
+  const redundantRecords = duplicateType.slice(1);
+  if (redundantRecords.length) {
+    return deleteRecords({ ids: duplicateType.map(({ id }) => id) });
+  }
+  return false;
+};
+
+/**
  * Delete record by dates.
  * @param {String, String[]} dates - dates to be deleted.
  */

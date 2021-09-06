@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Container } from '@mui/material';
 import MonthCalendar from '../UI/MonthCalendar';
-import { JSDToLux } from '../../helpers/time';
+import { ISOtoLux, isWithinMonth, JSDToLux } from '../../helpers/time';
 import getYasumiCount from '../../backend/settings';
 
 import yasumiChangeHandler from '../../handlers/yasumiChangeHandler';
@@ -19,26 +19,27 @@ const YasumiRegistry = () => {
   const maxYasumi = useRef(0);
 
   const clickDayHandler = (info) => {
-    yasumiChangeHandler({
-      info,
-      yasumiRecords,
-      savedRecords,
-      currentMonth,
-      maxYasumi,
-      remainingYasumi,
-      setRemainingYasumi,
-      setYasumiRecords,
-      setSavedRecords,
-      setSnackType,
-      setSnackOpen,
-    });
+    if (isWithinMonth(currentMonth.current, ISOtoLux(info.dateStr))) {
+      yasumiChangeHandler({
+        info,
+        yasumiRecords,
+        savedRecords,
+        currentMonth,
+        maxYasumi,
+        remainingYasumi,
+        setRemainingYasumi,
+        setYasumiRecords,
+        setSavedRecords,
+        setSnackType,
+        setSnackOpen,
+      });
+    }
   };
 
   const datesSetHandler = async ({ view }) => {
     const { currentStart } = view;
     currentMonth.current = JSDToLux(currentStart);
     maxYasumi.current = await getYasumiCount(currentMonth.current);
-
     refetchData({
       currentMonth,
       maxYasumi,
@@ -62,12 +63,14 @@ const YasumiRegistry = () => {
 
   return (
     <Container maxWidth="md">
-      <MonthCalendar {...{
-        remainingYasumi,
-        datesSetHandler,
-        clickDayHandler,
-        yasumiRecords,
-      }}
+      <MonthCalendar
+        {...{
+          currentMonth,
+          remainingYasumi,
+          datesSetHandler,
+          clickDayHandler,
+          yasumiRecords,
+        }}
       />
 
       <SimpleSnackbar open={snackOpen} setSnackOpen={setSnackOpen} snackType={snackType} />

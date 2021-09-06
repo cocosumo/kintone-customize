@@ -11,8 +11,9 @@ const MonthCalendar = ({
   clickDayHandler,
   datesSetHandler,
   yasumiRecords,
+  currentMonth,
 }) => {
-  const dayCellContentRender = (args) => <DayCell {...{ args, yasumiRecords }} />;
+  const dayCellContentRender = (args) => <DayCell {...{ args, yasumiRecords, currentMonth }} />;
 
   return (
     <Box height="100vh">
@@ -35,14 +36,7 @@ const MonthCalendar = ({
           center: 'remainingYasumi',
           end: 'today prev,next',
         }}
-        events={[
-          {
-            start: '2021-09-10T10:00:00',
-            allDay: true,
-            display: 'background',
-            classNames: ['day-all'],
-          },
-        ]}
+
       />
     </Box>
   );
