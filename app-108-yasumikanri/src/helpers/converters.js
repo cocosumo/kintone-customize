@@ -15,6 +15,15 @@ export const getYasumiWeight = (duration) => {
   }
 };
 
+export const getKintoneYasumiWeight = (duration) => {
+  switch (duration) {
+    case '一日': return 1;
+    case '午前休み': return 0.5;
+    case '午後休み': return 0.5;
+    default: return 0;
+  }
+};
+
 export const normType = {
   通常休み: 'day-ordinary',
   有休: 'day-leave',
