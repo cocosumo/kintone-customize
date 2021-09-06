@@ -8,9 +8,11 @@ const deleteRecords = async ({
   newYasumiRecords,
   savedRecords,
 }) => {
+  console.log(savedRecords, savedRecords.current, { ...savedRecords }, 'deleteRecords');
   const datesToBeDeleted = [];
-  Object.keys(savedRecords).forEach((key) => {
-    if (!newYasumiRecords[key]) {
+  Object.keys(savedRecords.current).forEach((key) => {
+    console.log(key, savedRecords.current[key], 'delete');
+    if (!newYasumiRecords[key] || savedRecords.current[key].length > newYasumiRecords[key].length) {
       datesToBeDeleted.push(key);
     }
   });
@@ -18,10 +20,10 @@ const deleteRecords = async ({
   return deleteRecordByDates(datesToBeDeleted);
 };
 
-const pushToRecordsToSave = (recordsToSave, unsavedRecord, key) => {
+const pushToRecordsToSave = (recordsToSaveArray, unsavedRecord, key) => {
   const dayOrdinary = getOrdinaryYasumi(unsavedRecord);
   if (dayOrdinary.length) {
-    recordsToSave.push({ ...{ date: key }, ...dayOrdinary[0] });
+    recordsToSaveArray.push({ ...{ date: key }, ...dayOrdinary[0] });
   }
 };
 
@@ -29,20 +31,26 @@ const compareAndSaveRecords = async ({
   newYasumiRecords,
   savedRecords,
 }) => {
+  console.log(savedRecords.current, 'fuck');
   const recordsToAdd = [];
   const recordsToUpdate = [];
+  console.log(savedRecords.current, 'shit');
   Object.keys(newYasumiRecords).forEach(
     (key) => {
-      if (!savedRecords[key]) {
+      console.log(key, savedRecords.current[key]);
+      if (!savedRecords.current[key]
+        || newYasumiRecords[key].length > savedRecords.current[key].length) {
         pushToRecordsToSave(recordsToAdd, newYasumiRecords[key], key);
-      } else if (JSON.stringify(newYasumiRecords[key]) !== JSON.stringify(savedRecords[key])) {
+      } else if (
+        JSON.stringify(newYasumiRecords[key]) !== JSON.stringify(savedRecords.current[key])) {
         pushToRecordsToSave(recordsToUpdate, newYasumiRecords[key], key);
       }
     },
   );
+  console.log(recordsToAdd, recordsToUpdate, 'add');
   const promises = [
-    addYasumiRecords(recordsToAdd),
-    updateYasumiRecords(recordsToUpdate, savedRecords),
+    // addYasumiRecords(recordsToAdd),
+    // updateYasumiRecords(recordsToUpdate, savedRecords),
   ];
   return Promise.allSettled(promises);
 };
@@ -57,13 +65,15 @@ const yasumiSaveHandler = debounce(async ({
   setSnackType,
   setSnackOpen,
 }) => {
-  console.log(newYasumiRecords, 'saving');
+  console.log(savedRecords, 'fuccked');
   const promises = [
-    deleteRecords({ savedRecords: savedRecords.current, newYasumiRecords }),
-    compareAndSaveRecords({ savedRecords: savedRecords.current, newYasumiRecords }),
+    deleteRecords({ savedRecords, newYasumiRecords }),
+    compareAndSaveRecords({ ...savedRecords, newYasumiRecords }),
   ];
 
   const result = await Promise.allSettled(promises);
+
+  console.log(savedRecords, 'afterBoth');
   const isSuccess = !JSON.stringify(result).includes('rejected');
   setSnackType(isSuccess ? 'saveSuccess' : 'saveErrors');
   setSnackOpen(true);

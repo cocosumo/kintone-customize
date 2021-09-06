@@ -42,16 +42,23 @@ const getKeyByValue = (object, value) => Object.keys(object).find((key) => objec
 export const getKintoneType = (type) => getKeyByValue(normType, type);
 export const getKintoneDuration = (duration) => getKeyByValue(normDuration, duration);
 
-export const shiftToNext = (duration, remainingYasumi) => {
-  switch (duration) {
-    case 'day-whole': return 'day-am';
-    case 'day-am': return 'day-pm';
-    case 'day-pm': return null;
-    default:
-      if (remainingYasumi >= 1) {
-        return 'day-whole';
-      }
-      return 'day-am';
+export const shiftToNext = (duration, remainingYasumi, availableTime) => {
+  if (availableTime === 'day-whole') {
+    switch (duration) {
+      case 'day-whole': return 'day-am';
+      case 'day-am': return 'day-pm';
+      case 'day-pm': return null;
+      default:
+        if (remainingYasumi >= 1) {
+          return 'day-whole';
+        }
+        return 'day-am';
+    }
+  } else {
+    if (duration === null) {
+      return availableTime;
+    }
+    return null;
   }
 };
 
