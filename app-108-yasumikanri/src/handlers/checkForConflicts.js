@@ -21,22 +21,20 @@ const compareLeaves = (leaveRec, specialLeaveRec) => {
   return ['どちらかを削除してください。', 'どちらかを削除してください。'];
 };
 
-const checkIfInputIsConflict = (inputRecord, existingRecord) => {
+const checkIfInputIsConflict = (inputRecord, existingRecord, isEdit) => {
   const inputDuration = getDuration(inputRecord);
   const inputWeight = getKintoneYasumiWeight(inputDuration);
   const existingDuration = getDuration(existingRecord);
-
+  console.log(inputDuration, inputWeight, existingDuration);
   if (inputWeight === 1) {
     return messages.withConflict;
   } if (inputWeight === 0.5) {
     if (inputDuration !== existingDuration) {
-      deleteRecordByDates(getDate(inputRecord));
+      if (!isEdit) deleteRecordByDates(getDate(inputRecord));
     } else {
       return messages.withConflict;
     }
   }
-
-  return null;
 };
 
 const groupByType = (recsByDate) => recsByDate.reduce((
@@ -61,23 +59,32 @@ const groupByType = (recsByDate) => recsByDate.reduce((
   'day-leaveSpecial': { total: 0, records: [] },
 });
 
-const checkForConflicts = async (record) => {
+const checkForConflicts = async (event) => {
+  const { record, type } = event;
+  const isEdit = type.includes('edit');
+
   const {
     yasumiDate: { value: yasumiDate },
+    $id,
   } = record;
-  const recsByDate = groupByType(await fetchByYasumiDate(yasumiDate));
+  let recsByDate = await fetchByYasumiDate(yasumiDate);
+  if (isEdit) {
+    recsByDate = recsByDate.filter(({ $id: resId }) => $id.value !== resId.value);
+  }
+
+  const groupedRecords = groupByType(recsByDate);
   const {
     total: totalWeight,
     'day-ordinary': { total: totalOrdinary, records: recsOrdinary },
     'day-leave': { total: totalLeave, records: recsLeave },
     'day-leaveSpecial': { total: totalLeaveSpecial, records: recsLeaveSpecial },
-  } = recsByDate;
+  } = groupedRecords;
 
-  let conflictError = ' ss';
+  let conflictError = 'ss';
+  console.log(groupedRecords);
 
-  console.log(recsByDate);
   if (totalWeight === totalOrdinary) {
-    deleteRecordByDates(yasumiDate);
+    if (!isEdit) deleteRecordByDates(yasumiDate, $id?.value);
   } else if (totalWeight === 1) {
     if (((totalLeave || totalLeaveSpecial) === 1)) {
       if ((recsLeave.length || recsLeaveSpecial.length) === 1) {
@@ -91,6 +98,7 @@ const checkForConflicts = async (record) => {
       conflictError = compareLeaves(recsLeave[0], recsLeaveSpecial[0]);
     } else if ((totalLeave || totalLeaveSpecial) === 0.5) {
       /* Not checked */
+      console.log('entered');
       conflictError = checkIfInputIsConflict(
         record,
         totalLeave ? recsLeave[0] : recsLeaveSpecial[0],
@@ -103,6 +111,7 @@ const checkForConflicts = async (record) => {
       conflictError = checkIfInputIsConflict(
         record,
         totalLeave ? recsLeave[0] : recsLeaveSpecial[0],
+        isEdit,
       );
     }
   } else if (totalWeight > 1) {

@@ -1,10 +1,12 @@
-import { onCreate, onCreateSubmit, onIndexShow } from '../../kintone-api/api';
+import {
+  onCreate, onEditOrCreateSubmit, onIndexShow,
+} from '../../kintone-api/api';
 import onIndexShowHandler from './kintoneHandlers/onIndexShowHandler';
 import onCreateHandler from './kintoneHandlers/onCreateHandler';
-import onCreateSubmitHandler from './kintoneHandlers/eventHandlers/onCreateSubmitHandler';
+import onEditOrCreateSubmitHandler from './kintoneHandlers/eventHandlers/onEditOrCreateSubmitHandler';
 
 (() => {
   kintone.events.on(onIndexShow, onIndexShowHandler);
   kintone.events.on(onCreate, onCreateHandler);
-  kintone.events.on(onCreateSubmit, onCreateSubmitHandler);
+  kintone.events.on(onEditOrCreateSubmit, onEditOrCreateSubmitHandler);
 })();
