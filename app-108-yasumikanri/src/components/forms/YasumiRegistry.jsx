@@ -13,7 +13,6 @@ import SimpleSnackbar from '../UI/snackbars/SimpleSnackBar';
 
 const YasumiRegistry = () => {
   const [yasumiRecords, setYasumiRecords] = useState();
-
   const [snackType, setSnackType] = useState();
   const [snackOpen, setSnackOpen] = useState(false);
   const [remainingYasumi, setRemainingYasumi] = useState();

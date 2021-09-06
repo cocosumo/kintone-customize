@@ -8,8 +8,8 @@ import messages from '../helpers/messages';
 
 const getDate = (record) => record.yasumiDate.value;
 const getDuration = (record) => record.duration.value;
-const getType = (record) => record.type.value;
-const getId = (record) => record.$id.value;
+/* const getType = (record) => record.type.value;
+const getId = (record) => record.$id.value; */
 
 const compareLeaves = (leaveRec, specialLeaveRec) => {
   const leaveDuration = getDuration(leaveRec);
@@ -25,7 +25,7 @@ const checkIfInputIsConflict = (inputRecord, existingRecord, isEdit) => {
   const inputDuration = getDuration(inputRecord);
   const inputWeight = getKintoneYasumiWeight(inputDuration);
   const existingDuration = getDuration(existingRecord);
-  console.log(inputDuration, inputWeight, existingDuration);
+
   if (inputWeight === 1) {
     return messages.withConflict;
   } if (inputWeight === 0.5) {
@@ -35,6 +35,7 @@ const checkIfInputIsConflict = (inputRecord, existingRecord, isEdit) => {
       return messages.withConflict;
     }
   }
+  return null;
 };
 
 const groupByType = (recsByDate) => recsByDate.reduce((
@@ -75,7 +76,7 @@ const checkForConflicts = async (event) => {
   const groupedRecords = groupByType(recsByDate);
   const {
     total: totalWeight,
-    'day-ordinary': { total: totalOrdinary, records: recsOrdinary },
+    'day-ordinary': { total: totalOrdinary },
     'day-leave': { total: totalLeave, records: recsLeave },
     'day-leaveSpecial': { total: totalLeaveSpecial, records: recsLeaveSpecial },
   } = groupedRecords;

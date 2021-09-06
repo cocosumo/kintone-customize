@@ -61,6 +61,7 @@ const resolveIcon = ({ type, duration, status }) => {
 
 const TypeIcon = ({ record }) => (
   <img
+    key={record.type}
     style={{
       maxWidth: '100%',
       maxHeight: '100%',

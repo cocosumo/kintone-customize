@@ -28,8 +28,10 @@ const yasumiChangeHandler = ({
         weight = resolveNewWeight(item.duration, newDuration);
         return { ...item, duration: newDuration };
       }
-      return item;
-    }).filter(({ duration }) => Boolean(duration));
+      return { ...item };
+    });
+
+    newArray = newArray.filter(({ duration }) => Boolean(duration));
 
     if ((remainingYasumi - weight) < 0) {
       setSnackType('aboveLimit');
@@ -41,6 +43,7 @@ const yasumiChangeHandler = ({
       if (newArray.length) {
         setYasumiRecords((prev) => {
           newYasumiRecords = { ...prev, [dateStr]: newArray };
+          console.log(newYasumiRecords, 'omg');
           return newYasumiRecords;
         });
       } else {

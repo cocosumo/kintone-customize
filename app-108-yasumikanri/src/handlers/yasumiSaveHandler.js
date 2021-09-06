@@ -4,6 +4,7 @@ import { getOrdinaryYasumi } from '../helpers/converters';
 import refetchData from './refetchData';
 
 const deleteRecords = async ({
+  /* Fix this */
   newYasumiRecords,
   savedRecords,
 }) => {
@@ -56,6 +57,7 @@ const yasumiSaveHandler = debounce(async ({
   setSnackType,
   setSnackOpen,
 }) => {
+  console.log(newYasumiRecords, 'saving');
   const promises = [
     deleteRecords({ savedRecords: savedRecords.current, newYasumiRecords }),
     compareAndSaveRecords({ savedRecords: savedRecords.current, newYasumiRecords }),
