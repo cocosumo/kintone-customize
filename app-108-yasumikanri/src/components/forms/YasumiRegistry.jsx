@@ -8,6 +8,7 @@ import yasumiChangeHandler from '../../handlers/yasumiChangeHandler';
 import refetchData from '../../handlers/refetchData';
 import deleteExcessYasumi from '../../handlers/deleteExcessYasumi';
 import SimpleSnackbar from '../UI/snackbars/SimpleSnackBar';
+import clearYasumi from '../../handlers/clearYasumi';
 
 const YasumiRegistry = () => {
   const [yasumiRecords, setYasumiRecords] = useState();
@@ -15,11 +16,12 @@ const YasumiRegistry = () => {
   const [snackOpen, setSnackOpen] = useState(false);
   const [remainingYasumi, setRemainingYasumi] = useState();
   const [savedRecords, setSavedRecords] = useState();
+  const [isSaving, setIsSaving] = useState();
   const currentMonth = useRef();
   const maxYasumi = useRef(0);
 
   const clickDayHandler = (info) => {
-    if (isWithinMonth(currentMonth.current, ISOtoLux(info.dateStr))) {
+    if (!isSaving && isWithinMonth(currentMonth.current, ISOtoLux(info.dateStr))) {
       yasumiChangeHandler({
         info,
         yasumiRecords,
@@ -32,6 +34,7 @@ const YasumiRegistry = () => {
         setSavedRecords,
         setSnackType,
         setSnackOpen,
+        setIsSaving,
       });
     }
   };
@@ -46,6 +49,20 @@ const YasumiRegistry = () => {
       setSavedRecords,
       setYasumiRecords,
       setRemainingYasumi,
+    });
+  };
+
+  const clearHandler = () => {
+    clearYasumi({
+      remainingYasumi,
+      yasumiRecords,
+      currentMonth,
+      maxYasumi,
+      setSavedRecords,
+      setYasumiRecords,
+      setRemainingYasumi,
+      setSnackType,
+      setSnackOpen,
     });
   };
 
@@ -70,6 +87,8 @@ const YasumiRegistry = () => {
           datesSetHandler,
           clickDayHandler,
           yasumiRecords,
+          isSaving,
+          clearHandler,
         }}
       />
 

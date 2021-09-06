@@ -61,7 +61,10 @@ const yasumiSaveHandler = debounce(async ({
   setYasumiRecords,
   setSnackType,
   setSnackOpen,
+  setIsSaving,
 }) => {
+  setIsSaving(true);
+
   const promises = [
     deleteRecords({ savedRecords, newYasumiRecords }),
     compareAndSaveRecords({ savedRecords, newYasumiRecords }),
@@ -81,6 +84,7 @@ const yasumiSaveHandler = debounce(async ({
     setRemainingYasumi,
     maxYasumi,
   });
+  setIsSaving(false);
 }, 1000);
 
 export default yasumiSaveHandler;

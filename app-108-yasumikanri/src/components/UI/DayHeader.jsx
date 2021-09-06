@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 
 const DayHeader = ({ isRenderDate, dayNumberText }) => (
 
-  <Typography sx={{ color: isRenderDate ? '' : 'gray' }}>
+  <Typography sx={{ color: isRenderDate ? '' : '#fafafa' }}>
     {dayNumberText}
   </Typography>
 );

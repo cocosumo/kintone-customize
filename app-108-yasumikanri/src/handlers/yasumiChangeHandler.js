@@ -25,9 +25,9 @@ const yasumiChangeHandler = ({
   setYasumiRecords,
   setSnackType,
   setSnackOpen,
+  setIsSaving,
 }) => {
   const { dateStr } = info;
-
   let newArray = yasumiRecords[dateStr] ? [...yasumiRecords[dateStr]] : [defaultRecord];
   let weight;
   let newDuration;
@@ -84,6 +84,7 @@ const yasumiChangeHandler = ({
     setYasumiRecords,
     setSnackType,
     setSnackOpen,
+    setIsSaving,
   });
 };
 

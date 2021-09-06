@@ -81,8 +81,7 @@ const checkForConflicts = async (event) => {
     'day-leaveSpecial': { total: totalLeaveSpecial, records: recsLeaveSpecial },
   } = groupedRecords;
 
-  let conflictError = 'ss';
-  console.log(groupedRecords);
+  let conflictError;
 
   if (totalWeight === totalOrdinary) {
     if (!isEdit) deleteRecordByDates(yasumiDate, $id?.value);
@@ -99,7 +98,6 @@ const checkForConflicts = async (event) => {
       conflictError = compareLeaves(recsLeave[0], recsLeaveSpecial[0]);
     } else if ((totalLeave || totalLeaveSpecial) === 0.5) {
       /* Not checked */
-      console.log('entered');
       conflictError = checkIfInputIsConflict(
         record,
         totalLeave ? recsLeave[0] : recsLeaveSpecial[0],

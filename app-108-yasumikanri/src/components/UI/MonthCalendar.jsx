@@ -9,9 +9,11 @@ import DayCell from './DayCell';
 const MonthCalendar = ({
   remainingYasumi,
   clickDayHandler,
+  clearHandler,
   datesSetHandler,
   yasumiRecords,
   currentMonth,
+  isSaving,
 }) => {
   const dayCellContentRender = (args) => <DayCell {...{ args, yasumiRecords, currentMonth }} />;
 
@@ -30,11 +32,21 @@ const MonthCalendar = ({
           remainingYasumi: {
             text: `残りの休み: ${remainingYasumi || 0}`,
           },
+          loading: {
+            text: '保存中...',
+          },
+          clear: {
+            text: '全部削除',
+            click: clearHandler,
+          },
         }}
         headerToolbar={{
           start: 'title',
           center: 'remainingYasumi',
-          end: 'today prev,next',
+          end: `${!isSaving ? 'prev,next' : 'loading'}`,
+        }}
+        footerToolbar={{
+          start: 'clear',
         }}
 
       />
