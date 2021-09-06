@@ -8,7 +8,7 @@ const deleteExcessYasumi = async ({
   currentMonth,
   maxYasumi,
   setYasumiRecords,
-  savedRecords,
+  setSavedRecords,
   setRemainingYasumi,
   setSnackType,
   setSnackOpen,
@@ -38,7 +38,7 @@ const deleteExcessYasumi = async ({
       currentMonth,
       setYasumiRecords,
       setRemainingYasumi,
-      savedRecords,
+      setSavedRecords,
       maxYasumi,
     });
   }

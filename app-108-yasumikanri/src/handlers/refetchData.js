@@ -6,17 +6,15 @@ const refetchData = async ({
   currentMonth,
   setYasumiRecords,
   setRemainingYasumi,
-  savedRecords,
+  setSavedRecords,
   maxYasumi,
-  caller,
 }) => {
-  console.log(savedRecords, 'refetched', caller);
   const yasumiObjs = await yasumiRecToObj(currentMonth.current);
 
   ReactDOM.unstable_batchedUpdates(() => {
     setRemainingYasumi(maxYasumi.current - yasumiUsed(yasumiObjs));
     setYasumiRecords(yasumiObjs);
-    savedRecords.current = yasumiObjs;
+    setSavedRecords(yasumiObjs);
   });
 };
 

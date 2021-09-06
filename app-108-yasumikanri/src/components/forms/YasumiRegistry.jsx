@@ -1,6 +1,4 @@
-import {
-  useState, useRef,
-} from 'react';
+import { useState, useRef } from 'react';
 import { Container } from '@mui/material';
 import MonthCalendar from '../UI/MonthCalendar';
 import { JSDToLux } from '../../helpers/time';
@@ -16,9 +14,9 @@ const YasumiRegistry = () => {
   const [snackType, setSnackType] = useState();
   const [snackOpen, setSnackOpen] = useState(false);
   const [remainingYasumi, setRemainingYasumi] = useState();
+  const [savedRecords, setSavedRecords] = useState();
   const currentMonth = useRef();
   const maxYasumi = useRef(0);
-  const savedRecords = useRef();
 
   const clickDayHandler = (info) => {
     yasumiChangeHandler({
@@ -30,6 +28,7 @@ const YasumiRegistry = () => {
       remainingYasumi,
       setRemainingYasumi,
       setYasumiRecords,
+      setSavedRecords,
       setSnackType,
       setSnackOpen,
     });
@@ -43,7 +42,7 @@ const YasumiRegistry = () => {
     refetchData({
       currentMonth,
       maxYasumi,
-      savedRecords,
+      setSavedRecords,
       setYasumiRecords,
       setRemainingYasumi,
     });
@@ -53,8 +52,8 @@ const YasumiRegistry = () => {
     remainingYasumi,
     yasumiRecords,
     currentMonth,
-    savedRecords,
     maxYasumi,
+    setSavedRecords,
     setYasumiRecords,
     setRemainingYasumi,
     setSnackType,

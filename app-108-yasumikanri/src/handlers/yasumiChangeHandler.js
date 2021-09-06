@@ -20,14 +20,15 @@ const yasumiChangeHandler = ({
   savedRecords,
   maxYasumi,
   currentMonth,
+  setSavedRecords,
   setRemainingYasumi,
   setYasumiRecords,
   setSnackType,
   setSnackOpen,
 }) => {
   const { dateStr } = info;
-
-  let newArray = yasumiRecords[dateStr] || [defaultRecord];
+  console.log(yasumiRecords[dateStr]);
+  let newArray = yasumiRecords[dateStr] ? [...yasumiRecords[dateStr]] : [defaultRecord];
   let weight;
   let newDuration;
   let newYasumiRecords;
@@ -35,6 +36,7 @@ const yasumiChangeHandler = ({
   if (!availableTime) return;
 
   if (newArray) {
+    console.log(newArray);
     if (availableTime !== 'day-whole' && newArray.length === 1) newArray.unshift(defaultRecord); // newArray = newArray.concat(defaultRecord);
 
     newArray = [...newArray].map((item) => {
@@ -78,12 +80,12 @@ const yasumiChangeHandler = ({
     savedRecords,
     currentMonth,
     maxYasumi,
+    setSavedRecords,
     setRemainingYasumi,
     setYasumiRecords,
     setSnackType,
     setSnackOpen,
   });
-  // process({ newYasumiRecords, savedRecords });
 };
 
 export default yasumiChangeHandler;
