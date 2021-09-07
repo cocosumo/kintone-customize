@@ -3,6 +3,7 @@ import Snackbar from '@mui/material/Snackbar';
 import EditIcon from '@material-ui/icons/Edit';
 import { getKintoneDuration, getKintoneStatus, getKintoneType } from '../../../helpers/converters';
 import { toLocaleDate } from '../../../helpers/time';
+import { recordPath } from '../../../../../kintone-api/api';
 
 const onEditHandler = (id) => {
   window.open(`${recordPath(id)}&mode=edit`, '_blank');

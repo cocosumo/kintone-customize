@@ -12,6 +12,7 @@ import LeaveSpecialPM from '../../assets/day-leaveSpecial-pm.png';
 import OrdinaryAM from '../../assets/day-ordinary-am.png';
 import OrdinaryPM from '../../assets/day-ordinary-pm.png';
 import Ordinary from '../../assets/day-ordinary.png';
+import { isMobile } from '../../../../kintone-api/api';
 
 const resolveIcon = ({ type, duration, status }) => {
   switch (type) {
@@ -43,7 +44,7 @@ const resolveIcon = ({ type, duration, status }) => {
 
     case 'day-leaveSpecial':
       switch (status) {
-        case 'unprocessed':
+        case 'unprocessed': return Unprocessed;
         case 'processing': return Processing;
         case 'approved':
           switch (duration) {
@@ -53,7 +54,7 @@ const resolveIcon = ({ type, duration, status }) => {
             default:
           }
           break;
-        case 'returned':
+        case 'returned': return Returned;
         default:
       }
       break;
@@ -62,16 +63,22 @@ const resolveIcon = ({ type, duration, status }) => {
   return Processing;
 };
 
-const TypeIcon = ({ record }) => (
-  <img
-    key={record.type}
-    style={{
-      maxWidth: '100%',
-      maxHeight: '100%',
-    }}
-    src={resolveIcon(record)}
-    alt="type"
-  />
-);
+const TypeIcon = ({ record, siblings }) => {
+  let size = '100%';
+  if (siblings > 1) {
+    size = isMobile() ? '72%' : '100%';
+  }
+  return (
+    <img
+      key={record.type}
+      style={{
+        maxWidth: size,
+        maxHeight: size,
+      }}
+      src={resolveIcon(record)}
+      alt="type"
+    />
+  );
+};
 
 export default TypeIcon;

@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { deleteRedundantType } from '../../backend/yasumiKanri';
+import swapArrayLocs from '../../helpers/utils';
 import TypeIcon from './TypeIcon';
 
 const DayContent = ({ dayRecords }) => {
@@ -13,13 +14,23 @@ const DayContent = ({ dayRecords }) => {
   }
   /* End Clean duplicates */
 
+  if (dayToRender.length > 1 && dayToRender[0].duration !== 'day-am') {
+    swapArrayLocs(dayToRender, 0, 1);
+  }
+
   const iconContent = dayToRender.map(
-    (record) => <TypeIcon key={record.type + record.id} {...{ record }} />,
+    (record) => (
+      <TypeIcon
+        siblings={dayToRender.length}
+        key={record.type + record.id}
+        {...{ record }}
+      />
+    ),
   );
 
   return (
     <Box sx={{
-      textAlign: 'center', pt: 0.2, pb: 0.8, height: '100%',
+      textAlign: 'center', pt: 0.2, pb: 0.8, width: '100%', height: '100%',
     }}
     >
       {iconContent}

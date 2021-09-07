@@ -22,7 +22,7 @@ const DayCell = ({
   return (
     <Box style={{ margin: 'auto 0 auto 0', width: '100%' }}>
       <DayHeader {...{ isRenderDate, dayNumberText }} />
-      <Box sx={{ height: 60 }}>
+      <Box sx={{ width: '100%', height: 60 }}>
         {isExist && (<DayContent {...{ dayRecords }} />)}
       </Box>
     </Box>

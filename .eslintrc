@@ -35,7 +35,7 @@
             "error",
             {
               "props": true,
-              "ignorePropertyModificationsFor": ["accu", "event"]
+              "ignorePropertyModificationsFor": ["accu", "event", "arr"]
             }
           ]
     }

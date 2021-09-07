@@ -36,7 +36,7 @@ const MonthCalendar = ({
             text: '保存中...',
           },
           clear: {
-            text: '全部削除',
+            text: 'リセット',
             click: clearHandler,
           },
         }}
