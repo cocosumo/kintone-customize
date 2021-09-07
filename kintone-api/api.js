@@ -84,8 +84,8 @@ export const getSpaceElement = (spaceId) => {
 /**
  * List View
  * */
-export const getHeaderMenuSpaceElement = (eventType) => (
-  eventType.includes('k/m')
+export const getHeaderMenuSpaceElement = () => (
+  isMobile()
     ? kintone.mobile.app.getHeaderMenuSpaceElement()
     : kintone.app.getHeaderMenuSpaceElement()
 );

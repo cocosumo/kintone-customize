@@ -53,6 +53,7 @@ const yasumiChangeHandler = ({
     if ((remainingYasumi - weight) < 0) {
       setSnackType('aboveLimit');
       setSnackOpen(true);
+      seIsEditing(false);
       return; // cancel change if no more remaining yasumi
     }
 

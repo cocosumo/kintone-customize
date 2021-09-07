@@ -11,6 +11,7 @@ import SimpleSnackbar from '../UI/snackbars/SimpleSnackBar';
 import clearYasumi from '../../handlers/clearYasumi';
 import LeaveSnackBar from '../UI/snackbars/LeaveSnackbar';
 import getLeaveInClickedDate from '../../handlers/getLeaveInClickedDate';
+import Instructions from '../paragraphs/Instructions';
 
 const YasumiRegistry = () => {
   const [yasumiRecords, setYasumiRecords] = useState();
@@ -101,7 +102,6 @@ const YasumiRegistry = () => {
           datesSetHandler,
           clickDayHandler,
           yasumiRecords,
-          isSaving,
           isEditing,
           clearHandler,
         }}
@@ -109,6 +109,7 @@ const YasumiRegistry = () => {
 
       <SimpleSnackbar open={snackOpen} setSnackOpen={setSnackOpen} snackType={snackType} />
       <LeaveSnackBar {...{ leaveSnack, setLeaveSnack }} />
+      <Instructions />
     </Container>
   );
 };

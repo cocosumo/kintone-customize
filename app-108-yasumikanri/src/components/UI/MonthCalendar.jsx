@@ -13,7 +13,6 @@ const MonthCalendar = ({
   datesSetHandler,
   yasumiRecords,
   currentMonth,
-  isSaving,
   isEditing,
 }) => {
   const dayCellContentRender = (args) => <DayCell {...{ args, yasumiRecords, currentMonth }} />;
@@ -47,7 +46,7 @@ const MonthCalendar = ({
           end: `${!isEditing ? 'prev,next' : 'loading'}`,
         }}
         footerToolbar={{
-          start: !isEditing ? 'clear' : '',
+          start: !isEditing ? 'clear' : 'loading',
         }}
 
       />
