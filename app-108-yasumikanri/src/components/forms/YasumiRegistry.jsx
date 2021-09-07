@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { Container } from '@mui/material';
+import { Container, Button, Grid } from '@mui/material';
+import HelpIcon from '@mui/icons-material/Help';
 import MonthCalendar from '../UI/MonthCalendar';
 import { ISOtoLux, isWithinMonth, JSDToLux } from '../../helpers/time';
 import getYasumiCount from '../../backend/settings';
@@ -12,6 +13,8 @@ import clearYasumi from '../../handlers/clearYasumi';
 import LeaveSnackBar from '../UI/snackbars/LeaveSnackbar';
 import getLeaveInClickedDate from '../../handlers/getLeaveInClickedDate';
 import Instructions from '../paragraphs/Instructions';
+import HelpFab from '../UI/HelpFab';
+import { isMobile } from '../../../../kintone-api/api';
 
 const YasumiRegistry = () => {
   const [yasumiRecords, setYasumiRecords] = useState();
@@ -94,23 +97,44 @@ const YasumiRegistry = () => {
   });
 
   return (
-    <Container maxWidth="md">
-      <MonthCalendar
-        {...{
-          currentMonth,
-          remainingYasumi,
-          datesSetHandler,
-          clickDayHandler,
-          yasumiRecords,
-          isEditing,
-          clearHandler,
-        }}
-      />
+    <>
+      <Container maxWidth="md">
+        <Grid
+          container
+          direction="row"
+          alignItems="center"
+          marginBottom={2}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            startIcon={<HelpIcon />}
+            onClick={() => {
+              const element = document.getElementById('helpSection');
+              element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }}
+          >
+            使い方
+          </Button>
+        </Grid>
+        <MonthCalendar
+          {...{
+            currentMonth,
+            remainingYasumi,
+            datesSetHandler,
+            clickDayHandler,
+            yasumiRecords,
+            isEditing,
+            clearHandler,
+          }}
+        />
 
-      <SimpleSnackbar open={snackOpen} setSnackOpen={setSnackOpen} snackType={snackType} />
-      <LeaveSnackBar {...{ leaveSnack, setLeaveSnack }} />
-      <Instructions />
-    </Container>
+        <SimpleSnackbar open={snackOpen} setSnackOpen={setSnackOpen} snackType={snackType} />
+        <LeaveSnackBar {...{ leaveSnack, setLeaveSnack }} />
+        <Instructions />
+      </Container>
+    </>
   );
 };
 

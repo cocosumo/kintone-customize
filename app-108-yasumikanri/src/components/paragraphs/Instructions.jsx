@@ -9,17 +9,18 @@ import Ordinary from '../../assets/day-ordinary.png';
 import Blank from '../../assets/blank.png';
 import Plus from '../../assets/plus.png';
 import TechSupportPNG from '../../assets/techSupport.png';
+import { isMobile } from '../../../../kintone-api/api';
 
 const Instructions = () => {
   const rawContent = [
-    { title: '一回目', image: Ordinary, desc: '終日休み' },
+    { title: '一回目', image: Ordinary, desc: '終日休' },
     { title: '二回目', image: OrdinaryAM, desc: '午前休' },
     { title: '三回目', image: OrdinaryPM, desc: '午後休' },
     { title: '四回目', image: Blank, desc: '白紙' }];
   const content = rawContent.map(({ title, image, desc }) => (
     <Card sx={{ maxWidth: '20%' }} key={title}>
-      <CardContent sx={{ p: 1 }}>
-        <Typography variant="h6" align="center" component="div">
+      <CardContent sx={{ p: 1 }} style={{ paddingBottom: 1 }}>
+        <Typography fontSize={isMobile() ? 10 : 16} align="center" component="div">
           {title}
           <img
             style={{
@@ -71,7 +72,7 @@ const Instructions = () => {
   return (
     <Card sx={{ mt: 4, minWidth: 275 }}>
       <CardContent>
-        <Typography align="center" sx={{ fontSize: 16 }} color="text.secondary" gutterBottom>
+        <Typography id="helpSection" align="center" sx={{ fontSize: 16 }} color="text.secondary" gutterBottom>
           使い方
         </Typography>
         <Typography marginBottom={2} variant="h5" align="center" component="div">

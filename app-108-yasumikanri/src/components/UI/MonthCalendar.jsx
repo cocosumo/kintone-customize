@@ -18,7 +18,7 @@ const MonthCalendar = ({
   const dayCellContentRender = (args) => <DayCell {...{ args, yasumiRecords, currentMonth }} />;
 
   return (
-    <Box height="100vh">
+    <Box>
       <FullCalendar
         dayCellContent={dayCellContentRender}
         datesSet={datesSetHandler}
