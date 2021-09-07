@@ -84,7 +84,7 @@ export const getSpaceElement = (spaceId) => (
  * */
 export const getHeaderMenuSpaceElement = () => (
   isMobile()
-    ? kintone.mobile.app.getHeaderMenuSpaceElement()
+    ? kintone.mobile.app.getHeaderSpaceElement()
     : kintone.app.getHeaderMenuSpaceElement()
 );
 

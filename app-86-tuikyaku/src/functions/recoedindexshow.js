@@ -1,4 +1,5 @@
 import getRecords from '../handlers/getrecords';
+// import getHeaderMenuSpaceElement from '../../../kintone-api/api';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recoedindexshow = (event) => {
@@ -13,7 +14,7 @@ const recoedindexshow = (event) => {
   }
 
   // ボタンの増殖防止
-  if (document.getElementById('my_select_button') !== null) {
+  if (document.getElementById('my_select_button01') !== null) {
     return;
   }
   /* [★★★]
@@ -38,11 +39,19 @@ const recoedindexshow = (event) => {
 
   // [一覧表示画面]プルダウン(担当者名)の設置
   const myselect01 = document.createElement('select');
-  myselect01.id = 'my_select_button';
+  myselect01.id = 'my_select_button01';
   myselect01.innerText = 'セレクトボタン';
-  const myHeaderSpace01 = kintone.app.getHeaderMenuSpaceElement();
-  myHeaderSpace01.innerText = '担当名: ';
-  kintone.app.getHeaderMenuSpaceElement().appendChild(myselect01);
+  const isMobile = () => (window.location.href).includes('k/m');
+  const myHeaderSpace01 = () => (
+    isMobile()
+      ? kintone.mobile.app.getHeaderSpaceElement()
+      : kintone.app.getHeaderMenuSpaceElement()
+  );
+  // const myHeaderSpace01 = kintone.mobile.app.getHeaderSpaceElement();
+  console.log(myHeaderSpace01);
+
+  myHeaderSpace01().innerText = '担当名: ';
+  myHeaderSpace01().appendChild(myselect01);
   console.log('一覧:ヘッダにボタン設置');
 
   // ログインユーザー情報の取得
@@ -68,7 +77,7 @@ const recoedindexshow = (event) => {
     ini.innerText = userName;
     console.log('ユーザ名の取得 :', userName);
   }
-  document.getElementById('my_select_button').appendChild(ini);
+  document.getElementById('my_select_button01').appendChild(ini);
 
   // プルダウンメニューの要素を設定する- ID:34 = 社員名簿
   // 社員名簿のレコードを取得する
@@ -88,7 +97,7 @@ const recoedindexshow = (event) => {
       const listitems = document.createElement('option');
       listitems.value = Employee.文字列＿氏名.value;
       listitems.innerText = Employee.文字列＿氏名.value;
-      document.getElementById('my_select_button').appendChild(listitems);
+      document.getElementById('my_select_button01').appendChild(listitems);
       // console.log(listitems);
     });
   }, (er) => {
@@ -99,7 +108,7 @@ const recoedindexshow = (event) => {
   // ドロップダウン変更時の処理
   const selectField = '担当名'; // フィルタリング対象のフィールド名
   myselect01.onchange = () => {
-    const member = document.getElementById('my_select_button').value;
+    const member = document.getElementById('my_select_button01').value;
     const query = `${selectField} in ("${member}")`;
     console.log('query = ', query);
     // console.log('origin = ', window.location.origin);      // https://rdmuhwtt6gx7.cybozu.com
