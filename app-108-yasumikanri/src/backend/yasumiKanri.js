@@ -153,7 +153,7 @@ export const deleteRedundantType = (duplicateType) => {
  * Delete record by dates.
  * @param {String, String[]} dates - dates to be deleted.
  */
-export const deleteRecordByDates = async (dates) => {
+export const deleteRecordsByDates = async (dates) => {
   const strToDates = [].concat(dates);
 
   if (!strToDates.length) return 'No Items to delete.';

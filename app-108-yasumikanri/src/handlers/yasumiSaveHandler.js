@@ -1,5 +1,5 @@
 import { debounce } from 'lodash';
-import { addYasumiRecords, deleteRecordByDates, updateYasumiRecords } from '../backend/yasumiKanri';
+import { addYasumiRecords, deleteRecordsByDates, updateYasumiRecords } from '../backend/yasumiKanri';
 import { getOrdinaryYasumi } from '../helpers/converters';
 import refetchData from './refetchData';
 
@@ -15,7 +15,7 @@ const deleteRecords = async ({
     }
   });
 
-  return deleteRecordByDates(datesToBeDeleted);
+  return deleteRecordsByDates(datesToBeDeleted);
 };
 
 const pushToRecordsToSave = (recordsToSaveArray, unsavedRecord, key) => {

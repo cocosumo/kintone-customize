@@ -117,6 +117,12 @@ export const snackDetails = (snackType) => {
         message: '休み数は上限に超えました。削除します。',
         severity: 'warning',
       };
+    case 'resetInput':
+      return {
+        duration: 1000,
+        message: 'リセット出来ました。',
+        severity: 'info',
+      };
 
     default: return {};
   }

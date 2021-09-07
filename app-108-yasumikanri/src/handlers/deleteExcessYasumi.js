@@ -1,4 +1,4 @@
-import { deleteRecordByDates } from '../backend/yasumiKanri';
+import { deleteRecordsByDates } from '../backend/yasumiKanri';
 import { getYasumiWeight } from '../helpers/converters';
 import refetchData from './refetchData';
 
@@ -30,7 +30,7 @@ const deleteExcessYasumi = async ({
       }
     }
 
-    await deleteRecordByDates(datesToBeDeleted);
+    await deleteRecordsByDates(datesToBeDeleted);
     setSnackType('deletedExcess');
     setSnackOpen(true);
 

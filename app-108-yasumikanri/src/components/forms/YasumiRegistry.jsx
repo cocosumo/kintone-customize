@@ -9,11 +9,13 @@ import refetchData from '../../handlers/refetchData';
 import deleteExcessYasumi from '../../handlers/deleteExcessYasumi';
 import SimpleSnackbar from '../UI/snackbars/SimpleSnackBar';
 import clearYasumi from '../../handlers/clearYasumi';
+import LeaveSnackBar from '../UI/snackbars/LeaveSnackbar';
 
 const YasumiRegistry = () => {
   const [yasumiRecords, setYasumiRecords] = useState();
   const [snackType, setSnackType] = useState();
   const [snackOpen, setSnackOpen] = useState(false);
+  const [leaveSnackOpen, setLeaveSnackOpen] = useState(false);
   const [remainingYasumi, setRemainingYasumi] = useState();
   const [savedRecords, setSavedRecords] = useState();
   const [isSaving, setIsSaving] = useState();
@@ -54,7 +56,6 @@ const YasumiRegistry = () => {
 
   const clearHandler = () => {
     clearYasumi({
-      remainingYasumi,
       yasumiRecords,
       currentMonth,
       maxYasumi,
@@ -63,6 +64,7 @@ const YasumiRegistry = () => {
       setRemainingYasumi,
       setSnackType,
       setSnackOpen,
+      setIsSaving,
     });
   };
 
@@ -93,6 +95,11 @@ const YasumiRegistry = () => {
       />
 
       <SimpleSnackbar open={snackOpen} setSnackOpen={setSnackOpen} snackType={snackType} />
+      <LeaveSnackBar
+        open={leaveSnackOpen}
+        setLeaveSnackOpen={setLeaveSnackOpen}
+        data={data}
+      />
     </Container>
   );
 };

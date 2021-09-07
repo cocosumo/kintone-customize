@@ -1,4 +1,7 @@
 import Processing from '../../assets/day-processing.png';
+import Unprocessed from '../../assets/day-unprocessed.png';
+import Returned from '../../assets/day-returned.png';
+
 import Leave from '../../assets/day-leave.png';
 import LeaveAM from '../../assets/day-leave-am.png';
 import LeavePM from '../../assets/day-leave-pm.png';
@@ -23,7 +26,7 @@ const resolveIcon = ({ type, duration, status }) => {
 
     case 'day-leave':
       switch (status) {
-        case 'unprocessed':
+        case 'unprocessed': return Unprocessed;
         case 'processing': return Processing;
         case 'approved':
           switch (duration) {
@@ -33,7 +36,7 @@ const resolveIcon = ({ type, duration, status }) => {
             default:
           }
           break;
-        case 'returned':
+        case 'returned': return Returned;
         default:
       }
       break;

@@ -1,5 +1,5 @@
 import {
-  deleteRecordByDates,
+  deleteRecordsByDates,
   fetchByYasumiDate,
   deleteRedundantRecords,
 } from '../backend/yasumiKanri';
@@ -30,7 +30,7 @@ const checkIfInputIsConflict = (inputRecord, existingRecord, isEdit) => {
     return messages.withConflict;
   } if (inputWeight === 0.5) {
     if (inputDuration !== existingDuration) {
-      if (!isEdit) deleteRecordByDates(getDate(inputRecord));
+      if (!isEdit) deleteRecordsByDates(getDate(inputRecord));
     } else {
       return messages.withConflict;
     }
@@ -84,7 +84,7 @@ const checkForConflicts = async (event) => {
   let conflictError;
 
   if (totalWeight === totalOrdinary) {
-    if (!isEdit) deleteRecordByDates(yasumiDate, $id?.value);
+    if (!isEdit) deleteRecordsByDates(yasumiDate, $id?.value);
   } else if (totalWeight === 1) {
     if (((totalLeave || totalLeaveSpecial) === 1)) {
       if ((recsLeave.length || recsLeaveSpecial.length) === 1) {
@@ -105,7 +105,7 @@ const checkForConflicts = async (event) => {
     }
   } else if (totalWeight === 0.5) {
     if (totalOrdinary === 0.5) {
-      deleteRecordByDates(yasumiDate);
+      deleteRecordsByDates(yasumiDate);
     } else if ((totalLeave || totalLeaveSpecial) === 0.5) {
       conflictError = checkIfInputIsConflict(
         record,
@@ -117,13 +117,13 @@ const checkForConflicts = async (event) => {
     const totalLeaveAndSpecial = totalLeave + totalLeaveSpecial;
 
     if (totalLeave + totalLeave === 0) {
-      deleteRecordByDates(yasumiDate);
+      deleteRecordsByDates(yasumiDate);
     } else if (totalLeaveAndSpecial > 1) {
-      deleteRecordByDates(yasumiDate);
+      deleteRecordsByDates(yasumiDate);
       deleteRedundantRecords(recsLeave.concat(recsLeaveSpecial));
       conflictError = messages.deletedDuplicate;
     } else if ((totalLeave || totalLeave === 1) && totalLeaveAndSpecial === 1) {
-      deleteRecordByDates(yasumiDate);
+      deleteRecordsByDates(yasumiDate);
       conflictError = messages.withConflict;
     } else if (totalLeave + totalLeaveSpecial === 1) {
       conflictError = compareLeaves(recsLeave[0], recsLeaveSpecial[0]);
