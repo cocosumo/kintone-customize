@@ -62,6 +62,7 @@ const yasumiSaveHandler = debounce(async ({
   setSnackType,
   setSnackOpen,
   setIsSaving,
+  seIsEditing,
 }) => {
   setIsSaving(true);
 
@@ -85,6 +86,7 @@ const yasumiSaveHandler = debounce(async ({
     maxYasumi,
   });
   setIsSaving(false);
+  seIsEditing(false);
 }, 1000);
 
 export default yasumiSaveHandler;

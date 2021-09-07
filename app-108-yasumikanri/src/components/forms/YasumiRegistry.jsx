@@ -20,6 +20,7 @@ const YasumiRegistry = () => {
   const [remainingYasumi, setRemainingYasumi] = useState();
   const [savedRecords, setSavedRecords] = useState();
   const [isSaving, setIsSaving] = useState();
+  const [isEditing, seIsEditing] = useState(false);
   const currentMonth = useRef();
   const maxYasumi = useRef(0);
 
@@ -47,6 +48,7 @@ const YasumiRegistry = () => {
         setSnackType,
         setSnackOpen,
         setIsSaving,
+        seIsEditing,
       });
     }
   };
@@ -100,6 +102,7 @@ const YasumiRegistry = () => {
           clickDayHandler,
           yasumiRecords,
           isSaving,
+          isEditing,
           clearHandler,
         }}
       />

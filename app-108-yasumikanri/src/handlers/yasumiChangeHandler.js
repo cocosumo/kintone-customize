@@ -26,6 +26,7 @@ const yasumiChangeHandler = ({
   setSnackType,
   setSnackOpen,
   setIsSaving,
+  seIsEditing,
 }) => {
   const { dateStr } = info;
   let newArray = yasumiRecords[dateStr] ? [...yasumiRecords[dateStr]] : [defaultRecord];
@@ -34,7 +35,7 @@ const yasumiChangeHandler = ({
   let newYasumiRecords;
   const availableTime = getAvailableDayTime(newArray);
   if (!availableTime) return;
-
+  seIsEditing(true);
   if (newArray) {
     if (availableTime !== 'day-whole' && newArray.length === 1) newArray.unshift(defaultRecord); // newArray = newArray.concat(defaultRecord);
 
@@ -85,6 +86,7 @@ const yasumiChangeHandler = ({
     setSnackType,
     setSnackOpen,
     setIsSaving,
+    seIsEditing,
   });
 };
 

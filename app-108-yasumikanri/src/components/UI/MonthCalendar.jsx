@@ -14,6 +14,7 @@ const MonthCalendar = ({
   yasumiRecords,
   currentMonth,
   isSaving,
+  isEditing,
 }) => {
   const dayCellContentRender = (args) => <DayCell {...{ args, yasumiRecords, currentMonth }} />;
 
@@ -33,7 +34,7 @@ const MonthCalendar = ({
             text: `残りの休み: ${remainingYasumi || 0}`,
           },
           loading: {
-            text: '保存中...',
+            text: '編集中...',
           },
           clear: {
             text: 'リセット',
@@ -43,10 +44,10 @@ const MonthCalendar = ({
         headerToolbar={{
           start: 'title',
           center: 'remainingYasumi',
-          end: `${!isSaving ? 'prev,next' : 'loading'}`,
+          end: `${!isEditing ? 'prev,next' : 'loading'}`,
         }}
         footerToolbar={{
-          start: 'clear',
+          start: !isEditing ? 'clear' : '',
         }}
 
       />
