@@ -74,12 +74,10 @@ export const onFieldChange = (fields) => [].concat(fields).reduce(
 /**
  * Record View
  * */
-export const getSpaceElement = (spaceId) => {
-  const url = window.location.href;
-  return url.includes('k/m')
+export const getSpaceElement = (spaceId) => (
+  isMobile()
     ? kintone.mobile.app.record.getSpaceElement(spaceId)
-    : kintone.app.record.getSpaceElement(spaceId);
-};
+    : kintone.app.record.getSpaceElement(spaceId));
 
 /**
  * List View
