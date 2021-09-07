@@ -10,12 +10,13 @@ import deleteExcessYasumi from '../../handlers/deleteExcessYasumi';
 import SimpleSnackbar from '../UI/snackbars/SimpleSnackBar';
 import clearYasumi from '../../handlers/clearYasumi';
 import LeaveSnackBar from '../UI/snackbars/LeaveSnackbar';
+import getLeaveInClickedDate from '../../handlers/getLeaveInClickedDate';
 
 const YasumiRegistry = () => {
   const [yasumiRecords, setYasumiRecords] = useState();
   const [snackType, setSnackType] = useState();
   const [snackOpen, setSnackOpen] = useState(false);
-  const [leaveSnackOpen, setLeaveSnackOpen] = useState(false);
+  const [leaveSnack, setLeaveSnack] = useState({ isOpen: false, data: [], date: '' });
   const [remainingYasumi, setRemainingYasumi] = useState();
   const [savedRecords, setSavedRecords] = useState();
   const [isSaving, setIsSaving] = useState();
@@ -24,6 +25,15 @@ const YasumiRegistry = () => {
 
   const clickDayHandler = (info) => {
     if (!isSaving && isWithinMonth(currentMonth.current, ISOtoLux(info.dateStr))) {
+      const leaveInClickedDate = getLeaveInClickedDate(yasumiRecords[info.dateStr]);
+      if (leaveInClickedDate) {
+        setLeaveSnack({
+          isOpen: true,
+          data: leaveInClickedDate,
+          date: info.dateStr,
+        });
+      }
+
       yasumiChangeHandler({
         info,
         yasumiRecords,
@@ -95,11 +105,7 @@ const YasumiRegistry = () => {
       />
 
       <SimpleSnackbar open={snackOpen} setSnackOpen={setSnackOpen} snackType={snackType} />
-      <LeaveSnackBar
-        open={leaveSnackOpen}
-        setLeaveSnackOpen={setLeaveSnackOpen}
-        data={data}
-      />
+      <LeaveSnackBar {...{ leaveSnack, setLeaveSnack }} />
     </Container>
   );
 };

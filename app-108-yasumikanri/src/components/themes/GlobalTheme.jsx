@@ -7,6 +7,9 @@ const theme = createTheme({
         anchorOriginTopCenter: {
           top: '10%',
         },
+        anchorOriginBottomCenter: {
+          bottom: '20%',
+        },
       },
     },
   },

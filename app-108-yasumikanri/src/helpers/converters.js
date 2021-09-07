@@ -41,6 +41,7 @@ const getKeyByValue = (object, value) => Object.keys(object).find((key) => objec
 
 export const getKintoneType = (type) => getKeyByValue(normType, type);
 export const getKintoneDuration = (duration) => getKeyByValue(normDuration, duration);
+export const getKintoneStatus = (status) => getKeyByValue(normStatus, status);
 
 export const shiftToNext = (duration, remainingYasumi, availableTime) => {
   if (availableTime === 'day-whole') {
