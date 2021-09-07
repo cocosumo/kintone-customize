@@ -1,11 +1,8 @@
-import {
-  Alert, Button, Box, AlertTitle,
-} from '@mui/material';
+import { Alert, Button, AlertTitle } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import EditIcon from '@material-ui/icons/Edit';
-import { toLocaleDate } from '../../../helpers/time';
-
 import { getKintoneDuration, getKintoneStatus, getKintoneType } from '../../../helpers/converters';
+import { toLocaleDate } from '../../../helpers/time';
 
 const onEditHandler = (id) => {
   window.open(`${recordPath(id)}&mode=edit`, '_blank');
@@ -16,14 +13,11 @@ const LeaveSnackbar = ({
   setLeaveSnack,
 }) => {
   const { isOpen, data, date } = leaveSnack;
-
   const {
     id, type, duration, status,
   } = data;
-  let message = '';
-  if (isOpen) {
-    message = `${getKintoneDuration(duration)}${getKintoneType(type)}が${getKintoneStatus(status)}です。`;
-  }
+  const message = `${getKintoneType(type)}が${getKintoneStatus(status)}です。`;
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -51,12 +45,12 @@ const LeaveSnackbar = ({
         key={message}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={isOpen}
-        autoHideDuration={2000}
+        autoHideDuration={3000}
         transitionDuration={500}
         onClose={handleClose}
       >
         <Alert sx={{ fontSize: 14 }} onClose={handleClose} variant="filled" severity="info" action={action}>
-          <AlertTitle>{toLocaleDate(date)}</AlertTitle>
+          <AlertTitle sx={{ fontSize: 16 }}>{`${toLocaleDate(date)}(${getKintoneDuration(duration)})`}</AlertTitle>
           {message}
         </Alert>
       </Snackbar>
