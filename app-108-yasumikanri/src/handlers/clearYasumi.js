@@ -14,7 +14,6 @@ const clearYasumi = async ({
 }) => {
   setIsSaving(true);
 
-  console.log(Object.keys(yasumiRecords));
   await deleteRecordsByDates(Object.keys(yasumiRecords));
   setSnackType('resetInput');
   setSnackOpen(true);

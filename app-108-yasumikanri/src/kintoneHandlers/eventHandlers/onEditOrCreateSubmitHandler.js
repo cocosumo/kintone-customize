@@ -1,9 +1,8 @@
 import { fetchByYasumiDate } from '../../backend/yasumiKanri';
 import checkForConflicts from '../../handlers/conflictHandlers/checkForConflicts';
+import cleanRecords from '../../handlers/conflictHandlers/cleanRecords';
 import { groupByDuration } from '../../handlers/conflictHandlers/conflictHelper';
 import { normType } from '../../helpers/converters';
-
-const debug = true;
 
 const onEditOrCreateSubmitHandler = async (event) => {
   const { record, type } = event;
@@ -21,12 +20,13 @@ const onEditOrCreateSubmitHandler = async (event) => {
 
   const groupedRecords = await groupByDuration(recordsObject);
   const conflictError = await checkForConflicts(record, groupedRecords);
-  console.log(conflictError, type);
 
   if (conflictError) {
-    event.error = debug ? 'hello' : conflictError;
+    event.error = conflictError;
   } else if (type.includes('create')) {
-    console.log(normType[kinType]);
+    if (normType[kinType] === 'day-ordinary') {
+      cleanRecords(recordsObject);
+    }
   }
 
   return event;

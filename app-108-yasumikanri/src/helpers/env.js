@@ -1,5 +1,5 @@
 const env = {
-  isStaging: true,
+  isStaging: false,
   prodAppId: 108,
 };
 
