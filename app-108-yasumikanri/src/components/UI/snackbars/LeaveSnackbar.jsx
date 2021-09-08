@@ -18,7 +18,12 @@ const LeaveSnackbar = ({
     id, type, duration, status,
   } = data;
 
-  const message = `${getKintoneType(type)}が${getKintoneStatus(status)}済です。`;
+  let kintoneStatus = getKintoneStatus(status);
+  if (kintoneStatus && kintoneStatus.includes('承認')) {
+    kintoneStatus += '済';
+  }
+
+  const message = `${getKintoneType(type)}が${kintoneStatus}です。`;
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {

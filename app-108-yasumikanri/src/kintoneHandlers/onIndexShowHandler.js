@@ -8,6 +8,7 @@ const registrationViewId = 5523653;
 
 const renderRegistration = async () => {
   localStorage.setItem('employeeRole', await getEmployeeRole());
+  console.log('hello');
   render(
     <GlobalTheme>
       <YasumiRegistry />

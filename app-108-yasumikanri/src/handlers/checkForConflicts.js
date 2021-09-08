@@ -1,15 +1,16 @@
+import deleteRecords from '../../../kintone-api/deleteRecords';
 import {
   deleteRecordsByDates,
   fetchByYasumiDate,
   deleteRedundantRecords,
 } from '../backend/yasumiKanri';
-import { getKintoneYasumiWeight, normType } from '../helpers/converters';
+import { getKintoneType, getKintoneYasumiWeight, normType } from '../helpers/converters';
 import messages from '../helpers/messages';
 
 const getDate = (record) => record.yasumiDate.value;
 const getDuration = (record) => record.duration.value;
-/* const getType = (record) => record.type.value;
-const getId = (record) => record.$id.value; */
+const getType = (record) => record.type.value;
+const getId = (record) => record.$id.value;
 
 const compareLeaves = (leaveRec, specialLeaveRec) => {
   const leaveDuration = getDuration(leaveRec);
@@ -22,17 +23,28 @@ const compareLeaves = (leaveRec, specialLeaveRec) => {
 };
 
 const checkIfInputIsConflict = (inputRecord, existingRecord, isEdit) => {
+  console.log(inputRecord, existingRecord);
   const inputDuration = getDuration(inputRecord);
+  const inputType = getType(inputRecord);
   const inputWeight = getKintoneYasumiWeight(inputDuration);
   const existingDuration = getDuration(existingRecord);
+  const existingType = getType(existingRecord);
+  const existingId = getId(existingRecord);
 
   if (inputWeight === 1) {
-    return messages.withConflict;
-  } if (inputWeight === 0.5) {
-    if (inputDuration !== existingDuration) {
-      if (!isEdit) deleteRecordsByDates(getDate(inputRecord));
+    if (existingType === getKintoneType('day-ordinary')) {
+      deleteRecords({ ids: [existingId] });
     } else {
       return messages.withConflict;
+    }
+  } if (inputWeight === 0.5) {
+    if (inputDuration === existingDuration) {
+      console.log('inputDuration === existingDuration');
+      if (existingType === getKintoneType('day-ordinary')) {
+        deleteRecords({ ids: [existingId] });
+      } else {
+        return messages.withConflict;
+      }
     }
   }
   return null;
@@ -76,16 +88,15 @@ const checkForConflicts = async (event) => {
   const groupedRecords = groupByType(recsByDate);
   const {
     total: totalWeight,
-    'day-ordinary': { total: totalOrdinary },
+    'day-ordinary': { total: totalOrdinary, records: recsOrdinary },
     'day-leave': { total: totalLeave, records: recsLeave },
     'day-leaveSpecial': { total: totalLeaveSpecial, records: recsLeaveSpecial },
   } = groupedRecords;
 
-  let conflictError;
-
-  if (totalWeight === totalOrdinary) {
-    if (!isEdit) deleteRecordsByDates(yasumiDate, $id?.value);
-  } else if (totalWeight === 1) {
+  let conflictError = null;
+  console.log(groupedRecords);
+  if (totalWeight === 1) {
+    console.log('totalWeight === 1');
     if (((totalLeave || totalLeaveSpecial) === 1)) {
       if ((recsLeave.length || recsLeaveSpecial.length) === 1) {
         conflictError = messages.withConflict;
@@ -100,12 +111,17 @@ const checkForConflicts = async (event) => {
       /* Not checked */
       conflictError = checkIfInputIsConflict(
         record,
-        totalLeave ? recsLeave[0] : recsLeaveSpecial[0],
+        recsLeave[0] || recsLeaveSpecial[0],
+        isEdit,
       );
     }
   } else if (totalWeight === 0.5) {
+    console.log('totalWeight === 0.5');
     if (totalOrdinary === 0.5) {
-      deleteRecordsByDates(yasumiDate);
+      conflictError = checkIfInputIsConflict(
+        record,
+        recsLeave[0] || recsLeaveSpecial[0] || recsOrdinary[0],
+      );
     } else if ((totalLeave || totalLeaveSpecial) === 0.5) {
       conflictError = checkIfInputIsConflict(
         record,
@@ -114,20 +130,25 @@ const checkForConflicts = async (event) => {
       );
     }
   } else if (totalWeight > 1) {
-    const totalLeaveAndSpecial = totalLeave + totalLeaveSpecial;
-
-    if (totalLeave + totalLeave === 0) {
+    const totalLeavePlusSpecial = totalLeave + totalLeaveSpecial;
+    console.log('greater than');
+    if (totalLeavePlusSpecial === 0) {
+      console.log('otalLeavePlusSpecial === 0');
       deleteRecordsByDates(yasumiDate);
     } else if (totalLeaveAndSpecial > 1) {
+      console.log('totalLeaveAndSpecial > 1');
       deleteRecordsByDates(yasumiDate);
       deleteRedundantRecords(recsLeave.concat(recsLeaveSpecial));
       conflictError = messages.deletedDuplicate;
-    } else if ((totalLeave || totalLeave === 1) && totalLeaveAndSpecial === 1) {
+    } else if ((totalLeave || totalLeaveSpecial === 1) && totalLeavePlusSpecial === 1) {
+      console.log('totalLeave || totalLeaveSpecial === 1) && totalLeavePlusSpecial === 1');
       deleteRecordsByDates(yasumiDate);
       conflictError = messages.withConflict;
-    } else if (totalLeave + totalLeaveSpecial === 1) {
+    } else if (totalLeavePlusSpecial === 1) {
+      console.log(totalLeavePlusSpecial === 1);
       conflictError = compareLeaves(recsLeave[0], recsLeaveSpecial[0]);
     } else if ((totalLeave || totalLeaveSpecial) === 0.5) {
+      console.log('totalLeave || totalLeaveSpecial) === 0.5');
       conflictError = checkIfInputIsConflict(
         record,
         totalLeave ? recsLeave[0] : recsLeaveSpecial[0],

@@ -13,8 +13,6 @@ import clearYasumi from '../../handlers/clearYasumi';
 import LeaveSnackBar from '../UI/snackbars/LeaveSnackbar';
 import getLeaveInClickedDate from '../../handlers/getLeaveInClickedDate';
 import Instructions from '../paragraphs/Instructions';
-import HelpFab from '../UI/HelpFab';
-import { isMobile } from '../../../../kintone-api/api';
 
 const YasumiRegistry = () => {
   const [yasumiRecords, setYasumiRecords] = useState();

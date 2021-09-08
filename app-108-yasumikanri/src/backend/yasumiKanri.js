@@ -170,7 +170,6 @@ export const deleteRecordsByDates = async (dates) => {
     fields: ['$id'],
   })).records.map(({ $id }) => $id.value);
 
-  console.log(recordIds);
   if (recordIds) {
     return deleteRecords({ ids: recordIds });
   }

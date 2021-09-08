@@ -1,4 +1,5 @@
 import { fetchSettings } from '../../../kintone-api/fetchRecords';
+import { envAppId } from '../helpers/env';
 
 /* Plus 1 yasumi for support roles. */
 const yasumiDaysReference = {
@@ -36,7 +37,7 @@ const getYasumiCount = async (luxonDate) => {
 
   const {
     設定: { value: settingsTable },
-  } = (await fetchSettings()).records[0];
+  } = (await fetchSettings(envAppId())).records[0];
 
   const yasumiDaysSetting = settingsTable.find(({ value }) => {
     const { 設定名: { value: settingsName } } = value;
