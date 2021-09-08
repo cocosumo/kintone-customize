@@ -1,7 +1,7 @@
 import messages from '../../helpers/messages';
 import { normDuration } from '../../helpers/converters';
 
-const createSubmitConflict = async (record, groupedRecords) => {
+const checkForConflicts = async (record, groupedRecords) => {
   const {
     duration: { value: kinDuration },
   } = record;
@@ -31,4 +31,4 @@ const createSubmitConflict = async (record, groupedRecords) => {
   return null;
 };
 
-export default createSubmitConflict;
+export default checkForConflicts;

@@ -1,3 +1,5 @@
+/* Deprecated */
+
 import deleteRecords from '../../../kintone-api/deleteRecords';
 import {
   deleteRecordsByDates,

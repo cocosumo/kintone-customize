@@ -1,19 +1,34 @@
-import { getGroupByDurationWithDate, getGroupByTypeWithDate } from '../../handlers/conflictHandlers/conflictHelper';
-import createSubmitConflict from '../../handlers/conflictHandlers/createSubmitConflict';
+import { fetchByYasumiDate } from '../../backend/yasumiKanri';
+import checkForConflicts from '../../handlers/conflictHandlers/checkForConflicts';
+import { groupByDuration } from '../../handlers/conflictHandlers/conflictHelper';
+import { normType } from '../../helpers/converters';
 
-const debug = false;
+const debug = true;
 
 const onEditOrCreateSubmitHandler = async (event) => {
   const { record, type } = event;
   const {
     yasumiDate: { value: yasumiDate },
+    type: { value: kinType },
     $id,
   } = record;
 
-  const groupedRecords = await getGroupByDurationWithDate(yasumiDate);
-  const conflictError = await createSubmitConflict(record, groupedRecords);
+  let recordsObject = await fetchByYasumiDate(yasumiDate);
 
-  event.error = debug ? 'hello' : conflictError;
+  if (type.includes('edit')) {
+    recordsObject = recordsObject.filter(({ $id: resId }) => $id.value !== resId.value);
+  }
+
+  const groupedRecords = await groupByDuration(recordsObject);
+  const conflictError = await checkForConflicts(record, groupedRecords);
+  console.log(conflictError, type);
+
+  if (conflictError) {
+    event.error = debug ? 'hello' : conflictError;
+  } else if (type.includes('create')) {
+    console.log(normType[kinType]);
+  }
+
   return event;
 };
 
