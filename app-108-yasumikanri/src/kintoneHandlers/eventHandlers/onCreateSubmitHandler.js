@@ -1,7 +1,9 @@
-import createSaveConflict from '../../handlers/conflictHandlers/createSaveConflict';
+import createSubmitConflict from '../../handlers/conflictHandlers/createSubmitConflict';
 
 const onCreateSubmitHandler = async (event) => {
-  createSaveConflict(event);
+  createSubmitConflict(event);
+
+  return event;
 };
 
 export default onCreateSubmitHandler;

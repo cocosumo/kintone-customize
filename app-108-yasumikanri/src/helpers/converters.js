@@ -6,6 +6,19 @@ export const normDuration = {
   午後休み: 'day-pm',
 };
 
+export const normStatus = {
+  未申請: 'unprocessed',
+  上長確認中: 'processing',
+  承認: 'approved',
+  差し戻し: 'returned',
+};
+
+export const normType = {
+  通常休み: 'day-ordinary',
+  有休: 'day-leave',
+  特別有休: 'day-leaveSpecial',
+};
+
 export const getYasumiWeight = (duration) => {
   switch (duration) {
     case 'day-whole': return 1;
@@ -22,19 +35,6 @@ export const getKintoneYasumiWeight = (duration) => {
     case '午後休み': return 0.5;
     default: return 0;
   }
-};
-
-export const normType = {
-  通常休み: 'day-ordinary',
-  有休: 'day-leave',
-  特別有休: 'day-leaveSpecial',
-};
-
-export const normStatus = {
-  未申請: 'unprocessed',
-  上長確認中: 'processing',
-  承認: 'approved',
-  差し戻し: 'returned',
 };
 
 const getKeyByValue = (object, value) => Object.keys(object).find((key) => object[key] === value);

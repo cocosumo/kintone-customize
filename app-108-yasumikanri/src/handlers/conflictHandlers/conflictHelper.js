@@ -1,4 +1,10 @@
 import { fetchByYasumiDate } from '../../backend/yasumiKanri';
+import { getKintoneYasumiWeight, normDuration, normType } from '../../helpers/converters';
+
+export const getDate = (record) => record.yasumiDate.value;
+export const getDuration = (record) => record.duration.value;
+export const getType = (record) => record.type.value;
+export const getId = (record) => record.$id.value;
 
 export const groupByType = (recsByDate) => recsByDate.reduce((
   accu,
@@ -26,4 +32,24 @@ export const getGroupByTypeWithDate = async (
   yasumiDate,
 ) => groupByType(await fetchByYasumiDate(yasumiDate));
 
-export default conflictHelper = 'conflictHelper';
+export const groupByDuration = (recsByDate) => recsByDate.reduce((
+  accu, curr,
+) => {
+  const {
+    duration: { value: duration },
+    type: { value: type },
+    $id: { value: id },
+  } = curr;
+
+  accu[normDuration[duration]].push({ duration: normDuration[duration], type: normType[type], id });
+
+  return accu;
+}, {
+  'day-whole': [],
+  'day-am': [],
+  'day-pm': [],
+});
+
+export const getGroupByDurationWithDate = async (
+  yasumiDate,
+) => groupByDuration(await fetchByYasumiDate(yasumiDate));
