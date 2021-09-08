@@ -1,4 +1,4 @@
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { addYasumiRecords, deleteRecordsByDates, updateYasumiRecords } from '../backend/yasumiKanri';
 import { getOrdinaryYasumi } from '../helpers/converters';
 import refetchData from './refetchData';
@@ -87,6 +87,6 @@ const yasumiSaveHandler = debounce(async ({
   });
   setIsSaving(false);
   seIsEditing(false);
-}, 1000);
+}, 2000);
 
 export default yasumiSaveHandler;
