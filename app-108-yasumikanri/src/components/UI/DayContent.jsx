@@ -1,8 +1,10 @@
 import Zoom from '@mui/material/Zoom';
 import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 import { deleteRedundantType } from '../../backend/yasumiKanri';
 import swapArrayLocs from '../../helpers/utils';
 import TypeIcon from './TypeIcon';
+import { getKintoneDuration } from '../../helpers/converters';
 
 const DayContent = ({ dayRecords }) => {
   let dayToRender = [...dayRecords];
@@ -36,16 +38,18 @@ const DayContent = ({ dayRecords }) => {
 
   return (
     <Zoom key={dayToRender[0]?.duration} in={shouldAnim}>
-      <Box
-        key={dayToRender[0].type}
-        sx={{
-          textAlign: 'center', pt: 0.2, pb: 0.8, width: '100%', height: '100%',
-        }}
-      >
+      <Tooltip title={getKintoneDuration(dayToRender[0]?.duration)}>
+        <Box
+          key={dayToRender[0].type}
+          sx={{
+            textAlign: 'center', pt: 0.2, pb: 0.8, width: '100%', height: '100%',
+          }}
+        >
 
-        {iconContent}
+          {iconContent}
 
-      </Box>
+        </Box>
+      </Tooltip>
     </Zoom>
 
   );
