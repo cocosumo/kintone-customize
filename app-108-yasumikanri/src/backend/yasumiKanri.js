@@ -6,6 +6,7 @@ import { getEmployeeNumber } from './user';
 import deleteRecords from '../../../kintone-api/deleteRecords';
 import addRecords from '../../../kintone-api/addRecords';
 import updateRecords from '../../../kintone-api/updateRecords';
+import updateStatus, { updateAllStatus } from '../../../kintone-api/updateStatus';
 
 const ownRecordFilter = `employeeNumber = "${getEmployeeNumber()}"`;
 
@@ -69,9 +70,12 @@ export const fetchByYasumiDate = async (yasumiDate) => {
 export const addYasumiRecords = async (unsavedRecords) => {
   if (!unsavedRecords.length) return 'No records to add';
   const kintoneRecords = toKintoneRecords(unsavedRecords);
-  return addRecords({ records: kintoneRecords });
+  const addedRecords = await addRecords({ records: kintoneRecords });
+  if (addedRecords.ids) {
+    updateAllStatus({ ids: addedRecords.ids });
+  }
+  return addedRecords;
 };
-
 /**
  * Update records.
  * @param {Records[]} records - kintone records to be updated.

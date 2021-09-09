@@ -1,6 +1,7 @@
 const env = {
   isStaging: false,
   prodAppId: 108,
+  stagingAppId: 110,
 };
 
 export const envAppId = () => {

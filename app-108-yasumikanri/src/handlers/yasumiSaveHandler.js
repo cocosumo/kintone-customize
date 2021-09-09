@@ -48,7 +48,10 @@ const compareAndSaveRecords = async ({
     addYasumiRecords(recordsToAdd),
     updateYasumiRecords(recordsToUpdate, savedRecords),
   ];
-  return Promise.allSettled(promises);
+
+  const settedPromises = Promise.allSettled(promises);
+  console.log(settedPromises);
+  return settedPromises;
 };
 
 const yasumiSaveHandler = debounce(async ({

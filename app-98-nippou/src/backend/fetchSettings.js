@@ -1,11 +1,11 @@
-import { getAppId } from '../../../kintone-api/api';
+import { getEnvAppId } from '../helpers/env';
 
 const settingsId = 82;
 
 const fetchSettings = () => {
   const body = {
     app: settingsId,
-    query: `コード="${getAppId()}"`,
+    query: `コード="${getEnvAppId()}"`,
   };
   return kintone.api(
     kintone.api.url('/k/v1/records', true),

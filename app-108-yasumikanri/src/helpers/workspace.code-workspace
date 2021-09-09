@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "..\\.."
+		},
+		{
+			"path": "..\\..\\..\\kintone-api"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "app-108-yasumikanri"
+	}
+}
