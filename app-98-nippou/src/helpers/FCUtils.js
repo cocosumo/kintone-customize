@@ -1,5 +1,5 @@
 import { dateTimeISO, isPast } from './Time';
-import actionTypeData from '../store/actionTypeData';
+import { getActionTypeData } from '../backend/fetchSettings';
 
 export const resolveTitle = (event) => {
   const { type: eventType, record } = event;
@@ -31,7 +31,7 @@ const kintoneToFCEvents = (record, isPlan, name) => {
       } = value;
 
       const buildIdString = (actionType.value + startTime.value + endTime.value).replace(/:/g, '');
-      const data = actionTypeData().find(({ type }) => type === actionType.value);
+      const data = getActionTypeData(actionType.value);
       const { bgColor, color } = data;
       return {
         id: buildIdString,
