@@ -1,6 +1,5 @@
-import Grow from '@mui/material/Grow';
+import Zoom from '@mui/material/Zoom';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
 import { deleteRedundantType } from '../../backend/yasumiKanri';
 import swapArrayLocs from '../../helpers/utils';
 import TypeIcon from './TypeIcon';
@@ -36,7 +35,7 @@ const DayContent = ({ dayRecords }) => {
   );
 
   return (
-    <Grow in={shouldAnim}>
+    <Zoom key={dayToRender[0]?.duration} in={shouldAnim}>
       <Box
         key={dayToRender[0].type}
         sx={{
@@ -47,7 +46,7 @@ const DayContent = ({ dayRecords }) => {
         {iconContent}
 
       </Box>
-    </Grow>
+    </Zoom>
 
   );
 };

@@ -50,7 +50,6 @@ const compareAndSaveRecords = async ({
   ];
 
   const settedPromises = Promise.allSettled(promises);
-  console.log(settedPromises);
   return settedPromises;
 };
 
