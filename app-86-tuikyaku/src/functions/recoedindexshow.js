@@ -3,7 +3,7 @@ import getRecords from '../handlers/getrecords';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recoedindexshow = (event) => {
-  const view = 5522965; // 一覧のID
+  const view = 5522965; // 一覧のID:[本番用= 5522965 ][テスト用= 5522965 ] =共通
   // 上記アプリの必要なドロップダウンのフィールドコード
   // [★★★]const field00 = 'ルックアップ＿店舗名';
   const field01 = '文字列＿氏名';
@@ -48,7 +48,6 @@ const recoedindexshow = (event) => {
       : kintone.app.getHeaderMenuSpaceElement()
   );
   // const myHeaderSpace01 = kintone.mobile.app.getHeaderSpaceElement();
-  console.log(myHeaderSpace01);
 
   myHeaderSpace01().innerText = '担当名: ';
   myHeaderSpace01().appendChild(myselect01);
@@ -59,23 +58,36 @@ const recoedindexshow = (event) => {
 
   // 初期値を追加
   const ini = document.createElement('option');
-  const url = window.location.search;
-  const result = url.indexOf('(');
+  let url = window.location.search;
+  url = decodeURI(url); // urlをデコーディングする
+  let resultPos = url.indexOf('担当名');
   console.log('location.search = ', url);
-  console.log('URL内の"("検索位置 =', result);
-  if (result !== -1) { // URLに'query'が含まれるとき(プルダウンでの絞り込み表示時)
-    // 絞り込み条件の氏名を取り出し
-    let selectName = url.slice(result + 1); // 7='query in '
-    selectName = decodeURI(selectName);
-    const lastlen = selectName.length;
-    selectName = selectName.substring(1, lastlen - 2);
+  console.log('URL内の"担当名"検索位置 =', resultPos);
+  if (resultPos !== -1) { // URLに'query'が含まれるとき(プルダウンでの絞り込み表示時)
+    // ここから：絞り込み条件の氏名を取り出し 「query=担当名 like "苗字" and 担当名 like "名前"」
+    let selectName = url.slice(resultPos + 10); // 10=読み飛ばす文字数/slice=urlから指定箇所以降を取り出し
+    resultPos = selectName.indexOf('担当名');
+    const selectNameL = selectName.substring(0, resultPos - 6); // 1文字目から"resultPos - 2"文字目までを取り出し
+    selectName = selectName.slice(resultPos + 10);
+    const selectNameF = selectName.substring(0, selectName.indexOf('"'));
+    selectName = selectNameL.concat(' ', selectNameF);
     ini.value = selectName;
     ini.innerText = selectName;
     console.log('ユーザ名の取得 :', selectName);
-  } else { // URLに'query'が含まれるないとき(初回)
-    ini.value = userName;
-    ini.innerText = userName;
-    console.log('ユーザ名の取得 :', userName);
+    // ここまで：絞り込み条件の氏名を取り出し
+  } else { // URLに'query'が含まれないとき(初回)
+    let selectName = userName;
+    const selectNameL = selectName.substring(0, selectName.indexOf(' '));
+    const selectNameF = selectName.slice(selectName.indexOf(' ') + 1);
+    selectName = selectNameL.concat(' ', selectNameF);
+    ini.value = selectName;
+    ini.innerText = selectName;
+    console.log('ユーザ名の取得 :', selectName);
+
+    const selectField = '担当名'; // フィルタリング対象のフィールド名
+    const query = `${selectField} like "${selectNameL}" and ${selectField} like "${selectNameF}"`;
+    console.log('query = ', query);
+    window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
   }
   document.getElementById('my_select_button01').appendChild(ini);
 
@@ -88,17 +100,15 @@ const recoedindexshow = (event) => {
   };
 
   getRecords(params01).then((resp) => { // 100件以上のレコード読み込み(上限1万件)
-    console.log(resp);
-    const Employees = resp.records;
+    console.log('レコード取得に成功しました！', resp);
+    const Employees = resp.records; // 社員
 
     // 設定項目の数だけ選択肢として追加
     Employees.forEach((Employee) => {
-      // console.log(Employee.文字列＿氏名.value);
       const listitems = document.createElement('option');
       listitems.value = Employee.文字列＿氏名.value;
       listitems.innerText = Employee.文字列＿氏名.value;
       document.getElementById('my_select_button01').appendChild(listitems);
-      // console.log(listitems);
     });
   }, (er) => {
     // error
@@ -109,7 +119,13 @@ const recoedindexshow = (event) => {
   const selectField = '担当名'; // フィルタリング対象のフィールド名
   myselect01.onchange = () => {
     const member = document.getElementById('my_select_button01').value;
-    const query = `${selectField} in ("${member}")`;
+    const Firstname = member.slice(member.indexOf(' ') + 1);
+    console.log('Firstname = ', Firstname);
+    console.log('member = ', member);
+    const Lastname = member.substring(0, member.indexOf(' '));
+    console.log('Lastname = ', Lastname);
+    // const query = `${selectField} in ("${member}")`;
+    const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
     console.log('query = ', query);
     // console.log('origin = ', window.location.origin);      // https://rdmuhwtt6gx7.cybozu.com
     // console.log('pathname = ', window.location.pathname);  // /k/86/
