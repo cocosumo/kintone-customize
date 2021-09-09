@@ -26,10 +26,10 @@ const EventsProvider = ({ event, name, children }) => {
 
   useEffect(async () => {
     if (name === 'report') {
-      const { reportDate, creator } = record;
+      const { reportDate } = record;
       /* Pull plans related to this report date */
       const plannedEvents = kintoneToFCEvents(
-        (await fetchPlanOnDate(reportDate.value, creator.value))?.records[0],
+        (await fetchPlanOnDate(reportDate.value))?.records[0],
         true,
         'plans',
       );

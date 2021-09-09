@@ -58,11 +58,8 @@ const MaterialReport = ({ selectedDate, actionOptions }) => {
     const eventTitle = info.actionType || info.event.title;
     const buildIdString = (eventTitle + startTime + endTime).replace(/:/g, '');
     const oldEventId = info.id || info.oldEvent?.id;
-    /* const colorData = actionTypeData().find(({ type }) => type === eventTitle);
-    const { bgColor, color } = colorData; */
     const colorDate = actionOptions.find(({ type }) => type === eventTitle);
     const { bgColor, color } = colorDate;
-    // console.log(getSettings(), 'hello');
 
     const newEvent = {
       id: buildIdString,
@@ -148,14 +145,6 @@ const MaterialReport = ({ selectedDate, actionOptions }) => {
         selectedTime={selectedTime}
       />
       )}
-      {/* {isDetailsOpen
-      && (
-      <EventDetailsDialog
-        open={isDetailsOpen}
-        onDetailsClose={onDetailsCloseHandler}
-        selectedTime={selectedTime}
-      />
-      )} */}
 
     </>
   );

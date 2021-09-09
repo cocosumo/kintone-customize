@@ -1,5 +1,8 @@
-import { getAppId, getUserName } from '../../../kintone-api/api';
+import { getAppId } from '../../../kintone-api/api';
 import { endOfMonth, startOfMonth } from '../helpers/Time';
+import { getEmployeeNumber } from './user';
+
+const ownRecordFilter = `employeeNumber = "${getEmployeeNumber()}"`;
 
 const fetchRecords = (condition) => {
   const body = {
@@ -17,16 +20,16 @@ export const fetchOnDate = (selectedDate) => fetchRecords(
   `reportDate = "${selectedDate}" `,
 );
 
-export const fetchPlanOnDate = async (selectedDate, creator) => (fetchRecords(
-  `plansDate = "${selectedDate}" and creator="${creator || getUserName()}" limit 1`,
+export const fetchPlanOnDate = async (selectedDate) => (fetchRecords(
+  `plansDate = "${selectedDate}" and ${ownRecordFilter} limit 1`,
 ));
 
-export const fetchReportOnDate = async (selectedDate, creator) => (fetchRecords(
-  `reportDate = "${selectedDate}" and creator ="${creator || getUserName()}" limit 1`,
+export const fetchReportOnDate = async (selectedDate) => (fetchRecords(
+  `reportDate = "${selectedDate}" and ${ownRecordFilter} limit 1`,
 ));
 
-export const fetchMonthRecords = (date, creator) => fetchRecords(
-  `creator = "${creator || getUserName()}"
+export const fetchMonthRecords = (date) => fetchRecords(
+  `${ownRecordFilter}
   and reportDate >= "${startOfMonth(date)}"
   and reportDate <= "${endOfMonth(date)}"`,
 );

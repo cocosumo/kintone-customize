@@ -9,24 +9,22 @@ import { useState } from 'react';
 import { Grid, DialogTitle } from '@material-ui/core';
 import EventInputForm from '../forms/EventInputForm';
 import { reduceEvent } from '../../helpers/DOM';
-import actionTypeData from '../../store/actionTypeData';
 import { CloseButton } from '../UI/MaterialActionButtons';
 import { ISOtoDATE } from '../../helpers/Time';
+import { getOptions } from '../../backend/fetchSettings';
 
 const EventEditDialog = ({
   open, onFormClose, selectedTime,
 }) => {
   const selectedFCEvent = reduceEvent(selectedTime);
-  // const initialDate = selectedTime?._context?.options.initialDate;
   const selectedId = selectedTime?.id;
   const isEventPressed = Boolean(selectedId);
   const initialEndTime = ISOtoDATE(selectedFCEvent.endTime);
 
   const [startTime, setStartTime] = useState(ISOtoDATE(selectedFCEvent.startTime));
-  // const [endTime, setEndTime] = useState(initialEndTime.invalid ? startTime : initialEndTime);
   const [endTime, setEndTime] = useState(initialEndTime);
   const [actionType, setActionType] = useState(
-    selectedFCEvent.actionType || actionTypeData()[0].type,
+    selectedFCEvent.actionType || getOptions()[0].type,
   );
   const [actionDetails, setActionDetails] = useState(selectedFCEvent.actionDetails);
   const [errorFields, setErrorFields] = useState({});

@@ -18,6 +18,7 @@ const getCummulative = async (record, fields) => {
   } = record;
 
   const { records: monthRecords } = await fetchMonthRecords(reportDateVal, creatorVal);
+  /* 各フィールドの値を取得 */
   return monthRecords.reduce((prev, curr) => {
     fields.forEach((item) => {
       prev[item] = (prev[item] || 0) + (+curr[item].value || 0);
@@ -42,7 +43,7 @@ const renderCumTotals = (cumTotals) => {
   });
 };
 
-const displayCummulativeTotals = async (record) => {
+export const displayCummulativeTotals = async (record) => {
   const cumTotals = await getCummulative(record, await getCumFields());
   renderCumTotals(cumTotals);
 };

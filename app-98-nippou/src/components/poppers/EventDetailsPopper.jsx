@@ -10,7 +10,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import TitleBar from '../UI/TitleBar';
 import { timeTo24Format } from '../../helpers/Time';
 import { reduceEvent } from '../../helpers/DOM';
-import { getOptionData } from '../../store/actionTypeData';
+import { getActionTypeData } from '../../backend/fetchSettings';
 
 const TimeRange = ({ startTime, endTime }) => (
   <Typography sx={{ display: 'block', pt: 0.25 }} variant="subtitle1">
@@ -21,7 +21,7 @@ const TimeRange = ({ startTime, endTime }) => (
 );
 
 const Content = ({ startTime, endTime, actionType }) => {
-  const { bgColor } = getOptionData(actionType);
+  const { bgColor } = getActionTypeData(actionType);
 
   return (
     <Grid sx={{ color: '#3c4043' }} container direction="row">

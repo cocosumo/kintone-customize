@@ -9,22 +9,22 @@ import { redirectToRecordId } from '../../helpers/DOM';
 const DEBUG_MODE = false;
 
 const initialize = ({ record }) => {
-  const { reportDate, EID } = record;
+  const { reportDate, employeeNumber } = record;
 
   setFieldShown('plansTable', DEBUG_MODE);
   setFieldShown('reportTable', DEBUG_MODE);
   reportDate.disabled = !DEBUG_MODE;
-  EID.disabled = !DEBUG_MODE;
+  employeeNumber.disabled = !DEBUG_MODE;
   /* if (type.includes('create')) {
     scheduleType.value = resolveSchedType(reportDate.value);
   } */
 };
 
 const checkExistingRecord = async ({
-  type, record: { reportDate, creator },
+  type, record: { reportDate },
 }) => {
   if (type.includes('create')) {
-    const existingRecord = (await fetchReportOnDate(reportDate.value, creator.value)).records[0];
+    const existingRecord = (await fetchReportOnDate(reportDate.value)).records[0];
 
     const isExist = Boolean(existingRecord);
     if (isExist) {

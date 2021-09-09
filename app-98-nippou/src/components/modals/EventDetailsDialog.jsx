@@ -10,8 +10,8 @@ import CircleIcon from '@material-ui/icons/Circle';
 import DescriptionIcon from '@material-ui/icons/Description';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { reduceEvent } from '../../helpers/DOM';
-import { getOptionData } from '../../store/actionTypeData';
 import { timeTo24Format } from '../../helpers/Time';
+import { getActionTypeData } from '../../backend/fetchSettings';
 import { EditButton, CloseButton, DeleteButton } from '../UI/MaterialActionButtons';
 
 const theme = createTheme();
@@ -52,7 +52,7 @@ const TimeRange = ({ startTime, endTime }) => (
 );
 
 const Content = ({ startTime, endTime, actionType }) => {
-  const { bgColor } = getOptionData(actionType);
+  const { bgColor } = getActionTypeData(actionType);
 
   return (
     <Grid sx={{ color: '#3c4043' }} container direction="row">
