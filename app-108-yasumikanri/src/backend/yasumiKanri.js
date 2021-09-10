@@ -1,12 +1,15 @@
 import { fetchRecords } from '../../../kintone-api/fetchRecords';
 import {
-  normDuration, normStatus, normType, toKintoneRecords, getYasumiWeight, getKintoneType,
+  normDuration, normStatus,
+  normType, toKintoneRecords,
+  getYasumiWeight, getKintoneType,
+  getKintoneStatus,
 } from '../helpers/converters';
 import { getEmployeeNumber } from './user';
 import deleteRecords from '../../../kintone-api/deleteRecords';
 import addRecords from '../../../kintone-api/addRecords';
 import updateRecords from '../../../kintone-api/updateRecords';
-import updateStatus, { updateAllStatus } from '../../../kintone-api/updateStatus';
+import { updateAllStatus } from '../../../kintone-api/updateStatus';
 
 const ownRecordFilter = `employeeNumber = "${getEmployeeNumber()}"`;
 
@@ -21,6 +24,27 @@ export const fetchYasumiRecords = async (luxonDate) => {
   return fetchRecords({
     condition: [
       ownRecordFilter,
+      `yasumiDate >= "${startDay}"`,
+      `yasumiDate <= "${endDay}"`,
+    ].join(' and '),
+  });
+};
+
+/**
+ * Fetch records on a given year month
+ * @param luxonDate, Date of the year to be processed .
+ */
+export const fetchLeaveRecords = async (luxonDate) => {
+  const startDay = luxonDate.startOf('year').toISODate();
+  const endDay = luxonDate.endOf('year').toISODate();
+  const leaveQuery = `type in ("${getKintoneType('day-leave')}")`;
+  const statusQuery = `ステータス="${getKintoneStatus('approved')}"`;
+  console.log(leaveQuery, statusQuery);
+  return fetchRecords({
+    condition: [
+      ownRecordFilter,
+      leaveQuery,
+      statusQuery,
       `yasumiDate >= "${startDay}"`,
       `yasumiDate <= "${endDay}"`,
     ].join(' and '),
