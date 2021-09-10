@@ -3,6 +3,7 @@ import Avatar from '@mui/material/Avatar';
 
 const IconChip = ({ avatar, label }) => (
   <Chip
+    sx={{ fontSize: 16 }}
     avatar={(
       <Avatar
         alt="icon"
