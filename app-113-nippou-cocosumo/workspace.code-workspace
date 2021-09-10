@@ -7,5 +7,7 @@
 			"path": "..\\app-98-nippou"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "app-98-nippou"
+	}
 }

@@ -1,14 +1,16 @@
 /* eslint-disable no-param-reassign */
 import ReactDOM from 'react-dom';
-import { Typography, Grid } from '@material-ui/core';
 
 import { fetchFields, fetchMonthRecords } from '../../backend/fetchRecords';
-import InfoContainer from '../../components/containers/InfoContainer';
 import { getSpaceElement, isMobile, setFieldShown } from '../../../../kintone-api/api';
+import CumContainer from '../../components/containers/CumContainer';
 
 const getCumFields = async () => {
   const { properties } = await fetchFields();
-  const cummulativeFields = Object.keys(properties).filter((item) => item.includes('cum'));
+  const cummulativeFields = Object
+    .keys(properties)
+    .filter((key) => key.includes('cum'))
+    .map((key) => ({ code: properties[key].code, label: properties[key].label }));
   return cummulativeFields;
 };
 
@@ -22,35 +24,32 @@ const getCummulative = async (record, fields) => {
   /* 各フィールドの値を取得 */
   return monthRecords.reduce((prev, curr) => {
     fields.forEach((item) => {
-      prev[item] = (prev[item] || 0) + (+curr[item].value || 0);
+      const propCode = item.code;
+      prev[propCode] = (prev[propCode] || 0) + (+curr[propCode].value || 0);
     });
     return prev;
   }, {});
 };
 
-const renderCumTotals = (cumTotals) => {
-  Object.entries(cumTotals).forEach(([key, value]) => {
+const renderCumTotals = (cumTotals, cumFields, record) => {
+  Object.entries(cumTotals).forEach(([fieldCode, value]) => {
+    const { label } = cumFields.find(({ code }) => code === fieldCode);
+    const field = record[fieldCode];
     ReactDOM.render(
-      <Grid>
-        <InfoContainer>
-          <Typography sx={{ color: 'GrayText', fontSize: 12, textAlign: 'right' }}>
-            今月累計
-          </Typography>
-          <Typography variant="h6" sx={{ textAlign: 'right' }}>
-            {value}
-          </Typography>
-        </InfoContainer>
-      </Grid>,
-      getSpaceElement(key),
+      <CumContainer
+        {...{
+          field, fieldCode, label, value,
+        }}
+      />, getSpaceElement(fieldCode),
     );
   });
 };
 
 const hideFieldsOnMobile = (fields) => {
   if (isMobile()) {
-    fields.forEach((field) => {
-      if (field.includes('hide')) {
-        setFieldShown(field, false);
+    fields.forEach(({ code }) => {
+      if (code.includes('hide')) {
+        setFieldShown(code, false);
       }
     });
   }
@@ -61,7 +60,7 @@ export const displayCummulativeTotals = async (record) => {
   const cumTotals = await getCummulative(record, cumFields);
 
   hideFieldsOnMobile(cumFields);
-  renderCumTotals(cumTotals);
+  renderCumTotals(cumTotals, cumFields, record);
 };
 
 const onDetailEditCreateHandler = async ({ record }) => {

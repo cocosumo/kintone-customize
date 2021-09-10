@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import AdapterLuxon from '@material-ui/lab/AdapterLuxon';
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import TextField from '@material-ui/core/TextField';
-import TimePicker from '@material-ui/lab/TimePicker';
-import {
-  Box, FormControl,
-} from '@material-ui/core';
+import AdapterLuxon from '@mui/lab/AdapterLuxon';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+
+import TextField from '@mui/material/TextField';
+import TimePicker from '@mui/lab/TimePicker';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+
 import { useState } from 'react';
 
 import { timeTo24Format } from '../../helpers/Time';

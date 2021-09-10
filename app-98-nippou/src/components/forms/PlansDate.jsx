@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Typography } from '@material-ui/core';
+import Typography from '@mui/material/Typography';
+
 import { onFieldChange } from '../../../../kintone-api/api';
 import {
   addDays, diffInDays, getRangeInBetween, isEndDateValid,

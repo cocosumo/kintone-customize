@@ -1,11 +1,9 @@
-import { Grid, Paper } from '@material-ui/core';
+import Paper from '@mui/material/Paper';
 
 const InfoContainer = ({ children }) => (
-  <Grid sx={{ mb: 1, p: 1 }}>
-    <Paper sx={{ p: 1 }}>
-      {children}
-    </Paper>
-  </Grid>
+  <Paper sx={{ m: 1, p: 1 }}>
+    {children}
+  </Paper>
 );
 
 export default InfoContainer;

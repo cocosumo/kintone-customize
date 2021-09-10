@@ -1,14 +1,16 @@
 /* Deprecated */
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import {
-  DialogTitle, Grid, Typography,
-} from '@material-ui/core';
-import CircleIcon from '@material-ui/icons/Circle';
-import DescriptionIcon from '@material-ui/icons/Description';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
+import CircleIcon from '@mui/icons-material/Circle';
+import DescriptionIcon from '@mui/icons-material/Description';
+
+import { createTheme, ThemeProvider } from '@mui/material';
 import { reduceEvent } from '../../helpers/DOM';
 import { timeTo24Format } from '../../helpers/Time';
 import { getActionTypeData } from '../../backend/fetchSettings';

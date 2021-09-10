@@ -1,6 +1,6 @@
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import { FormControl } from '@material-ui/core';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
 
 const MaterialText = ({
   id, label, value, onChange,

@@ -16,15 +16,6 @@ const renderApp = async (event) => {
 
   renderSchedule(event, 'report', options);
   renderSchedule(event, 'plans', options);
-  /* ReactDOM.render(
-    <Schedule event={event} name="report" />,
-    getSpaceElement('reportRoot'),
-  ); */
-
-  /*  ReactDOM.render(
-    <Schedule event={event} name="plans" />,
-    getSpaceElement('plansRoot'),
-  ); */
 
   ReactDOM.render(<PlansDate event={event} />, getSpaceElement('inform'));
 };

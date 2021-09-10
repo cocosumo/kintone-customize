@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
-import Box from '@material-ui/core/Box';
-import Popper from '@material-ui/core/Popper';
+import Box from '@mui/material/Box';
+import Popper from '@mui/material/Popper';
 import {
   Paper, Fade, Typography, Grid,
-} from '@material-ui/core';
-import CircleIcon from '@material-ui/icons/Circle';
-import DescriptionIcon from '@material-ui/icons/Description';
+} from '@mui/material';
+import CircleIcon from '@mui/icons-material/Circle';
+import DescriptionIcon from '@mui/icons-material/Description';
 import TitleBar from '../UI/TitleBar';
 import { timeTo24Format } from '../../helpers/Time';
 import { reduceEvent } from '../../helpers/DOM';

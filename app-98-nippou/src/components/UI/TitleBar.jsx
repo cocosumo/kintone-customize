@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import Grid from '@mui/material/Grid';
 import { EditButton, DeleteButton, CloseButton } from './MaterialActionButtons';
 
 const TitleBar = ({ onClose, onDelete, onEdit }) => (

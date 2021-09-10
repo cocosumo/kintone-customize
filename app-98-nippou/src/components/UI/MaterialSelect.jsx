@@ -1,9 +1,9 @@
-import Box from '@material-ui/core/Box';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import CircleTwoToneIcon from '@material-ui/icons/CircleTwoTone';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import CircleTwoToneIcon from '@mui/icons-material/CircleTwoTone';
 
 const MaterialSelect = ({
   id, label, value, onChange, optionsData,

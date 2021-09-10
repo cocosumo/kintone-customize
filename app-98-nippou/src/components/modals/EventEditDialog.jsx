@@ -1,12 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-props-no-spreading */
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
-import { Grid, DialogTitle } from '@material-ui/core';
+import { Grid, DialogTitle } from '@mui/material';
 import EventInputForm from '../forms/EventInputForm';
 import { reduceEvent } from '../../helpers/DOM';
 import { CloseButton } from '../UI/MaterialActionButtons';
