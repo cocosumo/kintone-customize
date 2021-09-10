@@ -17,6 +17,7 @@ export const EventsContext = createContext();
 
 const EventsProvider = ({ event, name, children }) => {
   const { type, record } = event;
+  const { employeeNumber } = record;
 
   const initialEvents = type.includes('create') ? [] : kintoneToFCEvents(record, false, name);
 
@@ -29,7 +30,7 @@ const EventsProvider = ({ event, name, children }) => {
       const { reportDate } = record;
       /* Pull plans related to this report date */
       const plannedEvents = kintoneToFCEvents(
-        (await fetchPlanOnDate(reportDate.value))?.records[0],
+        (await fetchPlanOnDate(reportDate.value, employeeNumber.value))?.records[0],
         true,
         'plans',
       );

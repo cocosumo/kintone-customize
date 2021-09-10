@@ -7,6 +7,7 @@ import { timeTo24Format } from '../../helpers/Time';
 
 import EventEditDialog from '../modals/EventEditDialog';
 import { EventDetailsPopper } from '../poppers/EventDetailsPopper';
+import { getActionTypeData } from '../../backend/fetchSettings';
 
 const MaterialReport = ({ selectedDate, actionOptions }) => {
   const [reportDate, setReportDate] = useState(selectedDate);
@@ -58,7 +59,8 @@ const MaterialReport = ({ selectedDate, actionOptions }) => {
     const eventTitle = info.actionType || info.event.title;
     const buildIdString = (eventTitle + startTime + endTime).replace(/:/g, '');
     const oldEventId = info.id || info.oldEvent?.id;
-    const colorDate = actionOptions.find(({ type }) => type === eventTitle);
+    const colorDate = getActionTypeData(eventTitle);
+
     const { bgColor, color } = colorDate;
 
     const newEvent = {

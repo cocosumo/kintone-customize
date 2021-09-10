@@ -21,10 +21,12 @@ const initialize = ({ record }) => {
 };
 
 const checkExistingRecord = async ({
-  type, record: { reportDate },
+  type, record: { reportDate, employeeNumber },
 }) => {
   if (type.includes('create')) {
-    const existingRecord = (await fetchReportOnDate(reportDate.value)).records[0];
+    const existingRecord = (
+      await fetchReportOnDate(reportDate.value, employeeNumber.value)
+    ).records[0];
 
     const isExist = Boolean(existingRecord);
     if (isExist) {
@@ -51,10 +53,10 @@ const storeSettings = async () => {
   });
 };
 
-const onEditOrCreateHandler = (event) => {
+const onEditOrCreateHandler = async (event) => {
   initialize(event);
 
-  if (checkExistingRecord(event)) {
+  if (await checkExistingRecord(event)) {
     storeSettings();
     renderApp(event);
   }
