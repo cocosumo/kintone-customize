@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
 import ReactDOM from 'react-dom';
-import { Typography } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
+
 import { fetchFields, fetchMonthRecords } from '../../backend/fetchRecords';
 import InfoContainer from '../../components/containers/InfoContainer';
-import { getSpaceElement } from '../../../../kintone-api/api';
+import { getSpaceElement, isMobile, setFieldShown } from '../../../../kintone-api/api';
 
 const getCumFields = async () => {
   const { properties } = await fetchFields();
@@ -30,21 +31,36 @@ const getCummulative = async (record, fields) => {
 const renderCumTotals = (cumTotals) => {
   Object.entries(cumTotals).forEach(([key, value]) => {
     ReactDOM.render(
-      <InfoContainer>
-        <Typography sx={{ color: 'GrayText', fontSize: 12, textAlign: 'right' }}>
-          今月累計
-        </Typography>
-        <Typography variant="h6" sx={{ textAlign: 'right' }}>
-          {value}
-        </Typography>
-      </InfoContainer>,
+      <Grid>
+        <InfoContainer>
+          <Typography sx={{ color: 'GrayText', fontSize: 12, textAlign: 'right' }}>
+            今月累計
+          </Typography>
+          <Typography variant="h6" sx={{ textAlign: 'right' }}>
+            {value}
+          </Typography>
+        </InfoContainer>
+      </Grid>,
       getSpaceElement(key),
     );
   });
 };
 
+const hideFieldsOnMobile = (fields) => {
+  if (isMobile()) {
+    fields.forEach((field) => {
+      if (field.includes('hide')) {
+        setFieldShown(field, false);
+      }
+    });
+  }
+};
+
 export const displayCummulativeTotals = async (record) => {
-  const cumTotals = await getCummulative(record, await getCumFields());
+  const cumFields = await getCumFields();
+  const cumTotals = await getCummulative(record, cumFields);
+
+  hideFieldsOnMobile(cumFields);
   renderCumTotals(cumTotals);
 };
 
