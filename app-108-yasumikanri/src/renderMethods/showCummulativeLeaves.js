@@ -14,7 +14,7 @@ const showCummulativeLeaves = async ({ yasumiDate }) => {
     return accu + getKintoneYasumiWeight(duration.value);
   }, 0);
   render(
-    <IconChip avatar={Leave} label={`今年、${leavesCount}有休が取れました。`} />,
+    <IconChip avatar={Leave} label={`現在、累計${leavesCount}日/年、有休を取得しています。`} />,
     getSpaceElement('annualCumLeaves'),
   );
 };

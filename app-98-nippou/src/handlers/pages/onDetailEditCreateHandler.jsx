@@ -17,10 +17,10 @@ const getCumFields = async () => {
 const getCummulative = async (record, fields) => {
   const {
     reportDate: { value: reportDateVal },
-    creator: { value: creatorVal },
+    employeeNumber: { value: employeeNumber },
   } = record;
 
-  const { records: monthRecords } = await fetchMonthRecords(reportDateVal, creatorVal);
+  const { records: monthRecords } = await fetchMonthRecords(reportDateVal, employeeNumber);
   /* 各フィールドの値を取得 */
   return monthRecords.reduce((prev, curr) => {
     fields.forEach((item) => {

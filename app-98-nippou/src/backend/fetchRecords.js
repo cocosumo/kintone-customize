@@ -28,8 +28,8 @@ export const fetchReportOnDate = async (selectedDate) => (fetchRecords(
   `reportDate = "${selectedDate}" and ${ownRecordFilter} limit 1`,
 ));
 
-export const fetchMonthRecords = (date) => fetchRecords(
-  `${ownRecordFilter}
+export const fetchMonthRecords = (date, employeeNumber = getEmployeeNumber()) => fetchRecords(
+  `employeeNumber = "${employeeNumber}"
   and reportDate >= "${startOfMonth(date)}"
   and reportDate <= "${endOfMonth(date)}"`,
 );
