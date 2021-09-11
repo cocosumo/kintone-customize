@@ -55,9 +55,8 @@ const storeSettings = async () => {
 
 const onEditOrCreateHandler = async (event) => {
   initialize(event);
-
+  storeSettings();
   if (await checkExistingRecord(event)) {
-    storeSettings();
     renderApp(event);
   }
 
