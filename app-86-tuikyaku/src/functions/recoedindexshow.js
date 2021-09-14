@@ -1,13 +1,22 @@
 import getRecords from '../handlers/getrecords';
-import { getHeaderMenuSpaceElement } from '../../../kintone-api/api';
+import { getHeaderMenuSpaceElement, getHeaderSpaceElement } from '../../../kintone-api/api';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recoedindexshow = (event) => {
   const view = 5522965; // 一覧のID:[本番用= 5522965 ][テスト用= 5522965 ] =共通
-  const fieldEmp = '文字列＿氏名';
+  const viewall = 20; // (すべて)の一覧ID
+  const FieldEmp = '文字列＿氏名';
+  const FieldEmp2 = '役職';
 
   // 指定の一覧以外このJSを実行しない
   if (event.viewId !== view) {
+    if (event.viewId === viewall) {
+      getHeaderSpaceElement().innerText = ' 上の"(すべて)"をクリックすると、一覧の表示方法が変更されます。\n'
+                                        + ' 絞り込み表示をしたい場合には、漏斗(ろうと)のアイコンをクリックし、条件を設定してください。\n'
+                                        + ' 詳細は、QA「絞り込み表示、ソートの仕方」を参照してください。';
+      // const linkstring = 'QAのリンクはこちら';
+      // getHeaderSpaceElement().innerText = infomation + linkstring.link('https://rdmuhwtt6gx7.cybozu.com/k/104/show#record=8&l.view=5523657&l.q&l.sort_0=f5523588&l.order_0=ASC&l.next=9&l.prev=7');
+    }
     return;
   }
 
@@ -19,25 +28,47 @@ const recoedindexshow = (event) => {
   // プルダウンメニューの要素を設定する ID:34 = 社員名簿
   const APP_ID = 34;
 
+  // [一覧表示画面]プルダウン(店舗名)の設置
+  let myselectShop = document.createElement('text');
+  myselectShop.id = 'my_textShop';
+  myselectShop.innerText = '店舗名: ';
+  getHeaderMenuSpaceElement().appendChild(myselectShop);
+
+  myselectShop = document.createElement('select');
+  myselectShop.id = 'my_select_buttonShop';
+  myselectShop.innerText = '店舗名セレクト';
+  getHeaderMenuSpaceElement().appendChild(myselectShop);
+
   // [一覧表示画面]プルダウン(担当者名)の設置
-  const myselectEmp = document.createElement('select');
+  let myselectEmp = document.createElement('text');
+  myselectEmp.id = 'my_textEmp';
+  myselectEmp.innerText = '　担当名: ';
+  getHeaderMenuSpaceElement().appendChild(myselectEmp);
+
+  myselectEmp = document.createElement('select');
   myselectEmp.id = 'my_select_buttonEmp';
   myselectEmp.innerText = 'セレクトボタン';
-
-  getHeaderMenuSpaceElement().innerText = '担当名: ';
   getHeaderMenuSpaceElement().appendChild(myselectEmp);
+
   console.log('一覧:ヘッダにボタン設置');
 
   // ログインユーザー情報の取得
   const userName = kintone.getLoginUser().name;
+
+  // 店舗名のプルダウンに初期値を追加
+  // [ログインユーザー情報から、所属店舗を抜き出す]
+  // [プルダウンの初期値に追加する]
+
+  // 店舗名のプルダウンに、店舗名のリストを追加する
+  // [ユーザー管理の[組織]の情報から、店舗情報を抜き出す]
+  // [店舗名の取り出し方法=ゆめてつ以下、"店"の含まれる組織を抽出し、組織名称から"ゆめてつ"を取り除く]
+  // [プルダウンのリストに追加する]
 
   // 担当者のプルダウンに初期値を追加
   const ini = document.createElement('option');
   let url = window.location.search;
   url = decodeURI(url); // urlをデコーディングする
   let resultPos = url.indexOf('担当名');
-  // console.log('location.search = ', url);
-  // console.log('URL内の"担当名"検索位置 =', resultPos);
   if (resultPos !== -1) { // URLに'query'が含まれるとき(プルダウンでの絞り込み表示時)
     // ここから：絞り込み条件の氏名を取り出し 「query=担当名 like "苗字" and 担当名 like "名前"」
     let selectName = url.slice(resultPos + 10); // 10=読み飛ばす文字数/slice=urlから指定箇所以降を取り出し
@@ -66,12 +97,16 @@ const recoedindexshow = (event) => {
   }
   document.getElementById('my_select_buttonEmp').appendChild(ini);
 
-  // プルダウンメニューの要素を設定する- ID:34 = 社員名簿
-  // 社員名簿のレコードを取得する
-  // const APP_ID = 34;
+  // プルダウンに「全てのレコードを表示」を追加
+  const newitem = document.createElement('option');
+  newitem.value = 'listall';
+  newitem.innerText = '全てのレコードを表示';
+  document.getElementById('my_select_buttonEmp').appendChild(newitem);
+
+  // プルダウンメニューの要素を設定する- ID:34 = 社員名簿 -> 社員名簿のレコードを取得する
   const paramsEmp = {
     app: APP_ID,
-    fields: [fieldEmp],
+    fields: [FieldEmp, FieldEmp2],
   };
 
   getRecords(paramsEmp).then((resp) => { // 100件以上のレコード読み込み(上限1万件)
@@ -80,30 +115,34 @@ const recoedindexshow = (event) => {
 
     // 設定項目の数だけ選択肢として追加
     Employees.forEach((Employee) => {
-      const listitems = document.createElement('option');
-      listitems.value = Employee.文字列＿氏名.value;
-      listitems.innerText = Employee.文字列＿氏名.value;
-      document.getElementById('my_select_buttonEmp').appendChild(listitems);
+      // 対象の役職のメンバのみをプルダウンに追加
+      if (Employee.役職.value === '営業'
+       || Employee.役職.value === '主任'
+       || Employee.役職.value === '店長') {
+        const listitems = document.createElement('option');
+        listitems.value = Employee.文字列＿氏名.value;
+        listitems.innerText = Employee.文字列＿氏名.value;
+        document.getElementById('my_select_buttonEmp').appendChild(listitems);
+      }
     });
   }, (er) => {
     // error
     console.log('レコード取得に失敗しました。', er);
   });
 
-  // ドロップダウン変更時の処理
+  // 担当者のドロップダウン変更時の処理
   const selectField = '担当名'; // フィルタリング対象のフィールド名
   myselectEmp.onchange = () => {
-    const member = document.getElementById('my_select_buttonEmp').value;
-    const Firstname = member.slice(member.indexOf(' ') + 1);
-    // console.log('Firstname = ', Firstname);
-    // console.log('member = ', member);
-    const Lastname = member.substring(0, member.indexOf(' '));
-    // console.log('Lastname = ', Lastname);
-    const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
-    // console.log('query = ', query);
-    // console.log('origin = ', window.location.origin);      // https://rdmuhwtt6gx7.cybozu.com
-    // console.log('pathname = ', window.location.pathname);  // /k/86/
-    window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+    if (document.getElementById('my_select_buttonEmp').value === 'listall') {
+      // 全てのレコードを表示
+      window.location.href = `${window.location.origin + window.location.pathname}?view=${viewall}`;
+    } else {
+      const member = document.getElementById('my_select_buttonEmp').value;
+      const Firstname = member.slice(member.indexOf(' ') + 1);
+      const Lastname = member.substring(0, member.indexOf(' '));
+      const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
+      window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+    }
   };
 };
 
