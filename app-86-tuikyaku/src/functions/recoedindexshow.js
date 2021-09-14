@@ -4,8 +4,6 @@ import { getHeaderMenuSpaceElement } from '../../../kintone-api/api';
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recoedindexshow = (event) => {
   const view = 5522965; // 一覧のID:[本番用= 5522965 ][テスト用= 5522965 ] =共通
-  // 上記アプリの必要なドロップダウンのフィールドコード
-  // const fieldShop = 'ルックアップ＿店舗名'; // [★★★00]
   const fieldEmp = '文字列＿氏名';
 
   // 指定の一覧以外このJSを実行しない
@@ -18,32 +16,14 @@ const recoedindexshow = (event) => {
     return;
   }
 
-  /*
-  // [★★★01ここから][一覧表示画面]プルダウン(店舗名)の設置
-  const myselectShop = document.createElement('select');
-  myselectShop.id = 'my_select_buttonShop';
-  myselectShop.innerText = 'セレクトボタン0';
-  const myHeaderSpaceShop = kintone.app.getHeaderMenuSpaceElement();
-  myHeaderSpaceShop.innerText = '店舗名: ';
-  kintone.app.getHeaderMenuSpaceElement().appendChild(myselectShop);
-
-  // プルダウンメニューの要素を設定する- ID:34 = 社員名簿
-  // 社員名簿のレコードを取得する
-  [★★★] */
+  // プルダウンメニューの要素を設定する ID:34 = 社員名簿
   const APP_ID = 34;
-  /* [★★★]
-  const paramsShop = {
-    app: APP_ID,
-    fields: [fieldShop],
-  }; // [★★★01ここまで]
-  [★★★] */
 
   // [一覧表示画面]プルダウン(担当者名)の設置
   const myselectEmp = document.createElement('select');
   myselectEmp.id = 'my_select_buttonEmp';
   myselectEmp.innerText = 'セレクトボタン';
 
-  // console.log('getHeadermenuSpaceElement =', getHeaderMenuSpaceElement);
   getHeaderMenuSpaceElement().innerText = '担当名: ';
   getHeaderMenuSpaceElement().appendChild(myselectEmp);
   console.log('一覧:ヘッダにボタン設置');
@@ -51,7 +31,7 @@ const recoedindexshow = (event) => {
   // ログインユーザー情報の取得
   const userName = kintone.getLoginUser().name;
 
-  // 初期値を追加
+  // 担当者のプルダウンに初期値を追加
   const ini = document.createElement('option');
   let url = window.location.search;
   url = decodeURI(url); // urlをデコーディングする
