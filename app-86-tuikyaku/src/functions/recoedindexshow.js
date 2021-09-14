@@ -5,7 +5,7 @@ import { getHeaderMenuSpaceElement } from '../../../kintone-api/api';
 const recoedindexshow = (event) => {
   const view = 5522965; // 一覧のID:[本番用= 5522965 ][テスト用= 5522965 ] =共通
   // 上記アプリの必要なドロップダウンのフィールドコード
-  // [★★★]const fieldShop = 'ルックアップ＿店舗名';
+  // const fieldShop = 'ルックアップ＿店舗名'; // [★★★00]
   const fieldEmp = '文字列＿氏名';
 
   // 指定の一覧以外このJSを実行しない
@@ -18,8 +18,8 @@ const recoedindexshow = (event) => {
     return;
   }
 
-  /* [★★★]
-  // [一覧表示画面]プルダウン(店舗名)の設置
+  /*
+  // [★★★01ここから][一覧表示画面]プルダウン(店舗名)の設置
   const myselectShop = document.createElement('select');
   myselectShop.id = 'my_select_buttonShop';
   myselectShop.innerText = 'セレクトボタン0';
@@ -35,7 +35,7 @@ const recoedindexshow = (event) => {
   const paramsShop = {
     app: APP_ID,
     fields: [fieldShop],
-  };
+  }; // [★★★01ここまで]
   [★★★] */
 
   // [一覧表示画面]プルダウン(担当者名)の設置
@@ -56,8 +56,8 @@ const recoedindexshow = (event) => {
   let url = window.location.search;
   url = decodeURI(url); // urlをデコーディングする
   let resultPos = url.indexOf('担当名');
-  console.log('location.search = ', url);
-  console.log('URL内の"担当名"検索位置 =', resultPos);
+  // console.log('location.search = ', url);
+  // console.log('URL内の"担当名"検索位置 =', resultPos);
   if (resultPos !== -1) { // URLに'query'が含まれるとき(プルダウンでの絞り込み表示時)
     // ここから：絞り込み条件の氏名を取り出し 「query=担当名 like "苗字" and 担当名 like "名前"」
     let selectName = url.slice(resultPos + 10); // 10=読み飛ばす文字数/slice=urlから指定箇所以降を取り出し
@@ -115,13 +115,12 @@ const recoedindexshow = (event) => {
   myselectEmp.onchange = () => {
     const member = document.getElementById('my_select_buttonEmp').value;
     const Firstname = member.slice(member.indexOf(' ') + 1);
-    console.log('Firstname = ', Firstname);
-    console.log('member = ', member);
+    // console.log('Firstname = ', Firstname);
+    // console.log('member = ', member);
     const Lastname = member.substring(0, member.indexOf(' '));
-    console.log('Lastname = ', Lastname);
-    // const query = `${selectField} in ("${member}")`;
+    // console.log('Lastname = ', Lastname);
     const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
-    console.log('query = ', query);
+    // console.log('query = ', query);
     // console.log('origin = ', window.location.origin);      // https://rdmuhwtt6gx7.cybozu.com
     // console.log('pathname = ', window.location.pathname);  // /k/86/
     window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
