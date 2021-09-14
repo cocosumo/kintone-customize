@@ -88,6 +88,12 @@ export const getHeaderMenuSpaceElement = () => (
     : kintone.app.getHeaderMenuSpaceElement()
 );
 
+export const getHeaderSpaceElement = () => (
+  isMobile()
+    ? kintone.mobile.app.getHeaderSpaceElement()
+    : kintone.app.getHeaderSpaceElement()
+);
+
 /**
  * Print View
  * */
