@@ -5,8 +5,8 @@ import { getHeaderMenuSpaceElement } from '../../../kintone-api/api';
 const recoedindexshow = (event) => {
   const view = 5522965; // 一覧のID:[本番用= 5522965 ][テスト用= 5522965 ] =共通
   // 上記アプリの必要なドロップダウンのフィールドコード
-  // [★★★]const field00 = 'ルックアップ＿店舗名';
-  const field01 = '文字列＿氏名';
+  // [★★★]const fieldShop = 'ルックアップ＿店舗名';
+  const fieldEmp = '文字列＿氏名';
 
   // 指定の一覧以外このJSを実行しない
   if (event.viewId !== view) {
@@ -14,37 +14,38 @@ const recoedindexshow = (event) => {
   }
 
   // ボタンの増殖防止
-  if (document.getElementById('my_select_button01') !== null) {
+  if (document.getElementById('my_select_buttonEmp') !== null) {
     return;
   }
+
   /* [★★★]
   // [一覧表示画面]プルダウン(店舗名)の設置
-  const myselect00 = document.createElement('select');
-  myselect00.id = 'my_select_button00';
-  myselect00.innerText = 'セレクトボタン0';
-  const myHeaderSpace00 = kintone.app.getHeaderMenuSpaceElement();
-  myHeaderSpace00.innerText = '店舗名: ';
-  kintone.app.getHeaderMenuSpaceElement().appendChild(myselect00);
+  const myselectShop = document.createElement('select');
+  myselectShop.id = 'my_select_buttonShop';
+  myselectShop.innerText = 'セレクトボタン0';
+  const myHeaderSpaceShop = kintone.app.getHeaderMenuSpaceElement();
+  myHeaderSpaceShop.innerText = '店舗名: ';
+  kintone.app.getHeaderMenuSpaceElement().appendChild(myselectShop);
 
   // プルダウンメニューの要素を設定する- ID:34 = 社員名簿
   // 社員名簿のレコードを取得する
   [★★★] */
   const APP_ID = 34;
   /* [★★★]
-  const params00 = {
+  const paramsShop = {
     app: APP_ID,
-    fields: [field00],
+    fields: [fieldShop],
   };
   [★★★] */
 
   // [一覧表示画面]プルダウン(担当者名)の設置
-  const myselect01 = document.createElement('select');
-  myselect01.id = 'my_select_button01';
-  myselect01.innerText = 'セレクトボタン';
+  const myselectEmp = document.createElement('select');
+  myselectEmp.id = 'my_select_buttonEmp';
+  myselectEmp.innerText = 'セレクトボタン';
 
   // console.log('getHeadermenuSpaceElement =', getHeaderMenuSpaceElement);
   getHeaderMenuSpaceElement().innerText = '担当名: ';
-  getHeaderMenuSpaceElement().appendChild(myselect01);
+  getHeaderMenuSpaceElement().appendChild(myselectEmp);
   console.log('一覧:ヘッダにボタン設置');
 
   // ログインユーザー情報の取得
@@ -83,17 +84,17 @@ const recoedindexshow = (event) => {
     console.log('query = ', query);
     window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
   }
-  document.getElementById('my_select_button01').appendChild(ini);
+  document.getElementById('my_select_buttonEmp').appendChild(ini);
 
   // プルダウンメニューの要素を設定する- ID:34 = 社員名簿
   // 社員名簿のレコードを取得する
   // const APP_ID = 34;
-  const params01 = {
+  const paramsEmp = {
     app: APP_ID,
-    fields: [field01],
+    fields: [fieldEmp],
   };
 
-  getRecords(params01).then((resp) => { // 100件以上のレコード読み込み(上限1万件)
+  getRecords(paramsEmp).then((resp) => { // 100件以上のレコード読み込み(上限1万件)
     console.log('レコード取得に成功しました！', resp);
     const Employees = resp.records; // 社員
 
@@ -102,7 +103,7 @@ const recoedindexshow = (event) => {
       const listitems = document.createElement('option');
       listitems.value = Employee.文字列＿氏名.value;
       listitems.innerText = Employee.文字列＿氏名.value;
-      document.getElementById('my_select_button01').appendChild(listitems);
+      document.getElementById('my_select_buttonEmp').appendChild(listitems);
     });
   }, (er) => {
     // error
@@ -111,8 +112,8 @@ const recoedindexshow = (event) => {
 
   // ドロップダウン変更時の処理
   const selectField = '担当名'; // フィルタリング対象のフィールド名
-  myselect01.onchange = () => {
-    const member = document.getElementById('my_select_button01').value;
+  myselectEmp.onchange = () => {
+    const member = document.getElementById('my_select_buttonEmp').value;
     const Firstname = member.slice(member.indexOf(' ') + 1);
     console.log('Firstname = ', Firstname);
     console.log('member = ', member);
