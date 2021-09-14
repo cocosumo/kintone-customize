@@ -1,5 +1,5 @@
 import getRecords from '../handlers/getrecords';
-// import getHeaderMenuSpaceElement from '../../../kintone-api/api';
+import { getHeaderMenuSpaceElement } from '../../../kintone-api/api';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recoedindexshow = (event) => {
@@ -41,16 +41,10 @@ const recoedindexshow = (event) => {
   const myselect01 = document.createElement('select');
   myselect01.id = 'my_select_button01';
   myselect01.innerText = 'セレクトボタン';
-  const isMobile = () => (window.location.href).includes('k/m');
-  const myHeaderSpace01 = () => (
-    isMobile()
-      ? kintone.mobile.app.getHeaderSpaceElement()
-      : kintone.app.getHeaderMenuSpaceElement()
-  );
-  // const myHeaderSpace01 = kintone.mobile.app.getHeaderSpaceElement();
 
-  myHeaderSpace01().innerText = '担当名: ';
-  myHeaderSpace01().appendChild(myselect01);
+  // console.log('getHeadermenuSpaceElement =', getHeaderMenuSpaceElement);
+  getHeaderMenuSpaceElement().innerText = '担当名: ';
+  getHeaderMenuSpaceElement().appendChild(myselect01);
   console.log('一覧:ヘッダにボタン設置');
 
   // ログインユーザー情報の取得
