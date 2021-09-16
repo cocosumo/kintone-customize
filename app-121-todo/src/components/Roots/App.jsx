@@ -1,5 +1,33 @@
-import Button from '@mui/material/Button';
+import { useState } from 'react';
+import updateDatesTable from '../../kintoneForm/updateDatesTable';
+import IntervalSettings from '../dialogs/IntervalSettings';
+import SelectInterval from '../UI/SelectInterval';
 
-const App = () => <Button variant="contained">繰り返し設定</Button>;
+const items = {
+  everyWeek: '毎週',
+  everyMonth: '毎月',
+};
+
+const App = () => {
+  const [intervalForm, setIntervalForm] = useState({
+    isOpen: false,
+    selectValue: '',
+  });
+
+  const closeFormHandler = (generatedDates) => {
+    updateDatesTable(generatedDates);
+    setIntervalForm((prev) => ({ ...prev, isOpen: false }));
+  };
+
+  return (
+    <>
+      <SelectInterval
+        selectValue={intervalForm.selectValue}
+        {...{ items, setIntervalForm }}
+      />
+      <IntervalSettings {...{ items, intervalForm, closeFormHandler }} />
+    </>
+  );
+};
 
 export default App;
