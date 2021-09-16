@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-const updateDatesTable = (generatedDates) => {
+const updateDatesTable = (generatedDates, setSnackIsOpen) => {
   if (!generatedDates.length) return;
 
   const { record } = kintone.app.record.get();
@@ -16,6 +16,7 @@ const updateDatesTable = (generatedDates) => {
   }));
   notifTable.value = tableRows;
   kintone.app.record.set({ record });
+  setSnackIsOpen(true);
 };
 
 export default updateDatesTable;

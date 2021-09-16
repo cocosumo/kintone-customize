@@ -34,10 +34,11 @@ const EveryMonth = ({ intervalSettings, setIntervalSettings }) => {
           value={monthDays}
           onChange={onSelectChangehandler}
           renderValue={
-            (selected) => selected
-              .sort()
-              .map((i) => `${i + 1}日`)
-              .join(', ')
+            (selected) => {
+              selected.sort();
+              return selected.map((i) => `${i + 1}日`)
+                .join(', ');
+            }
 }
         >
           {menuItems}

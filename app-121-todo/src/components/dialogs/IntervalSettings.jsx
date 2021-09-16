@@ -62,13 +62,12 @@ const IntervalSettings = ({ items, intervalForm, closeFormHandler }) => {
         {items[intervalForm.selectValue]}
         の繰り返し設定
       </DialogTitle>
-
-      <FormContent {...{ intervalSettings, setIntervalSettings, intervalType }} />
       <CustomDatePicker {...{ untilDate, setUntilDate }} />
+      <FormContent {...{ intervalSettings, setIntervalSettings, intervalType }} />
 
       <DialogActions>
         <Button onClick={closeFormHandler}>キャンセル</Button>
-        <Button onClick={generateHandler} autoFocus>
+        <Button variant="contained" onClick={generateHandler} autoFocus>
           生成する
         </Button>
       </DialogActions>

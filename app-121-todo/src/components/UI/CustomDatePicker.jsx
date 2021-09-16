@@ -9,7 +9,7 @@ import DatePicker from '@mui/lab/DatePicker';
 import Box from '@mui/material/Box';
 
 const CustomDatePicker = ({ untilDate, setUntilDate }) => (
-  <Box sx={{ mx: 2 }}>
+  <Box sx={{ mx: 2, mb: 2 }}>
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={jaLocale}>
       <DatePicker
         label="いつまでですか。"
