@@ -95,7 +95,7 @@ export const getHeaderSpaceElement = () => (
 );
 
 /**
- * Print View
+ * Print Viewのヘーダ―
  * */
 export const getPrintViewHeader = () => {
   const headerElement = document.getElementsByClassName('print-header-gaia')[0];
@@ -125,9 +125,38 @@ export const setFieldShown = (fieldCode, isShown) => {
   }
 };
 
+/**
+ * ユーザー名を取得する
+ * */
 export const getUserName = () => (kintone.getLoginUser()).name;
 
+/**
+ * 現在開いてるレコードデータをJSON形式で取得します。
+ * @param appId {int} default = 現在開いているアプリID
+ * @param recordId {int} レコード―ID
+ * @returns {string} レコードのリンク
+ * */
 export const kintoneLink = ({ appId = getAppId(), recordId }) => {
   const { protocol, hostname } = window.location;
   return `${protocol}//${hostname}/${device()}/${appId}/${recordPath(recordId)}`;
+};
+
+/**
+ * 現在開いてるレコードデータをJSON形式で取得します。
+ * */
+export const getFormRecord = () => {
+  if (isMobile()) {
+    return kintone.mobile.app.record.get();
+  }
+  return kintone.app.record.get();
+};
+
+/**
+ * フィールドコードを指定して、レコードに対応するフィールド要素を取得します。
+ * */
+export const setFormRecord = (formRecord) => {
+  if (isMobile()) {
+    kintone.mobile.app.record.set(formRecord);
+  }
+  kintone.app.record.set(formRecord);
 };
