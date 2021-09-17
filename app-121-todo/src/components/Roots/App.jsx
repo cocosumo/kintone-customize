@@ -5,6 +5,7 @@ import IntervalSettings from '../dialogs/IntervalSettings';
 import SelectInterval from '../UI/SelectInterval';
 import SuccessSnack from '../UI/SuccessSnack';
 import Progress from '../UI/Progress';
+import GlobalTheme from '../themes/GlobalTheme';
 
 const items = {
   everyWeek: '毎週',
@@ -42,7 +43,7 @@ const App = () => {
   };
   console.log('rerendered');
   return (
-    <>
+    <GlobalTheme>
       <SelectInterval
         selectValue={intervalForm.selectValue}
         {...{ items, setIntervalForm }}
@@ -50,7 +51,7 @@ const App = () => {
       <IntervalSettings {...{ items, intervalForm, closeFormHandler }} />
       <SuccessSnack {...{ snackIsOpen, closeSnackHandler }} />
       {Boolean(reminderDates?.length) && <Progress /> }
-    </>
+    </GlobalTheme>
   );
 };
 

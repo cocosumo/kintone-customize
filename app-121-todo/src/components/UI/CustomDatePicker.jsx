@@ -20,7 +20,7 @@ const CustomDatePicker = ({ untilDate, setUntilDate }) => (
         onChange={(newValue) => {
           setUntilDate(newValue);
         }}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <TextField fullWidth {...params} />}
       />
     </LocalizationProvider>
   </Box>
