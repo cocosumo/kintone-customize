@@ -42,7 +42,7 @@ const IntervalSettings = ({ items, intervalForm, closeFormHandler }) => {
   const [untilDate, setUntilDate] = useState(addDays(new Date(), 30));
   const intervalType = intervalForm.selectValue;
 
-  const generateHandler = () => {
+  const generateHandler = async () => {
     const interval = {
       start: new Date(),
       end: untilDate,

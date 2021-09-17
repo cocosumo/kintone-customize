@@ -1,21 +1,26 @@
 import { format } from 'date-fns';
 
 const updateDatesTable = (generatedDates, setSnackIsOpen) => {
-  if (!generatedDates.length) return;
+  if (!generatedDates || !generatedDates.length) return;
 
   const { record } = kintone.app.record.get();
+
   const { notifTable } = record;
-  const tableRows = generatedDates.map((dt) => ({
-    id: null,
-    value: {
-      notifDate: {
-        type: 'DATE',
-        value: format(dt, 'yyyy-MM-dd'),
+
+  generatedDates.forEach((dt) => {
+    notifTable.value.push({
+      id: null,
+      value: {
+        notifDate: {
+          type: 'DATE',
+          value: format(dt, 'yyyy-MM-dd'),
+        },
       },
-    },
-  }));
-  notifTable.value = tableRows;
-  kintone.app.record.set({ record });
+    });
+    kintone.app.record.set({ record });
+    console.log('requesting...');
+  });
+
   setSnackIsOpen(true);
 };
 

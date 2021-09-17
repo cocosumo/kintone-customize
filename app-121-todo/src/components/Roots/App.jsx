@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
+import { useEffect, useState } from 'react';
+
 import updateDatesTable from '../../kintoneForm/updateDatesTable';
 import IntervalSettings from '../dialogs/IntervalSettings';
 import SelectInterval from '../UI/SelectInterval';
+import SuccessSnack from '../UI/SuccessSnack';
+import Progress from '../UI/Progress';
 
 const items = {
   everyWeek: '毎週',
@@ -16,16 +17,30 @@ const App = () => {
     selectValue: '',
   });
   const [snackIsOpen, setSnackIsOpen] = useState(false);
+  const [reminderDates, setReminderDates] = useState([]);
+
+  useEffect(() => {
+    if (reminderDates?.length) {
+      const timer = setTimeout(() => {
+        updateDatesTable(reminderDates, setSnackIsOpen);
+        setReminderDates([]);
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+    return null;
+  }, [reminderDates]);
 
   const closeFormHandler = (generatedDates) => {
-    updateDatesTable(generatedDates, setSnackIsOpen);
     setIntervalForm((prev) => ({ ...prev, isOpen: false }));
+
+    setReminderDates(generatedDates);
   };
 
   const closeSnackHandler = () => {
     setSnackIsOpen(false);
   };
-
+  console.log('rerendered');
   return (
     <>
       <SelectInterval
@@ -33,21 +48,8 @@ const App = () => {
         {...{ items, setIntervalForm }}
       />
       <IntervalSettings {...{ items, intervalForm, closeFormHandler }} />
-
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        open={snackIsOpen}
-        autoHideDuration={3000}
-        onClose={closeSnackHandler}
-      >
-        <Alert
-          onClose={closeSnackHandler}
-          severity="success"
-          variant="filled"
-        >
-          成功！！
-        </Alert>
-      </Snackbar>
+      <SuccessSnack {...{ snackIsOpen, closeSnackHandler }} />
+      {Boolean(reminderDates?.length) && <Progress /> }
     </>
   );
 };
