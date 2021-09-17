@@ -15,7 +15,10 @@ const CustomDatePicker = ({ untilDate, setUntilDate }) => (
   >
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={jaLocale}>
       <DatePicker
+        views={['year', 'month', 'day']}
         label="いつまでですか。"
+        okText="はい"
+        cancelText="キャンセル"
         value={untilDate}
         onChange={(newValue) => {
           setUntilDate(newValue);

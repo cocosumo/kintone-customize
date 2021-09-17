@@ -8,6 +8,7 @@ const updateDatesTable = (generatedDates, setSnackIsOpen) => {
 
   const { notifTable } = record;
 
+  notifTable.value.splice(0);
   generatedDates.forEach((dt) => {
     notifTable.value.push({
       id: null,

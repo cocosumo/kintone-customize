@@ -1,8 +1,9 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { isMobile } from '../../../../kintone-api/api';
 
 const theme = createTheme({
   typography: {
-    htmlFontSize: '1rem',
+    htmlFontSize: isMobile() ? 10 : 14,
   },
   components: {
     MuiSnackbar: {
@@ -16,13 +17,6 @@ const theme = createTheme({
       },
     },
     MuiAlert: {
-      styleOverrides: {
-        root: {
-          fontSize: 16,
-        },
-      },
-    },
-    MuiTextField: {
       styleOverrides: {
         root: {
           fontSize: 16,

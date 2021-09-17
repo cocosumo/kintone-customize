@@ -20,12 +20,13 @@ export const eachWeekDayOfInterval = (interval, weekDays) => {
 export const eachMonthDayOfInterval = (interval, monthDays) => {
   const { end, start } = interval;
   const selectedMonthDays = [];
-  monthDays.sort();
+  monthDays.sort((a, b) => a - b);
 
   let curr = startOfMonth(start);
-
+  console.log(monthDays);
   while (isBefore(curr, end)) {
     selectedMonthDays.push(...addDaysToDate(curr, monthDays));
+
     curr = addMonths(curr, 1);
   }
 

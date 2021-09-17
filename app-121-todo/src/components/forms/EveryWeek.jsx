@@ -53,16 +53,23 @@ const EveryWeek = ({ intervalSettings, setIntervalSettings }) => {
       item
       xs={6}
     >
-      <Button key={key} sx={{ justifyContent: 'left', fontSize: 16 }} fullWidth onClick={handleToggle(value)}>
-        <Checkbox
-          checked={intervalSettings.weekDays.indexOf(value) !== -1}
-          tabIndex={-1}
-          disableRipple
-          inputProps={{ 'aria-labelledby': key }}
-        />
+      <Button
+        key={key}
+        id={key + value}
+        sx={{ justifyContent: 'left', fontSize: 16 }}
+        fullWidth
+        onClick={handleToggle(value)}
+        startIcon={(
+          <Checkbox
+            checked={intervalSettings.weekDays.indexOf(value) !== -1}
+            tabIndex={-1}
+            disableRipple
+            inputProps={{ 'aria-labelledby': key }}
+          />
+      )}
+      >
         {key}
       </Button>
-
     </Grid>
   ));
 

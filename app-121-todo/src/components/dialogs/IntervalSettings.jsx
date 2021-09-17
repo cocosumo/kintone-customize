@@ -57,8 +57,8 @@ const IntervalSettings = ({ intervalForm, closeFormHandler }) => {
   };
 
   return (
-    <Dialog onClose={closeFormHandler} open={intervalForm.isOpen}>
-      <DialogContent sx={{ mt: 2 }}>
+    <Dialog open={intervalForm.isOpen}>
+      <DialogContent sx={{ overflow: 'hidden', mt: 2 }}>
         <CustomDatePicker {...{ untilDate, setUntilDate }} />
         <FormContent {...{ intervalSettings, setIntervalSettings, intervalType }} />
       </DialogContent>
