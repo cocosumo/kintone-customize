@@ -4,6 +4,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
 export const weeks = {
   日曜日: 0,
@@ -28,7 +30,7 @@ const EveryWeek = ({ intervalSettings, setIntervalSettings }) => {
     setIntervalSettings((prev) => ({ ...prev, weekDays: newChecked }));
   };
 
-  const listItems = Object.entries(weeks).map(
+  /*   const listItems = Object.entries(weeks).map(
     ([key, value]) => (
       <ListItem
         key={key + value}
@@ -48,12 +50,33 @@ const EveryWeek = ({ intervalSettings, setIntervalSettings }) => {
         </ListItemButton>
       </ListItem>
     ),
-  );
+  ); */
+
+  const ListItems = () => Object.entries(weeks).map(([key, value]) => (
+    <Grid
+      key={key + value}
+      item
+      xs={6}
+    >
+      <Button fullWidth onClick={handleToggle(value)}>
+        <Checkbox
+          sx={{ fontSize: 16 }}
+          edge="start"
+          checked={intervalSettings.weekDays.indexOf(value) !== -1}
+          tabIndex={-1}
+          disableRipple
+          inputProps={{ 'aria-labelledby': key }}
+        />
+        {key}
+      </Button>
+
+    </Grid>
+  ));
 
   return (
-    <List>
-      {listItems}
-    </List>
+    <Grid maxWidth={320} container>
+      <ListItems />
+    </Grid>
   );
 };
 

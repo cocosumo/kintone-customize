@@ -1,5 +1,5 @@
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
@@ -34,7 +34,7 @@ const FormContent = ({ intervalType, intervalSettings, setIntervalSettings }) =>
   }
 };
 
-const IntervalSettings = ({ items, intervalForm, closeFormHandler }) => {
+const IntervalSettings = ({ intervalForm, closeFormHandler }) => {
   const [intervalSettings, setIntervalSettings] = useState({
     weekDays: [],
     monthDays: [],
@@ -58,13 +58,10 @@ const IntervalSettings = ({ items, intervalForm, closeFormHandler }) => {
 
   return (
     <Dialog onClose={closeFormHandler} open={intervalForm.isOpen}>
-      <DialogTitle>
-        {items[intervalForm.selectValue]}
-        の繰り返し設定
-      </DialogTitle>
-      <CustomDatePicker {...{ untilDate, setUntilDate }} />
-      <FormContent {...{ intervalSettings, setIntervalSettings, intervalType }} />
-
+      <DialogContent sx={{ mt: 2 }}>
+        <CustomDatePicker {...{ untilDate, setUntilDate }} />
+        <FormContent {...{ intervalSettings, setIntervalSettings, intervalType }} />
+      </DialogContent>
       <DialogActions>
         <Button onClick={closeFormHandler}>キャンセル</Button>
         <Button variant="contained" onClick={generateHandler} autoFocus>

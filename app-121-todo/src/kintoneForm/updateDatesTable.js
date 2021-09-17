@@ -1,9 +1,10 @@
 import { format } from 'date-fns';
+import { getFormRecord, setFormRecord } from '../../../kintone-api/api';
 
 const updateDatesTable = (generatedDates, setSnackIsOpen) => {
   if (!generatedDates || !generatedDates.length) return;
 
-  const { record } = kintone.app.record.get();
+  const { record } = getFormRecord();
 
   const { notifTable } = record;
 
@@ -17,8 +18,7 @@ const updateDatesTable = (generatedDates, setSnackIsOpen) => {
         },
       },
     });
-    kintone.app.record.set({ record });
-    console.log('requesting...');
+    setFormRecord({ record });
   });
 
   setSnackIsOpen(true);

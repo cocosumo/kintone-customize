@@ -13,7 +13,7 @@ const SuccessSnack = ({ snackIsOpen, closeSnackHandler }) => (
       severity="success"
       variant="filled"
     >
-      成功！！
+      出来ました。
     </Alert>
   </Snackbar>
 );
