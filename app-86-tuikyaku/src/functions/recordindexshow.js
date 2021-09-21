@@ -80,11 +80,18 @@ const recordindexshow = (event) => {
     window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
   }
 
+  // サブ関数 ＊＊＊＊＊ ここから ＊＊＊＊＊
+  // -------------------------------------------------------------------
+  // 関数名 ：  setEmployeename()
+  // 内容   ：  queryを含むURLから、担当者名や店舗名など、必要な情報を抜き出す処理
+  // -------------------------------------------------------------------
+  // 引数   ：  なし
+  // -------------------------------------------------------------------
   function setEmployeename() {
     let resultPos = url.indexOf('担当名');
     if (resultPos !== -1) { // URLに'query'が含まれるとき(プルダウンでの絞り込み表示時)
-      // ここから：絞り込み条件の氏名を取り出し 「query=担当名 like "苗字" and 担当名 like "名前"」
-      selectName = url.slice(resultPos + 10); // 10=読み飛ばす文字数/slice=urlから指定箇所以降を取り出し
+      // ここから：絞り込み条件の氏名を取り出す 「query=担当名 like "苗字" and 担当名 like "名前"」
+      selectName = url.slice(resultPos + 10); // 10=読み飛ばす文字数/ slice = urlから指定箇所以降を取り出し
       resultPos = selectName.indexOf('担当名');
       const selectNameL = selectName.substring(0, resultPos - 6); // 1文字目から"resultPos - 2"文字目までを取り出し
       selectName = selectName.slice(resultPos + 10);
@@ -92,14 +99,27 @@ const recordindexshow = (event) => {
       selectName = selectNameL.concat(' ', selectNameF);
       ini.value = selectName;
       ini.innerText = selectName;
-      console.log('ユーザ名の取得 :', selectName);
-      // ここまで：絞り込み条件の氏名を取り出し
+      // 店舗名の初期値を設定
       document.getElementById('my_select_buttonEmp').value = selectName;
+      console.log('[担当名]ユーザ名の取得 :', document.getElementById('my_select_buttonEmp').value);
+      // ここまで：絞り込み条件の氏名を取り出し
     } else { // if (url.indexOf('店舗名') !== -1)
-      console.log('店舗名で絞り込んだ時の処理を実装予定');
+      resultPos = url.indexOf('店舗名');
+      selectName = url.slice(resultPos + 10); // 10=読み飛ばす文字数/slice=urlから指定箇所以降を取り出し
+      selectName = selectName.substring(0, selectName.indexOf('"'));
+      affShop = selectName;
+      // 店舗名の初期値を設定
+      document.getElementById('my_select_buttonShop').value = affShop;
+      console.log('[店舗名]ユーザ名の取得 :', selectName);
     }
   }
 
+  // -------------------------------------------------------------------
+  // 関数名 ：  picupShopname(lists)
+  // 内容   ：  選択中の社員が所属する、店舗名を取り出す処理
+  // -------------------------------------------------------------------
+  // 引数   ：  lists = 店舗リストの情報が含まれているobject
+  // -------------------------------------------------------------------
   function picupShopname(lists) {
     lists.forEach((item) => {
       // 対象の役職のメンバのみをプルダウンに追加
@@ -112,6 +132,12 @@ const recordindexshow = (event) => {
     });
   }
 
+  // -------------------------------------------------------------------
+  // 関数名 ：  AddEmplist(lists)
+  // 内容   ：  該当の店舗に所属する社員の一覧を、プルダウンのリストへ追加する処理
+  // -------------------------------------------------------------------
+  // 引数   ：  lists = 社員名簿の情報が含まれているobject
+  // -------------------------------------------------------------------
   function AddEmplist(lists) {
     lists.forEach((item) => {
       // 対象の役職のメンバのみをプルダウンに追加
@@ -128,22 +154,12 @@ const recordindexshow = (event) => {
     });
   }
 
-  /*
-  Employees.forEach((item) => {
-    // 対象の役職のメンバのみをプルダウンに追加
-    if (item.ルックアップ＿店舗名.value === myselectShop.value) {
-      if (item.役職.value === '営業'
-      || item.役職.value === '主任'
-      || item.役職.value === '店長') {
-        const listitems = document.createElement('option');
-        listitems.value = item.文字列＿氏名.value;
-        listitems.innerText = item.文字列＿氏名.value;
-        document.getElementById('my_select_buttonEmp').appendChild(listitems);
-      }
-    }
-  }); */
-
-  // プルダウンに「---」と「全てのレコードを表示」を追加
+  // -------------------------------------------------------------------
+  // 関数名 ：  setEmpInitSelect()
+  // 内容   ：  プルダウンに「---」と「全てのレコードを表示」を追加する処理
+  // -------------------------------------------------------------------
+  // 引数   ：  なし
+  // -------------------------------------------------------------------
   function setEmpInitSelect() {
     const newitem = document.createElement('option');
     newitem.value = 'init';
@@ -155,6 +171,9 @@ const recordindexshow = (event) => {
     document.getElementById('my_select_buttonEmp').appendChild(newitem2);
     console.log('セレクトボックスの初期値セット完了');
   }
+  // -------------------------------------------------------------------
+  // サブ関数 ＊＊＊＊＊ ここまで ＊＊＊＊＊
+  // -------------------------------------------------------------------
 
   setEmployeename();
   setEmpInitSelect();
@@ -171,6 +190,7 @@ const recordindexshow = (event) => {
     Employees = resp.records; // 社員
     picupShopname(Employees);
     AddEmplist(Employees);
+    setEmployeename();
   }, (er) => {
     // error
     console.log('社員名簿のレコード取得に失敗しました。', er);
@@ -191,19 +211,25 @@ const recordindexshow = (event) => {
       // 対象の店舗のみをプルダウンに追加
       if (ShopName.店舗名.value !== 'なし'
       && ShopName.店舗名.value !== '本部'
-      ) { // && ShopName.店舗名.value !== 'システム管理部'
+      && ShopName.店舗名.value !== 'システム管理部') {
         const listitems = document.createElement('option');
         listitems.value = ShopName.店舗名.value;
         listitems.innerText = ShopName.店舗名.value;
         document.getElementById('my_select_buttonShop').appendChild(listitems);
       }
     });
+    setEmployeename();
   }, (er) => {
     // error
     console.log('店舗リストのレコード取得に失敗しました。', er);
   });
 
-  // 店舗名のプルダウン変更時の処理
+  // -------------------------------------------------------------------
+  // 関数名 ：  myselectShop.onchange
+  // 内容   ：  [店舗名]のプルダウン変更時の処理
+  // -------------------------------------------------------------------
+  // 引数   ：  なし
+  // -------------------------------------------------------------------
   myselectShop.onchange = () => {
     affShop = document.getElementById('my_select_buttonShop').value;
     // プルダウン子要素の初期化
@@ -217,7 +243,12 @@ const recordindexshow = (event) => {
     AddEmplist(Employees); // 社員名のリスト(プルダウン)の更新
   };
 
-  // 担当者のプルダウン変更時の処理
+  // -------------------------------------------------------------------
+  // 関数名 ：  myselectShop.onchange
+  // 内容   ：  [担当者名]のプルダウン変更時の処理
+  // -------------------------------------------------------------------
+  // 引数   ：  なし
+  // -------------------------------------------------------------------
   myselectEmp.onchange = () => {
     if (document.getElementById('my_select_buttonEmp').value === 'listall') {
       // 全てのレコードを表示
