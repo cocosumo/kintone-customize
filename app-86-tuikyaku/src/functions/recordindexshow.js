@@ -10,6 +10,8 @@ const recordindexshow = (event) => {
   const EmpIDname = 'my_select_buttonEmp';
   const ShopIDname = 'my_select_buttonShop';
 
+  // ブランチのテスト
+
   // 社員情報の取得
   // const Employees = getEmployees;
   const APPEMP_ID = 34; // ID:34 = 社員名簿
