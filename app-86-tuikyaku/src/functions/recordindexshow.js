@@ -1,4 +1,4 @@
-import getRecords from '../handlers/getrecords';
+import getRecords from '../handlers/getrecords'; // 注)kintone apiを使用しているため、promise
 import { getHeaderMenuSpaceElement, getHeaderSpaceElement } from '../../../kintone-api/api';
 // import getEmployees from '../Backend/getEmployees';
 
@@ -66,11 +66,43 @@ const recordindexshow = (event) => {
 
   // 担当者のプルダウンに初期値を追加
   const ini = document.createElement('option');
-  const userID = kintone.getLoginUser().employeeNumber;
+  // const userID = kintone.getLoginUser().employeeNumber;
   let affShop = ''; // 店舗名の初期値を格納する変数
   let selectName; // 選択されている社員名(初期値はログインユーザー名)
   let url = window.location.search;
   url = decodeURI(url); // urlをデコーディングする
+
+  const app86DateTimeKey = 'app86日時'; // ローカルストレージの日時の保存名(キー)
+  let app86DateTimeD; // ローカルストレージの日時の保存データ
+  const app86EmployeesKey = 'app86社員リスト'; // ローカルストレージの社員リストの保存名(キー)
+  let app86EmployeesD; // ローカルストレージの社員リストの保存データ
+  const app86ShopListKey = 'app86店舗リスト'; // ローカルストレージの店舗リストの保存名(キー)
+  let app86ShopListD; // ローカルストレージの店舗リストの保存データ
+
+  // LocalStrageに日時が保存されているか確認する - (1)
+  app86DateTimeD = localStorage.getItem(app86DateTimeKey);
+  // (1-2)保存されていない場合
+  if (!app86DateTimeD) {
+    // - getrecordsを使用して、社員名簿から社員の一覧の配列(以降、社員リスト)を取得する
+    // - 取得した社員リストを、LocalStorageに格納する
+    localStorage.setItem(app86EmployeesKey, app86EmployeesD);
+    // - getrecordsを使用して、店舗リストから店舗一覧の配列(以降、店舗リスト)を取得する
+    // - 取得した店舗リストを、LocalStorageに格納する
+    localStorage.setItem(app86ShopListKey, app86ShopListD);
+    // - 現在の日時を、LocalStrageに格納する
+  } else {
+    // (1-1)保存されている場合
+    // - 保存されている値から、3時間経過しているかどうか確認する -(2)
+    // - (2-1)経過している場合
+    // - - 保存されている日時・店舗リスト・社員リストを削除する(remove)
+    // - (2-2)経過していない場合
+    // - - LocalStorageに、店舗リスト・社員リストが保存されているか確認 - (3)
+    // - - (3-1)保存されている場合
+    // - - - LocalStrageに保存されている店舗リスト・社員リストを取得する
+    // - - (3-2)保存されていない場合(理論上は存在しないはず)
+    // - - - 1-2の処理に同じ
+  }
+
   if ((url.indexOf('query=') === -1) && (url.indexOf('q=') === -1)) { // URLにqueryが含まれないとき(初回)
     selectName = kintone.getLoginUser().name;
     const selectNameL = selectName.substring(0, selectName.indexOf(' '));
@@ -81,6 +113,7 @@ const recordindexshow = (event) => {
     console.log('ユーザ名の取得 :', selectName);
 
     // 役職が営業/主任/店長出ない場合は、初期値で絞り込まない
+    /*
     let userpost; // ログインユーザーの役職を格納する
     const params = {
       app: APPEMP_ID,
@@ -93,12 +126,12 @@ const recordindexshow = (event) => {
     });
     if (userpost === '営業'
       || userpost === '主任'
-      || userpost === '店長') {
-      const selectField = '担当名'; // フィルタリング対象のフィールド名
-      const query = `${selectField} like "${selectNameL}" and ${selectField} like "${selectNameF}"`;
-      console.log('query = ', query);
-      window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
-    }
+      || userpost === '店長') { */
+    const selectField = '担当名'; // フィルタリング対象のフィールド名
+    const query = `${selectField} like "${selectNameL}" and ${selectField} like "${selectNameF}"`;
+    console.log('query = ', query);
+    window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+    // }
   }
 
   function setEmployeename() {
@@ -177,7 +210,6 @@ const recordindexshow = (event) => {
    * プルダウンに「---」と「全てのレコードを表示」を追加する処理
    * @type {string} targetID = 対象のプルダウンのID名
    */
-  // プルダウンに「---」と「全てのレコードを表示」を追加
   function setEmpInitSelect(targetID) {
     const newitem = document.createElement('option');
     newitem.value = 'init';
