@@ -1,5 +1,6 @@
 import getRecords from '../handlers/getrecords';
 import { getHeaderMenuSpaceElement, getHeaderSpaceElement } from '../../../kintone-api/api';
+// import getEmployees from '../Backend/getEmployees';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
@@ -63,17 +64,15 @@ const recordindexshow = (event) => {
 
   console.log('一覧:ヘッダにボタン設置');
 
-  // ログインユーザー情報の取得
-  const userName = kintone.getLoginUser().name;
-
   // 担当者のプルダウンに初期値を追加
   const ini = document.createElement('option');
+  const userID = kintone.getLoginUser().employeeNumber;
   let affShop = ''; // 店舗名の初期値を格納する変数
   let selectName; // 選択されている社員名(初期値はログインユーザー名)
   let url = window.location.search;
   url = decodeURI(url); // urlをデコーディングする
   if ((url.indexOf('query=') === -1) && (url.indexOf('q=') === -1)) { // URLにqueryが含まれないとき(初回)
-    selectName = userName;
+    selectName = kintone.getLoginUser().name;
     const selectNameL = selectName.substring(0, selectName.indexOf(' '));
     const selectNameF = selectName.slice(selectName.indexOf(' ') + 1);
     selectName = selectNameL.concat(' ', selectNameF);
@@ -82,7 +81,6 @@ const recordindexshow = (event) => {
     console.log('ユーザ名の取得 :', selectName);
 
     // 役職が営業/主任/店長出ない場合は、初期値で絞り込まない
-    /*
     let userpost; // ログインユーザーの役職を格納する
     const params = {
       app: APPEMP_ID,
@@ -93,18 +91,14 @@ const recordindexshow = (event) => {
       console.log('役職を表示 ', resp.record.役職.value);
       userpost = resp.record.役職.value;
     });
-    */
-    /*
     if (userpost === '営業'
       || userpost === '主任'
       || userpost === '店長') {
-    */
-
-    const selectField = '担当名'; // フィルタリング対象のフィールド名
-    const query = `${selectField} like "${selectNameL}" and ${selectField} like "${selectNameF}"`;
-    console.log('query = ', query);
-    window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
-    // }
+      const selectField = '担当名'; // フィルタリング対象のフィールド名
+      const query = `${selectField} like "${selectNameL}" and ${selectField} like "${selectNameF}"`;
+      console.log('query = ', query);
+      window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+    }
   }
 
   function setEmployeename() {
@@ -117,18 +111,18 @@ const recordindexshow = (event) => {
       selectName = selectName.slice(resultPos + 10);
       const selectNameF = selectName.substring(0, selectName.indexOf('"'));
       selectName = selectNameL.concat(' ', selectNameF);
-
+      console.log('所属店舗=', affShop);
       // 店舗名の初期値を設定
       document.getElementById(EmpIDname).value = selectName;
-      console.log('[担当名]ユーザ名の取得 :', selectName);
       // ログインユーザーがリスト化対象外職種の場合は、「---」を選択
       if (selectName !== document.getElementById(EmpIDname).value) {
         document.getElementById(EmpIDname).value = '---';
         selectName = '---';
       }
+      console.log('[担当名]ユーザ名の取得 :', selectName);
       // ここまで：絞り込み条件の氏名を取り出し
       document.getElementById(EmpIDname).value = selectName;
-    } else { // if (url.indexOf('店舗名') !== -1)
+    } else if (url.indexOf('店舗名') !== -1) {
       resultPos = url.indexOf('店舗名');
       affShop = url.slice(resultPos + 10); // 10=読み飛ばす文字数/slice=urlから指定箇所以降を取り出し
       affShop = affShop.substring(0, affShop.indexOf('"'));
@@ -179,21 +173,6 @@ const recordindexshow = (event) => {
     });
   }
 
-  /*
-  Employees.forEach((item) => {
-    // 対象の役職のメンバのみをプルダウンに追加
-    if (item.ルックアップ＿店舗名.value === myselectShop.value) {
-      if (item.役職.value === '営業'
-      || item.役職.value === '主任'
-      || item.役職.value === '店長') {
-        const listitems = document.createElement('option');
-        listitems.value = item.文字列＿氏名.value;
-        listitems.innerText = item.文字列＿氏名.value;
-        document.getElementById(EmpIDname).appendChild(listitems);
-      }
-    }
-  }); */
-
   /**
    * プルダウンに「---」と「全てのレコードを表示」を追加する処理
    * @type {string} targetID = 対象のプルダウンのID名
@@ -210,9 +189,6 @@ const recordindexshow = (event) => {
     document.getElementById((targetID)).appendChild(newitem2);
     console.log('セレクトボックスの初期値セット完了');
   }
-
-  // setEmployeename();
-  // setEmpInitSelect();
 
   // プルダウンメニューの要素を設定する- ID:34 = 社員名簿 -> 社員名簿のレコードを取得する
   const paramsEmp = {
