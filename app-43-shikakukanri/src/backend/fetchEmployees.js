@@ -1,6 +1,6 @@
-import { fetchUpTo500Records } from '../../../kintone-api/fetchRecords';
+import { fetchAllRecords } from '../../../kintone-api/fetchRecords';
 
-const fetchEmployees = () => fetchUpTo500Records({ appId: 34 });
+const fetchEmployees = () => fetchAllRecords({ appId: 34 });
 
 export const getEmployeeCountPerStore = async () => {
   const employees = (await fetchEmployees()).records;

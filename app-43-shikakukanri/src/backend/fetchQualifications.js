@@ -1,8 +1,8 @@
-import { fetchUpTo500Records } from '../../../kintone-api/fetchRecords';
+import { fetchAllRecords } from '../../../kintone-api/fetchRecords';
 
-const fetchQualifications = () => fetchUpTo500Records();
+const fetchQualifications = () => fetchAllRecords();
 
-export const fetchTakkenshi = () => fetchUpTo500Records({ filterCond: 'qualificationChoices in ("宅建士")' });
+export const fetchTakkenshi = () => fetchAllRecords({ filterCond: 'qualificationChoices in ("宅建士")' });
 
 export const getTakkenshiCountPerStore = async () => {
   const takkenshi = (await fetchTakkenshi()).records;
