@@ -199,6 +199,8 @@ const recordindexshow = (event) => {
     const FieldEmp2 = '役職';
     const FieldEmp3 = 'ルックアップ＿店舗名';
     const FieldShop = '店舗名';
+    const ExItems1 = ['なし', '本部', 'システム管理部', '本社', '買取店', 'すてくら'];
+    const ExItem2 = 'すてくら';
 
     const paramsEmp = {
       app: APPEMP_ID,
@@ -222,12 +224,9 @@ const recordindexshow = (event) => {
       let newShopList = Shoplists.map((item) => {
         // console.log('item.店舗名.value：', item.店舗名.value);
         let returnValue;
-        if (item.店舗名.value !== 'なし'
-        && item.店舗名.value !== '本部'
-        && item.店舗名.value !== 'システム管理部'
-        && item.店舗名.value !== '本社'
-        && item.店舗名.value !== '買取店'
-        && item.店舗名.value.indexOf('すてくら') === -1) {
+        if (ExItems1.includes(item.店舗名.value) || item.店舗名.value.includes(ExItem2)) {
+          returnValue = undefined; // リスト化対象外店舗は、undefinedとする
+        } else {
           // 戻り値に店舗名を設定する
           returnValue = item.店舗名.value;
           // 対象の店舗名のみ、店舗リストに登録する
@@ -235,8 +234,6 @@ const recordindexshow = (event) => {
           listitems.value = item.店舗名.value;
           listitems.innerText = item.店舗名.value;
           document.getElementById(ShopIDname).appendChild(listitems);
-        } else {
-          returnValue = undefined; // リスト化対象外店舗は、undefinedとする
         }
         return returnValue;
       });
