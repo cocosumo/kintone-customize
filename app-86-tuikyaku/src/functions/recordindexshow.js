@@ -212,27 +212,36 @@ const recordindexshow = (event) => {
       fields: [FieldShop],
     };
 
-    getRecords(paramsShop).then((resp) => { // 100件以上のレコード読み込み(上限1万件)
+    getRecords(paramsShop).then((respShop) => { // 100件以上のレコード読み込み(上限1万件)
       setInitSelect(ShopIDname); // [店舗名]のプルダウンに、「---」と「すべてのレコードを表示」を追加
-      console.log('店舗リストのレコード取得に成功しました！', resp);
-      Shoplists = resp.records;
+      console.log('店舗リストのレコード取得に成功しました！', respShop);
+      Shoplists = respShop.records;
 
-      // 設定項目の数だけ選択肢として追加
-      Shoplists.forEach((ShopName) => {
-        // 対象の店舗のみをプルダウンに追加(すてくらを含まない、「なし」「本部」「システム管理部」以外)
-        // if (['なし', '本部', 'システム管理部', '本社', '買取店'].includes(item.役職.value)) { -> 含まない
-        if (ShopName.店舗名.value !== 'なし'
-        && ShopName.店舗名.value !== '本部'
-        && ShopName.店舗名.value !== 'システム管理部'
-        && ShopName.店舗名.value !== '本社'
-        && ShopName.店舗名.value !== '買取店'
-        && ShopName.店舗名.value.indexOf('すてくら') === -1) {
+      // 店舗リストの配列を再編成する
+      // const newShopList = Shoplists.map((item) => item.店舗名.value);
+      let newShopList = Shoplists.map((item) => {
+        // console.log('item.店舗名.value：', item.店舗名.value);
+        let returnValue;
+        if (item.店舗名.value !== 'なし'
+        && item.店舗名.value !== '本部'
+        && item.店舗名.value !== 'システム管理部'
+        && item.店舗名.value !== '本社'
+        && item.店舗名.value !== '買取店'
+        && item.店舗名.value.indexOf('すてくら') === -1) {
+          // 戻り値に店舗名を設定する
+          returnValue = item.店舗名.value;
+          // 対象の店舗名のみ、店舗リストに登録する
           const listitems = document.createElement('option');
-          listitems.value = ShopName.店舗名.value;
-          listitems.innerText = ShopName.店舗名.value;
+          listitems.value = item.店舗名.value;
+          listitems.innerText = item.店舗名.value;
           document.getElementById(ShopIDname).appendChild(listitems);
+        } else {
+          returnValue = undefined; // リスト化対象外店舗は、undefinedとする
         }
+        return returnValue;
       });
+      newShopList = newShopList.filter((value) => value !== undefined);
+      console.log('newShopList：', newShopList);
 
       getRecords(paramsEmp).then((respEmp) => { // 100件以上のレコード読み込み(上限1万件)
         console.log('社員名簿のレコード取得に成功しました！', respEmp);
@@ -257,7 +266,7 @@ const recordindexshow = (event) => {
         app86EmployeesD = JSON.stringify(Employees);
         localStorage.setItem(app86EmployeesKey, app86EmployeesD);
         // - 取得した店舗リストを、LocalStorageに格納する
-        app86ShopListD = JSON.stringify(Shoplists);
+        app86ShopListD = JSON.stringify(newShopList);
         localStorage.setItem(app86ShopListKey, app86ShopListD);
 
         // - 現在の日時を、LocalStrageに格納する
@@ -278,6 +287,8 @@ const recordindexshow = (event) => {
     // (1-1)(3-2)LocalStorageにデータが保存されている場合 かつ、(2-2)3時間経過していない場合
     // - - - LocalStrageに保存されている店舗リスト・社員リストを取得する
     // 条件判定時にデータは取得済みのため、処理は省略する
+    console.log('店舗リスト ', app86ShopListD);
+    console.log('社員リスト', app86EmployeesD);
   }
 
   if (flg1st === 'true') {
