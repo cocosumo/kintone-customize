@@ -69,6 +69,15 @@ const recordindexshow = (event) => {
   let url = window.location.search;
   url = decodeURI(url); // urlをデコーディングする
 
+  // ローカルストレージの活用をする
+  const app86DateTimeKey = 'app86日時'; // ローカルストレージの日時の保存名(キー)
+  let app86DateTimeD; // ローカルストレージの日時の保存データ
+  const app86EmployeesKey = 'app86社員リスト'; // ローカルストレージの社員リストの保存名(キー)
+  let app86EmployeesD; // ローカルストレージの社員リストの保存データ
+  const app86ShopListKey = 'app86店舗リスト'; // ローカルストレージの店舗リストの保存名(キー)
+  let app86ShopListD; // ローカルストレージの店舗リストの保存データ
+  const divTime = 10; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
+
   // 担当名に表示する氏名の取り出しをする
   if ((url.indexOf('query=') === -1) && (url.indexOf('q=') === -1)) { // URLにqueryが含まれないとき(初回)
     flg1st = 'true';
@@ -164,15 +173,6 @@ const recordindexshow = (event) => {
     });
   }
 
-  // ローカルストレージの活用をする
-  const app86DateTimeKey = 'app86日時'; // ローカルストレージの日時の保存名(キー)
-  let app86DateTimeD; // ローカルストレージの日時の保存データ
-  const app86EmployeesKey = 'app86社員リスト'; // ローカルストレージの社員リストの保存名(キー)
-  let app86EmployeesD; // ローカルストレージの社員リストの保存データ
-  const app86ShopListKey = 'app86店舗リスト'; // ローカルストレージの店舗リストの保存名(キー)
-  let app86ShopListD; // ローカルストレージの店舗リストの保存データ
-  const divTime = 10; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
-
   // LocalStrageに日時が保存されているか確認する - (1)
   app86DateTimeD = JSON.parse(localStorage.getItem(app86DateTimeKey));
   app86EmployeesD = localStorage.getItem(app86EmployeesKey);
@@ -195,13 +195,15 @@ const recordindexshow = (event) => {
     const FieldEmp = '文字列＿氏名';
     const FieldEmp2 = '役職';
     const FieldEmp3 = 'ルックアップ＿店舗名';
+    const FieldEmp4 = '状態';
     const FieldShop = '店舗名';
     const ExItems1 = ['なし', '本部', 'システム管理部', '本社', '買取店', 'すてくら'];
     const ExItem2 = 'すてくら';
+    const ExItemsEmp = ['営業', '主任', '店長'];
 
     const paramsEmp = {
       app: APPEMP_ID,
-      fields: [FieldEmp, FieldEmp2, FieldEmp3],
+      fields: [FieldEmp, FieldEmp2, FieldEmp3, FieldEmp4],
     };
 
     // - getrecordsを使用して、店舗リストから店舗一覧の配列(以降、店舗リスト)を取得する
@@ -235,6 +237,7 @@ const recordindexshow = (event) => {
         }
         return returnValue;
       });
+
       // 配列から、undefinedを除外して、newShopListを再編する
       newShopList = newShopList.filter((value) => value !== undefined);
       console.log('newShopList：', newShopList);
@@ -244,23 +247,36 @@ const recordindexshow = (event) => {
         console.log('社員名簿のレコード取得に成功しました！', respEmp);
         Employees = respEmp.records; // 社員
 
-        // function pickupShopname(lists) {
-        Employees.forEach((item) => {
-          // 対象の役職のメンバのみをプルダウンに追加
-          if (item.文字列＿氏名.value === selectName) {
-            affShop = item.ルックアップ＿店舗名.value;
-            console.log('店舗名の初期値 =', affShop);
-            // 店舗名の初期値を設定
-            document.getElementById(ShopIDname).value = affShop;
-            // ログインユーザーがリスト化対象外店舗所属の場合は、「---」を選択
-            if (affShop !== document.getElementById(ShopIDname).value) {
-              document.getElementById(ShopIDname).value = '---';
+        let chkFlg = false;
+        let newEmpList = Employees.map((item) => {
+          // 社員名簿をリスト化する
+          let returnValue;
+          if (ExItemsEmp.includes(item.役職.value) && item.状態.value !== '無効') {
+            // console.log('文字列＿氏名.value :', item.文字列＿氏名.value);
+            const member = { name: item.文字列＿氏名.value, shop: item.ルックアップ＿店舗名.value };
+            returnValue = member;
+
+            // 絞り込み表示対象者の所属店舗を設定する
+            if (item.文字列＿氏名.value === selectName) {
+              affShop = item.ルックアップ＿店舗名.value;
+              console.log('店舗名の初期値 =', affShop);
+              // 店舗名の初期値を設定
+              document.getElementById(ShopIDname).value = affShop;
+              chkFlg = true;
             }
+          } else {
+            const member = { name: undefined, shop: undefined };
+            returnValue = member; // リスト化対象外社員は、undefinedとする
           }
+          return returnValue;
         });
 
+        // 配列から、undefinedを除外して、newEmpListを再編する
+        newEmpList = newEmpList.filter((value) => value.name !== undefined);
+        console.log('newEmpList', newEmpList);
+
         // - 取得した社員リストを、LocalStorageに格納する
-        app86EmployeesD = JSON.stringify(Employees);
+        app86EmployeesD = JSON.stringify(newEmpList);
         localStorage.setItem(app86EmployeesKey, app86EmployeesD);
         // - 取得した店舗リストを、LocalStorageに格納する
         app86ShopListD = JSON.stringify(newShopList);
@@ -270,6 +286,12 @@ const recordindexshow = (event) => {
         app86DateTimeD = JSON.stringify(Date.now() / 1000);
         localStorage.setItem(app86DateTimeKey, app86DateTimeD);
 
+        // 店舗名プルダウンの値を設定する
+        if (chkFlg === false) {
+          document.getElementById(ShopIDname).value = '---';
+        }
+
+        // 社員リストのプルダウンの値を設定する
         AddEmplist(Employees);
         // setEmployeename();
       }, (er) => {
