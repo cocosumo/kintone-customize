@@ -171,7 +171,7 @@ const recordindexshow = (event) => {
   let app86EmployeesD; // ローカルストレージの社員リストの保存データ
   const app86ShopListKey = 'app86店舗リスト'; // ローカルストレージの店舗リストの保存名(キー)
   let app86ShopListD; // ローカルストレージの店舗リストの保存データ
-  const divTime = 10800; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
+  const divTime = 10; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
 
   // LocalStrageに日時が保存されているか確認する - (1)
   app86DateTimeD = JSON.parse(localStorage.getItem(app86DateTimeKey));
@@ -179,9 +179,6 @@ const recordindexshow = (event) => {
   app86ShopListD = localStorage.getItem(app86ShopListKey);
   console.log('レコード一覧の取得時間(Date.now(秒))：', app86DateTimeD);
   const now = (Date.now()) / 1000;
-  // console.log('app86DateTimeD：', app86DateTimeD);
-  // console.log('app86EmployeesD：', app86EmployeesD);
-  // console.log('app86ShopListD：', app86ShopListD);
   console.log('1-1 現在の時間(Date.now(秒))：', now);
   console.log('1-1 経過時間(秒)：', (now - app86DateTimeD));
 
@@ -214,6 +211,7 @@ const recordindexshow = (event) => {
       fields: [FieldShop],
     };
 
+    // 店舗名のリストを作成する
     getRecords(paramsShop).then((respShop) => { // 100件以上のレコード読み込み(上限1万件)
       setInitSelect(ShopIDname); // [店舗名]のプルダウンに、「---」と「すべてのレコードを表示」を追加
       console.log('店舗リストのレコード取得に成功しました！', respShop);
@@ -237,9 +235,11 @@ const recordindexshow = (event) => {
         }
         return returnValue;
       });
+      // 配列から、undefinedを除外して、newShopListを再編する
       newShopList = newShopList.filter((value) => value !== undefined);
       console.log('newShopList：', newShopList);
 
+      // 社員名のリストを作成する
       getRecords(paramsEmp).then((respEmp) => { // 100件以上のレコード読み込み(上限1万件)
         console.log('社員名簿のレコード取得に成功しました！', respEmp);
         Employees = respEmp.records; // 社員
