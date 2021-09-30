@@ -14,8 +14,8 @@ const recordindexshow = (event) => {
 
   // 指定の一覧以外このJSを実行しない
   if (event.viewId === view) {
-    getHeaderSpaceElement().innerText = '[担当名]のプルダウンには、役職が「店長」「主任」「営業」の方を表示しています。\n'
-                                      + 'この条件以外で絞り込みたい場合は、上の"メイン"をクリックし、"(すべて)"を選択してください。';
+    getHeaderSpaceElement().innerText = '[担当名]のプルダウンには、役職が「店長」「主任」「営業」の方を表示しています。\n';
+    // + 'この条件以外で絞り込みたい場合は、上の"メイン"をクリックし、"(すべて)"を選択してください。';
   } else {
     if (event.viewId === viewall) {
       const infomation = ' 上の"(すべて)"をクリックすると、一覧の表示方法が変更されます。\n'
@@ -59,15 +59,14 @@ const recordindexshow = (event) => {
   console.log('一覧:ヘッダにボタン設置');
 
   // 担当者のプルダウンに初期値を追加
-  const ini = document.createElement('option');
-  // const userID = kintone.getLoginUser().employeeNumber;
-  let affShop = ''; // 店舗名の初期値を格納する変数
+  let affShop = 'init'; // 店舗名の初期値を格納する変数
   let selectName; // 選択されている社員名(初期値はログインユーザー名)
   let selectNameL; // ログインユーザーの苗字
   let selectNameF; // ログインユーザーの名前
   let Shoplists; // 店舗リスト
   let Employees; // 社員リスト
   let flg1st = false; // 初回判定用フラグ true=初回, false=初回ではない
+  let FlgOcpChk = false; // 対象社員が営業職がどうかをチェックするフラグ true:営業, false:営業以外
   let url = window.location.search;
   url = decodeURI(url); // urlをデコーディングする
 
@@ -81,17 +80,17 @@ const recordindexshow = (event) => {
   const divTime = 10800; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
 
   // 担当名に表示する氏名の取り出しをする
-  if ((url.indexOf('query=') === -1) && (url.indexOf('q=') === -1)) { // URLにqueryが含まれないとき(初回)
+  // URLにqueryが含まれないとき(初回)
+  if ((url.indexOf('query=') === -1) && (url.indexOf('q=') === -1)) {
     flg1st = true;
     selectName = kintone.getLoginUser().name;
     selectNameL = selectName.substring(0, selectName.indexOf(' '));
     selectNameF = selectName.slice(selectName.indexOf(' ') + 1);
     selectName = selectNameL.concat(' ', selectNameF);
-    ini.value = selectName;
-    ini.innerText = selectName;
+    affShop = 'init';
     console.log('ユーザ名の取得 :', selectName);
   } else {
-    // function setEmployeename() {
+    // URLにプルダウンで指定したqueryが含まれる場合
     flg1st = false;
     let resultPos = url.indexOf('担当名');
     if (resultPos !== -1) { // URLに'担当名'が含まれるとき(プルダウンでの絞り込み表示時)
@@ -102,29 +101,12 @@ const recordindexshow = (event) => {
       selectName = selectName.slice(resultPos + 10);
       selectNameF = selectName.substring(0, selectName.indexOf('"'));
       selectName = selectNameL.concat(' ', selectNameF);
-      console.log('所属店舗=', affShop);
-      // 店舗名の初期値を設定
-      document.getElementById(EmpIDname).value = selectName;
-      // ログインユーザーがリスト化対象外職種の場合は、「---」を選択
-      if (selectName !== document.getElementById(EmpIDname).value) {
-        document.getElementById(EmpIDname).value = '---';
-        selectName = '---';
-      }
-      console.log('[担当名]ユーザ名の取得 :', selectName);
-      // ここまで：絞り込み条件の氏名を取り出し
-      document.getElementById(EmpIDname).value = selectName;
+      affShop = 'init';
     } else if (url.indexOf('店舗名') !== -1) {
       resultPos = url.indexOf('店舗名');
       affShop = url.slice(resultPos + 10); // 10=読み飛ばす文字数/slice=urlから指定箇所以降を取り出し
-      affShop = affShop.substring(0, affShop.indexOf('"'));
-      // 店舗名の初期値を設定
-      document.getElementById(ShopIDname).value = affShop;
-      // ログインユーザーがリスト化対象外店舗所属の場合は、「---」を選択
-      if (affShop !== document.getElementById(ShopIDname).value) {
-        document.getElementById(ShopIDname).value = '---';
-        affShop = '---';
-      }
-      console.log('[店舗名]ユーザ名の取得 :', affShop);
+      affShop = `${affShop.substring(0, affShop.indexOf('"'))}店`;
+      selectName = 'init';
     } else {
       // ユーザがプルダウン以外で絞り込み表示している場合
       // 処理は実行しない
@@ -135,19 +117,95 @@ const recordindexshow = (event) => {
    * 社員リストから、対象の役職のみを取り出す処理
    * @param {Array} lists : 社員リストapp86EmployeesD({name: 氏名, shop: 店舗})
    */
-  function AddEmplist(lists) {
+  function makeEmpList(lists) {
     setInitSelect(EmpIDname); // 「---」と「すべてを表示する」を追加
     lists.forEach((item) => {
-      // console.log('myselectShop.value :', myselectShop.value);
       // 対象のメンバのみをプルダウンに追加
-      if (['init', 'listall'].includes(myselectShop.value)
-       || myselectShop.value === item.shop) {
+      // 【選択してください】と'すべて表示'の時には、社員リストには全員追加する
+      if (['init', 'listall'].includes(affShop)
+       || affShop === item.shop) {
         const listitems = document.createElement('option');
         listitems.value = item.name;
         listitems.innerText = item.name;
         document.getElementById(EmpIDname).appendChild(listitems);
       }
     });
+  }
+
+  /**
+   * 社員名簿のリストから、所属店舗(affshop)の取り出しと、対象職種かどうかを判定する(FlgOcpChk)
+   * @param {array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
+   */
+  function chkOccupation(lists) {
+    // 絞り込み表示対象者の所属店舗を設定する
+    lists.forEach((item) => {
+      if (item.name === selectName) {
+        affShop = item.shop;
+        console.log('店舗名の初期値 =', affShop);
+        FlgOcpChk = true;
+      }
+    });
+  }
+
+  /**
+   * 店舗リストのプルダウンを作成する
+   * @param {array} lists : 店舗リスト[ 店舗名 ,・・・]
+   */
+  function makeShopList(lists) {
+    setInitSelect(ShopIDname); // [店舗名]のプルダウンに、「【選択してください】」と「すべてのレコードを表示」を追加
+    lists.forEach((item) => {
+      // 対象の店舗名のみ、店舗リストに登録する
+      const listitems = document.createElement('option');
+      listitems.value = item;
+      listitems.innerText = item;
+      document.getElementById(ShopIDname).appendChild(listitems);
+    });
+  }
+
+  /**
+   * 該当の社員名(selectName)の所属店舗をaffshopに格納する処理
+   * @param {array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
+   */
+  function setAffiliationShop(lists) {
+    if (selectName !== 'init' && affShop === 'init') {
+      lists.forEach((item) => {
+        if (selectName === item.name) {
+          affShop = item.shop;
+        }
+      });
+    }
+  }
+
+  /**
+   * プルダウンの内容表示を切り替える処理
+   */
+  function setview() {
+    // 所属店舗の値を更新する
+    setAffiliationShop(app86EmployeesD);
+
+    // 一覧の表示状態と、職種により、表示内容を切り替える
+    if (FlgOcpChk === false) {
+      console.log('営業職ではない');
+      if (affShop !== 'init') {
+        document.getElementById(ShopIDname).value = affShop;
+        document.getElementById(EmpIDname).value = 'listall';
+      } else {
+        document.getElementById(ShopIDname).value = 'init';
+        document.getElementById(EmpIDname).value = 'init';
+      }
+    } else if (flg1st === true) {
+      // 初回にログインユーザー名でフィルタリングする
+      console.log('初回ではない　かつ　   営業職');
+      const selectField = '担当名'; // フィルタリング対象のフィールド名
+      const query = `${selectField} like "${selectNameL}" and ${selectField} like "${selectNameF}"`;
+      console.log('query = ', query);
+      window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+    } else if (flg1st === false) {
+      // 初回ログインではない場合
+      console.log('初回ではない　かつ　営業職:', affShop, ' ', selectName);
+      document.getElementById(ShopIDname).value = affShop;
+      document.getElementById(EmpIDname).value = selectName;
+    }
   }
 
   // LocalStrageに日時が保存されているか確認する - (1)
@@ -165,23 +223,14 @@ const recordindexshow = (event) => {
     app86DateTimeD = JSON.stringify(now);
     localStorage.setItem(app86DateTimeKey, app86DateTimeD);
     console.log('1-2 現在の時間(Date.now(秒))：', app86DateTimeD);
+
     // - getrecordsを使用して、社員名簿から社員の一覧の配列(以降、社員リスト)を取得する
     // プルダウンメニューの要素を設定する- ID:34 = 社員名簿 -> 社員名簿のレコードを取得する
-    const APPEMP_ID = 34; // ID:34 = 社員名簿
     const APPSHOP_ID = 19; // ID:19 = 店舗リスト
-    const FieldEmp = '文字列＿氏名';
-    const FieldEmp2 = '役職';
-    const FieldEmp3 = 'ルックアップ＿店舗名';
-    const FieldEmp4 = '状態';
     const FieldShop = '店舗名';
     const ExItems1 = ['なし', '本部', 'システム管理部', '本社', '買取店', 'すてくら'];
     const ExItem2 = 'すてくら';
     const ExItemsEmp = ['営業', '主任', '店長'];
-
-    const paramsEmp = {
-      app: APPEMP_ID,
-      fields: [FieldEmp, FieldEmp2, FieldEmp3, FieldEmp4],
-    };
 
     // - getrecordsを使用して、店舗リストから店舗一覧の配列(以降、店舗リスト)を取得する
     // 店舗名のプルダウンに、店舗名のリストを追加する
@@ -192,7 +241,6 @@ const recordindexshow = (event) => {
 
     // 店舗名のリストを作成する
     getRecords(paramsShop).then((respShop) => { // 100件以上のレコード読み込み(上限1万件)
-      setInitSelect(ShopIDname); // [店舗名]のプルダウンに、「---」と「すべてのレコードを表示」を追加
       console.log('店舗リストのレコード取得に成功しました！', respShop);
       Shoplists = respShop.records;
 
@@ -206,41 +254,40 @@ const recordindexshow = (event) => {
         } else {
           // 戻り値に店舗名を設定する
           returnValue = item.店舗名.value;
-          // 対象の店舗名のみ、店舗リストに登録する
-          const listitems = document.createElement('option');
-          listitems.value = item.店舗名.value;
-          listitems.innerText = item.店舗名.value;
-          document.getElementById(ShopIDname).appendChild(listitems);
         }
         return returnValue;
       });
 
       // 配列から、undefinedを除外して、newShopListを再編する
       newShopList = newShopList.filter((value) => value !== undefined);
-      console.log('newShopList：', newShopList);
+      // console.log('newShopList：', newShopList);
 
       // 社員名のリストを作成する
+      const APPEMP_ID = 34; // ID:34 = 社員名簿
+      const FieldEmp = '文字列＿氏名';
+      const FieldEmp2 = '役職';
+      const FieldEmp3 = 'ルックアップ＿店舗名';
+      const FieldEmp4 = '状態';
+
+      const paramsEmp = {
+        app: APPEMP_ID,
+        fields: [FieldEmp, FieldEmp2, FieldEmp3, FieldEmp4],
+      };
+
       getRecords(paramsEmp).then((respEmp) => { // 100件以上のレコード読み込み(上限1万件)
         console.log('社員名簿のレコード取得に成功しました！', respEmp);
         Employees = respEmp.records; // 社員
 
-        let chkFlg = false; // 対象社員が営業職がどうかをチェックするフラグ true:営業, false:営業以外
         let newEmpList = Employees.map((item) => {
           // 社員名簿をリスト化する
           let returnValue;
-          if (ExItemsEmp.includes(item.役職.value) && item.状態.value !== '無効') {
+          if ((ExItemsEmp.includes(item.役職.value))
+          && (item.状態.value !== '無効')
+          && !(ExItems1.includes(item.ルックアップ＿店舗名.value))
+          && !(item.ルックアップ＿店舗名.value.includes(ExItem2))) {
             // console.log('文字列＿氏名.value :', item.文字列＿氏名.value);
             const member = { name: item.文字列＿氏名.value, shop: item.ルックアップ＿店舗名.value };
             returnValue = member;
-
-            // 絞り込み表示対象者の所属店舗を設定する
-            if (item.文字列＿氏名.value === selectName) {
-              affShop = item.ルックアップ＿店舗名.value;
-              console.log('店舗名の初期値 =', affShop);
-              // 店舗名の初期値を設定
-              document.getElementById(ShopIDname).value = affShop;
-              chkFlg = true;
-            }
           } else {
             const member = { name: undefined, shop: undefined };
             returnValue = member; // リスト化対象外社員は、undefinedとする
@@ -266,22 +313,18 @@ const recordindexshow = (event) => {
         app86DateTimeD = JSON.stringify(Date.now() / 1000);
         localStorage.setItem(app86DateTimeKey, app86DateTimeD);
 
-        // 店舗名プルダウンの値を設定する
-        console.log('1stflg = ', flg1st, ', chkflg = ', chkFlg);
-        console.log('ユーザー名 = ', selectName);
-        if (chkFlg === false) {
-          document.getElementById(ShopIDname).value = 'init';
-        } else if (flg1st === true) {
-          // 初回にログインユーザー名でフィルタリングする
-          const selectField = '担当名'; // フィルタリング対象のフィールド名
-          const query = `${selectField} like "${selectNameL}" and ${selectField} like "${selectNameF}"`;
-          console.log('query = ', query);
-          window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
-        }
+        // 絞り込み表示対象者の所属店舗を設定する
+        chkOccupation(app86EmployeesD); // affshop,FlgOcpChkの更新
+        console.log('APIリクエスト時の処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
+        console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
-        // 社員リストのプルダウンの値を設定する
-        AddEmplist(app86EmployeesD);
-        // setEmployeename();
+        // プルダウンに選択肢を追加する
+        setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affshop)の更新
+        makeShopList(app86ShopListD); // 店舗名
+        makeEmpList(app86EmployeesD); // 担当名
+
+        // 一覧の表示状態と、職種により、表示内容を切り替える
+        setview();
       }, (er) => {
         // error
         console.log('社員名簿のレコード取得に失敗しました。', er);
@@ -293,35 +336,60 @@ const recordindexshow = (event) => {
   } else {
     // (1-1)(3-2)LocalStorageにデータが保存されている場合 かつ、(2-2)3時間経過していない場合
     // - - - LocalStrageに保存されている店舗リスト・社員リストを取得する
-    // 条件判定時にデータは取得済みのため、処理は省略する
-    console.log('店舗リスト ', app86ShopListD);
-    console.log('社員リスト', app86EmployeesD);
+    // 条件判定時にデータは取得済み
+    // console.log('店舗リスト ', app86ShopListD);
+    // console.log('社員リスト', app86EmployeesD);
+
+    // プルダウンの値を設定する
+    // console.log('【chkpoint】店舗名', affShop, 'ユーザー名 = ', selectName);
+    setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affshop)の更新
+    makeShopList(app86ShopListD); // 店舗名
+    makeEmpList(app86EmployeesD); // 担当名
+    chkOccupation(app86EmployeesD); // affshop,FlgOcpChkの更新
+    console.log('LocalStorageからの処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
+    console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
+
+    // 一覧の表示状態と、職種により、表示内容を切り替える
+    setview();
   }
 
   // 店舗名のプルダウン変更時の処理
   myselectShop.onchange = () => {
     affShop = document.getElementById(ShopIDname).value;
-    // プルダウン子要素の初期化
-    if (document.getElementById(ShopIDname).value === 'listall') {
-      // 全てのレコードを表示
-      // window.location.href =
-      // `${window.location.origin + window.location.pathname}?view=${viewall}`;
-    } else if (myselectEmp.hasChildNodes()) {
-      while (myselectEmp.childNodes.length > 0) {
-        myselectEmp.removeChild(myselectEmp.firstChild);
+    console.log('店舗名のプルダウンに変更あり 所属店舗= ', affShop);
+    if (affShop === 'listall') {
+      // '全てのレコードを表示'の時の処理
+      window.location.href = `${window.location.origin + window.location.pathname}?view=${viewall}`;
+    } else if (affShop === 'init') {
+      // 【選択してください】の時は何もしない
+    } else {
+      // プルダウン子要素の初期化
+      if (myselectEmp.hasChildNodes()) {
+        while (myselectEmp.childNodes.length > 0) {
+          myselectEmp.removeChild(myselectEmp.firstChild);
+        }
       }
-    }
+      makeEmpList(app86EmployeesD); // 社員名のリスト(プルダウン)の更新
 
-    // setInitSelect(EmpIDname); // 「---」と「すべてを表示する」を追加
-    AddEmplist(app86EmployeesD); // 社員名のリスト(プルダウン)の更新
+      if (flg1st === false || FlgOcpChk === false) {
+        selectName = 'init';
+      }
+      document.getElementById(EmpIDname).value = selectName; // 担当名を設定
+      console.log('担当名のプルダウンに、社員名を設定。設定値= ', selectName);
+    }
   };
 
   // 担当者のプルダウン変更時の処理
   myselectEmp.onchange = () => {
+    console.log('担当名のプルダウンに変更あり');
     if (document.getElementById(EmpIDname).value === 'listall') {
-      // 全てのレコードを表示
+      // 該当店舗の全てのレコードを表示
       const selectField = '店舗名'; // フィルタリング対象のフィールド名
-      const shop = document.getElementById(ShopIDname).value;
+      let shop = document.getElementById(ShopIDname).value;
+      if (shop.indexOf('店') !== -1) {
+        shop = shop.substring(0, shop.indexOf('店'));
+        console.log('店舗名', shop);
+      }
       const query = `${selectField} like "${shop}"`;
       window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
     } else if (document.getElementById(EmpIDname).value === 'init') {
