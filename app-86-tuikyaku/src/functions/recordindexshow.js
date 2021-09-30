@@ -249,6 +249,11 @@ const recordindexshow = (event) => {
       let newShopList = Shoplists.map((item) => item.店舗名.value);
       console.log('newShopList：', newShopList);
 
+      // - 取得した店舗リストを、LocalStorageに格納する
+      app86ShopListD = newShopList;
+      newShopList = JSON.stringify(newShopList);
+      localStorage.setItem(app86ShopListKey, newShopList);
+
       // - getrecordsを使用して、社員名簿から社員一覧の配列を取得する
       const APPEMP_ID = 34; // ID:34 = 社員名簿
       const FieldEmp = '文字列＿氏名';
@@ -271,7 +276,7 @@ const recordindexshow = (event) => {
       };
 
       getRecords(paramsEmp).then((respEmp) => { // 100件以上のレコード読み込み(上限1万件)
-        console.log('社員名簿のレコード取得に成功しました！', respEmp);
+        // console.log('社員名簿のレコード取得に成功しました！', respEmp);
         Employees = respEmp.records; // 社員
 
         let newEmpList = Employees.map((item) => {
@@ -279,20 +284,12 @@ const recordindexshow = (event) => {
           const member = { name: item.文字列＿氏名.value, shop: item.ルックアップ＿店舗名.value };
           return member;
         });
-
-        // 配列から、undefinedを除外して、newEmpListを再編する
-        newEmpList = newEmpList.filter((value) => value.name !== undefined);
         console.log('newEmpList', newEmpList);
 
         // - 取得した社員リストを、LocalStorageに格納する
         app86EmployeesD = newEmpList;
         newEmpList = JSON.stringify(newEmpList);
         localStorage.setItem(app86EmployeesKey, newEmpList);
-
-        // - 取得した店舗リストを、LocalStorageに格納する
-        app86ShopListD = newShopList;
-        newShopList = JSON.stringify(newShopList);
-        localStorage.setItem(app86ShopListKey, newShopList);
 
         // - 現在の日時を、LocalStrageに格納する
         app86DateTimeD = JSON.stringify(Date.now() / 1000);
