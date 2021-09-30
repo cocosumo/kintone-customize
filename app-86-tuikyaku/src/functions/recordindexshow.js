@@ -228,50 +228,46 @@ const recordindexshow = (event) => {
     // プルダウンメニューの要素を設定する- ID:34 = 社員名簿 -> 社員名簿のレコードを取得する
     const APPSHOP_ID = 19; // ID:19 = 店舗リスト
     const FieldShop = '店舗名';
-    const ExItems1 = ['なし', '本部', 'システム管理部', '本社', '買取店', 'すてくら'];
-    const ExItem2 = 'すてくら';
-    const ExItemsEmp = ['営業', '主任', '店長'];
 
     // - getrecordsを使用して、店舗リストから店舗一覧の配列(以降、店舗リスト)を取得する
-    // 店舗名のプルダウンに、店舗名のリストを追加する
+    const shopquery = '店舗名 not like "なし" and 店舗名 not like "本部"'
+                     + 'and 店舗名 not like "システム管理部" and 店舗名 not like "本社"'
+                     + 'and 店舗名 not like "買取店" and 店舗名 not like "すてくら"';
+
     const paramsShop = {
       app: APPSHOP_ID,
       fields: [FieldShop],
+      filterCond: shopquery,
     };
 
     // 店舗名のリストを作成する
     getRecords(paramsShop).then((respShop) => { // 100件以上のレコード読み込み(上限1万件)
-      console.log('店舗リストのレコード取得に成功しました！', respShop);
+      // console.log('店舗リストのレコード取得に成功しました！', respShop);
       Shoplists = respShop.records;
 
       // 店舗リストの配列を再編成する
-      // const newShopList = Shoplists.map((item) => item.店舗名.value);
-      let newShopList = Shoplists.map((item) => {
-        // console.log('item.店舗名.value：', item.店舗名.value);
-        let returnValue;
-        if (ExItems1.includes(item.店舗名.value) || item.店舗名.value.includes(ExItem2)) {
-          returnValue = undefined; // リスト化対象外店舗は、undefinedとする
-        } else {
-          // 戻り値に店舗名を設定する
-          returnValue = item.店舗名.value;
-        }
-        return returnValue;
-      });
+      let newShopList = Shoplists.map((item) => item.店舗名.value);
+      console.log('newShopList：', newShopList);
 
-      // 配列から、undefinedを除外して、newShopListを再編する
-      newShopList = newShopList.filter((value) => value !== undefined);
-      // console.log('newShopList：', newShopList);
-
-      // 社員名のリストを作成する
+      // - getrecordsを使用して、社員名簿から社員一覧の配列を取得する
       const APPEMP_ID = 34; // ID:34 = 社員名簿
       const FieldEmp = '文字列＿氏名';
       const FieldEmp2 = '役職';
       const FieldEmp3 = 'ルックアップ＿店舗名';
       const FieldEmp4 = '状態';
 
+      const empquery = '状態 not in ("無効") and 役職 in ("営業","主任","店長") '
+                      + 'and ルックアップ＿店舗名 not like "すてくら"'
+                      + 'and ルックアップ＿店舗名 not like "なし"'
+                      + 'and ルックアップ＿店舗名 not like "本部"'
+                      + 'and ルックアップ＿店舗名 not like "システム管理部"'
+                      + 'and ルックアップ＿店舗名 not like "本社"'
+                      + 'and ルックアップ＿店舗名 not like "買取店"';
+
       const paramsEmp = {
         app: APPEMP_ID,
         fields: [FieldEmp, FieldEmp2, FieldEmp3, FieldEmp4],
+        filterCond: empquery,
       };
 
       getRecords(paramsEmp).then((respEmp) => { // 100件以上のレコード読み込み(上限1万件)
@@ -280,19 +276,8 @@ const recordindexshow = (event) => {
 
         let newEmpList = Employees.map((item) => {
           // 社員名簿をリスト化する
-          let returnValue;
-          if ((ExItemsEmp.includes(item.役職.value))
-          && (item.状態.value !== '無効')
-          && !(ExItems1.includes(item.ルックアップ＿店舗名.value))
-          && !(item.ルックアップ＿店舗名.value.includes(ExItem2))) {
-            // console.log('文字列＿氏名.value :', item.文字列＿氏名.value);
-            const member = { name: item.文字列＿氏名.value, shop: item.ルックアップ＿店舗名.value };
-            returnValue = member;
-          } else {
-            const member = { name: undefined, shop: undefined };
-            returnValue = member; // リスト化対象外社員は、undefinedとする
-          }
-          return returnValue;
+          const member = { name: item.文字列＿氏名.value, shop: item.ルックアップ＿店舗名.value };
+          return member;
         });
 
         // 配列から、undefinedを除外して、newEmpListを再編する
