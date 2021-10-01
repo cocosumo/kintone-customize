@@ -34,7 +34,7 @@ export const fetchYasumiRecords = async (luxonDate) => {
  * Fetch records on a given year month
  * @param luxonDate, Date of the year to be processed .
  */
-export const fetchLeaveRecords = async (luxonDate) => {
+export const fetchLeaveRecords = async (luxonDate, employeeNumber) => {
   const startDay = luxonDate.startOf('year').toISODate();
   const endDay = luxonDate.endOf('year').toISODate();
   const leaveQuery = `type in ("${getKintoneType('day-leave')}")`;
@@ -42,7 +42,7 @@ export const fetchLeaveRecords = async (luxonDate) => {
   console.log(leaveQuery, statusQuery);
   return fetchRecords({
     condition: [
-      ownRecordFilter,
+      `employeeNumber = "${employeeNumber}"`,
       leaveQuery,
       statusQuery,
       `yasumiDate >= "${startDay}"`,
