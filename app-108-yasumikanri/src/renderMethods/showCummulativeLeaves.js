@@ -6,8 +6,10 @@ import Leave from '../assets/day-leave.png';
 import IconChip from '../components/containers/IconChip';
 import { getKintoneYasumiWeight } from '../helpers/converters';
 
-const showCummulativeLeaves = async ({ yasumiDate }) => {
-  const leaveRecords = (await fetchLeaveRecords(ISOtoLux(yasumiDate.value))).records;
+const showCummulativeLeaves = async ({ yasumiDate, employeeNumber }) => {
+  const leaveRecords = (await fetchLeaveRecords(
+    ISOtoLux(yasumiDate.value), employeeNumber.value,
+  )).records;
   const leavesCount = leaveRecords.reduce((accu, curr) => {
     const { duration } = curr;
     console.log(getKintoneYasumiWeight(duration.value));

@@ -1,0 +1,7 @@
+{
+  "liveServer.settings.https": {
+    "enable": true,
+    "cert": "C:\\Users\\lenzr\\OneDrive\\Documents\\certs\\localhost+2.pem",
+    "key": "C:\\Users\\lenzr\\OneDrive\\Documents\\certs\\localhost+2-key.pem"
+  }
+}
