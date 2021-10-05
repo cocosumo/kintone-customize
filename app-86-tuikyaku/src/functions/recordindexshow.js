@@ -77,7 +77,7 @@ const recordindexshow = (event) => {
   let app86EmployeesD; // ローカルストレージの社員リストの保存データ
   const app86ShopListKey = 'app86店舗リスト'; // ローカルストレージの店舗リストの保存名(キー)
   let app86ShopListD; // ローカルストレージの店舗リストの保存データ
-  const divTime = 10800; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
+  const divTime = 10; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
 
   // 担当名に表示する氏名の取り出しをする
   // URLにqueryが含まれないとき(初回)
@@ -240,61 +240,76 @@ const recordindexshow = (event) => {
       filterCond: shopquery,
     };
 
+    // - getrecordsを使用して、社員名簿から社員一覧の配列を取得する
+    const APPEMP_ID = 34; // ID:34 = 社員名簿
+    const FieldEmp = '文字列＿氏名';
+    const FieldEmp2 = '役職';
+    const FieldEmp3 = 'ルックアップ＿店舗名';
+    const FieldEmp4 = '状態';
+
+    const empquery = '状態 not in ("無効") and 役職 in ("営業","主任","店長") '
+                    + 'and ルックアップ＿店舗名 not like "すてくら"'
+                    + 'and ルックアップ＿店舗名 not like "なし"'
+                    + 'and ルックアップ＿店舗名 not like "本部"'
+                    + 'and ルックアップ＿店舗名 not like "システム管理部"'
+                    + 'and ルックアップ＿店舗名 not like "本社"'
+                    + 'and ルックアップ＿店舗名 not like "買取店"';
+
+    const paramsEmp = {
+      app: APPEMP_ID,
+      fields: [FieldEmp, FieldEmp2, FieldEmp3, FieldEmp4],
+      filterCond: empquery,
+    };
+
     // 店舗名のリストを作成する
-    getRecords(paramsShop).then((respShop) => { // 100件以上のレコード読み込み(上限1万件)
-      // console.log('店舗リストのレコード取得に成功しました！', respShop);
-      Shoplists = respShop.records;
+    // app86ShopListD = (await getRecords(paramsShop)).map((item) => item.店舗名.value);
+    getRecords(paramsShop)
+      .then((respShop) => { // 100件以上のレコード読み込み(上限1万件)
+        // console.log('店舗リストのレコード取得に成功しました！', respShop);
+        Shoplists = respShop.records;
 
-      // 店舗リストの配列を再編成する
-      let newShopList = Shoplists.map((item) => item.店舗名.value);
-      console.log('newShopList：', newShopList);
+        // 店舗リストの配列を再編成する
+        let newShopList = Shoplists.map((item) => item.店舗名.value);
+        console.log('newShopList：', newShopList);
 
-      // - 取得した店舗リストを、LocalStorageに格納する
-      app86ShopListD = newShopList;
-      newShopList = JSON.stringify(newShopList);
-      localStorage.setItem(app86ShopListKey, newShopList);
+        // - 取得した店舗リストを、LocalStorageに格納する
+        app86ShopListD = newShopList;
+        newShopList = JSON.stringify(newShopList);
+        localStorage.setItem(app86ShopListKey, newShopList);
+      })
+      .then(getRecords(paramsEmp)
+        .then((respEmp) => { // 100件以上のレコード読み込み(上限1万件)
+          // console.log('社員名簿のレコード取得に成功しました！', respEmp);
+          Employees = respEmp.records; // 社員
 
-      // - getrecordsを使用して、社員名簿から社員一覧の配列を取得する
-      const APPEMP_ID = 34; // ID:34 = 社員名簿
-      const FieldEmp = '文字列＿氏名';
-      const FieldEmp2 = '役職';
-      const FieldEmp3 = 'ルックアップ＿店舗名';
-      const FieldEmp4 = '状態';
+          let newEmpList = Employees.map((item) => {
+            // 社員名簿をリスト化する
+            const member = { name: item.文字列＿氏名.value, shop: item.ルックアップ＿店舗名.value };
+            return member;
+          });
+          console.log('newEmpList', newEmpList);
 
-      const empquery = '状態 not in ("無効") and 役職 in ("営業","主任","店長") '
-                      + 'and ルックアップ＿店舗名 not like "すてくら"'
-                      + 'and ルックアップ＿店舗名 not like "なし"'
-                      + 'and ルックアップ＿店舗名 not like "本部"'
-                      + 'and ルックアップ＿店舗名 not like "システム管理部"'
-                      + 'and ルックアップ＿店舗名 not like "本社"'
-                      + 'and ルックアップ＿店舗名 not like "買取店"';
+          // - 取得した社員リストを、LocalStorageに格納する
+          app86EmployeesD = newEmpList;
+          newEmpList = JSON.stringify(newEmpList);
+          localStorage.setItem(app86EmployeesKey, newEmpList);
 
-      const paramsEmp = {
-        app: APPEMP_ID,
-        fields: [FieldEmp, FieldEmp2, FieldEmp3, FieldEmp4],
-        filterCond: empquery,
-      };
-
-      getRecords(paramsEmp).then((respEmp) => { // 100件以上のレコード読み込み(上限1万件)
-        // console.log('社員名簿のレコード取得に成功しました！', respEmp);
-        Employees = respEmp.records; // 社員
-
-        let newEmpList = Employees.map((item) => {
-          // 社員名簿をリスト化する
-          const member = { name: item.文字列＿氏名.value, shop: item.ルックアップ＿店舗名.value };
-          return member;
-        });
-        console.log('newEmpList', newEmpList);
-
-        // - 取得した社員リストを、LocalStorageに格納する
-        app86EmployeesD = newEmpList;
-        newEmpList = JSON.stringify(newEmpList);
-        localStorage.setItem(app86EmployeesKey, newEmpList);
-
-        // - 現在の日時を、LocalStrageに格納する
-        app86DateTimeD = JSON.stringify(Date.now() / 1000);
-        localStorage.setItem(app86DateTimeKey, app86DateTimeD);
-
+          // - 現在の日時を、LocalStrageに格納する
+          app86DateTimeD = JSON.stringify(Date.now() / 1000);
+          localStorage.setItem(app86DateTimeKey, app86DateTimeD);
+        })
+        .catch((er) => {
+        // error
+          console.log('社員レコード取得に失敗しました。', er);
+        })
+        .finally(() => {
+          console.log('社員レコードの取得処理が終了しました。');
+        }))
+      .catch((er) => {
+        // error
+        console.log('店舗レコード取得に失敗しました。', er);
+      })
+      .finally(() => {
         // 絞り込み表示対象者の所属店舗を設定する
         chkOccupation(app86EmployeesD); // affshop,FlgOcpChkの更新
         console.log('APIリクエスト時の処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
@@ -307,14 +322,7 @@ const recordindexshow = (event) => {
 
         // 一覧の表示状態と、職種により、表示内容を切り替える
         setview();
-      }, (er) => {
-        // error
-        console.log('社員名簿のレコード取得に失敗しました。', er);
       });
-    }, (er) => {
-      // error
-      console.log('店舗リストのレコード取得に失敗しました。', er);
-    });
   } else {
     // (1-1)(3-2)LocalStorageにデータが保存されている場合 かつ、(2-2)3時間経過していない場合
     // - - - LocalStrageに保存されている店舗リスト・社員リストを取得する
