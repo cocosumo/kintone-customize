@@ -5,7 +5,18 @@ import setInitSelect from '../Backend/setSelectInit';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
-  const view = 5522965; // メインの一覧ID:[本番用= 5522965 ][テスト用= 5522965 ] =共通
+  const TESTMODE = true; // テストモードと本番環境をコンパイルSWで切り替える[true:テスト用, false:本番環境用]
+  let view; // 現在の一覧ID
+  let viewpursuit = 5522965; // メインの一覧ID:[本番用= 5522965 ][テスト用= 5522965] =共通
+  let viewcontract = 5523924; // 契約済の一覧ID:[本番用=5523924][テスト用=5523930]
+  let viewcancel = 5523926; // 中止の一覧ID:[本番用=5523926][テスト用=5523932]
+  let viewwebbrows = 5522969; // WEB閲覧の一覧ID:[本番用=5522969][テスト用=5522969]
+  if (TESTMODE === true) {
+    viewpursuit = 5522965; // メインの一覧ID:[テスト用= 5522965]
+    viewcontract = 5523930; // 契約済の一覧ID:[テスト用=5523930]
+    viewcancel = 5523932; // 中止の一覧ID:[テスト用=5523932]
+    viewwebbrows = 5522969; // WEB閲覧の一覧ID:[テスト用=5522969] =共通
+  }
   const viewall = 20; // (すべて)の一覧ID：本番用・テスト用共通 = 20
   const EmpIDname = 'my_select_buttonEmp';
   const ShopIDname = 'my_select_buttonShop';
@@ -13,9 +24,13 @@ const recordindexshow = (event) => {
   // ブランチのテスト
 
   // 指定の一覧以外このJSを実行しない
-  if (event.viewId === view) {
+  if (event.viewId === viewpursuit
+    || event.viewId === viewcontract
+    || event.viewId === viewcancel
+    || event.viewId === viewwebbrows) {
     getHeaderSpaceElement().innerText = '[担当名]のプルダウンには、役職が「店長」「主任」「営業」の方を表示しています。\n';
     // + 'この条件以外で絞り込みたい場合は、上の"メイン"をクリックし、"(すべて)"を選択してください。';
+    view = event.viewId; // 現在の一覧IDを格納
   } else {
     if (event.viewId === viewall) {
       const infomation = ' 上の"(すべて)"をクリックすると、一覧の表示方法が変更されます。\n'
@@ -63,8 +78,8 @@ const recordindexshow = (event) => {
   let selectName; // 選択されている社員名(初期値はログインユーザー名)
   let selectNameL; // ログインユーザーの苗字
   let selectNameF; // ログインユーザーの名前
-  let Shoplists; // 店舗リスト
-  let Employees; // 社員リスト
+  // let Shoplists; // 店舗リスト
+  // let Employees; // 社員リスト
   let flg1st = false; // 初回判定用フラグ true=初回, false=初回ではない
   let FlgOcpChk = false; // 対象社員が営業職がどうかをチェックするフラグ true:営業, false:営業以外
   let url = window.location.search;
@@ -217,6 +232,77 @@ const recordindexshow = (event) => {
   console.log('1-1 現在の時間(Date.now(秒))：', now);
   console.log('1-1 経過時間(秒)：', (now - app86DateTimeD));
 
+  // パラメータ設定 - getrecordsを使用して、店舗リストから店舗の一覧を配列で取得
+  const APPSHOP_ID = 19; // ID:19 = 店舗リスト
+  const FieldShop = '店舗名';
+  const shopquery = '店舗名 not like "なし" and 店舗名 not like "本部"'
+                    + 'and 店舗名 not like "システム管理部" and 店舗名 not like "本社"'
+                    + 'and 店舗名 not like "買取店" and 店舗名 not like "すてくら"';
+  const paramsShop = {
+    app: APPSHOP_ID,
+    fields: [FieldShop],
+    filterCond: shopquery,
+  };
+
+  // パラメータ設定 - getrecordsを使用して、社員名簿から社員一覧の配列を取得する
+  const APPEMP_ID = 34; // ID:34 = 社員名簿
+  const FieldEmp = '文字列＿氏名';
+  const FieldEmp2 = '役職';
+  const FieldEmp3 = 'ルックアップ＿店舗名';
+  const FieldEmp4 = '状態';
+  const empquery = '状態 not in ("無効") and 役職 in ("営業","主任","店長") '
+                  + 'and ルックアップ＿店舗名 not like "すてくら"'
+                  + 'and ルックアップ＿店舗名 not like "なし"'
+                  + 'and ルックアップ＿店舗名 not like "本部"'
+                  + 'and ルックアップ＿店舗名 not like "システム管理部"'
+                  + 'and ルックアップ＿店舗名 not like "本社"'
+                  + 'and ルックアップ＿店舗名 not like "買取店"';
+  const paramsEmp = {
+    app: APPEMP_ID,
+    fields: [FieldEmp, FieldEmp2, FieldEmp3, FieldEmp4],
+    filterCond: empquery,
+  };
+
+  /**
+   * プルダウン店舗名と担当名のメンバを取得(作成)する
+   */
+  async function getLists() {
+    app86ShopListD = (await getRecords(paramsShop)); // 店舗リストから店舗の一覧を取得する
+    app86EmployeesD = (await getRecords(paramsEmp)); // 社員名簿から社員の一覧を取得する
+
+    // - 取得した店舗リストを、LocalStorageに格納する
+    // console.log('app86ShopListD ：', app86ShopListD);
+    app86ShopListD = app86ShopListD.records.map((item) => item.店舗名.value);
+    const newShopList = JSON.stringify(app86ShopListD);
+    localStorage.setItem(app86ShopListKey, newShopList);
+
+    // - 取得した社員リストを、LocalStorageに格納する
+    // console.log('app86EmployeesD ：', app86EmployeesD);
+    app86EmployeesD = app86EmployeesD.records.map((item) => {
+      const member = { name: item.文字列＿氏名.value, shop: item.ルックアップ＿店舗名.value };
+      return member;
+    });
+    const newEmpList = JSON.stringify(app86EmployeesD);
+    localStorage.setItem(app86EmployeesKey, newEmpList);
+
+    // - 現在の日時を、LocalStrageに格納する
+    app86DateTimeD = JSON.stringify(Date.now() / 1000);
+    localStorage.setItem(app86DateTimeKey, app86DateTimeD);
+
+    // 絞り込み表示対象者の所属店舗を設定する
+    chkOccupation(app86EmployeesD); // affshop,FlgOcpChkの更新
+    console.log('APIリクエスト時の処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
+    console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
+
+    // プルダウンに選択肢を追加する
+    setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affshop)の更新
+    makeShopList(app86ShopListD); // 店舗名
+    makeEmpList(app86EmployeesD); // 担当名
+
+    // 一覧の表示状態と、職種により、表示内容を切り替える
+    setview();
+  }
+
   // (1-2)データが保存されていない場合 or 前回のデータの取得から3時間経過している場合
   if ((app86DateTimeD === null) || (app86EmployeesD === null)
    || (app86ShopListD === null) || ((now - app86DateTimeD) >= divTime)) {
@@ -224,105 +310,7 @@ const recordindexshow = (event) => {
     localStorage.setItem(app86DateTimeKey, app86DateTimeD);
     console.log('1-2 現在の時間(Date.now(秒))：', app86DateTimeD);
 
-    // - getrecordsを使用して、社員名簿から社員の一覧の配列(以降、社員リスト)を取得する
-    // プルダウンメニューの要素を設定する- ID:34 = 社員名簿 -> 社員名簿のレコードを取得する
-    const APPSHOP_ID = 19; // ID:19 = 店舗リスト
-    const FieldShop = '店舗名';
-
-    // - getrecordsを使用して、店舗リストから店舗一覧の配列(以降、店舗リスト)を取得する
-    const shopquery = '店舗名 not like "なし" and 店舗名 not like "本部"'
-                     + 'and 店舗名 not like "システム管理部" and 店舗名 not like "本社"'
-                     + 'and 店舗名 not like "買取店" and 店舗名 not like "すてくら"';
-
-    const paramsShop = {
-      app: APPSHOP_ID,
-      fields: [FieldShop],
-      filterCond: shopquery,
-    };
-
-    // - getrecordsを使用して、社員名簿から社員一覧の配列を取得する
-    const APPEMP_ID = 34; // ID:34 = 社員名簿
-    const FieldEmp = '文字列＿氏名';
-    const FieldEmp2 = '役職';
-    const FieldEmp3 = 'ルックアップ＿店舗名';
-    const FieldEmp4 = '状態';
-
-    const empquery = '状態 not in ("無効") and 役職 in ("営業","主任","店長") '
-                    + 'and ルックアップ＿店舗名 not like "すてくら"'
-                    + 'and ルックアップ＿店舗名 not like "なし"'
-                    + 'and ルックアップ＿店舗名 not like "本部"'
-                    + 'and ルックアップ＿店舗名 not like "システム管理部"'
-                    + 'and ルックアップ＿店舗名 not like "本社"'
-                    + 'and ルックアップ＿店舗名 not like "買取店"';
-
-    const paramsEmp = {
-      app: APPEMP_ID,
-      fields: [FieldEmp, FieldEmp2, FieldEmp3, FieldEmp4],
-      filterCond: empquery,
-    };
-
-    // 店舗名のリストを作成する
-    // app86ShopListD = (await getRecords(paramsShop)).map((item) => item.店舗名.value);
-    getRecords(paramsShop)
-      .then((respShop) => { // 100件以上のレコード読み込み(上限1万件)
-        // console.log('店舗リストのレコード取得に成功しました！', respShop);
-        Shoplists = respShop.records;
-
-        // 店舗リストの配列を再編成する
-        let newShopList = Shoplists.map((item) => item.店舗名.value);
-        console.log('newShopList：', newShopList);
-
-        // - 取得した店舗リストを、LocalStorageに格納する
-        app86ShopListD = newShopList;
-        newShopList = JSON.stringify(newShopList);
-        localStorage.setItem(app86ShopListKey, newShopList);
-      })
-      .then(getRecords(paramsEmp)
-        .then((respEmp) => { // 100件以上のレコード読み込み(上限1万件)
-          // console.log('社員名簿のレコード取得に成功しました！', respEmp);
-          Employees = respEmp.records; // 社員
-
-          let newEmpList = Employees.map((item) => {
-            // 社員名簿をリスト化する
-            const member = { name: item.文字列＿氏名.value, shop: item.ルックアップ＿店舗名.value };
-            return member;
-          });
-          console.log('newEmpList', newEmpList);
-
-          // - 取得した社員リストを、LocalStorageに格納する
-          app86EmployeesD = newEmpList;
-          newEmpList = JSON.stringify(newEmpList);
-          localStorage.setItem(app86EmployeesKey, newEmpList);
-
-          // - 現在の日時を、LocalStrageに格納する
-          app86DateTimeD = JSON.stringify(Date.now() / 1000);
-          localStorage.setItem(app86DateTimeKey, app86DateTimeD);
-        })
-        .catch((er) => {
-        // error
-          console.log('社員レコード取得に失敗しました。', er);
-        })
-        .finally(() => {
-          console.log('社員レコードの取得処理が終了しました。');
-        }))
-      .catch((er) => {
-        // error
-        console.log('店舗レコード取得に失敗しました。', er);
-      })
-      .finally(() => {
-        // 絞り込み表示対象者の所属店舗を設定する
-        chkOccupation(app86EmployeesD); // affshop,FlgOcpChkの更新
-        console.log('APIリクエスト時の処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
-        console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
-
-        // プルダウンに選択肢を追加する
-        setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affshop)の更新
-        makeShopList(app86ShopListD); // 店舗名
-        makeEmpList(app86EmployeesD); // 担当名
-
-        // 一覧の表示状態と、職種により、表示内容を切り替える
-        setview();
-      });
+    getLists();
   } else {
     // (1-1)(3-2)LocalStorageにデータが保存されている場合 かつ、(2-2)3時間経過していない場合
     // - - - LocalStrageに保存されている店舗リスト・社員リストを取得する
