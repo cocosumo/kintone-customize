@@ -1,5 +1,5 @@
 import getRecords from '../handlers/getrecords'; // 注)kintone apiを使用しているため、promise
-import { getHeaderMenuSpaceElement, getHeaderSpaceElement } from '../../../kintone-api/api';
+import { getHeaderMenuSpaceElement, getHeaderSpaceElement, isMobile } from '../../../kintone-api/api';
 // import getEmployees from '../Backend/getEmployees';
 import setInitSelect from '../Backend/setSelectInit';
 
@@ -49,8 +49,19 @@ const recordindexshow = (event) => {
   }
 
   // プルダウンメニューの要素を設定する
+  $(getHeaderMenuSpaceElement()).append(`
+  <div>
+  <label id='my_textShop'>店舗名: </label>
+  <select id='my_select_buttonShop'>店舗名セレクト</select>`,
+  $(isMobile() ? '<br>' : '<text>  </text>'),
+  `<label id='my_textEmp'>担当名: </label>
+  <select id='my_select_buttonEmp'>担当名セレクト</select>)
+  </div>`);
+  // $(isMobile() ? <br> : <text>  </text>)
+
+  /*
   // [一覧表示画面]プルダウン(店舗名)の設置
-  let myselectShop = document.createElement('text');
+  let myselectShop = document.createElement('label');
   myselectShop.id = 'my_textShop';
   myselectShop.innerText = '店舗名: ';
   getHeaderMenuSpaceElement().appendChild(myselectShop);
@@ -60,17 +71,23 @@ const recordindexshow = (event) => {
   myselectShop.innerText = '店舗名セレクト';
   getHeaderMenuSpaceElement().appendChild(myselectShop);
 
+  // [一覧表示画面]モバイル用、改行の設定位置
+  const newLinePoint = document.createElement('text');
+  newLinePoint.id = 'line_point';
+  newLinePoint.innerText = ' ';
+  getHeaderMenuSpaceElement().appendChild(newLinePoint);
+
   // [一覧表示画面]プルダウン(担当者名)の設置
-  let myselectEmp = document.createElement('text');
+  let myselectEmp = document.createElement('label');
   myselectEmp.id = 'my_textEmp';
-  myselectEmp.innerText = '　担当名: ';
+  myselectEmp.innerText = '担当名: ';
   getHeaderMenuSpaceElement().appendChild(myselectEmp);
 
   myselectEmp = document.createElement('select');
   myselectEmp.id = EmpIDname;
-  myselectEmp.innerText = 'セレクトボタン';
+  myselectEmp.innerText = '担当名セレクト';
   getHeaderMenuSpaceElement().appendChild(myselectEmp);
-
+  */
   console.log('一覧:ヘッダにボタン設置');
 
   // 担当者のプルダウンに初期値を追加
@@ -278,10 +295,9 @@ const recordindexshow = (event) => {
 
     // - 取得した社員リストを、LocalStorageに格納する
     // console.log('app86EmployeesD ：', app86EmployeesD);
-    app86EmployeesD = app86EmployeesD.records.map((item) => {
-      const member = { name: item.文字列＿氏名.value, shop: item.ルックアップ＿店舗名.value };
-      return member;
-    });
+    app86EmployeesD = app86EmployeesD.records.map(({ 文字列＿氏名, ルックアップ＿店舗名 }) => (
+      { name: 文字列＿氏名.value, shop: ルックアップ＿店舗名.value }));
+
     const newEmpList = JSON.stringify(app86EmployeesD);
     localStorage.setItem(app86EmployeesKey, newEmpList);
 
