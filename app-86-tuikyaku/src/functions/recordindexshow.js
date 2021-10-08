@@ -49,26 +49,15 @@ const recordindexshow = (event) => {
   }
 
   // プルダウンメニューの要素を設定する
-  const HTMLforMobile = `<div>
-  <label id='my_textShop'>店舗名: </label>
-  <select id='my_select_buttonShop'></select>
-  <br/>
-  <label id='my_textEmp'>担当名: </label>
-  <select id='my_select_buttonEmp'></select>
-  </div>`;
-  const HTMLforPC = `<div>
-  <label id='my_textShop'>店舗名: </label>
-  <select id='my_select_buttonShop'></select>
-  <text>  </text>
-  <label id='my_textEmp'>担当名: </label>
-  <select id='my_select_buttonEmp'></select>
-  </div>`;
-
-  let dispHTML; // 表示するHTMLの内容をセットする
-  $(isMobile()
-    ? dispHTML = HTMLforMobile
-    : dispHTML = HTMLforPC);
-  $(getHeaderMenuSpaceElement()).append(dispHTML);
+  $(getHeaderMenuSpaceElement()).append(
+    `<div>
+      <label id='my_textShop'>店舗名: </label>
+      <select id='my_select_buttonShop'></select>
+      ${isMobile() ? '<br/>' : '&nbsp;'}
+      <label id='my_textEmp'>担当名: </label>
+      <select id='my_select_buttonEmp'></select>
+     </div>`,
+  );
 
   // 担当者のプルダウンに初期値を追加
   let affShop = 'init'; // 店舗名の初期値を格納する変数
@@ -124,21 +113,32 @@ const recordindexshow = (event) => {
   }
 
   /**
+   * リストのプルダウンを作成する
+   * @param {array} lists : 店舗リスト[ 店舗名 ,・・・]
+   */
+  function makeList(lists, targetID) {
+    setInitSelect(targetID); // [店舗名]のプルダウンに、「【選択してください】」と「すべてのレコードを表示」を追加
+    lists.forEach((item) => {
+      // 対象の店舗名のみ、店舗リストに登録する
+      $(`#${targetID}`).append($('<option>').html(item).val(item));
+    });
+  }
+
+  /**
    * 社員リストから、対象の役職のみを取り出す処理
    * @param {Array} lists : 社員リストapp86EmployeesD({name: 氏名, shop: 店舗})
    */
-  function makeEmpList(lists) {
-    setInitSelect(EmpIDname); // 「---」と「すべてを表示する」を追加
-    lists.forEach((item) => {
-      // 対象のメンバのみをプルダウンに追加
-      // 【選択してください】と'すべて表示'の時には、社員リストには全員追加する
-      if (['init', 'listall'].includes(affShop)
-       || affShop === item.shop) {
-        const listitems = document.createElement('option');
-        listitems.value = item.name;
-        listitems.innerText = item.name;
-        document.getElementById(EmpIDname).appendChild(listitems);
-      }
+  function makeEmpList(lists, targetID) {
+    let newlists;
+    setInitSelect(targetID); // [店舗名]のプルダウンに、「【選択してください】」と「すべてのレコードを表示」を追加
+    // 【選択してください】と'全レコードを表示'の時には、社員リストには全員追加する
+    if (['init', 'listall'].includes(affShop)) {
+      newlists = lists; // listsはそのまま
+    } else {
+      newlists = lists.filter((item) => affShop === item.shop);
+    }
+    newlists.forEach((item) => {
+      $(`#${targetID}`).append($('<option>').html(item.name).val(item.name));
     });
   }
 
@@ -154,21 +154,6 @@ const recordindexshow = (event) => {
         console.log('店舗名の初期値 =', affShop);
         FlgOcpChk = true;
       }
-    });
-  }
-
-  /**
-   * 店舗リストのプルダウンを作成する
-   * @param {array} lists : 店舗リスト[ 店舗名 ,・・・]
-   */
-  function makeShopList(lists) {
-    setInitSelect(ShopIDname); // [店舗名]のプルダウンに、「【選択してください】」と「すべてのレコードを表示」を追加
-    lists.forEach((item) => {
-      // 対象の店舗名のみ、店舗リストに登録する
-      const listitems = document.createElement('option');
-      listitems.value = item;
-      listitems.innerText = item;
-      document.getElementById(ShopIDname).appendChild(listitems);
     });
   }
 
@@ -286,8 +271,8 @@ const recordindexshow = (event) => {
 
     // プルダウンに選択肢を追加する
     setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affshop)の更新
-    makeShopList(app86ShopListD); // 店舗名
-    makeEmpList(app86EmployeesD); // 担当名
+    makeList(app86ShopListD, ShopIDname); // 店舗名
+    makeEmpList(app86EmployeesD, EmpIDname); // 担当名
 
     // 一覧の表示状態と、職種により、表示内容を切り替える
     setview();
@@ -307,8 +292,8 @@ const recordindexshow = (event) => {
 
     // プルダウンの値を設定する
     setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affshop)の更新
-    makeShopList(app86ShopListD); // 店舗名
-    makeEmpList(app86EmployeesD); // 担当名
+    makeList(app86ShopListD, ShopIDname); // 店舗名
+    makeEmpList(app86EmployeesD, EmpIDname); // 担当名
     chkOccupation(app86EmployeesD); // affshop,FlgOcpChkの更新
     console.log('LocalStorageからの処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
     console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
@@ -331,13 +316,8 @@ const recordindexshow = (event) => {
     } else if (affShop === 'init') {
       // 【選択してください】の時は何もしない
     } else {
-      // プルダウン子要素の初期化
-      if (myselectEmp.hasChildNodes()) {
-        while (myselectEmp.childNodes.length > 0) {
-          myselectEmp.removeChild(myselectEmp.firstChild);
-        }
-      }
-      makeEmpList(app86EmployeesD); // 社員名のリスト(プルダウン)の更新
+      $('#my_select_buttonEmp > option').remove(); // プルダウン子要素の初期化
+      makeEmpList(app86EmployeesD, EmpIDname); // 社員名のリスト(プルダウン)の更新
 
       if (flg1st === false || FlgOcpChk === false) {
         selectName = 'init';
