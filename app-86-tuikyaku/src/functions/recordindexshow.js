@@ -70,19 +70,6 @@ const recordindexshow = (event) => {
     : dispHTML = HTMLforPC);
   $(getHeaderMenuSpaceElement()).append(dispHTML);
 
-  /* $(getHeaderMenuSpaceElement()).append(
-    `<div>
-    <label id='my_textShop'>店舗名: </label>
-    <select id='my_select_buttonShop'></select>`,
-    $(isMobile()
-      ? '<br/>'
-      : '<text>  </text>'),
-    `<label id='my_textEmp'>担当名: </label>
-    <select id='my_select_buttonEmp'></select>
-    </div>`,
-  ); */
-  // console.log('一覧:ヘッダにボタン設置');
-
   // 担当者のプルダウンに初期値を追加
   let affShop = 'init'; // 店舗名の初期値を格納する変数
   let selectName; // 選択されている社員名(初期値はログインユーザー名)
@@ -261,14 +248,6 @@ const recordindexshow = (event) => {
   let ExclusionShop = ['すてくら', 'なし', '本部', 'システム管理部', '本社', '買取店'];
   ExclusionShop = ExclusionShop.map((item) => 'ルックアップ＿店舗名 not like '.concat('"', item, '"')).join(' and ');
   const empquery = `状態 not in ("無効") and 役職 in ("営業","主任","店長") and${ExclusionShop}`;
-
-  /*  const empquery = '状態 not in ("無効") and 役職 in ("営業","主任","店長") '
-                  + 'and ルックアップ＿店舗名 not like "すてくら"'
-                  + 'and ルックアップ＿店舗名 not like "なし"'
-                  + 'and ルックアップ＿店舗名 not like "本部"'
-                  + 'and ルックアップ＿店舗名 not like "システム管理部"'
-                  + 'and ルックアップ＿店舗名 not like "本社"'
-                  + 'and ルックアップ＿店舗名 not like "買取店"'; */
   const paramsEmp = {
     app: APPEMP_ID,
     fields: [FieldEmp, FieldEmp2, FieldEmp3, FieldEmp4],
@@ -324,13 +303,9 @@ const recordindexshow = (event) => {
     getLists();
   } else {
     // (1-1)(3-2)LocalStorageにデータが保存されている場合 かつ、(2-2)3時間経過していない場合
-    // - - - LocalStrageに保存されている店舗リスト・社員リストを取得する
-    // 条件判定時にデータは取得済み
-    // console.log('店舗リスト ', app86ShopListD);
-    // console.log('社員リスト', app86EmployeesD);
+    // - - - LocalStrageに保存されている店舗リスト(app86ShopListD)・社員リスト(app86EmployeesD)で処理する
 
     // プルダウンの値を設定する
-    // console.log('【chkpoint】店舗名', affShop, 'ユーザー名 = ', selectName);
     setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affshop)の更新
     makeShopList(app86ShopListD); // 店舗名
     makeEmpList(app86EmployeesD); // 担当名
@@ -368,7 +343,6 @@ const recordindexshow = (event) => {
         selectName = 'init';
       }
       document.getElementById(EmpIDname).value = selectName; // 担当名を設定
-      // console.log('担当名のプルダウンに、社員名を設定。設定値= ', selectName);
     }
   };
 
@@ -390,14 +364,10 @@ const recordindexshow = (event) => {
     } else {
       const selectField = '担当名'; // フィルタリング対象のフィールド名
       const member = document.getElementById(EmpIDname).value;
-      // console.log('selectName ', selectName); // ->undefined
-      // console.log('member ', member);
-      // if (selectName === member) {
       const Firstname = member.slice(member.indexOf(' ') + 1);
       const Lastname = member.substring(0, member.indexOf(' '));
       const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
       window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
-      // }
     }
   };
 };
