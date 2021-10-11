@@ -5,14 +5,15 @@ import setInitSelect from '../Backend/setSelectInit';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
-  const TESTMODE = true; // テストモードと本番環境をコンパイルSWで切り替える[true:テスト用, false:本番環境用]
+  /* **************************************** 変数宣言部 **************************************** */
+  const TESTMODE = true; // 環境切替のコンパイルSW[true:テスト用, false:本番環境用]
   let view; // 現在の一覧ID
-  let viewpursuit = 5522965; // メインの一覧ID:[本番用= 5522965 ][テスト用= 5522965] =共通
-  let viewcontract = 5523924; // 契約済の一覧ID:[本番用=5523924][テスト用=5523930]
-  let viewcancel = 5523926; // 中止の一覧ID:[本番用=5523926][テスト用=5523932]
-  let viewwebbrows = 5522969; // WEB閲覧の一覧ID:[本番用=5522969][テスト用=5522969]
+  let viewpursuit = 5522965; // メインの一覧ID:[本番用= 5522965 ]
+  let viewcontract = 5523924; // 契約済の一覧ID:[本番用=5523924]
+  let viewcancel = 5523926; // 中止の一覧ID:[本番用=5523926]
+  let viewwebbrows = 5522969; // WEB閲覧の一覧ID:[本番用=5522969]
   if (TESTMODE === true) {
-    viewpursuit = 5522965; // メインの一覧ID:[テスト用= 5522965]
+    viewpursuit = 5522965; // メインの一覧ID:[テスト用= 5522965] =共通
     viewcontract = 5523930; // 契約済の一覧ID:[テスト用=5523930]
     viewcancel = 5523932; // 中止の一覧ID:[テスト用=5523932]
     viewwebbrows = 5522969; // WEB閲覧の一覧ID:[テスト用=5522969] =共通
@@ -21,103 +22,30 @@ const recordindexshow = (event) => {
   const EmpIDname = 'my_select_buttonEmp';
   const ShopIDname = 'my_select_buttonShop';
 
-  // ブランチのテスト
-
-  // 指定の一覧以外このJSを実行しない
-  if (event.viewId === viewpursuit
-    || event.viewId === viewcontract
-    || event.viewId === viewcancel
-    || event.viewId === viewwebbrows) {
-    getHeaderSpaceElement().innerText = '[担当名]のプルダウンには、役職が「店長」「主任」「営業」の方を表示しています。\n';
-    // + 'この条件以外で絞り込みたい場合は、上の"メイン"をクリックし、"(すべて)"を選択してください。';
-    view = event.viewId; // 現在の一覧IDを格納
-  } else {
-    if (event.viewId === viewall) {
-      const infomation = ' 上の"(すべて)"をクリックすると、一覧の表示方法が変更されます。\n'
-                       + ' 絞り込み表示をしたい場合には、漏斗(ろうと)のアイコンをクリックし、条件を設定してください。\n'
-                       + ' 詳細は、QA「絞り込み表示、ソートの仕方」を参照してください。\n';
-      // const linkstring = 'QAのリンクはこちら';
-      // getHeaderSpaceElement().innerText = infomation + linkstring.link('https://rdmuhwtt6gx7.cybozu.com/k/104/show#record=8&l.view=5523657&l.q&l.sort_0=f5523588&l.order_0=ASC&l.next=9&l.prev=7');
-      getHeaderSpaceElement().innerText = infomation;
-    }
-    return;
-  }
-
-  // ボタンの増殖防止
-  if (document.getElementById(EmpIDname) !== null) {
-    return;
-  }
-
-  // プルダウンメニューの要素を設定する
-  $(getHeaderMenuSpaceElement()).append(
-    `<div>
-      <label id='my_textShop'>店舗名: </label>
-      <select id='my_select_buttonShop'></select>
-      ${isMobile() ? '<br/>' : '&nbsp;'}
-      <label id='my_textEmp'>担当名: </label>
-      <select id='my_select_buttonEmp'></select>
-     </div>`,
-  );
-
-  // 担当者のプルダウンに初期値を追加
   let affShop = 'init'; // 店舗名の初期値を格納する変数
   let selectName; // 選択されている社員名(初期値はログインユーザー名)
   let selectNameL; // ログインユーザーの苗字
   let selectNameF; // ログインユーザーの名前
   let flg1st = false; // 初回判定用フラグ true=初回, false=初回ではない
-  let FlgOcpChk = false; // 対象社員が営業職がどうかをチェックするフラグ true:営業, false:営業以外
+  let FlgOcpChk = false; // 対象社員の職種を確認するフラグ true:営業, false:営業以外
   let url = window.location.search;
-  url = decodeURI(url); // urlをデコーディングする
 
   // ローカルストレージの活用をする
-  const app86DateTimeKey = 'app86日時'; // ローカルストレージの日時の保存名(キー)
-  let app86DateTimeD; // ローカルストレージの日時の保存データ
-  const app86EmployeesKey = 'app86社員リスト'; // ローカルストレージの社員リストの保存名(キー)
-  let app86EmployeesD; // ローカルストレージの社員リストの保存データ
-  const app86ShopListKey = 'app86店舗リスト'; // ローカルストレージの店舗リストの保存名(キー)
-  let app86ShopListD; // ローカルストレージの店舗リストの保存データ
-  const divTime = 10800; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
+  const app86DateTimeKey = 'app86日時'; // 日時の保存名(キー)
+  let app86DateTimeD; // 日時の保存データ
+  const app86EmployeesKey = 'app86社員リスト'; // 社員リストの保存名(キー)
+  let app86EmployeesD; // 社員リストの保存データ
+  const app86ShopListKey = 'app86店舗リスト'; // 店舗リストの保存名(キー)
+  let app86ShopListD; // 店舗リストの保存データ
+  const divTime = 50; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
 
-  // 担当名に表示する氏名の取り出しをする
-  // URLにqueryが含まれないとき(初回)
-  if ((url.indexOf('query=') === -1) && (url.indexOf('q=') === -1)) {
-    flg1st = true;
-    selectName = kintone.getLoginUser().name;
-    selectNameL = selectName.substring(0, selectName.indexOf(' '));
-    selectNameF = selectName.slice(selectName.indexOf(' ') + 1);
-    selectName = selectNameL.concat(' ', selectNameF);
-    affShop = 'init';
-    console.log('ユーザ名の取得 :', selectName);
-  } else {
-    // URLにプルダウンで指定したqueryが含まれる場合
-    flg1st = false;
-    let resultPos = url.indexOf('担当名');
-    if (resultPos !== -1) { // URLに'担当名'が含まれるとき(プルダウンでの絞り込み表示時)
-      // ここから：絞り込み条件の氏名を取り出し 「query=担当名 like "苗字" and 担当名 like "名前"」
-      selectName = url.slice(resultPos + 10); // 10=読み飛ばす文字数/slice=urlから指定箇所以降を取り出し
-      resultPos = selectName.indexOf('担当名');
-      selectNameL = selectName.substring(0, resultPos - 6); // 1文字目から"resultPos - 2"文字目までを取り出し
-      selectName = selectName.slice(resultPos + 10);
-      selectNameF = selectName.substring(0, selectName.indexOf('"'));
-      selectName = selectNameL.concat(' ', selectNameF);
-      affShop = 'init';
-    } else if (url.indexOf('店舗名') !== -1) {
-      resultPos = url.indexOf('店舗名');
-      affShop = url.slice(resultPos + 10); // 10=読み飛ばす文字数/slice=urlから指定箇所以降を取り出し
-      affShop = `${affShop.substring(0, affShop.indexOf('"'))}店`;
-      selectName = 'init';
-    } else {
-      // ユーザがプルダウン以外で絞り込み表示している場合
-      // 処理は実行しない
-    }
-  }
-
+  /* **************************************** 関数宣言部 **************************************** */
   /**
    * リストのプルダウンを作成する
-   * @param {array} lists : 店舗リスト[ 店舗名 ,・・・]
+   * @param {array} lists : (inputの例) 店舗リスト[ 店舗名 ,・・・]
    */
   function makeList(lists, targetID) {
-    setInitSelect(targetID); // [店舗名]のプルダウンに、「【選択してください】」と「すべてのレコードを表示」を追加
+    setInitSelect(targetID); // 「【選択してください】」と「全レコードを表示」を追加
     lists.forEach((item) => {
       // 対象の店舗名のみ、店舗リストに登録する
       $(`#${targetID}`).append($('<option>').html(item).val(item));
@@ -130,20 +58,20 @@ const recordindexshow = (event) => {
    */
   function makeEmpList(lists, targetID) {
     let newlists;
-    setInitSelect(targetID); // [店舗名]のプルダウンに、「【選択してください】」と「すべてのレコードを表示」を追加
     // 【選択してください】と'全レコードを表示'の時には、社員リストには全員追加する
     if (['init', 'listall'].includes(affShop)) {
       newlists = lists; // listsはそのまま
     } else {
       newlists = lists.filter((item) => affShop === item.shop);
     }
-    newlists.forEach((item) => {
-      $(`#${targetID}`).append($('<option>').html(item.name).val(item.name));
-    });
+    // 社員リストの配列を、社員名だけのシンプルな配列に変換する
+    newlists = newlists.map((item) => (item.name));
+
+    makeList(newlists, targetID); // セレクトボックスに、該当の社員名を追加する
   }
 
   /**
-   * 社員名簿のリストから、所属店舗(affshop)の取り出しと、対象職種かどうかを判定する(FlgOcpChk)
+   * 社員名簿のリストから所属店舗(affshop)を取り出し、営業職か判定する(FlgOcpChk)
    * @param {array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
    */
   function chkOccupation(lists) {
@@ -194,7 +122,8 @@ const recordindexshow = (event) => {
       const selectField = '担当名'; // フィルタリング対象のフィールド名
       const query = `${selectField} like "${selectNameL}" and ${selectField} like "${selectNameF}"`;
       // console.log('query = ', query);
-      window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+      window.location.href = `${window.location.origin
+                              + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
     } else if (flg1st === false) {
       // 初回ログインではない場合
       // console.log('初回ではない かつ 営業職:', affShop, ' ', selectName);
@@ -203,46 +132,103 @@ const recordindexshow = (event) => {
     }
   }
 
+  /* **************************************** 処理実装部 **************************************** */
+  // 指定の一覧以外このJSを実行しない
+  if (event.viewId === viewpursuit
+    || event.viewId === viewcontract
+    || event.viewId === viewcancel
+    || event.viewId === viewwebbrows) {
+    getHeaderSpaceElement().innerText = '[担当名]のプルダウンには、'
+                                        + '役職が「店長」「主任」「営業」の方を表示しています。\n';
+    view = event.viewId; // 現在の一覧IDを格納
+  } else {
+    if (event.viewId === viewall) {
+      getHeaderSpaceElement().innerText = `上の"(すべて)"をクリックすると、一覧の表示方法が変更されます。
+          絞り込み表示をしたい場合には、漏斗(ろうと)のアイコンをクリックし、条件を設定してください。
+          詳細は、QA「絞り込み表示、ソートの仕方」を参照してください。`;
+    }
+    return;
+  }
+
+  // ボタンの増殖防止
+  if (document.getElementById(EmpIDname) !== null) {
+    return;
+  }
+
+  // プルダウンメニューの要素を設定する
+  $(getHeaderMenuSpaceElement()).append(
+    `<div>
+      <label id='my_textShop'>店舗名: </label>
+      <select id='my_select_buttonShop'></select>
+      ${isMobile() ? '<br/>' : '&nbsp;'}
+      <label id='my_textEmp'>担当名: </label>
+      <select id='my_select_buttonEmp'></select>
+     </div>`,
+  );
+
+  // 担当名に表示する氏名の取り出しをする
+  url = decodeURI(url); // urlをデコーディングする
+  // URLにqueryが含まれないとき(初回)
+  if ((url.indexOf('query=') === -1) && (url.indexOf('q=') === -1)) {
+    flg1st = true;
+    selectName = kintone.getLoginUser().name;
+    selectNameL = selectName.substring(0, selectName.indexOf(' '));
+    selectNameF = selectName.slice(selectName.indexOf(' ') + 1);
+    selectName = selectNameL.concat(' ', selectNameF);
+    affShop = 'init';
+    console.log('ユーザ名の取得 :', selectName);
+  } else {
+    // URLにプルダウンで指定したqueryが含まれる場合の処理
+    flg1st = false;
+    let resultPos = url.indexOf('担当名');
+    if (resultPos !== -1) { // URLに'担当名'が含まれるとき
+      // ここから：絞り込み条件の氏名を取り出す 「query=担当名 like "苗字" and 担当名 like "名前"」
+      selectName = url.slice(resultPos + 10); // 10=読み飛ばす文字数
+      resultPos = selectName.indexOf('担当名');
+      selectNameL = selectName.substring(0, resultPos - 6);
+      selectName = selectName.slice(resultPos + 10);
+      selectNameF = selectName.substring(0, selectName.indexOf('"'));
+      selectName = selectNameL.concat(' ', selectNameF);
+      affShop = 'init';
+    } else if (url.indexOf('店舗名') !== -1) { // URLに'店舗名'が含まれるとき
+      resultPos = url.indexOf('店舗名');
+      affShop = url.slice(resultPos + 10); // 10=読み飛ばす文字数
+      affShop = `${affShop.substring(0, affShop.indexOf('"'))}店`;
+      selectName = 'init';
+    } else {
+      // ユーザがプルダウン以外で絞り込み表示している場合
+      // 処理は実行しない
+    }
+  }
+
   // LocalStrageに日時が保存されているか確認する - (1)
   app86DateTimeD = JSON.parse(localStorage.getItem(app86DateTimeKey));
   app86EmployeesD = JSON.parse(localStorage.getItem(app86EmployeesKey));
   app86ShopListD = JSON.parse(localStorage.getItem(app86ShopListKey));
-  // console.log('レコード一覧の取得時間(Date.now(秒))：', app86DateTimeD);
   const now = (Date.now()) / 1000;
-  // console.log('1-1 現在の時間(Date.now(秒))：', now);
   console.log('1-1 経過時間(秒)：', (now - app86DateTimeD));
-
-  // パラメータ設定 - getrecordsを使用して、店舗リストから店舗の一覧を配列で取得
-  const APPSHOP_ID = 19; // ID:19 = 店舗リスト
-  const FieldShop = '店舗名';
-  const shopquery = '店舗名 not like "なし" and 店舗名 not like "本部"'
-                    + 'and 店舗名 not like "システム管理部" and 店舗名 not like "本社"'
-                    + 'and 店舗名 not like "買取店" and 店舗名 not like "すてくら"';
-  const paramsShop = {
-    app: APPSHOP_ID,
-    fields: [FieldShop],
-    filterCond: shopquery,
-  };
-
-  // パラメータ設定 - getrecordsを使用して、社員名簿から社員一覧の配列を取得する
-  const APPEMP_ID = 34; // ID:34 = 社員名簿
-  const FieldEmp = '文字列＿氏名';
-  const FieldEmp2 = '役職';
-  const FieldEmp3 = 'ルックアップ＿店舗名';
-  const FieldEmp4 = '状態';
-  let ExclusionShop = ['すてくら', 'なし', '本部', 'システム管理部', '本社', '買取店'];
-  ExclusionShop = ExclusionShop.map((item) => 'ルックアップ＿店舗名 not like '.concat('"', item, '"')).join(' and ');
-  const empquery = `状態 not in ("無効") and 役職 in ("営業","主任","店長") and${ExclusionShop}`;
-  const paramsEmp = {
-    app: APPEMP_ID,
-    fields: [FieldEmp, FieldEmp2, FieldEmp3, FieldEmp4],
-    filterCond: empquery,
-  };
 
   /**
    * プルダウン店舗名と担当名のメンバを取得(作成)する
    */
   async function getLists() {
+    // パラメータ設定 - getrecordsを使用して、店舗リストから店舗の一覧を配列で取得
+    // 店舗名のプルダウンから除外する項目を配列に格納する
+    let ExclusionShop = ['すてくら', 'なし', '本部', 'システム管理部', '本社', '買取店'];
+    const paramsShop = {
+      app: 19,
+      fields: ['店舗名'],
+      filterCond: ExclusionShop.map((item) => '店舗名 not like '.concat('"', item, '"')).join(' and '),
+    };
+
+    // パラメータ設定 - getrecordsを使用して、社員名簿から社員一覧の配列を取得する
+    ExclusionShop = ExclusionShop.map((item) => 'ルックアップ＿店舗名 not like '.concat('"', item, '"')).join(' and ');
+    const paramsEmp = {
+      app: 34,
+      fields: ['文字列＿氏名', '役職', 'ルックアップ＿店舗名', '状態'],
+      filterCond: `状態 not in ("無効") and 役職 in ("営業","主任","店長") and ${ExclusionShop}`,
+    };
+
     app86ShopListD = (await getRecords(paramsShop)); // 店舗リストから店舗の一覧を取得する
     app86EmployeesD = (await getRecords(paramsEmp)); // 社員名簿から社員の一覧を取得する
 
@@ -312,7 +298,8 @@ const recordindexshow = (event) => {
     // console.log('店舗名のプルダウンに変更あり 所属店舗= ', affShop);
     if (affShop === 'listall') {
       // '全てのレコードを表示'の時の処理
-      window.location.href = `${window.location.origin + window.location.pathname}?view=${viewall}`;
+      window.location.href = `${window.location.origin
+                              + window.location.pathname}?view=${viewall}`;
     } else if (affShop === 'init') {
       // 【選択してください】の時は何もしない
     } else {
@@ -338,7 +325,8 @@ const recordindexshow = (event) => {
         // console.log('店舗名', shop);
       }
       const query = `${selectField} like "${shop}"`;
-      window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+      window.location.href = `${window.location.origin
+                          + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
     } else if (document.getElementById(EmpIDname).value === 'init') {
       // デフォルト値・何もしない
     } else {
@@ -347,7 +335,8 @@ const recordindexshow = (event) => {
       const Firstname = member.slice(member.indexOf(' ') + 1);
       const Lastname = member.substring(0, member.indexOf(' '));
       const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
-      window.location.href = `${window.location.origin + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+      window.location.href = `${window.location.origin
+                           + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
     }
   };
 };
