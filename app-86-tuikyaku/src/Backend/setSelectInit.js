@@ -1,5 +1,5 @@
 /**
- * プルダウンに「---」と「全てのレコードを表示」を追加する処理
+ * プルダウンに「【選択してください】」と「全レコードを表示」を追加する処理
  * @type {string} targetID = 対象のプルダウンのID名
  */
 function setInitSelect(targetID) {
