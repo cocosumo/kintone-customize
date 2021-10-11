@@ -75,11 +75,9 @@ const yasumiSaveHandler = debounce(async ({
   ];
 
   const result = await Promise.allSettled(promises);
-
+  console.log('success');
   const isSuccess = !JSON.stringify(result).includes('rejected');
   setSnack({ isOpen: true, type: isSuccess ? 'saveSuccess' : 'saveErrors' });
-  /* setSnackType(isSuccess ? 'saveSuccess' : 'saveErrors');
-  setSnackOpen(true); */
 
   await refetchData({
     currentMonth,

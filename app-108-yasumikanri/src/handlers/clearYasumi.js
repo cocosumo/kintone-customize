@@ -8,15 +8,13 @@ const clearYasumi = async ({
   setSavedRecords,
   setYasumiRecords,
   setRemainingYasumi,
-  setSnackType,
-  setSnackOpen,
+  setSnack,
   setIsSaving,
 }) => {
   setIsSaving(true);
 
   await deleteRecordsByDates(Object.keys(yasumiRecords));
-  setSnackType('resetInput');
-  setSnackOpen(true);
+  setSnack({ isOpen: true, type: 'resetInput' });
   await refetchData({
     currentMonth,
     setYasumiRecords,

@@ -1,6 +1,6 @@
 import Processing from '../../assets/day-processing.png';
 import Unprocessed from '../../assets/day-unprocessed.png';
-import UnprocessedChange from '../../assets/day-unprocessed-change.png';
+import ProcessingChange from '../../assets/day-processing-change.png';
 import Returned from '../../assets/day-returned.png';
 
 import Leave from '../../assets/day-leave.png';
@@ -20,8 +20,8 @@ const resolveIcon = ({ type, duration, status = 'approved' }) => {
   switch (type) {
     case 'day-ordinary':
       switch (status) {
-        case 'unprocessed': return UnprocessedChange;
-        case 'processing': return Processing;
+        case 'unprocessed': return Unprocessed;
+        case 'processing': return ProcessingChange;
         case 'approved':
           switch (duration) {
             case 'day-whole': return Ordinary;

@@ -94,11 +94,13 @@ export const fetchByYasumiDate = async (yasumiDate) => {
 export const addYasumiRecords = async (unsavedRecords) => {
   if (!unsavedRecords.length) return 'No records to add';
   const kintoneRecords = toKintoneRecords(unsavedRecords);
+  console.log(kintoneRecords);
   const addedRecords = await addRecords({ records: kintoneRecords });
-  console.log(addedRecords, 'added');
+
   if (addedRecords.ids) {
     await updateAllStatus({ ids: addedRecords.ids });
   }
+
   return addedRecords;
 };
 /**
