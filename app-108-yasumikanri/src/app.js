@@ -12,5 +12,6 @@ import onTypeChangeHandler from './kintoneHandlers/eventHandlers/onTypeChangeHan
   kintone.events.on(onCreate, onCreateHandler);
   kintone.events.on(onEditOrCreate, onEditOrCreateHandler);
   kintone.events.on(onEditOrCreateSubmit, onEditOrCreateSubmitHandler);
+
   kintone.events.on(onFieldChange('type'), onTypeChangeHandler);
 })();

@@ -13,3 +13,5 @@ export const isWithinMonth = (currMonth, luxDate) => {
 
   return luxDate >= startDay && luxDate <= endDay;
 };
+
+export const isMonthNow = (luxDate) => isWithinMonth(DateTime.now(), luxDate);

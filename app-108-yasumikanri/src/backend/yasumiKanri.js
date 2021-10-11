@@ -95,8 +95,9 @@ export const addYasumiRecords = async (unsavedRecords) => {
   if (!unsavedRecords.length) return 'No records to add';
   const kintoneRecords = toKintoneRecords(unsavedRecords);
   const addedRecords = await addRecords({ records: kintoneRecords });
+  console.log(addedRecords, 'added');
   if (addedRecords.ids) {
-    updateAllStatus({ ids: addedRecords.ids });
+    await updateAllStatus({ ids: addedRecords.ids });
   }
   return addedRecords;
 };
@@ -206,5 +207,6 @@ export const deleteRecordsByDates = async (dates) => {
 
 export const defaultRecord = {
   type: 'day-ordinary',
+  status: 'approved',
   duration: null,
 };
