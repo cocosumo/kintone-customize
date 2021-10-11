@@ -2,7 +2,9 @@ import { useState, useRef } from 'react';
 import { Container, Button, Grid } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import MonthCalendar from '../UI/MonthCalendar';
-import { ISOtoLux, isWithinMonth, JSDToLux } from '../../helpers/time';
+import {
+  isMonthNow, ISOtoLux, isWithinMonth, JSDToLux,
+} from '../../helpers/time';
 import getYasumiCount from '../../backend/settings';
 
 import yasumiChangeHandler from '../../handlers/yasumiChangeHandler';
@@ -10,15 +12,14 @@ import refetchData from '../../handlers/refetchData';
 import deleteExcessYasumi from '../../handlers/deleteExcessYasumi';
 import SimpleSnackbar from '../UI/snackbars/SimpleSnackBar';
 import clearYasumi from '../../handlers/clearYasumi';
-import LeaveSnackBar from '../UI/snackbars/LeaveSnackbar';
-import getLeaveInClickedDate from '../../handlers/getLeaveInClickedDate';
+import EditRecordSnackbar from '../UI/snackbars/EditRecordSnackbar';
+import { getLeaveInClickedDate, getOrdinaryInClickedDate } from '../../handlers/getInfoInClickedDate';
 import Instructions from '../paragraphs/Instructions';
 
 const YasumiRegistry = () => {
   const [yasumiRecords, setYasumiRecords] = useState();
-  const [snackType, setSnackType] = useState();
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [leaveSnack, setLeaveSnack] = useState({ isOpen: false, data: [], date: '' });
+  const [snack, setSnack] = useState({ isOpen: false, type: null });
+  const [editRecordSnack, setEditRecordSnack] = useState({ isOpen: false, data: [], date: '' });
   const [remainingYasumi, setRemainingYasumi] = useState();
   const [savedRecords, setSavedRecords] = useState();
   const [isSaving, setIsSaving] = useState();
@@ -27,10 +28,23 @@ const YasumiRegistry = () => {
   const maxYasumi = useRef(0);
 
   const clickDayHandler = (info) => {
-    if (!isSaving && isWithinMonth(currentMonth.current, ISOtoLux(info.dateStr))) {
+    const clickedLuxDate = ISOtoLux(info.dateStr);
+    if (!isSaving && isWithinMonth(currentMonth.current, clickedLuxDate)) {
       const leaveInClickedDate = getLeaveInClickedDate(yasumiRecords[info.dateStr]);
+      if (isMonthNow(clickedLuxDate)) {
+        const ordinaryClickedDate = getOrdinaryInClickedDate(yasumiRecords[info.dateStr]);
+        if (ordinaryClickedDate) {
+          setEditRecordSnack({
+            isOpen: true,
+            data: ordinaryClickedDate,
+            date: info.dateStr,
+          });
+          return;
+        }
+      }
+
       if (leaveInClickedDate) {
-        setLeaveSnack({
+        setEditRecordSnack({
           isOpen: true,
           data: leaveInClickedDate,
           date: info.dateStr,
@@ -47,8 +61,7 @@ const YasumiRegistry = () => {
         setRemainingYasumi,
         setYasumiRecords,
         setSavedRecords,
-        setSnackType,
-        setSnackOpen,
+        setSnack,
         setIsSaving,
         seIsEditing,
       });
@@ -76,8 +89,7 @@ const YasumiRegistry = () => {
       setSavedRecords,
       setYasumiRecords,
       setRemainingYasumi,
-      setSnackType,
-      setSnackOpen,
+      setSnack,
       setIsSaving,
     });
   };
@@ -90,8 +102,7 @@ const YasumiRegistry = () => {
     setSavedRecords,
     setYasumiRecords,
     setRemainingYasumi,
-    setSnackType,
-    setSnackOpen,
+    setSnack,
   });
 
   return (
@@ -128,8 +139,8 @@ const YasumiRegistry = () => {
           }}
         />
 
-        <SimpleSnackbar open={snackOpen} setSnackOpen={setSnackOpen} snackType={snackType} />
-        <LeaveSnackBar {...{ leaveSnack, setLeaveSnack }} />
+        <SimpleSnackbar open={snack.isOpen} setSnackOpen={setSnack} snackType={snack.type} />
+        <EditRecordSnackbar {...{ editRecordSnack, setEditRecordSnack }} />
         <Instructions />
       </Container>
     </>

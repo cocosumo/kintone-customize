@@ -1,5 +1,6 @@
 import Processing from '../../assets/day-processing.png';
 import Unprocessed from '../../assets/day-unprocessed.png';
+import ProcessingChange from '../../assets/day-processing-change.png';
 import Returned from '../../assets/day-returned.png';
 
 import Leave from '../../assets/day-leave.png';
@@ -12,19 +13,27 @@ import LeaveSpecialPM from '../../assets/day-leaveSpecial-pm.png';
 import OrdinaryAM from '../../assets/day-ordinary-am.png';
 import OrdinaryPM from '../../assets/day-ordinary-pm.png';
 import Ordinary from '../../assets/day-ordinary.png';
+
 import { isMobile } from '../../../../kintone-api/api';
 
-const resolveIcon = ({ type, duration, status }) => {
+const resolveIcon = ({ type, duration, status = 'approved' }) => {
   switch (type) {
     case 'day-ordinary':
-      switch (duration) {
-        case 'day-whole': return Ordinary;
-        case 'day-am': return OrdinaryAM;
-        case 'day-pm': return OrdinaryPM;
+      switch (status) {
+        case 'unprocessed': return Unprocessed;
+        case 'processing': return ProcessingChange;
+        case 'approved':
+          switch (duration) {
+            case 'day-whole': return Ordinary;
+            case 'day-am': return OrdinaryAM;
+            case 'day-pm': return OrdinaryPM;
+            default:
+          }
+          break;
+        case 'returned': return Returned;
         default:
       }
       break;
-
     case 'day-leave':
       switch (status) {
         case 'unprocessed': return Unprocessed;

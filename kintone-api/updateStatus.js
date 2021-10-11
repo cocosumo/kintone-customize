@@ -9,6 +9,7 @@ const updateStatus = ({
     action,
     assignee,
   };
+  console.log(body, 'body');
   return kintone.api(kintone.api.url('/k/v1/record/status.json', true), 'PUT', body);
 };
 
@@ -27,7 +28,8 @@ export const updateAllStatus = ({
     app: appId,
     records: recsToUpdateStatus,
   };
-  return kintone.api(kintone.api.url('/k/v1/records/status.json', true), 'PUT', body);
+  return kintone.api(kintone.api.url('/k/v1/records/status.json', true), 'PUT', body)
+    .catch((reason) => console.warn('error: ', reason.message));
 };
 
 export default updateStatus;

@@ -23,8 +23,7 @@ const yasumiChangeHandler = ({
   setSavedRecords,
   setRemainingYasumi,
   setYasumiRecords,
-  setSnackType,
-  setSnackOpen,
+  setSnack,
   setIsSaving,
   seIsEditing,
 }) => {
@@ -33,6 +32,7 @@ const yasumiChangeHandler = ({
   let weight;
   let newDuration;
   let newYasumiRecords;
+
   const availableTime = getAvailableDayTime(newArray);
   if (!availableTime) return;
   seIsEditing(true);
@@ -51,8 +51,9 @@ const yasumiChangeHandler = ({
     newArray = newArray.filter(({ duration }) => Boolean(duration));
 
     if ((remainingYasumi - weight) < 0) {
-      setSnackType('aboveLimit');
-      setSnackOpen(true);
+      /* setSnackType('aboveLimit');
+      setSnackOpen(true); */
+      setSnack({ isOpen: true, type: 'aboveLimit' });
       seIsEditing(false);
       return; // cancel change if no more remaining yasumi
     }
@@ -84,8 +85,7 @@ const yasumiChangeHandler = ({
     setSavedRecords,
     setRemainingYasumi,
     setYasumiRecords,
-    setSnackType,
-    setSnackOpen,
+    setSnack,
     setIsSaving,
     seIsEditing,
   });

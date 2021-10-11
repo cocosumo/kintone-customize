@@ -9,7 +9,7 @@ const validateForm = (event) => {
   const { record } = event;
   const { reason, type } = record;
 
-  if (!reason.value && normType[type.value].includes('leave')) {
+  if (!reason?.value && normType[type.value].includes('leave')) {
     event.error = messages.inputReason;
     reason.error = messages.inputReason;
     return false;

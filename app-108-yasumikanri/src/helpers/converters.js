@@ -124,6 +124,12 @@ export const snackDetails = (snackType) => {
         message: 'リセット出来ました。',
         severity: 'info',
       };
+    case 'noEditThisMonth':
+      return {
+        duration: 3000,
+        message: '今月の休みの変更は申請が必要です。',
+        severity: 'warning',
+      };
 
     default: return {};
   }
