@@ -1,3 +1,5 @@
+import usersToString from '../../helpers/kintone';
+
 interface KintoneEvent {
   record : kintone.types.SavedFields;
 }
@@ -5,7 +7,7 @@ interface KintoneEvent {
 const onSubmitHandler = (event : KintoneEvent) => {
   const {record: {title, toDo, onDuty}} = event;
 
-  title.value = toDo.value;
+  title.value = ` : ${usersToString(onDuty)}(${toDo.value})`;
 
   console.log(onDuty.value);
 

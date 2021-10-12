@@ -1,7 +1,7 @@
-export const ISOToTime = (ISO : string) : string => {
-  const kintoneDate = new Date(ISO);
-  console.log(kintoneDate);
-  return '';
+import format from 'date-fns/format';
+
+export const fromISOToTime = (ISO : string) : string => {
+  return format(new Date(ISO), 'HH:mm');
 };
 
-export default ISOToTime;
+export default fromISOToTime;

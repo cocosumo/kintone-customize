@@ -3,7 +3,7 @@ declare namespace kintone.types {
   interface Fields {
     title: kintone.fieldTypes.SingleLineText;
     toDo: kintone.fieldTypes.DropDown;
-    日時: kintone.fieldTypes.DateTime;
+    startTime: kintone.fieldTypes.DateTime;
     文字列__複数行_: kintone.fieldTypes.MultiLineText;
 
     onDuty: kintone.fieldTypes.UserSelect;

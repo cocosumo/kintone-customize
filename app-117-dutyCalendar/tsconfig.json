@@ -11,11 +11,12 @@
     "declaration": true,
     "target": "es5",
     "module": "es2015",
-    "strict": true
+    "strict": true,
+    "moduleResolution": "node"
   },
   "files" : [
     "./node_modules/@kintone/dts-gen/kintone.d.ts",
-    "./fields.d.ts"
+    "src/fields.d.ts"
   ],
   "include": [
     "src/**/*"
