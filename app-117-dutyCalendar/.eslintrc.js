@@ -1,4 +1,5 @@
 module.exports = {
+  'root': true,
   env: {
     browser: true,
     es2020: true,
@@ -16,10 +17,14 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
+  'globals': {
+    'kintone': false
+  },
   plugins: [
     'react',
     '@typescript-eslint',
   ],
   rules: {
+    'indent': ['error', 2]
   },
 };

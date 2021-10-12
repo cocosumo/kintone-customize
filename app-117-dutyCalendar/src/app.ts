@@ -1,10 +1,7 @@
-const HANDLE_EVENT = 'app.record.create.show';
 
-interface KintoneEvent {
-  record : kintone.types.SavedFields;
+import {onEditOrCreate, onSubmit} from '../../kintone-api/api';
+import onEditOrCreateHandler from './handlers/kintone/onEditOrCreateHandler';
+import onSubmitHandler from './handlers/kintone/onSubmitHandler';
 
-}
-kintone.events.on(HANDLE_EVENT, (event: KintoneEvent) => {
-  console.log('hello');
-  return event;
-});
+kintone.events.on(onEditOrCreate, onEditOrCreateHandler);
+kintone.events.on(onSubmit, onSubmitHandler);

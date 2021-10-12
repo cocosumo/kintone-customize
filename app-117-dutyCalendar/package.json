@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node scripts/npm-start.js",
+    "upload": "kintone-customize-uploader --watch kintone-manifest.json",
+    "develop": "npm run build -- --watch",
+    "build": "webpack --mode development",
+    "build:prod": "webpack --mode production",
+    "lint": "eslint src/*"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +19,7 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-typescript": "^7.15.0",
     "@cybozu/eslint-config": "^15.0.0",
+    "@kintone/customize-uploader": "^5.0.7",
     "@kintone/dts-gen": "^5.0.6",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",

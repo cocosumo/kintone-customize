@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 declare namespace kintone.types {
   interface Fields {
     title: kintone.fieldTypes.SingleLineText;
@@ -5,7 +6,7 @@ declare namespace kintone.types {
     日時: kintone.fieldTypes.DateTime;
     文字列__複数行_: kintone.fieldTypes.MultiLineText;
 
-    ユーザー選択: kintone.fieldTypes.UserSelect;
+    onDuty: kintone.fieldTypes.UserSelect;
   }
   interface SavedFields extends Fields {
     $id: kintone.fieldTypes.Id;
