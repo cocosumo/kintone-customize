@@ -19,8 +19,8 @@ const recordindexshow = (event) => {
     viewwebbrows = 5522969; // WEB閲覧の一覧ID:[テスト用=5522969] =共通
   }
   const viewall = 20; // (すべて)の一覧ID：本番用・テスト用共通 = 20
-  const EmpIDname = 'my_select_buttonEmp';
-  const ShopIDname = 'my_select_buttonShop';
+  const EmpIDname = 'my_selectEmp';
+  const ShopIDname = 'my_selectShop';
 
   let affShop = 'init'; // 店舗名の初期値を格納する変数
   let selectName; // 選択されている社員名(初期値はログインユーザー名)
@@ -37,7 +37,7 @@ const recordindexshow = (event) => {
   let app86EmployeesD; // 社員リストの保存データ
   const app86ShopListKey = 'app86店舗リスト'; // 店舗リストの保存名(キー)
   let app86ShopListD; // 店舗リストの保存データ
-  const divTime = 50; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
+  const divTime = 10800; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
 
   /* **************************************** 関数宣言部 **************************************** */
   /**
@@ -189,13 +189,17 @@ const recordindexshow = (event) => {
   }
 
   /* **************************************** 処理実装部 **************************************** */
+  // ボタンの増殖防止
+  if (document.getElementById(EmpIDname) !== null) {
+    return;
+  }
+
   // 指定の一覧以外このJSを実行しない
+  console.log('表示一覧ID', event.viewId);
   if (event.viewId === viewpursuit
     || event.viewId === viewcontract
     || event.viewId === viewcancel
     || event.viewId === viewwebbrows) {
-    getHeaderSpaceElement().innerText = '[担当名]のプルダウンには、'
-                                        + '役職が「店長」「主任」「営業」の方を表示しています。\n';
     view = event.viewId; // 現在の一覧IDを格納
   } else {
     if (event.viewId === viewall) {
@@ -206,21 +210,25 @@ const recordindexshow = (event) => {
     return;
   }
 
-  // ボタンの増殖防止
-  if (document.getElementById(EmpIDname) !== null) {
-    return;
-  }
-
   // プルダウンメニューの要素を設定する
   $(getHeaderMenuSpaceElement()).append(
-    `<div>
-      <label id='my_textShop'>店舗名: </label>
-      <select id='my_select_buttonShop'></select>
-      ${isMobile() ? '<br/>' : '&nbsp;'}
-      <label id='my_textEmp'>担当名: </label>
-      <select id='my_select_buttonEmp'></select>
-     </div>`,
+    ` <div class='ListBoxGroup'>
+        <div class='ShopListBox'>
+          <label id='my_textShop'>店舗名: &nbsp;</label>
+          <select id='my_selectShop'></select>
+        </div>
+        <div class='ViewAdjustment'>
+          ${isMobile() ? '<br>' : '&nbsp;'}
+        </div>
+        <div class='EmpListBox'>
+          <label id='my_textEmp'>担当名: &nbsp;</label>
+          <select id='my_selectEmp'></select>
+        </div>
+      </div>`,
   );
+
+  // 補助メッセージを表示する
+  getHeaderSpaceElement().append('※[担当名]には[店長][主任][営業]の方を表示しています\n');
 
   // 担当名に表示する氏名の取り出しをする
   url = decodeURI(url); // urlをデコーディングする
@@ -294,8 +302,8 @@ const recordindexshow = (event) => {
   }
 
   // プルダウン変更時の処理
-  const myselectShop = document.getElementById('my_select_buttonShop');
-  const myselectEmp = document.getElementById('my_select_buttonEmp');
+  const myselectShop = document.getElementById('my_selectShop');
+  const myselectEmp = document.getElementById('my_selectEmp');
 
   // 店舗名のプルダウン変更時の処理
   myselectShop.onchange = () => {
@@ -308,7 +316,7 @@ const recordindexshow = (event) => {
     } else if (affShop === 'init') {
       // 【選択してください】の時は何もしない
     } else {
-      $('#my_select_buttonEmp > option').remove(); // プルダウン子要素の初期化
+      $(`#${EmpIDname} > option`).remove(); // プルダウン子要素の初期化
       makeEmpList(app86EmployeesD, EmpIDname); // 社員名のリスト(プルダウン)の更新
 
       if (flg1st === false || FlgOcpChk === false) {

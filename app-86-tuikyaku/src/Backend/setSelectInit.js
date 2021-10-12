@@ -5,7 +5,6 @@
 function setInitSelect(targetID) {
   $(`#${targetID}`).append($('<option>').html('【選択してください】').val('init'));
   $(`#${targetID}`).append($('<option>').html('全レコードを表示').val('listall'));
-  // console.log(targetID, '：セレクトボックスの初期値セット完了');
 }
 
 export default setInitSelect;
