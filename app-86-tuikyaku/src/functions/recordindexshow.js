@@ -6,7 +6,7 @@ import setInitSelect from '../Backend/setSelectInit';
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
   /* **************************************** 変数宣言部 **************************************** */
-  const TESTMODE = true; // 環境切替のコンパイルSW[true:テスト用, false:本番環境用]
+  const TESTMODE = false; // 環境切替のコンパイルSW[true:テスト用, false:本番環境用]
   let view; // 現在の一覧ID
   let viewpursuit = 5522965; // メインの一覧ID:[本番用= 5522965 ]
   let viewcontract = 5523924; // 契約済の一覧ID:[本番用=5523924]
