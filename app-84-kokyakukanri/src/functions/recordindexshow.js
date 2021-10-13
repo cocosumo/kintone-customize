@@ -1,5 +1,5 @@
-import getRecords from '../../../app-86-tuikyaku/src/handlers/getrecords';
 import { getHeaderMenuSpaceElement, getHeaderSpaceElement, isMobile } from '../../../kintone-api/api';
+import { fetchAllRecords } from '../../../kintone-api/fetchRecords';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
@@ -31,22 +31,16 @@ const recordindexshow = (event) => {
 
   /* **************************************** 関数宣言部 **************************************** */
   /**
-   * 引数で指定されたセレクトボックスに、初期値(init, listall)を追加する処理
-   * @param {string} targetID : セレクトボックスのID名
-   */
-  function setInitSelect(targetID) {
-    $(`#${targetID}`).append($('<option>').html('【選択してください】').val('init'));
-    $(`#${targetID}`).append($('<option>').html('全レコードを表示').val('listall'));
-  }
-
-  /**
    * リストのプルダウンを作成する
    * @param {array} lists : (inputの例) 店舗リスト[ 店舗名 ,・・・]
    */
   function makeList(lists, targetID) {
-    setInitSelect(targetID); // 「【選択してください】」と「全レコードを表示」を追加
+    // 「【選択してください】」と「全レコードを表示」を追加
+    $(`#${targetID}`).append($('<option>').html('【選択してください】').val('init'));
+    $(`#${targetID}`).append($('<option>').html('全レコードを表示').val('listall'));
+
+    // 配列の各要素を、セレクトボックスの選択肢(option)に追加する
     lists.forEach((item) => {
-      // 対象の店舗名のみ、店舗リストに登録する
       $(`#${targetID}`).append($('<option>').html(item).val(item));
     });
   }
@@ -135,7 +129,7 @@ const recordindexshow = (event) => {
    * プルダウン店舗名と担当名のメンバを取得(作成)する
    */
   async function getLists() {
-    // パラメータ設定 - getrecordsを使用して、店舗リストから店舗の一覧を配列で取得
+    // パラメータ設定 - fetchAllRecordsを使用して、店舗リストから店舗の一覧を配列で取得
     // 店舗名のプルダウンから除外する項目を配列に格納する
     let ExclusionShop = ['すてくら', 'なし', '本部', 'システム管理部', '本社', '買取店'];
     const paramsShop = {
@@ -144,7 +138,7 @@ const recordindexshow = (event) => {
       filterCond: ExclusionShop.map((item) => '店舗名 not like '.concat('"', item, '"')).join(' and '),
     };
 
-    // パラメータ設定 - getrecordsを使用して、社員名簿から社員一覧の配列を取得する
+    // パラメータ設定 - fetchAllRecordsを使用して、社員名簿から社員一覧の配列を取得する
     ExclusionShop = ExclusionShop.map((item) => 'ルックアップ＿店舗名 not like '.concat('"', item, '"')).join(' and ');
     const paramsEmp = {
       app: 34,
@@ -152,8 +146,8 @@ const recordindexshow = (event) => {
       filterCond: `状態 not in ("無効") and 役職 in ("営業","主任","店長") and ${ExclusionShop}`,
     };
 
-    app86ShopListD = (await getRecords(paramsShop)); // 店舗リストから店舗の一覧を取得する
-    app86EmployeesD = (await getRecords(paramsEmp)); // 社員名簿から社員の一覧を取得する
+    app86ShopListD = (await fetchAllRecords(paramsShop)); // 店舗リストから店舗の一覧を取得する
+    app86EmployeesD = (await fetchAllRecords(paramsEmp)); // 社員名簿から社員の一覧を取得する
 
     // - 取得した店舗リストを、ローカルストレージに格納する
     // console.log('app86ShopListD ：', app86ShopListD);
