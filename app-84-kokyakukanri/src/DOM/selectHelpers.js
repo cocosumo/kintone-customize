@@ -1,4 +1,5 @@
 import { getLocalShopList } from '../backend/fetchShop';
+import { getLocalAgentsList } from '../backend/fetchEmployees';
 
 export const selectEmpID = 'my_selectEmp';
 export const selectShopID = 'my_selectShop';
@@ -19,6 +20,6 @@ export const populateShopSelect = () => {
   addOptionsToSelect(selectShopID, getLocalShopList());
 };
 
-export const populateEmpSelect = (list = getLocalEmpList()) => {
+export const populateEmpSelect = (list = getLocalAgentsList()) => {
   addOptionsToSelect(selectEmpID, list);
 };
