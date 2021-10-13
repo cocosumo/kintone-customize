@@ -1,5 +1,5 @@
 import { fetchRecords } from '../../../kintone-api/fetchRecords';
-import excludedShopQuery, { getStorageObj } from './utils';
+import { excludedShopQuery, getStorageObj } from './utils';
 
 const appId = 19;
 
