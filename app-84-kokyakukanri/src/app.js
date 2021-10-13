@@ -1,6 +1,7 @@
 import { onIndexShow } from '../../kintone-api/api';
-import onIndexShowHandler from './pages/onIndexShowHandler';
+import recordindexshow from './functions/recordindexshow';
 
 (() => {
-  kintone.events.on(onIndexShow, onIndexShowHandler);
+  // [レコード一覧画面]プルダウンによる絞り込みを行う
+  kintone.events.on(onIndexShow, recordindexshow);
 })();
