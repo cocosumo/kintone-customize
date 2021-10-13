@@ -2,6 +2,7 @@ import { getHeaderMenuSpaceElement, getHeaderSpaceElement, isMobile } from '../.
 import { fetchAllRecords } from '../../../kintone-api/fetchRecords';
 import { makeList, makeEmpList } from '../functions/makeList';
 import chkOccupation from '../functions/chkOccupation';
+import addEvents from '../DOM/events';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
@@ -245,7 +246,7 @@ const recordindexshow = (event) => {
   // プルダウン変更時の処理
   const myselectShop = document.getElementById('my_selectShop');
   const myselectEmp = document.getElementById('my_selectEmp');
-
+  addEvents();
   // 店舗名のプルダウン変更時の処理
   myselectShop.onchange = () => {
     affShop = document.getElementById(ShopIDname).value;

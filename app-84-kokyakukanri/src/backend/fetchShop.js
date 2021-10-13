@@ -12,4 +12,4 @@ export const fetchShop = () => fetchRecords(
   },
 );
 
-export const getLocalShopList = () => getStorageObj(shopListKey);
+export const getLocalShop = () => getStorageObj(shopListKey);

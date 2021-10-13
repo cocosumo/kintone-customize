@@ -1,25 +1,30 @@
-import { getLocalShopList } from '../backend/fetchShop';
-import { getLocalAgentsList } from '../backend/fetchEmployees';
+import { getLocalAgentsByShop, getLocalAgents } from '../backend/fetchEmployees';
+import { mySelectEmp, mySelectShop } from './utilsDOM';
 
-export const selectEmpID = 'my_selectEmp';
-export const selectShopID = 'my_selectShop';
-
-export const addOptionsToSelect = (selectId, list) => {
+export const addOptionsToSelect = (selectEl, list) => {
   const completeOptions = [
     ['【選択してください】', 'init'],
     ['全レコードを表示', 'listall'],
   ].concat(list.map((item) => ([item, item])));
 
-  $(`#${selectId}`)
+  $(selectEl)
     .append(
       completeOptions.map(([text, val]) => new Option(text, val)),
     );
 };
 
 export const populateShopSelect = () => {
-  addOptionsToSelect(selectShopID, getLocalShopList());
+  addOptionsToSelect(mySelectShop(), getLocalShopList());
 };
 
-export const populateEmpSelect = (list = getLocalAgentsList()) => {
-  addOptionsToSelect(selectEmpID, list);
+export const populateEmpSelect = (list = getLocalAgents()) => {
+  addOptionsToSelect(mySelectEmp(), list);
+};
+
+export const populateEmpSelectByStore = (selectedStore) => {
+  populateEmpSelect(
+    selectedStore
+      ? getLocalAgentsByShop(selectedStore)
+      : getLocalAgents(),
+  );
 };
