@@ -19,6 +19,6 @@ export const populateShopSelect = () => {
   addOptionsToSelect(selectShopID, getLocalShopList());
 };
 
-export const populateEmpSelect = () => {
-  addOptionsToSelect(selectEmpID, getLocalEmpList());
+export const populateEmpSelect = (list = getLocalEmpList()) => {
+  addOptionsToSelect(selectEmpID, list);
 };
