@@ -1,8 +1,8 @@
 import { fetchRecords } from '../../../kintone-api/fetchRecords';
-import { empListKey } from '../constants';
 import excludedShopQuery from './utils';
 
 const appId = 34;
+export const empListKey = 'app86社員リスト';
 
 export const fetchAgents = () => fetchRecords(
   {
