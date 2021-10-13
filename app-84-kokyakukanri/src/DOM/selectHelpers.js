@@ -1,5 +1,7 @@
 import { getLocalShopList } from '../backend/fetchShop';
-import { selectEmpID, selectShopID } from '../constants';
+
+export const selectEmpID = 'my_selectEmp';
+export const selectShopID = 'my_selectShop';
 
 export const addOptionsToSelect = (selectId, list) => {
   const completeOptions = [

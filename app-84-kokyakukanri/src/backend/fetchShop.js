@@ -3,7 +3,9 @@ import excludedShopQuery, { getStorageObj } from './utils';
 
 const appId = 19;
 
-const fetchShop = () => fetchRecords(
+export const shopListKey = 'app86店舗リスト';
+
+export const fetchShop = () => fetchRecords(
   {
     appId,
     condition: excludedShopQuery(),
@@ -11,5 +13,3 @@ const fetchShop = () => fetchRecords(
 );
 
 export const getLocalShopList = () => getStorageObj(shopListKey);
-
-export default fetchShop;
