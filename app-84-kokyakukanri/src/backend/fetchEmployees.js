@@ -19,3 +19,6 @@ export const fetchAgents = () => fetchRecords(
 export const fetchEmployees = () => fetchRecords({ appId });
 
 export const getLocalEmpList = () => getStorageObj(empListKey);
+
+export const getAgentByShop = (selectedShop) => getLocalEmpList()
+  .filter(({ shop }) => shop === selectedShop);
