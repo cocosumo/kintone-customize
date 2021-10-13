@@ -5,9 +5,9 @@ import { fetchAllRecords } from '../../../kintone-api/fetchRecords';
 const recordindexshow = (event) => {
   /* **************************************** 変数宣言部 **************************************** */
   let view; // 現在の一覧ID
-  const viewpursuit = 5519938; // 追客中の一覧ID:[本番用= 5519938]
+  /* const viewpursuit = 5519938; // 追客中の一覧ID:[本番用= 5519938]
   const viewcontract = 5522967; // 契約済の一覧ID:[本番用=5522967]
-  const viewcancel = 5523928; // 中止の一覧ID:[本番用=5523928]
+  const viewcancel = 5523928; // 中止の一覧ID:[本番用=5523928] */
   const viewall = 20; // (すべて)の一覧ID：本番用・テスト用共通 = 20
   const EmpIDname = 'my_selectEmp';
   const ShopIDname = 'my_selectShop';
@@ -48,14 +48,16 @@ const recordindexshow = (event) => {
   /**
    * 社員リストから、対象の役職のみを取り出す処理
    * @param {Array} lists : 社員リストapp86EmployeesD({name: 氏名, shop: 店舗})
+   * @param {string} targetID : optionを追加するselectのID名
+   * @param {string} targetShop : 社員名のリスト化したい対象店舗名
    */
-  function makeEmpList(lists, targetID) {
+  function makeEmpList(lists, targetID, targetShop) {
     let newlists;
     // 【選択してください】と'全レコードを表示'の時には、社員リストには全員追加する
-    if (['init', 'listall'].includes(affShop)) {
+    if (['init', 'listall'].includes(targetShop)) {
       newlists = lists; // listsはそのまま
     } else {
-      newlists = lists.filter((item) => affShop === item.shop);
+      newlists = lists.filter((item) => targetShop === item.shop);
     }
     // 社員リストの配列を、社員名だけのシンプルな配列に変換する
     newlists = newlists.map((item) => (item.name));
@@ -64,31 +66,37 @@ const recordindexshow = (event) => {
   }
 
   /**
-   * 社員名簿のリストから所属店舗(affshop)を取り出し、営業職か判定する(FlgOcpChk)
+   * 社員名簿のリストから所属店舗(affShop)を取り出し、営業職か判定する(FlgOcpChk)
    * @param {array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
+   * @param {string} targetName : 確認対象の社員名
+   * @returns {string} targetShop : 対象社員の所属店舗(affShop)
    */
-  function chkOccupation(lists) {
+  function chkOccupation(lists, targetName) {
+    let targetShop = 'init';
     // 絞り込み表示対象者の所属店舗を設定する
     lists.forEach((item) => {
-      if (item.name === selectName) {
-        affShop = item.shop;
-        console.log('店舗名の初期値 =', affShop);
-        FlgOcpChk = true;
+      if (item.name === targetName) {
+        targetShop = item.shop;
+        console.log('店舗名の初期値 =', targetShop);
+        // FlgOcpChk = true;
       }
     });
+    return targetShop;
   }
 
   /**
-   * 該当の社員名(selectName)の所属店舗をaffshopに格納する処理
+   * 該当の社員名(selectName)の所属店舗をaffShopに格納する処理
    * @param {array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
    */
   function setAffiliationShop(lists) {
-    if (selectName !== 'init' && affShop === 'init') {
-      lists.forEach((item) => {
-        if (selectName === item.name) {
-          affShop = item.shop;
-        }
-      });
+    if (affShop === 'init') {
+      affShop = chkOccupation(lists, selectName);
+      if (affShop !== 'init') {
+        FlgOcpChk = true;
+      } else {
+        // FlgOcpChk = false; //初期値=falseのため、処理省略
+        selectName = 'init';
+      }
     }
   }
 
@@ -168,14 +176,14 @@ const recordindexshow = (event) => {
     localStorage.setItem(app86DateTimeKey, app86DateTimeD);
 
     // 絞り込み表示対象者の所属店舗を設定する
-    chkOccupation(app86EmployeesD); // affshop,FlgOcpChkの更新
+    setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affShop)の更新
     console.log('APIリクエスト時の処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
     console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
     // プルダウンに選択肢を追加する
-    setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affshop)の更新
+
     makeList(app86ShopListD, ShopIDname); // 店舗名
-    makeEmpList(app86EmployeesD, EmpIDname); // 担当名
+    makeEmpList(app86EmployeesD, EmpIDname, affShop); // 担当名
 
     // 一覧の表示状態と、職種により、表示内容を切り替える
     setview();
@@ -188,18 +196,14 @@ const recordindexshow = (event) => {
   }
 
   // 指定の一覧以外このJSを実行しない
-  console.log('表示一覧ID', event.viewId);
-  if (event.viewId === viewpursuit
-    || event.viewId === viewcontract
-    || event.viewId === viewcancel
-    || event.viewId === viewwebbrows) {
+  if (event.viewType === 'list') {
     view = event.viewId; // 現在の一覧IDを格納
   } else {
-    if (event.viewId === viewall) {
+    /* if (event.viewId === viewall) {
       getHeaderSpaceElement().innerText = `上の"(すべて)"をクリックすると、一覧の表示方法が変更されます。
           絞り込み表示をしたい場合には、漏斗(ろうと)のアイコンをクリックし、条件を設定してください。
           詳細は、QA「絞り込み表示、ソートの仕方」を参照してください。`;
-    }
+    } */
     return;
   }
 
@@ -281,12 +285,11 @@ const recordindexshow = (event) => {
   } else {
     // (1-1)(3-2)ローカルストレージにデータが保存されている場合 かつ、(2-2)3時間経過していない場合
     // - - - LocalStrageに保存されている店舗リスト(app86ShopListD)・社員リスト(app86EmployeesD)で処理する
+    setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affShop)の更新
 
     // プルダウンの値を設定する
-    setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affshop)の更新
     makeList(app86ShopListD, ShopIDname); // 店舗名
-    makeEmpList(app86EmployeesD, EmpIDname); // 担当名
-    chkOccupation(app86EmployeesD); // affshop,FlgOcpChkの更新
+    makeEmpList(app86EmployeesD, EmpIDname, affShop); // 担当名
     console.log('ローカルストレージからの処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
     console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
@@ -310,10 +313,10 @@ const recordindexshow = (event) => {
       // 【選択してください】の時は何もしない
     } else {
       $(`#${EmpIDname} > option`).remove(); // プルダウン子要素の初期化
-      makeEmpList(app86EmployeesD, EmpIDname); // 社員名のリスト(プルダウン)の更新
+      makeEmpList(app86EmployeesD, EmpIDname, affShop); // 社員名のリスト(プルダウン)の更新
 
       if (flg1st === false || FlgOcpChk === false) {
-        selectName = 'init';
+        selectName = 'init'; // 店舗が変更されたときは、担当名も初期表示に戻す
       }
       document.getElementById(EmpIDname).value = selectName; // 担当名を設定
     }
