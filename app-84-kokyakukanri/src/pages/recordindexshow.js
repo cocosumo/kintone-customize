@@ -1,5 +1,7 @@
 import { getHeaderMenuSpaceElement, getHeaderSpaceElement, isMobile } from '../../../kintone-api/api';
 import { fetchAllRecords } from '../../../kintone-api/fetchRecords';
+import { makeList, makeEmpList } from '../functions/makeList';
+import chkOccupation from '../functions/chkOccupation';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
@@ -27,63 +29,9 @@ const recordindexshow = (event) => {
   let app86EmployeesD; // 社員リストの保存データ
   const app86ShopListKey = 'app86店舗リスト'; // 店舗リストの保存名(キー)
   let app86ShopListD; // 店舗リストの保存データ
-  const divTime = 10800; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
+  const divTime = 10; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
 
   /* **************************************** 関数宣言部 **************************************** */
-  /**
-   * リストのプルダウンを作成する
-   * @param {array} lists : (inputの例) 店舗リスト[ 店舗名 ,・・・]
-   */
-  function makeList(lists, targetID) {
-    // 「【選択してください】」と「全レコードを表示」を追加
-    $(`#${targetID}`).append($('<option>').html('【選択してください】').val('init'));
-    $(`#${targetID}`).append($('<option>').html('全レコードを表示').val('listall'));
-
-    // 配列の各要素を、セレクトボックスの選択肢(option)に追加する
-    lists.forEach((item) => {
-      $(`#${targetID}`).append($('<option>').html(item).val(item));
-    });
-  }
-
-  /**
-   * 社員リストから、対象の役職のみを取り出す処理
-   * @param {Array} lists : 社員リストapp86EmployeesD({name: 氏名, shop: 店舗})
-   * @param {string} targetID : optionを追加するselectのID名
-   * @param {string} targetShop : 社員名のリスト化したい対象店舗名
-   */
-  function makeEmpList(lists, targetID, targetShop) {
-    let newlists;
-    // 【選択してください】と'全レコードを表示'の時には、社員リストには全員追加する
-    if (['init', 'listall'].includes(targetShop)) {
-      newlists = lists; // listsはそのまま
-    } else {
-      newlists = lists.filter((item) => targetShop === item.shop);
-    }
-    // 社員リストの配列を、社員名だけのシンプルな配列に変換する
-    newlists = newlists.map((item) => (item.name));
-
-    makeList(newlists, targetID); // セレクトボックスに、該当の社員名を追加する
-  }
-
-  /**
-   * 社員名簿のリストから所属店舗(affShop)を取り出し、営業職か判定する(FlgOcpChk)
-   * @param {array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
-   * @param {string} targetName : 確認対象の社員名
-   * @returns {string} targetShop : 対象社員の所属店舗(affShop)
-   */
-  function chkOccupation(lists, targetName) {
-    let targetShop = 'init';
-    // 絞り込み表示対象者の所属店舗を設定する
-    lists.forEach((item) => {
-      if (item.name === targetName) {
-        targetShop = item.shop;
-        console.log('店舗名の初期値 =', targetShop);
-        // FlgOcpChk = true;
-      }
-    });
-    return targetShop;
-  }
-
   /**
    * 該当の社員名(selectName)の所属店舗をaffShopに格納する処理
    * @param {array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
@@ -141,7 +89,7 @@ const recordindexshow = (event) => {
     // 店舗名のプルダウンから除外する項目を配列に格納する
     let ExclusionShop = ['すてくら', 'なし', '本部', 'システム管理部', '本社', '買取店'];
     const paramsShop = {
-      app: 19,
+      appId: 19,
       fields: ['店舗名'],
       filterCond: ExclusionShop.map((item) => '店舗名 not like '.concat('"', item, '"')).join(' and '),
     };
@@ -149,7 +97,7 @@ const recordindexshow = (event) => {
     // パラメータ設定 - fetchAllRecordsを使用して、社員名簿から社員一覧の配列を取得する
     ExclusionShop = ExclusionShop.map((item) => 'ルックアップ＿店舗名 not like '.concat('"', item, '"')).join(' and ');
     const paramsEmp = {
-      app: 34,
+      appId: 34,
       fields: ['文字列＿氏名', '役職', 'ルックアップ＿店舗名', '状態'],
       filterCond: `状態 not in ("無効") and 役職 in ("営業","主任","店長") and ${ExclusionShop}`,
     };
