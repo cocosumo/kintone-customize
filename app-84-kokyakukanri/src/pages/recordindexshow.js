@@ -7,9 +7,6 @@ import chkOccupation from '../functions/chkOccupation';
 const recordindexshow = (event) => {
   /* **************************************** 変数宣言部 **************************************** */
   let view; // 現在の一覧ID
-  /* const viewpursuit = 5519938; // 追客中の一覧ID:[本番用= 5519938]
-  const viewcontract = 5522967; // 契約済の一覧ID:[本番用=5522967]
-  const viewcancel = 5523928; // 中止の一覧ID:[本番用=5523928] */
   const viewall = 20; // (すべて)の一覧ID：本番用・テスト用共通 = 20
   const EmpIDname = 'my_selectEmp';
   const ShopIDname = 'my_selectShop';
@@ -29,7 +26,7 @@ const recordindexshow = (event) => {
   let app86EmployeesD; // 社員リストの保存データ
   const app86ShopListKey = 'app86店舗リスト'; // 店舗リストの保存名(キー)
   let app86ShopListD; // 店舗リストの保存データ
-  const divTime = 10; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
+  const divTime = 10800; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
 
   /* **************************************** 関数宣言部 **************************************** */
   /**
