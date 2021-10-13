@@ -1,4 +1,4 @@
-const excludedShopQuery = (shopField = '店舗名') => [
+export const excludedShopQuery = (shopField = '店舗名') => [
   'すてくら',
   '本部',
   'システム管理部',
@@ -8,5 +8,3 @@ const excludedShopQuery = (shopField = '店舗名') => [
   .join(' and ');
 
 export const getStorageObj = (key) => JSON.parse(localStorage.getItem(key));
-
-export default excludedShopQuery;
