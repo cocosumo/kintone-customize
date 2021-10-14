@@ -5,6 +5,7 @@
     },
     "extends": [
         "plugin:react/recommended",
+        "plugin:jsdoc/recommended",
         "airbnb"
     ],
     "parserOptions": {
@@ -20,7 +21,8 @@
         "**/scripts/*"
     ],
     "plugins": [
-        "react"
+        "react",
+        "jsdoc"
     ],
     "rules": {
         "react/prop-types": 0,
