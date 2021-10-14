@@ -1,8 +1,13 @@
+/* 社員データに関するモジュール */
+
 import { fetchRecords } from '../../../kintone-api/fetchRecords';
-import { excludedShopQuery } from './utils';
+import { excludedShopQuery, getStorageObj, setStorageObj } from './utils';
 
 const appId = 34;
+
 export const empListKey = 'app86社員リスト';
+
+export const fetchEmployees = () => fetchRecords({ appId });
 
 export const fetchAgents = () => fetchRecords(
   {
@@ -16,9 +21,18 @@ export const fetchAgents = () => fetchRecords(
   },
 );
 
-export const fetchEmployees = () => fetchRecords({ appId });
+export const fetchNormalizedAgents = async () => (await fetchAgents())
+  .map(({
+    文字列＿氏名,
+    ルックアップ＿店舗名,
+  }) => ({
+    name: 文字列＿氏名.value,
+    shop: ルックアップ＿店舗名.value,
+  }));
 
-export const getLocalAgentsList = () => getStorageObj(empListKey);
+export const setLocalAgents = async () => setStorageObj(empListKey, await fetchNormalizedAgents());
 
-export const getAgentByShop = (selectedShop) => getLocalAgentsList()
+export const getLocalAgents = () => getStorageObj(empListKey);
+
+export const getAgentsByShop = (selectedShop) => getLocalAgents()
   .filter(({ shop }) => shop === selectedShop);
