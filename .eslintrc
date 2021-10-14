@@ -1,12 +1,15 @@
 {
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jquery": true
     },
     "extends": [
         "plugin:react/recommended",
         "plugin:jsdoc/recommended",
-        "airbnb"
+        "@cybozu",
+        "@cybozu/eslint-config/presets/react",
+        "@cybozu/eslint-config/globals/kintone"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -31,8 +34,6 @@
             0
         ],
         "react/react-in-jsx-scope": 0,
-        "no-undef": 0,
-        "no-restricted-syntax": 0,
         "no-param-reassign": [
             "error",
             {

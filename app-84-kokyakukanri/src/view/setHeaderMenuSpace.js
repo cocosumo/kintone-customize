@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { getHeaderMenuSpaceElement, isMobile } from '../../../kintone-api/api';
+import {getHeaderMenuSpaceElement, isMobile} from '../../../kintone-api/api';
 import FilterForm from './FilterForm';
 
 import filterForm from './filterForm.html';
@@ -34,7 +34,7 @@ export const setHeaderMenuSpaceElementByString = () => {
     );
 };
 
-/* 2. JQUeryでhtmlファイルを利用する。実行時間：18ms */
+/* 2. JQUeryでhtmlファイルを利用する。実行時間：28ms */
 export const setHeaderMenuSpaceElement = async () => {
   $(getHeaderMenuSpaceElement())
     .append(filterForm)
@@ -58,7 +58,7 @@ const generateSelect = (containerName, labelName, selectName) => {
   return selectContainer;
 };
 
-/* 3 なまのJSで。実行時間：20ms */
+/* 3 なまのJSで。実行時間：18ms */
 export const setHeaderMenuSpaceElementByVanillaJS = () => {
   const kintoneHeader = getHeaderMenuSpaceElement();
   const formContainer = document.createElement('div');
@@ -74,7 +74,7 @@ export const setHeaderMenuSpaceElementByVanillaJS = () => {
   kintoneHeader.append(formContainer);
 };
 
-/* 4. React 実行時間: 9ms */
+/* 4. React 実行時間: 11ms */
 export const setHeaderMenuSpaceElementByReact = () => {
   ReactDOM.render(
     <FilterForm />,

@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export const excludedShopQuery = (shopField = '店舗名') => [
   'すてくら',
   '本部',
@@ -6,6 +7,3 @@ export const excludedShopQuery = (shopField = '店舗名') => [
 ]
   .map((item) => `${shopField} not like "${item}"`)
   .join(' and ');
-
-export const getStorageObj = (key) => JSON.parse(localStorage.getItem(key));
-export const setStorageObj = (key, val) => localStorage.setItem(key, JSON.stringify(val));
