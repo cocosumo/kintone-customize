@@ -2,14 +2,16 @@ import { getHeaderMenuSpaceElement, getHeaderSpaceElement, isMobile } from '../.
 import { fetchAllRecords } from '../../../kintone-api/fetchRecords';
 import { makeList, makeEmpList } from '../functions/makeList';
 import chkOccupation from '../functions/chkOccupation';
+import { selectEmpID, selectShopID, mySelectShop, mySelectEmp } from '../view/utilsDOM';
+import selectShopOnChangeHandler from '../handlers/selectShopOnChangeHandler'
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
   /* **************************************** 変数宣言部 **************************************** */
   let view; // 現在の一覧ID
-  const viewall = 20; // (すべて)の一覧ID：本番用・テスト用共通 = 20
-  const EmpIDname = 'my_selectEmp';
-  const ShopIDname = 'my_selectShop';
+  // const viewall = 20; // (すべて)の一覧ID：本番用・テスト用共通 = 20
+  // const EmpIDname = 'my_selectEmp';
+  // const ShopIDname = 'my_selectShop';
 
   let affShop = 'init'; // 店舗名の初期値を格納する変数
   let selectName; // 選択されている社員名(初期値はログインユーザー名)
@@ -56,11 +58,11 @@ const recordindexshow = (event) => {
     if (FlgOcpChk === false) {
       // console.log('営業職ではない');
       if (affShop !== 'init') {
-        document.getElementById(ShopIDname).value = affShop;
-        document.getElementById(EmpIDname).value = 'listall';
+        document.getElementById(selectShopID).value = affShop;
+        document.getElementById(selectEmpID).value = 'listall';
       } else {
-        document.getElementById(ShopIDname).value = 'init';
-        document.getElementById(EmpIDname).value = 'init';
+        document.getElementById(selectShopID).value = 'init';
+        document.getElementById(selectEmpID).value = 'init';
       }
     } else if (flg1st === true) {
       // 初回にログインユーザー名でフィルタリングする
@@ -73,8 +75,8 @@ const recordindexshow = (event) => {
     } else if (flg1st === false) {
       // 初回ログインではない場合
       // console.log('初回ではない かつ 営業職:', affShop, ' ', selectName);
-      document.getElementById(ShopIDname).value = affShop;
-      document.getElementById(EmpIDname).value = selectName;
+      document.getElementById(selectShopID).value = affShop;
+      document.getElementById(selectEmpID).value = selectName;
     }
   }
 
@@ -127,8 +129,8 @@ const recordindexshow = (event) => {
 
     // プルダウンに選択肢を追加する
 
-    makeList(app86ShopListD, ShopIDname); // 店舗名
-    makeEmpList(app86EmployeesD, EmpIDname, affShop); // 担当名
+    makeList(app86ShopListD, selectShopID); // 店舗名
+    makeEmpList(app86EmployeesD, selectEmpID, affShop); // 担当名
 
     // 一覧の表示状態と、職種により、表示内容を切り替える
     setview();
@@ -136,7 +138,7 @@ const recordindexshow = (event) => {
 
   /* **************************************** 処理実装部 **************************************** */
   // ボタンの増殖防止
-  if (document.getElementById(EmpIDname) !== null) {
+  if (document.getElementById(selectEmpID) !== null) {
     return;
   }
 
@@ -233,8 +235,8 @@ const recordindexshow = (event) => {
     setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affShop)の更新
 
     // プルダウンの値を設定する
-    makeList(app86ShopListD, ShopIDname); // 店舗名
-    makeEmpList(app86EmployeesD, EmpIDname, affShop); // 担当名
+    makeList(app86ShopListD, selectShopID); // 店舗名
+    makeEmpList(app86EmployeesD, selectEmpID, affShop); // 担当名
     console.log('ローカルストレージからの処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
     console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
@@ -242,13 +244,16 @@ const recordindexshow = (event) => {
     setview();
   }
 
-  // プルダウン変更時の処理
-  const myselectShop = document.getElementById('my_selectShop');
-  const myselectEmp = document.getElementById('my_selectEmp');
-
   // 店舗名のプルダウン変更時の処理
-  myselectShop.onchange = () => {
-    affShop = document.getElementById(ShopIDname).value;
+  const paramsShopChange = {
+    TrgtArray: app86EmployeesD,
+    Flag1st: flg1st,
+    FlagOcp: FlgOcpChk,
+    TrgtName: selectName
+  };
+  mySelectShop().onchange = () => selectShopOnChangeHandler(paramsShopChange);
+    /* 
+    affShop = document.getElementById(selectShopID).value;
     // console.log('店舗名のプルダウンに変更あり 所属店舗= ', affShop);
     if (affShop === 'listall') {
       // '全てのレコードを表示'の時の処理
@@ -257,23 +262,23 @@ const recordindexshow = (event) => {
     } else if (affShop === 'init') {
       // 【選択してください】の時は何もしない
     } else {
-      $(`#${EmpIDname} > option`).remove(); // プルダウン子要素の初期化
-      makeEmpList(app86EmployeesD, EmpIDname, affShop); // 社員名のリスト(プルダウン)の更新
+      $(`#${selectEmpID} > option`).remove(); // プルダウン子要素の初期化
+      makeEmpList(app86EmployeesD, selectEmpID, affShop); // 社員名のリスト(プルダウン)の更新
 
       if (flg1st === false || FlgOcpChk === false) {
         selectName = 'init'; // 店舗が変更されたときは、担当名も初期表示に戻す
       }
-      document.getElementById(EmpIDname).value = selectName; // 担当名を設定
+      document.getElementById(selectEmpID).value = selectName; // 担当名を設定
     }
-  };
+  };     */
 
   // 担当者のプルダウン変更時の処理
-  myselectEmp.onchange = () => {
+  mySelectEmp().onchange = () => {
     // console.log('担当名のプルダウンに変更あり');
-    if (document.getElementById(EmpIDname).value === 'listall') {
+    if (document.getElementById(selectEmpID).value === 'listall') {
       // 該当店舗の全てのレコードを表示
       const selectField = '店舗名'; // フィルタリング対象のフィールド名
-      let shop = document.getElementById(ShopIDname).value;
+      let shop = document.getElementById(selectShopID).value;
       if (shop.indexOf('店') !== -1) {
         shop = shop.substring(0, shop.indexOf('店'));
         // console.log('店舗名', shop);
@@ -281,11 +286,11 @@ const recordindexshow = (event) => {
       const query = `${selectField} like "${shop}"`;
       window.location.href = `${window.location.origin
                           + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
-    } else if (document.getElementById(EmpIDname).value === 'init') {
+    } else if (document.getElementById(selectEmpID).value === 'init') {
       // デフォルト値・何もしない
     } else {
       const selectField = '担当名'; // フィルタリング対象のフィールド名
-      const member = document.getElementById(EmpIDname).value;
+      const member = document.getElementById(selectEmpID).value;
       const Firstname = member.slice(member.indexOf(' ') + 1);
       const Lastname = member.substring(0, member.indexOf(' '));
       const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
