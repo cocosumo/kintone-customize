@@ -4,15 +4,12 @@ import { makeList, makeEmpList } from '../functions/makeList';
 import chkOccupation from '../functions/chkOccupation';
 import { selectEmpID, selectShopID, mySelectShop, mySelectEmp } from '../view/utilsDOM';
 import selectShopOnChangeHandler from '../handlers/selectShopOnChangeHandler'
+import selectEmpOnChangeHandler from '../handlers/selectEmpOnChangeHandler'
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
   /* **************************************** 変数宣言部 **************************************** */
   let view; // 現在の一覧ID
-  // const viewall = 20; // (すべて)の一覧ID：本番用・テスト用共通 = 20
-  // const EmpIDname = 'my_selectEmp';
-  // const ShopIDname = 'my_selectShop';
-
   let affShop = 'init'; // 店舗名の初期値を格納する変数
   let selectName; // 選択されている社員名(初期値はログインユーザー名)
   let selectNameL; // ログインユーザーの苗字
@@ -146,11 +143,6 @@ const recordindexshow = (event) => {
   if (event.viewType === 'list') {
     view = event.viewId; // 現在の一覧IDを格納
   } else {
-    /* if (event.viewId === viewall) {
-      getHeaderSpaceElement().innerText = `上の"(すべて)"をクリックすると、一覧の表示方法が変更されます。
-          絞り込み表示をしたい場合には、漏斗(ろうと)のアイコンをクリックし、条件を設定してください。
-          詳細は、QA「絞り込み表示、ソートの仕方」を参照してください。`;
-    } */
     return;
   }
 
@@ -244,7 +236,7 @@ const recordindexshow = (event) => {
     setview();
   }
 
-  // 店舗名のプルダウン変更時の処理
+  // 店舗名のプルダウン変更時の処理　⇒【！！！要対応！！！】以降、view/events.jsに処理を移管する
   const paramsShopChange = {
     TrgtArray: app86EmployeesD,
     Flag1st: flg1st,
@@ -252,52 +244,9 @@ const recordindexshow = (event) => {
     TrgtName: selectName
   };
   mySelectShop().onchange = () => selectShopOnChangeHandler(paramsShopChange);
-    /* 
-    affShop = document.getElementById(selectShopID).value;
-    // console.log('店舗名のプルダウンに変更あり 所属店舗= ', affShop);
-    if (affShop === 'listall') {
-      // '全てのレコードを表示'の時の処理
-      window.location.href = `${window.location.origin
-                              + window.location.pathname}?view=${viewall}`;
-    } else if (affShop === 'init') {
-      // 【選択してください】の時は何もしない
-    } else {
-      $(`#${selectEmpID} > option`).remove(); // プルダウン子要素の初期化
-      makeEmpList(app86EmployeesD, selectEmpID, affShop); // 社員名のリスト(プルダウン)の更新
-
-      if (flg1st === false || FlgOcpChk === false) {
-        selectName = 'init'; // 店舗が変更されたときは、担当名も初期表示に戻す
-      }
-      document.getElementById(selectEmpID).value = selectName; // 担当名を設定
-    }
-  };     */
 
   // 担当者のプルダウン変更時の処理
-  mySelectEmp().onchange = () => {
-    // console.log('担当名のプルダウンに変更あり');
-    if (document.getElementById(selectEmpID).value === 'listall') {
-      // 該当店舗の全てのレコードを表示
-      const selectField = '店舗名'; // フィルタリング対象のフィールド名
-      let shop = document.getElementById(selectShopID).value;
-      if (shop.indexOf('店') !== -1) {
-        shop = shop.substring(0, shop.indexOf('店'));
-        // console.log('店舗名', shop);
-      }
-      const query = `${selectField} like "${shop}"`;
-      window.location.href = `${window.location.origin
-                          + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
-    } else if (document.getElementById(selectEmpID).value === 'init') {
-      // デフォルト値・何もしない
-    } else {
-      const selectField = '担当名'; // フィルタリング対象のフィールド名
-      const member = document.getElementById(selectEmpID).value;
-      const Firstname = member.slice(member.indexOf(' ') + 1);
-      const Lastname = member.substring(0, member.indexOf(' '));
-      const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
-      window.location.href = `${window.location.origin
-                           + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
-    }
-  };
+  mySelectEmp().onchange = () => selectEmpOnChangeHandler(view);
 };
 
 export default recordindexshow;
