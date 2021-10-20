@@ -1,23 +1,43 @@
 
-/*
-ただの例です。
-実際はチームでコーディング規約を統一させるのがベストですが、
-いろいろやってみて、とりあえず自由！ｗ
+import {useRef, useState} from 'react';
+import Webcam from 'react-webcam';
 
-ある程度慣れたら、規約を明確にしましょう。
-*/
 
 const TestComponent = () => {
+
+  const [imgSrc, setImgSrc] = useState(null);
+  const webCamRef = useRef<any>(null);
+
+  const onCaptureHandler = () => {
+    setImgSrc(webCamRef.current?.getScreenshot());
+    console.log(imgSrc);
+  };
+
   return (
-    <h1 style={{
-      'width': '100%',
-      'textAlign': 'center',
-      'color': 'red',
-      'fontWeight': 'bold'
-    }}
-    >
-      環境準備成功！おめでとうございます！いいもの作りましょう！！
-    </h1>);
+    <div style={{width: '100%'}}>
+      <h1
+        style={{
+          width: '100%',
+          textAlign: 'center',
+          color: 'red',
+          fontWeight: 'bold',
+        }}
+      >
+        機械学習
+      </h1>
+
+      <div style={{width: '300px', margin: '0px auto', overflow: 'hidden'}}>
+        <Webcam ref={webCamRef} style={{margin: '0px auto'}} width="300px" />
+        <button onClick={onCaptureHandler}>画像を取得</button>
+      </div>
+      {imgSrc && (
+        <img
+          src={imgSrc}
+          alt="hello"
+        />
+      )}
+    </div>
+  );
 };
 
 export default TestComponent;

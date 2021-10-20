@@ -8,6 +8,7 @@ module.exports = function(api) {
   const plugins = [
     [
       '@babel/proposal-class-properties',
+      '@babel/plugin-proposal-optional-chaining'
     ],
   ];
   return {

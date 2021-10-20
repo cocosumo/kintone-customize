@@ -17,6 +17,7 @@
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.15.0",
@@ -31,6 +32,7 @@
     "eslint": "^8.0.0",
     "eslint-plugin-react": "^7.26.1",
     "fork-ts-checker-webpack-plugin": "^6.3.4",
+    "npm-run-all": "^4.1.5",
     "ts-loader": "^9.2.6",
     "typescript": "^4.4.4",
     "webpack": "^5.58.1",
@@ -40,6 +42,8 @@
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.4",
     "date-fns": "^2.25.0",
-    "react": "^17.0.2"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-webcam": "^6.0.0"
   }
 }

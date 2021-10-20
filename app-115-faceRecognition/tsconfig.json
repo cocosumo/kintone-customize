@@ -10,8 +10,8 @@
     "declarationDir": "dist/types",
     "declaration": true,
     "jsx": "react-jsx",
-    "target": "es5",
-    "module": "es2015",
+    "target": "es6",
+    "module": "es2020",
     "strict": true,
     "moduleResolution": "node"
   },
