@@ -1,15 +1,16 @@
-import { getHeaderMenuSpaceElement, getHeaderSpaceElement, isMobile } from '../../../kintone-api/api';
-import { fetchAllRecords } from '../../../kintone-api/fetchRecords';
-import { makeList, makeEmpList } from '../functions/makeList';
+import {getHeaderSpaceElement} from '../../../kintone-api/api';
+import {makeList, makeEmpList} from '../functions/makeList';
 import chkOccupation from '../functions/chkOccupation';
-import { selectEmpID, selectShopID, mySelectShop, mySelectEmp } from '../view/utilsDOM';
-import selectShopOnChangeHandler from '../handlers/selectShopOnChangeHandler'
-import selectEmpOnChangeHandler from '../handlers/selectEmpOnChangeHandler'
+import {setViewCode, getViewCode, selectEmpID, selectShopID, mySelectShop, mySelectEmp} from '../view/utilsDOM';
+import selectShopOnChangeHandler from '../handlers/selectShopOnChangeHandler';
+import selectEmpOnChangeHandler from '../handlers/selectEmpOnChangeHandler';
+import {shopListKey, setLocalShops, getLocalShops} from '../backend/fetchShop';
+import {empListKey, getAgentsByShop, setLocalAgents, getAgentsNamesByShop, getLocalAgents} from '../backend/fetchEmployees';
+import {setHeaderMenuSpaceElementByReact} from '../view/setHeaderMenuSpace';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
   /* **************************************** 変数宣言部 **************************************** */
-  let view; // 現在の一覧ID
   let affShop = 'init'; // 店舗名の初期値を格納する変数
   let selectName; // 選択されている社員名(初期値はログインユーザー名)
   let selectNameL; // ログインユーザーの苗字
@@ -21,16 +22,15 @@ const recordindexshow = (event) => {
   // ローカルストレージの活用をする
   const app86DateTimeKey = 'app86日時'; // 日時の保存名(キー)
   let app86DateTimeD; // 日時の保存データ
-  const app86EmployeesKey = 'app86社員リスト'; // 社員リストの保存名(キー)
   let app86EmployeesD; // 社員リストの保存データ
-  const app86ShopListKey = 'app86店舗リスト'; // 店舗リストの保存名(キー)
   let app86ShopListD; // 店舗リストの保存データ
-  const divTime = 10800; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
+  const divTime = 20; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
 
   /* **************************************** 関数宣言部 **************************************** */
   /**
    * 該当の社員名(selectName)の所属店舗をaffShopに格納する処理
-   * @param {array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
+   *
+   * @param {Array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
    */
   function setAffiliationShop(lists) {
     if (affShop === 'init') {
@@ -46,6 +46,7 @@ const recordindexshow = (event) => {
 
   /**
    * プルダウンの内容表示を切り替える処理
+   *
    */
   function setview() {
     // 所属店舗の値を更新する
@@ -68,7 +69,7 @@ const recordindexshow = (event) => {
       const query = `${selectField} like "${selectNameL}" and ${selectField} like "${selectNameF}"`;
       // console.log('query = ', query);
       window.location.href = `${window.location.origin
-                              + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+                              + window.location.pathname}?view=${getViewCode()}&query=${encodeURI(query)}`;
     } else if (flg1st === false) {
       // 初回ログインではない場合
       // console.log('初回ではない かつ 営業職:', affShop, ' ', selectName);
@@ -81,39 +82,8 @@ const recordindexshow = (event) => {
    * プルダウン店舗名と担当名のメンバを取得(作成)する
    */
   async function getLists() {
-    // パラメータ設定 - fetchAllRecordsを使用して、店舗リストから店舗の一覧を配列で取得
-    // 店舗名のプルダウンから除外する項目を配列に格納する
-    let ExclusionShop = ['すてくら', 'なし', '本部', 'システム管理部', '本社', '買取店'];
-    const paramsShop = {
-      appId: 19,
-      fields: ['店舗名'],
-      filterCond: ExclusionShop.map((item) => '店舗名 not like '.concat('"', item, '"')).join(' and '),
-    };
-
-    // パラメータ設定 - fetchAllRecordsを使用して、社員名簿から社員一覧の配列を取得する
-    ExclusionShop = ExclusionShop.map((item) => 'ルックアップ＿店舗名 not like '.concat('"', item, '"')).join(' and ');
-    const paramsEmp = {
-      appId: 34,
-      fields: ['文字列＿氏名', '役職', 'ルックアップ＿店舗名', '状態'],
-      filterCond: `状態 not in ("無効") and 役職 in ("営業","主任","店長") and ${ExclusionShop}`,
-    };
-
-    app86ShopListD = (await fetchAllRecords(paramsShop)); // 店舗リストから店舗の一覧を取得する
-    app86EmployeesD = (await fetchAllRecords(paramsEmp)); // 社員名簿から社員の一覧を取得する
-
-    // - 取得した店舗リストを、ローカルストレージに格納する
-    // console.log('app86ShopListD ：', app86ShopListD);
-    app86ShopListD = app86ShopListD.records.map((item) => item.店舗名.value);
-    const newShopList = JSON.stringify(app86ShopListD);
-    localStorage.setItem(app86ShopListKey, newShopList);
-
-    // - 取得した社員リストを、ローカルストレージに格納する
-    // console.log('app86EmployeesD ：', app86EmployeesD);
-    app86EmployeesD = app86EmployeesD.records.map(({ 文字列＿氏名, ルックアップ＿店舗名 }) => (
-      { name: 文字列＿氏名.value, shop: ルックアップ＿店舗名.value }));
-
-    const newEmpList = JSON.stringify(app86EmployeesD);
-    localStorage.setItem(app86EmployeesKey, newEmpList);
+    await setLocalShops(); // 店舗リストのデータ取得とローカルストレージへの格納
+    await setLocalAgents(); // 社員リストのデータ取得とローカルストレージへの格納
 
     // - 現在の日時を、LocalStrageに格納する
     app86DateTimeD = JSON.stringify(Date.now() / 1000);
@@ -125,9 +95,8 @@ const recordindexshow = (event) => {
     console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
     // プルダウンに選択肢を追加する
-
-    makeList(app86ShopListD, selectShopID); // 店舗名
-    makeEmpList(app86EmployeesD, selectEmpID, affShop); // 担当名
+    makeList(getLocalShops(), selectShopID); // 店舗名
+    makeEmpList(getAgentsNamesByShop(), selectEmpID, affShop); // 担当名
 
     // 一覧の表示状態と、職種により、表示内容を切り替える
     setview();
@@ -140,30 +109,13 @@ const recordindexshow = (event) => {
   }
 
   // 指定の一覧以外このJSを実行しない
-  if (event.viewType === 'list') {
-    view = event.viewId; // 現在の一覧IDを格納
-  } else {
+  if (event.viewType !== 'list') {
     return;
   }
 
-  // プルダウンメニューの要素を設定する
-  $(getHeaderMenuSpaceElement()).append(
-    ` <div class='ListBoxGroup'>
-        <div class='ShopListBox'>
-          <label id='my_textShop'>店舗名: &nbsp;</label>
-          <select id='my_selectShop'></select>
-        </div>
-        <div class='ViewAdjustment'>
-          ${isMobile() ? '<br>' : '&nbsp;'}
-        </div>
-        <div class='EmpListBox'>
-          <label id='my_textEmp'>担当名: &nbsp;</label>
-          <select id='my_selectEmp'></select>
-        </div>
-      </div>`,
-  );
+  setViewCode(event.viewId);
+  setHeaderMenuSpaceElementByReact(); // プルダウンメニューの要素を設定する
 
-  // 補助メッセージを表示する
   getHeaderSpaceElement().append('※[担当名]には[店長][主任][営業]の方を表示しています\n');
 
   // 担当名に表示する氏名の取り出しをする
@@ -203,8 +155,11 @@ const recordindexshow = (event) => {
 
   // LocalStrageに日時が保存されているか確認する - (1)
   app86DateTimeD = JSON.parse(localStorage.getItem(app86DateTimeKey));
-  app86EmployeesD = JSON.parse(localStorage.getItem(app86EmployeesKey));
-  app86ShopListD = JSON.parse(localStorage.getItem(app86ShopListKey));
+  app86EmployeesD = getLocalAgents();
+  app86ShopListD = getLocalShops();
+
+  // localStorage.removeItem(shopListKey); // debag用、のちに削除すること
+
   const now = (Date.now()) / 1000;
   console.log('1-1 経過時間(秒)：', (now - app86DateTimeD));
 
@@ -212,12 +167,13 @@ const recordindexshow = (event) => {
   if ((app86DateTimeD === null) || (app86EmployeesD === null)
    || (app86ShopListD === null) || ((now - app86DateTimeD) >= divTime)) {
     app86DateTimeD = JSON.stringify(now);
-    localStorage.setItem(app86DateTimeKey, app86DateTimeD);
 
     // ローカルストレージを一旦消去する
     localStorage.removeItem(app86DateTimeKey);
-    localStorage.removeItem(app86EmployeesKey);
-    localStorage.removeItem(app86ShopListKey);
+    localStorage.removeItem(empListKey);
+    localStorage.removeItem(shopListKey);
+
+    localStorage.setItem(app86DateTimeKey, app86DateTimeD);
 
     // 社員名簿アプリ及び、店舗リストアプリから一覧情報を取得する
     getLists();
@@ -228,7 +184,8 @@ const recordindexshow = (event) => {
 
     // プルダウンの値を設定する
     makeList(app86ShopListD, selectShopID); // 店舗名
-    makeEmpList(app86EmployeesD, selectEmpID, affShop); // 担当名
+    // makeEmpList(app86EmployeesD, selectEmpID, affShop); // 担当名
+    getAgentsByShop(affShop);
     console.log('ローカルストレージからの処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
     console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
@@ -236,7 +193,7 @@ const recordindexshow = (event) => {
     setview();
   }
 
-  // 店舗名のプルダウン変更時の処理　⇒【！！！要対応！！！】以降、view/events.jsに処理を移管する
+  // 店舗名のプルダウン変更時の処理 ⇒【！！！要対応！！！】以降、view/events.jsに処理を移管する
   const paramsShopChange = {
     TrgtArray: app86EmployeesD,
     Flag1st: flg1st,
@@ -246,7 +203,7 @@ const recordindexshow = (event) => {
   mySelectShop().onchange = () => selectShopOnChangeHandler(paramsShopChange);
 
   // 担当者のプルダウン変更時の処理
-  mySelectEmp().onchange = () => selectEmpOnChangeHandler(view);
+  mySelectEmp().onchange = () => selectEmpOnChangeHandler();
 };
 
 export default recordindexshow;
