@@ -27,15 +27,21 @@ const TestComponent = () => {
       </h1>
 
       <div style={{width: '300px', margin: '0px auto', overflow: 'hidden'}}>
-        <Webcam ref={webCamRef} style={{margin: '0px auto'}} width="300px" />
-        <button onClick={onCaptureHandler}>画像を取得</button>
-      </div>
-      {imgSrc && (
-        <img
-          src={imgSrc}
-          alt="hello"
+        <Webcam
+          ref={webCamRef}
+          style={{margin: '0px auto'}}
+          screenshotFormat="image/jpeg"
+          width="300px"
         />
-      )}
+        <button onClick={onCaptureHandler}>画像を取得</button>
+        {imgSrc && (
+          <img
+            src={imgSrc}
+            alt="hello"
+          />
+        )}
+      </div>
+
     </div>
   );
 };
