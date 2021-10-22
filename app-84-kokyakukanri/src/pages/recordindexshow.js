@@ -1,107 +1,24 @@
 import {getHeaderSpaceElement} from '../../../kintone-api/api';
-import {makeList, makeEmpList} from '../functions/makeList';
-import chkOccupation from '../functions/chkOccupation';
-import {setViewCode, getViewCode, selectEmpID, selectShopID, mySelectShop, mySelectEmp} from '../view/utilsDOM';
+import {makeList} from '../backend/makeList';
+import {setViewCode, selectEmpID, selectShopID, mySelectShop, mySelectEmp} from '../view/utilsDOM';
 import selectShopOnChangeHandler from '../handlers/selectShopOnChangeHandler';
 import selectEmpOnChangeHandler from '../handlers/selectEmpOnChangeHandler';
-import {shopListKey, setLocalShops, getLocalShops} from '../backend/fetchShop';
-import {empListKey, getAgentsByShop, setLocalAgents, getAgentsNamesByShop, getLocalAgents} from '../backend/fetchEmployees';
+import {getLocalTimes} from '../backend/timeControl';
+import {getLocalShops} from '../backend/fetchShop';
+import {getAgentsByShop, getLocalAgents} from '../backend/fetchEmployees';
 import {setHeaderMenuSpaceElementByReact} from '../view/setHeaderMenuSpace';
+import {setSelectName, flg1st, affShop, selectName, FlgOcpChk, getLists, setAffiliationShop, setview} from '../backend/setName';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
   /* **************************************** 変数宣言部 **************************************** */
-  let affShop = 'init'; // 店舗名の初期値を格納する変数
-  let selectName; // 選択されている社員名(初期値はログインユーザー名)
-  let selectNameL; // ログインユーザーの苗字
-  let selectNameF; // ログインユーザーの名前
-  let flg1st = false; // 初回判定用フラグ true=初回, false=初回ではない
-  let FlgOcpChk = false; // 対象社員の職種を確認するフラグ true:営業, false:営業以外
-  let url = window.location.search;
-
   // ローカルストレージの活用をする
-  const app86DateTimeKey = 'app86日時'; // 日時の保存名(キー)
   let app86DateTimeD; // 日時の保存データ
   let app86EmployeesD; // 社員リストの保存データ
   let app86ShopListD; // 店舗リストの保存データ
   const divTime = 20; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
 
   /* **************************************** 関数宣言部 **************************************** */
-  /**
-   * 該当の社員名(selectName)の所属店舗をaffShopに格納する処理
-   *
-   * @param {Array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
-   */
-  function setAffiliationShop(lists) {
-    if (affShop === 'init') {
-      affShop = chkOccupation(lists, selectName);
-      if (affShop !== 'init') {
-        FlgOcpChk = true;
-      } else {
-        // FlgOcpChk = false; //初期値=falseのため、処理省略
-        selectName = 'init';
-      }
-    }
-  }
-
-  /**
-   * プルダウンの内容表示を切り替える処理
-   *
-   */
-  function setview() {
-    // 所属店舗の値を更新する
-    setAffiliationShop(app86EmployeesD);
-
-    // 一覧の表示状態と、職種により、表示内容を切り替える
-    if (FlgOcpChk === false) {
-      // console.log('営業職ではない');
-      if (affShop !== 'init') {
-        document.getElementById(selectShopID).value = affShop;
-        document.getElementById(selectEmpID).value = 'listall';
-      } else {
-        document.getElementById(selectShopID).value = 'init';
-        document.getElementById(selectEmpID).value = 'init';
-      }
-    } else if (flg1st === true) {
-      // 初回にログインユーザー名でフィルタリングする
-      // console.log('初回 かつ 営業職');
-      const selectField = '担当名'; // フィルタリング対象のフィールド名
-      const query = `${selectField} like "${selectNameL}" and ${selectField} like "${selectNameF}"`;
-      // console.log('query = ', query);
-      window.location.href = `${window.location.origin
-                              + window.location.pathname}?view=${getViewCode()}&query=${encodeURI(query)}`;
-    } else if (flg1st === false) {
-      // 初回ログインではない場合
-      // console.log('初回ではない かつ 営業職:', affShop, ' ', selectName);
-      document.getElementById(selectShopID).value = affShop;
-      document.getElementById(selectEmpID).value = selectName;
-    }
-  }
-
-  /**
-   * プルダウン店舗名と担当名のメンバを取得(作成)する
-   */
-  async function getLists() {
-    await setLocalShops(); // 店舗リストのデータ取得とローカルストレージへの格納
-    await setLocalAgents(); // 社員リストのデータ取得とローカルストレージへの格納
-
-    // - 現在の日時を、LocalStrageに格納する
-    app86DateTimeD = JSON.stringify(Date.now() / 1000);
-    localStorage.setItem(app86DateTimeKey, app86DateTimeD);
-
-    // 絞り込み表示対象者の所属店舗を設定する
-    setAffiliationShop(app86EmployeesD); // 担当名(selectName)と、所属店舗(affShop)の更新
-    console.log('APIリクエスト時の処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
-    console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
-
-    // プルダウンに選択肢を追加する
-    makeList(getLocalShops(), selectShopID); // 店舗名
-    makeEmpList(getAgentsNamesByShop(), selectEmpID, affShop); // 担当名
-
-    // 一覧の表示状態と、職種により、表示内容を切り替える
-    setview();
-  }
-
   /* **************************************** 処理実装部 **************************************** */
   // ボタンの増殖防止
   if (document.getElementById(selectEmpID) !== null) {
@@ -119,7 +36,8 @@ const recordindexshow = (event) => {
   getHeaderSpaceElement().append('※[担当名]には[店長][主任][営業]の方を表示しています\n');
 
   // 担当名に表示する氏名の取り出しをする
-  url = decodeURI(url); // urlをデコーディングする
+  setSelectName();
+  /*  url = decodeURI(url); // urlをデコーディングする
   // URLにqueryが含まれないとき(初回)
   if ((url.indexOf('query=') === -1) && (url.indexOf('q=') === -1)) {
     flg1st = true;
@@ -151,32 +69,21 @@ const recordindexshow = (event) => {
       // ユーザがプルダウン以外で絞り込み表示している場合
       // 処理は実行しない
     }
-  }
+  } */
 
   // LocalStrageに日時が保存されているか確認する - (1)
-  app86DateTimeD = JSON.parse(localStorage.getItem(app86DateTimeKey));
+  app86DateTimeD = getLocalTimes();
   app86EmployeesD = getLocalAgents();
   app86ShopListD = getLocalShops();
 
   // localStorage.removeItem(shopListKey); // debag用、のちに削除すること
 
-  const now = (Date.now()) / 1000;
-  console.log('1-1 経過時間(秒)：', (now - app86DateTimeD));
+  console.log('1-1 経過時間(秒)：', (((Date.now()) / 1000) - app86DateTimeD));
 
   // (1-2)データが保存されていない場合 or 前回のデータの取得から3時間経過している場合
   if ((app86DateTimeD === null) || (app86EmployeesD === null)
-   || (app86ShopListD === null) || ((now - app86DateTimeD) >= divTime)) {
-    app86DateTimeD = JSON.stringify(now);
-
-    // ローカルストレージを一旦消去する
-    localStorage.removeItem(app86DateTimeKey);
-    localStorage.removeItem(empListKey);
-    localStorage.removeItem(shopListKey);
-
-    localStorage.setItem(app86DateTimeKey, app86DateTimeD);
-
-    // 社員名簿アプリ及び、店舗リストアプリから一覧情報を取得する
-    getLists();
+   || (app86ShopListD === null) || (((Date.now() / 1000) - app86DateTimeD) >= divTime)) {
+    getLists(); // 社員名簿アプリ及び、店舗リストアプリから一覧情報を取得する
   } else {
     // (1-1)(3-2)ローカルストレージにデータが保存されている場合 かつ、(2-2)3時間経過していない場合
     // - - - LocalStrageに保存されている店舗リスト(app86ShopListD)・社員リスト(app86EmployeesD)で処理する

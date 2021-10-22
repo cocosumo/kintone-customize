@@ -1,14 +1,16 @@
-import { selectShopID, selectEmpID } from "../view/utilsDOM";
-import { makeEmpList } from "../functions/makeList";
+import {selectShopID, selectEmpID} from '../view/utilsDOM';
+import {makeEmpList} from '../backend/makeList';
 
 /**
  * 店舗名のプルダウンが変更されたときの処理
+ *
  * @param {
  *   @param TrgtArray, 対象の社員名のみが保存されている配列
  *   @param Flag1st, 初回かどうか判定するフラグ(True:初回, False:初回以外)
  *   @param FlagOcp, 営業職かどうか判定するフラグ(True:営業職(主任・店長含む), false:営業職ではない)
  *   @param TrgtName, 対象者の氏名
  * }
+ * @param _params
  */
 const selectShopOnChangeHandler = (_params) => {
   const app86EmployeesD = _params.TrgtArray;
