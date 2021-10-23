@@ -39,6 +39,7 @@
     "webpack-cli": "^4.9.0"
   },
   "dependencies": {
+    "@aws-sdk/client-rekognition": "^3.38.0",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.4",
     "date-fns": "^2.25.0",
