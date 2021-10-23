@@ -35,8 +35,8 @@ const TestComponent = () => {
       const client = new RekognitionClient({
         region: 'ap-northeast-1',
         credentials: {
-          accessKeyId: 'AKIAV2TZFLHTSOSMPJKE',
-          secretAccessKey: '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'
+          accessKeyId: 'xxxxx',
+          secretAccessKey: 'xxxxx'
         }});
 
       client.send(command)
