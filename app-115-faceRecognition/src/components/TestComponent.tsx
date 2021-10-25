@@ -6,7 +6,7 @@ import {RekognitionClient, DetectFacesCommand, DetectLabelsCommand, DetectFacesC
 import convertDataURIToBinary from '../helpers/utils';
 import AIResult from './DetectedLabels';
 import DetectedFace from './DetectedFace';
-
+import {accessKey, secretKey} from '../env';
 
 const TestComponent = () => {
 
@@ -35,8 +35,8 @@ const TestComponent = () => {
       const client = new RekognitionClient({
         region: 'ap-northeast-1',
         credentials: {
-          accessKeyId: 'xxxxx',
-          secretAccessKey: 'xxxxx'
+          accessKeyId: accessKey(),
+          secretAccessKey: secretKey()
         }});
 
       client.send(command)
