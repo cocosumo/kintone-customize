@@ -9,6 +9,7 @@ export let flg1st;
 export let affShop;
 export let selectName; // 選択されている社員名(初期値はログインユーザー名)
 export let FlgOcpChk;
+export let app86EmployeesD;
 
 let selectNameL; // ログインユーザーの苗字
 let selectNameF; // ログインユーザーの名前
@@ -56,13 +57,19 @@ export const setSelectName = () => {
 };
 
 /**
+ * 社員リストを更新する
+ */
+export const updateAgents = () => {
+  app86EmployeesD = getLocalAgents();
+};
+
+/**
  * 該当の社員名(selectName)の所属店舗をaffShopに格納する処理
  *
- * @param agentlists
  */
-export function setAffiliationShop(agentlists) {
+export function setAffiliationShop() {
   if (affShop === 'init') {
-    affShop = chkOccupation(agentlists, selectName);
+    affShop = chkOccupation(app86EmployeesD, selectName);
     if (affShop !== 'init') {
       FlgOcpChk = true;
     } else {
@@ -75,11 +82,10 @@ export function setAffiliationShop(agentlists) {
 /**
  * プルダウンの内容表示を切り替える処理
  *
- * @param agentlists
  */
-export function setview(agentlists) {
+export function setview() {
   // 所属店舗の値を更新する
-  setAffiliationShop(agentlists);
+  setAffiliationShop();
 
   // 一覧の表示状態と、職種により、表示内容を切り替える
   if (!FlgOcpChk) {
@@ -101,7 +107,7 @@ export function setview(agentlists) {
                             + window.location.pathname}?view=${getViewCode()}&query=${encodeURI(query)}`;
   } else if (!flg1st) {
     // 初回ログインではない場合
-    console.log('初回ではない かつ 営業職:', affShop, ' ', selectName);
+    // console.log('初回ではない かつ 営業職:', affShop, ' ', selectName);
     document.getElementById(selectShopID).value = affShop;
     document.getElementById(selectEmpID).value = selectName;
   }
@@ -116,15 +122,15 @@ export async function getLists() {
   setLocalTimes(); // 現在の日時を、LocalStrageに格納する
 
   // 絞り込み表示対象者の所属店舗を設定する
-  const agentlists = getLocalAgents();
-  setAffiliationShop(agentlists); // 担当名(selectName)と、所属店舗(affShop)の更新
+  updateAgents();
+  setAffiliationShop(); // 担当名(selectName)と、所属店舗(affShop)の更新
   console.log('APIリクエスト時の処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
   console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
   // プルダウンに選択肢を追加する
   makeList(getLocalShops(), selectShopID); // 店舗名
-  makeEmpList(agentlists, selectEmpID, affShop); // 担当名
+  makeEmpList(selectEmpID, affShop); // 担当名
 
   // 一覧の表示状態と、職種により、表示内容を切り替える
-  setview(agentlists);
+  setview();
 }

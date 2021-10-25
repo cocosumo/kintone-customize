@@ -1,6 +1,5 @@
 import {selectShopID, selectEmpID} from '../view/utilsDOM';
 import {makeEmpList} from '../backend/makeList';
-import {getLocalAgents} from '../backend/fetchEmployees';
 import {flg1st, FlgOcpChk, selectName} from '../backend/setName';
 
 /**
@@ -8,7 +7,6 @@ import {flg1st, FlgOcpChk, selectName} from '../backend/setName';
  *
  */
 const selectShopOnChangeHandler = () => {
-  const app86EmployeesD = getLocalAgents();
   const viewall = 20; // (すべて)の一覧ID：本番用・テスト用共通 = 20
 
   const affShop = document.getElementById(selectShopID).value;
@@ -21,7 +19,7 @@ const selectShopOnChangeHandler = () => {
     // 【選択してください】の時は何もしない
   } else {
     $(`#${selectEmpID} > option`).remove(); // プルダウン子要素の初期化
-    makeEmpList(app86EmployeesD, selectEmpID, affShop); // 社員名のリスト(プルダウン)の更新
+    makeEmpList(selectEmpID, affShop); // 社員名のリスト(プルダウン)の更新
 
     if (flg1st === false || FlgOcpChk === false) {
       document.getElementById(selectEmpID).value = 'init'; // 店舗が変更されたときは、担当名も初期表示に戻す

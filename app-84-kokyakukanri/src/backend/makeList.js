@@ -1,3 +1,5 @@
+import {app86EmployeesD} from './setName';
+
 /**
  * リストのプルダウンを作成する
  *
@@ -18,17 +20,16 @@ export function makeList(lists, targetID) {
 /**
  * 社員リストから、対象の役職のみを取り出す処理
  *
- * @param {Array} lists : 社員リストapp86EmployeesD({name: 氏名, shop: 店舗})
  * @param {string} targetID : optionを追加するselectのID名
  * @param {string} targetShop : 社員名のリスト化したい対象店舗名
  */
-export function makeEmpList(lists, targetID, targetShop) {
-  let newlists;
+export function makeEmpList(targetID, targetShop) {
+  let newlists = app86EmployeesD;
   // 【選択してください】と'全レコードを表示'の時には、社員リストには全員追加する
   if (['init', 'listall'].includes(targetShop)) {
-    newlists = lists; // listsはそのまま
+    // newlists = newlists; // そのまま
   } else {
-    newlists = lists.filter((item) => targetShop === item.shop);
+    newlists = newlists.filter((item) => targetShop === item.shop);
   }
   // 社員リストの配列を、社員名だけのシンプルな配列に変換する
   newlists = newlists.map((item) => (item.name));
