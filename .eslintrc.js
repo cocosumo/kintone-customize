@@ -1,5 +1,4 @@
 module.exports = {
-  'root': true,
   env: {
     browser: true,
     es2020: true,
@@ -30,8 +29,8 @@ module.exports = {
   'ignorePatterns': [
     '/dist/*.js',
     '**/vendor/*.js',
-    "**/scripts/*",
-    "webpack.config.js"
+    '**/scripts/*',
+    'webpack.config.js'
   ],
   rules: {
     'indent': ['error', 2]
