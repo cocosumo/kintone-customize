@@ -1,9 +1,9 @@
 import {selectShopID, selectEmpID, getViewCode} from '../view/utilsDOM';
-import {setLocalTimes, DateTimeKey} from '../backend/timeControl';
+import {setLocalTimes} from '../backend/timeControl';
 import chkOccupation from './chkOccupation';
-import {empListKey, setLocalAgents, getAgentsNamesByShop, getLocalAgents} from './fetchEmployees';
-import {shopListKey, setLocalShops, getLocalShops} from './fetchShop';
-import {makeList, makeEmpList} from './makeList';
+import {setLocalAgents, getLocalAgents} from './fetchEmployees';
+import {setLocalShops, getLocalShops} from './fetchShop';
+import {makeEmpList, makeList} from './makeList';
 
 export let flg1st;
 export let affShop;
@@ -58,10 +58,11 @@ export const setSelectName = () => {
 /**
  * 該当の社員名(selectName)の所属店舗をaffShopに格納する処理
  *
+ * @param agentlists
  */
-export function setAffiliationShop() {
+export function setAffiliationShop(agentlists) {
   if (affShop === 'init') {
-    affShop = chkOccupation(getLocalAgents(), selectName);
+    affShop = chkOccupation(agentlists, selectName);
     if (affShop !== 'init') {
       FlgOcpChk = true;
     } else {
@@ -74,10 +75,11 @@ export function setAffiliationShop() {
 /**
  * プルダウンの内容表示を切り替える処理
  *
+ * @param agentlists
  */
-export function setview() {
+export function setview(agentlists) {
   // 所属店舗の値を更新する
-  setAffiliationShop();
+  setAffiliationShop(agentlists);
 
   // 一覧の表示状態と、職種により、表示内容を切り替える
   if (FlgOcpChk === false) {
@@ -99,7 +101,7 @@ export function setview() {
                             + window.location.pathname}?view=${getViewCode()}&query=${encodeURI(query)}`;
   } else if (flg1st === false) {
     // 初回ログインではない場合
-    // console.log('初回ではない かつ 営業職:', affShop, ' ', selectName);
+    console.log('初回ではない かつ 営業職:', affShop, ' ', selectName);
     document.getElementById(selectShopID).value = affShop;
     document.getElementById(selectEmpID).value = selectName;
   }
@@ -109,25 +111,21 @@ export function setview() {
  * プルダウン店舗名と担当名のメンバを取得(作成)する
  */
 export async function getLists() {
-
-  // ローカルストレージを一旦消去する(debag用)
-  localStorage.removeItem(DateTimeKey);
-  localStorage.removeItem(empListKey);
-  localStorage.removeItem(shopListKey);
-
   await setLocalShops(); // 店舗リストのデータ取得とローカルストレージへの格納
   await setLocalAgents(); // 社員リストのデータ取得とローカルストレージへの格納
   setLocalTimes(); // 現在の日時を、LocalStrageに格納する
 
   // 絞り込み表示対象者の所属店舗を設定する
-  setAffiliationShop(); // 担当名(selectName)と、所属店舗(affShop)の更新
+  const agentlists = getLocalAgents();
+  setAffiliationShop(agentlists); // 担当名(selectName)と、所属店舗(affShop)の更新
   console.log('APIリクエスト時の処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
   console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
   // プルダウンに選択肢を追加する
   makeList(getLocalShops(), selectShopID); // 店舗名
-  makeEmpList(getAgentsNamesByShop(), selectEmpID, affShop); // 担当名
+  makeEmpList(agentlists, selectEmpID, affShop); // 担当名
+  console.log('チェック', agentlists);
 
   // 一覧の表示状態と、職種により、表示内容を切り替える
-  setview();
+  setview(agentlists);
 }

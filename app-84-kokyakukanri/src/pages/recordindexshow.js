@@ -1,21 +1,24 @@
 import {getHeaderSpaceElement} from '../../../kintone-api/api';
-import {makeList} from '../backend/makeList';
+import {makeEmpList, makeList} from '../backend/makeList';
 import {setViewCode, selectEmpID, selectShopID} from '../view/utilsDOM';
 import addEvents from '../view/events';
 import {getLocalTimes} from '../backend/timeControl';
 import {getLocalShops} from '../backend/fetchShop';
-import {getAgentsByShop, getLocalAgents} from '../backend/fetchEmployees';
+import {getLocalAgents} from '../backend/fetchEmployees';
 import {setHeaderMenuSpaceElementByReact} from '../view/setHeaderMenuSpace';
 import {setSelectName, flg1st, affShop, selectName, FlgOcpChk, getLists, setAffiliationShop, setview} from '../backend/setName';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
-  /* **************************************** 変数宣言部 **************************************** */
+  // ローカルストレージを一旦消去する(debag用)
+  /* localStorage.removeItem('app86日時');
+  localStorage.removeItem('app86社員リスト');
+  localStorage.removeItem('app86店舗リスト'); */
   // ローカルストレージの活用をする
   const app86DateTimeD = getLocalTimes(); // 日時の保存データ
   const app86EmployeesD = getLocalAgents(); // 社員リストの保存データ
   const app86ShopListD = getLocalShops(); // 店舗リストの保存データ
-  const divTime = 20; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
+  const divTime = 10800; // 経過時間の判定に使用する閾値(初期=10800秒=3時間で設定)
 
   // ボタンの増殖防止
   if (document.getElementById(selectEmpID) !== null) {
@@ -27,14 +30,14 @@ const recordindexshow = (event) => {
     return;
   }
 
-  setViewCode(event.viewId);
+  setViewCode(event.viewId); // 一覧viewIDの保存
   setHeaderMenuSpaceElementByReact(); // プルダウンメニューの要素を設定する
-
   getHeaderSpaceElement().append('※[担当名]には[店長][主任][営業]の方を表示しています\n');
-
-  // 担当名に表示する氏名の取り出しをする
-  setSelectName();
+  setSelectName(); // 担当名に表示する氏名の取り出しをする
   console.log('1-1 経過時間(秒)：', (((Date.now()) / 1000) - app86DateTimeD));
+
+  // ローカルストレージを一旦消去する(debag用)
+  console.log('デバッグ用 time, emp, shop', app86DateTimeD, app86EmployeesD, app86ShopListD);
 
   if ((app86DateTimeD === null) || (app86EmployeesD === null)
    || (app86ShopListD === null) || (((Date.now() / 1000) - app86DateTimeD) >= divTime)) {
@@ -48,13 +51,13 @@ const recordindexshow = (event) => {
 
     // プルダウンの値を設定する
     makeList(app86ShopListD, selectShopID); // 店舗名
-    // makeEmpList(app86EmployeesD, selectEmpID, affShop); // 担当名
-    getAgentsByShop(affShop);
+    makeEmpList(app86EmployeesD, selectEmpID, affShop);
+    // getAgentsByShop(affShop);
     console.log('ローカルストレージからの処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
     console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
     // 一覧の表示状態と、職種により、表示内容を切り替える
-    setview();
+    setview(app86EmployeesD);
   }
 
   addEvents();
