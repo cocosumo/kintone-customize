@@ -1,6 +1,6 @@
-import { getAppId } from './api';
+import {getAppId} from './api';
 
-const addRecords = async ({ appId = getAppId(), records }) => {
+const addRecords = async ({appId = getAppId(), records}) => {
   if (!records || !(records.length)) return 'No records passed';
   const body = {
     app: appId,

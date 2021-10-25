@@ -1,0 +1,19 @@
+{
+  "configurations": [
+    {
+      "type": "aws-sam",
+      "request": "direct-invoke",
+      "name": "app-108-yasumikanri:src/helpers/converters.toKintoneRecords (nodejs14.x)",
+      "invokeTarget": {
+        "target": "code",
+        "projectRoot": "${workspaceFolder}/",
+        "lambdaHandler": "src/helpers/converters.toKintoneRecords"
+      },
+      "lambda": {
+        "runtime": "nodejs14.x",
+        "payload": {},
+        "environmentVariables": {}
+      }
+    }
+  ]
+}
