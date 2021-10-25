@@ -3,8 +3,6 @@ interface KintoneEvent {
 }
 
 const onSubmitSuccessHandler = (event : KintoneEvent) => {
-  // const {record: {title}} = event;
-
   event.record.title.value = 'hello';
 
   return event;
