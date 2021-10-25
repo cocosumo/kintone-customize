@@ -1,9 +1,9 @@
-import { getAppId } from './api';
+import {getAppId} from './api';
 
 const settingsAppId = 82;
 const employeeListAppId = 34;
 
-export const fetchRecordById = ({ appId, recordId }) => {
+export const fetchRecordById = ({appId, recordId}) => {
   const body = {
     app: appId,
     id: recordId,
@@ -15,12 +15,14 @@ export const fetchRecordById = ({ appId, recordId }) => {
 };
 
 /**
-* 制約まで取得
-* @param {
-*   @param appId アプリのID、デフォールトは当アプリ
-*   @param condition クエリ
-* }
-*/
+ * 制約まで取得
+ *
+ * @param {object} root0 リクエストオブジェクト
+ * @param {string} root0.appId アプリ番号
+ * @param {string[]} root0.fields フィールド
+ * @param {string} root0.condition クエリ
+ * @returns {object[]} kintone records
+ */
 export const fetchRecords = ({
   condition = '',
   appId = getAppId(),
@@ -39,14 +41,11 @@ export const fetchRecords = ({
 };
 
 /**
-* 再起で取得
-* @param {
-*   @param appId, アプリのID、デフォールトは当アプリ
-*   @param filterCond, クエリ
-*   @param sortConds, 順番条件
-*   @param limit, レコード数
-* }
-*/
+ * 再起で取得
+ *
+ * @param {object} _params リクエストオブジェクト
+ * @returns {object[]} kintone records
+ */
 export const fetchAllRecords = (_params) => {
   const MAX_READ_LIMIT = 500;
 

@@ -1,13 +1,14 @@
-import { fetchByYasumiDate } from '../../backend/yasumiKanri';
+/* eslint-disable require-atomic-updates */
+import {fetchByYasumiDate} from '../../backend/yasumiKanri';
 import checkForConflicts from '../../handlers/conflictHandlers/checkForConflicts';
 import cleanRecords from '../../handlers/conflictHandlers/cleanRecords';
-import { groupByDuration } from '../../handlers/conflictHandlers/conflictHelper';
-import { normType } from '../../helpers/converters';
+import {groupByDuration} from '../../handlers/conflictHandlers/conflictHelper';
+import {normType} from '../../helpers/converters';
 import messages from '../../helpers/messages';
 
 const validateForm = (event) => {
-  const { record } = event;
-  const { reason, type } = record;
+  const {record} = event;
+  const {reason, type} = record;
 
   if (!reason?.value && normType[type.value].includes('leave')) {
     event.error = messages.inputReason;
@@ -18,16 +19,16 @@ const validateForm = (event) => {
 };
 
 const validateConflict = async (event) => {
-  const { record, type } = event;
+  const {record, type} = event;
   const {
-    yasumiDate: { value: yasumiDate },
-    type: { value: kinType },
+    yasumiDate: {value: yasumiDate},
+    type: {value: kinType},
     $id,
   } = record;
   let recordsObject = await fetchByYasumiDate(yasumiDate);
 
   if (type.includes('edit')) {
-    recordsObject = recordsObject.filter(({ $id: resId }) => $id.value !== resId.value);
+    recordsObject = recordsObject.filter(({$id: resId}) => $id.value !== resId.value);
   }
 
   const groupedRecords = await groupByDuration(recordsObject);

@@ -1,4 +1,4 @@
-import { getEmployeeNumber } from '../backend/user';
+import {getEmployeeNumber} from '../backend/user';
 
 export const normDuration = {
   一日: 'day-whole',
@@ -65,24 +65,32 @@ export const shiftToNext = (duration, remainingYasumi, availableTime) => {
 
 export const resolveNewWeight = (prev, curr) => getYasumiWeight(curr) - getYasumiWeight(prev);
 
-const toKintoneRecord = ({ date, type, duration }) => {
+const toKintoneRecord = ({date, type, duration}) => {
   const eid = getEmployeeNumber();
   return {
-    employeeNumber: { value: +eid },
-    type: { value: getKintoneType(type) },
-    duration: { value: getKintoneDuration(duration) },
-    yasumiDate: { value: date },
+    employeeNumber: {value: +eid},
+    type: {value: getKintoneType(type)},
+    duration: {value: getKintoneDuration(duration)},
+    yasumiDate: {value: date},
   };
 };
 
-export const getOrdinaryYasumi = (rawRecord) => rawRecord.filter(({ type }) => type === 'day-ordinary');
+export const getOrdinaryYasumi = (rawRecord) => rawRecord.filter(({type}) => type === 'day-ordinary');
 
+
+/**
+ * kintone records形に変更
+ *
+ * @param {object[]} unsavedRecords 保存されたyasumi records
+ * @param {object[]} savedRecords 保存されていないyasumi records
+ * @returns {object[]} kintone records
+ */
 export const toKintoneRecords = (unsavedRecords, savedRecords) => {
   const fallbackId = (date, rid) => (rid || getOrdinaryYasumi(savedRecords[date])[0].id);
 
   const result = unsavedRecords.map((item) => {
     const kr = toKintoneRecord(item);
-    return savedRecords ? { id: fallbackId(item.date, item.id), record: kr } : kr;
+    return savedRecords ? {id: fallbackId(item.date, item.id), record: kr} : kr;
   });
   return result;
 };
