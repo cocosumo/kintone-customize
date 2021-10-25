@@ -5,9 +5,4 @@
   "eslint.validate": [
     "javascript"
   ],
-  "liveServer.settings.https": {
-    "enable": true,
-    "cert": "\"C:\\Users\\yume-sp\\AppData\\Local\\Programs\\Microsoft VS Code\\localhost\\localhost+2.pem\"",
-    "key": "\"C:\\Users\\yume-sp\\AppData\\Local\\Programs\\Microsoft VS Code\\localhost\\localhost+2-key.pem\""
-  }
 }
