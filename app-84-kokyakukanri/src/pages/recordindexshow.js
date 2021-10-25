@@ -10,10 +10,6 @@ import {setSelectName, flg1st, affShop, selectName, FlgOcpChk, getLists, setAffi
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
-  // ローカルストレージを一旦消去する(debag用)
-  /* localStorage.removeItem('app86日時');
-  localStorage.removeItem('app86社員リスト');
-  localStorage.removeItem('app86店舗リスト'); */
   // ローカルストレージの活用をする
   const app86DateTimeD = getLocalTimes(); // 日時の保存データ
   const app86EmployeesD = getLocalAgents(); // 社員リストの保存データ
@@ -35,9 +31,6 @@ const recordindexshow = (event) => {
   getHeaderSpaceElement().append('※[担当名]には[店長][主任][営業]の方を表示しています\n');
   setSelectName(); // 担当名に表示する氏名の取り出しをする
   console.log('1-1 経過時間(秒)：', (((Date.now()) / 1000) - app86DateTimeD));
-
-  // ローカルストレージを一旦消去する(debag用)
-  console.log('デバッグ用 time, emp, shop', app86DateTimeD, app86EmployeesD, app86ShopListD);
 
   if ((app86DateTimeD === null) || (app86EmployeesD === null)
    || (app86ShopListD === null) || (((Date.now() / 1000) - app86DateTimeD) >= divTime)) {

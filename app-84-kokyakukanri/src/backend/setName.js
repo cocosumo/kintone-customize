@@ -82,7 +82,7 @@ export function setview(agentlists) {
   setAffiliationShop(agentlists);
 
   // 一覧の表示状態と、職種により、表示内容を切り替える
-  if (FlgOcpChk === false) {
+  if (!FlgOcpChk) {
     // console.log('営業職ではない');
     if (affShop !== 'init') {
       document.getElementById(selectShopID).value = affShop;
@@ -91,7 +91,7 @@ export function setview(agentlists) {
       document.getElementById(selectShopID).value = 'init';
       document.getElementById(selectEmpID).value = 'init';
     }
-  } else if (flg1st === true) {
+  } else if (flg1st) {
     // 初回にログインユーザー名でフィルタリングする
     // console.log('初回 かつ 営業職');
     const selectField = '担当名'; // フィルタリング対象のフィールド名
@@ -99,7 +99,7 @@ export function setview(agentlists) {
     // console.log('query = ', query);
     window.location.href = `${window.location.origin
                             + window.location.pathname}?view=${getViewCode()}&query=${encodeURI(query)}`;
-  } else if (flg1st === false) {
+  } else if (!flg1st) {
     // 初回ログインではない場合
     console.log('初回ではない かつ 営業職:', affShop, ' ', selectName);
     document.getElementById(selectShopID).value = affShop;
@@ -124,7 +124,6 @@ export async function getLists() {
   // プルダウンに選択肢を追加する
   makeList(getLocalShops(), selectShopID); // 店舗名
   makeEmpList(agentlists, selectEmpID, affShop); // 担当名
-  console.log('チェック', agentlists);
 
   // 一覧の表示状態と、職種により、表示内容を切り替える
   setview(agentlists);

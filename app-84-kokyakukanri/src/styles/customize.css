@@ -7,6 +7,7 @@
     justify-content       : flex-start; /* 横位置左揃え */
     align-items           : flex-start; /* 縦位置上揃え */
     align-content         : flex-start; /* 縦位置上揃え(複数行) */
+    gap: 2px;
   }
 
   .ViewAdjustment{
@@ -50,6 +51,7 @@
     align-items           : center;     /* 縦位置中央揃え */
     align-content         : center;     /* 縦位置中央揃え(複数行) */
     height                : 48px;       /* 高さ */
+    gap: 6px;
   }
 
   .ShopListBox,.EmpListBox{ /* 各セレクト&ラベルを入れる箱 */
