@@ -33,6 +33,6 @@ module.exports = {
     'webpack.config.js'
   ],
   rules: {
-    'indent': ['error', 2]
+
   },
 };
