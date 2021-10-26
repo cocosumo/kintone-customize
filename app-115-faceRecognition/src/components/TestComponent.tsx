@@ -1,12 +1,11 @@
 
 import {useEffect, useRef, useState} from 'react';
-
 import Webcam from 'react-webcam';
 import {RekognitionClient, DetectFacesCommand, DetectLabelsCommand, DetectFacesCommandOutput} from '@aws-sdk/client-rekognition';
 import convertDataURIToBinary from '../helpers/utils';
 import AIResult from './DetectedLabels';
 import DetectedFace from './DetectedFace';
-import {accessKey, secretKey} from '../env';
+import {accessKey, secretKey} from '../../env';
 
 const TestComponent = () => {
 
