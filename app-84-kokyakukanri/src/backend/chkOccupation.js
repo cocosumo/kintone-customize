@@ -6,13 +6,8 @@
  * @returns {string} targetShop : 対象社員の所属店舗(affShop)
  */
 export default function chkOccupation(lists, targetName) {
-  let targetShop = 'init';
   // 絞り込み表示対象者の所属店舗を設定する
-  lists.forEach((item) => {
-    if (item.name === targetName) {
-      targetShop = item.shop;
-      // console.log('店舗名の初期値 =', targetShop);
-    }
-  });
+  let targetShop = lists.find(item => item.name === targetName);
+  targetShop = (targetShop === undefined) ? 'init' : targetShop.shop;
   return targetShop;
 }
