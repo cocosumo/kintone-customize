@@ -1,7 +1,7 @@
+/* app84-kokyakukanri(顧客管理)の処理を横展開するため、本ファイルの処理は実行されない */
 import getRecords from '../handlers/getrecords'; // 注)kintone apiを使用しているため、promise
-import { getHeaderMenuSpaceElement, getHeaderSpaceElement, isMobile } from '../../../kintone-api/api';
+import {getHeaderMenuSpaceElement, getHeaderSpaceElement, isMobile} from '../../../kintone-api/api';
 // import getEmployees from '../Backend/getEmployees';
-import setInitSelect from '../Backend/setSelectInit';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
@@ -42,10 +42,16 @@ const recordindexshow = (event) => {
   /* **************************************** 関数宣言部 **************************************** */
   /**
    * リストのプルダウンを作成する
-   * @param {array} lists : (inputの例) 店舗リスト[ 店舗名 ,・・・]
+   *
+   * @param {Array} lists : (inputの例) 店舗リスト[ 店舗名 ,・・・]
+   * @param targetID
    */
   function makeList(lists, targetID) {
-    setInitSelect(targetID); // 「【選択してください】」と「全レコードを表示」を追加
+
+    // 「【選択してください】」と「全レコードを表示」を追加
+    $(`#${targetID}`).append($('<option>').html('【選択してください】').val('init'));
+    $(`#${targetID}`).append($('<option>').html('全レコードを表示').val('listall'));
+
     lists.forEach((item) => {
       // 対象の店舗名のみ、店舗リストに登録する
       $(`#${targetID}`).append($('<option>').html(item).val(item));
@@ -54,7 +60,9 @@ const recordindexshow = (event) => {
 
   /**
    * 社員リストから、対象の役職のみを取り出す処理
+   *
    * @param {Array} lists : 社員リストapp86EmployeesD({name: 氏名, shop: 店舗})
+   * @param targetID
    */
   function makeEmpList(lists, targetID) {
     let newlists;
@@ -72,7 +80,8 @@ const recordindexshow = (event) => {
 
   /**
    * 社員名簿のリストから所属店舗(affshop)を取り出し、営業職か判定する(FlgOcpChk)
-   * @param {array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
+   *
+   * @param {Array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
    */
   function chkOccupation(lists) {
     // 絞り込み表示対象者の所属店舗を設定する
@@ -87,7 +96,8 @@ const recordindexshow = (event) => {
 
   /**
    * 該当の社員名(selectName)の所属店舗をaffshopに格納する処理
-   * @param {array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
+   *
+   * @param {Array} lists : 社員名簿のリスト[{ name: 氏名, shop: 店舗}]
    */
   function setAffiliationShop(lists) {
     if (selectName !== 'init' && affShop === 'init') {
@@ -164,8 +174,8 @@ const recordindexshow = (event) => {
 
     // - 取得した社員リストを、ローカルストレージに格納する
     // console.log('app86EmployeesD ：', app86EmployeesD);
-    app86EmployeesD = app86EmployeesD.records.map(({ 文字列＿氏名, ルックアップ＿店舗名 }) => (
-      { name: 文字列＿氏名.value, shop: ルックアップ＿店舗名.value }));
+    app86EmployeesD = app86EmployeesD.records.map(({文字列＿氏名, ルックアップ＿店舗名}) => (
+      {name: 文字列＿氏名.value, shop: ルックアップ＿店舗名.value}));
 
     const newEmpList = JSON.stringify(app86EmployeesD);
     localStorage.setItem(app86EmployeesKey, newEmpList);
