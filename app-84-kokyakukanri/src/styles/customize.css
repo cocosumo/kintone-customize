@@ -51,7 +51,7 @@
     align-items           : center;     /* 縦位置中央揃え */
     align-content         : center;     /* 縦位置中央揃え(複数行) */
     height                : 48px;       /* 高さ */
-    gap: 6px;
+    gap: 5px;
   }
 
   .ShopListBox,.EmpListBox{ /* 各セレクト&ラベルを入れる箱 */

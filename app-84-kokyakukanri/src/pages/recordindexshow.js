@@ -6,7 +6,7 @@ import {getLocalTimes} from '../backend/timeControl';
 import {getLocalShops} from '../backend/fetchShop';
 import {getLocalAgents} from '../backend/fetchEmployees';
 import {setHeaderMenuSpaceElementByReact} from '../view/setHeaderMenuSpace';
-import {setSelectName, flg1st, affShop, selectName, FlgOcpChk, getLists, setAffiliationShop, setview, updateAgents} from '../backend/setName';
+import {setSelectName, affShop, getLists, setAffiliationShop, setview, updateAgents} from '../backend/setName';
 
 // [レコード一覧画面]プルダウンによる絞り込みを行う
 const recordindexshow = (event) => {
@@ -46,7 +46,7 @@ const recordindexshow = (event) => {
   setHeaderMenuSpaceElementByReact(); // プルダウンメニューの要素を設定する
   getHeaderSpaceElement().append('※[担当名]には[店長][主任][営業]の方を表示しています\n');
   setSelectName(); // 担当名に表示する氏名の取り出しをする
-  console.log('1-1 経過時間(秒)：', (((Date.now()) / 1000) - app86DateTimeD));
+  // console.log('1-1 経過時間(秒)：', (((Date.now()) / 1000) - app86DateTimeD));
 
   if ((app86DateTimeD === null) || (getLocalAgents() === null)
    || (app86ShopListD === null) || (((Date.now() / 1000) - app86DateTimeD) >= divTime)) {
@@ -61,9 +61,8 @@ const recordindexshow = (event) => {
     // プルダウンの値を設定する
     makeList(app86ShopListD, selectShopID); // 店舗名
     makeEmpList(selectEmpID, affShop);
-    // getAgentsByShop(affShop);
-    console.log('ローカルストレージからの処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
-    console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
+    // console.log('ローカルストレージからの処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
+    // console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
     // 一覧の表示状態と、職種により、表示内容を切り替える
     setview();

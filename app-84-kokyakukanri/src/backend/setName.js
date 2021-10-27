@@ -30,7 +30,7 @@ export const setSelectName = () => {
     selectNameF = selectName.slice(selectName.indexOf(' ') + 1);
     selectName = selectNameL.concat(' ', selectNameF);
     affShop = 'init';
-    console.log('ユーザ名の取得 :', selectName);
+    // console.log('ユーザ名の取得 :', selectName);
   } else {
     // URLにプルダウンで指定したqueryが含まれる場合の処理
     flg1st = false;
@@ -124,8 +124,8 @@ export async function getLists() {
   // 絞り込み表示対象者の所属店舗を設定する
   updateAgents();
   setAffiliationShop(); // 担当名(selectName)と、所属店舗(affShop)の更新
-  console.log('APIリクエスト時の処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
-  console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
+  // console.log('APIリクエスト時の処理：初回判定 = ', flg1st, ', 営業職判定 = ', FlgOcpChk);
+  // console.log('店舗名', affShop, 'ユーザー名 = ', selectName);
 
   // プルダウンに選択肢を追加する
   makeList(getLocalShops(), selectShopID); // 店舗名

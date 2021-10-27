@@ -11,8 +11,7 @@ export default function chkOccupation(lists, targetName) {
   lists.forEach((item) => {
     if (item.name === targetName) {
       targetShop = item.shop;
-      console.log('店舗名の初期値 =', targetShop);
-      // FlgOcpChk = true;
+      // console.log('店舗名の初期値 =', targetShop);
     }
   });
   return targetShop;
