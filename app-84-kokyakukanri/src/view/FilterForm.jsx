@@ -1,5 +1,3 @@
-// import {isMobile} from '../../../kintone-api/api';
-
 const Select = ({
   containerName, labelId, labelText, selectId,
 }) => (
