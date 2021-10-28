@@ -5,7 +5,11 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 
 const DetailsPopper = ({
-  id, detailsOpen, anchorEl, children, onCloseHandler,
+  id,
+  detailsOpen,
+  anchorEl,
+  children,
+  onCloseHandler,
 }) => (
 
   <Popper
@@ -13,7 +17,7 @@ const DetailsPopper = ({
     open={detailsOpen}
     anchorEl={anchorEl}
     placement="right"
-    style={{ zIndex: 1900 }}
+    style={{zIndex: 1900}}
     modifiers={[
       {
         name: 'flip',
@@ -27,7 +31,7 @@ const DetailsPopper = ({
     transition
   >
 
-    {({ TransitionProps }) => (
+    {({TransitionProps}) => (
 
       <Fade {...TransitionProps} timeout={350}>
         <Paper>
