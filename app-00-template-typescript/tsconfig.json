@@ -24,6 +24,8 @@
 , "fields.d.ts"  ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "*.js",
+    "*.jsx"
   ]
 }

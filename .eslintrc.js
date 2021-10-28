@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2020: true,
@@ -22,9 +23,10 @@ module.exports = {
     'kintone': false
   },
   plugins: [
+    '@typescript-eslint',
     'react',
     'jsdoc',
-    '@typescript-eslint',
+
   ],
   'ignorePatterns': [
     '/dist/*.js',
@@ -33,6 +35,8 @@ module.exports = {
     'webpack.config.js'
   ],
   rules: {
-
+    'indent': 'off',
+    '@typescript-eslint/indent': ['error'],
+    'react/jsx-filename-extension': [1, {'allow': 'as-needed'}]
   },
 };

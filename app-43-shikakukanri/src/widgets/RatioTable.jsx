@@ -1,6 +1,10 @@
-import { Container, IconButton, Typography } from '@material-ui/core';
+/*  tslint:disable */
 
-import React, { useState } from 'react';
+import {Container, IconButton, Typography} from '@material-ui/core';
+import PropTypes from 'prop-types';
+
+
+import React, {useState} from 'react';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -19,6 +23,7 @@ const RatioTable = ({
   employeeCountPerStore,
   takkenshiPerStore,
 }) => {
+
   const [detailsOpen, setDetailsOpen] = useState();
   const [anchorEl, setAnchorEl] = useState();
 
@@ -47,40 +52,43 @@ const RatioTable = ({
     return '#FFEBEE';
   };
 
-  const rows = [];
-  Object.entries(employeeCountPerStore).forEach(([key, value]) => {
-    const needCount = Math.ceil(value / 5);
-    const takkenshiCount = takkenshiPerStore[key]?.length || 0;
-    const isWithTakkenshi = Boolean(takkenshiCount);
-    const bgColor = resolveColor(takkenshiCount, needCount);
-    rows.push(
-      <TableRow sx={{ backgroundColor: bgColor }} key={key}>
-        <TblCell>{key}</TblCell>
-        <TblCell align="right">{value}</TblCell>
-        <TblCell align="right">{needCount}</TblCell>
-        <TblCell align="right">
 
-          {isWithTakkenshi && (
-          <IconButton
-            onClick={onDetailsClickHandler}
-            aria-label={key}
-            size="large"
-          >
-            <Typography fontSize={20} fontWeight={700} mr={1}>{takkenshiCount}</Typography>
-            <PeopleIcon aria-label={key} />
-          </IconButton>
-          )}
-        </TblCell>
-      </TableRow>,
-    );
-  });
+  const rows = [];
+  Object.entries(employeeCountPerStore)
+    .forEach(([key, value]) => {
+      const needCount = Math.ceil(value / 5);
+      const takkenshiCount = takkenshiPerStore[key]?.length || 0;
+      const isWithTakkenshi = Boolean(takkenshiCount);
+      const bgColor = resolveColor(takkenshiCount, needCount);
+      rows.push(
+        <TableRow sx={{backgroundColor: bgColor}} key={key}>
+          <TblCell>{key}</TblCell>
+          <TblCell align="right">{value}</TblCell>
+          <TblCell align="right">{needCount}</TblCell>
+          <TblCell align="right">
+
+            {isWithTakkenshi && (
+              <IconButton
+                onClick={onDetailsClickHandler}
+                aria-label={key}
+                size="large"
+              >
+                <Typography fontSize={20} fontWeight={700} mr={1}>{takkenshiCount}</Typography>
+                <PeopleIcon aria-label={key} />
+              </IconButton>
+            )}
+          </TblCell>
+        </TableRow>,
+      );
+    });
+
 
   return (
     <Container maxWidth="sm">
-      <TableContainer sx={{ mt: 2 }} component={Paper}>
+      <TableContainer sx={{mt: 2}} component={Paper}>
         <Table aria-label="customized table">
           <TableHead>
-            <TableRow sx={{ backgroundColor: '#3498db', color: '#FFF' }}>
+            <TableRow sx={{backgroundColor: '#3498db', color: '#FFF'}}>
               <TblHead>店舗</TblHead>
               <TblHead number>
                 社員
@@ -106,7 +114,7 @@ const RatioTable = ({
       </TableContainer>
       {detailsOpen && (
 
-        <DetailsPopper {...{ detailsOpen, anchorEl, onCloseHandler }}>
+        <DetailsPopper {...{detailsOpen, anchorEl, onCloseHandler}}>
           <PeopleStack records={takkenshiPerStore[anchorEl?.ariaLabel]} />
         </DetailsPopper>
 
@@ -116,3 +124,9 @@ const RatioTable = ({
 };
 
 export default RatioTable;
+
+
+RatioTable.propTypes = {
+  employeeCountPerStore: PropTypes.object,
+  takkenshiPerStore: PropTypes.object
+};
