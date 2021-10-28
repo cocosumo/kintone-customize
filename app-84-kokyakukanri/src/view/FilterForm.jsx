@@ -1,5 +1,3 @@
-import {isMobile} from '../../../kintone-api/api';
-
 const Select = ({
   containerName, labelId, labelText, selectId,
 }) => (
@@ -23,7 +21,6 @@ const FilterForm = () => (
       selectId="my_selectShop"
       labelText="店舗名："
     />
-    {isMobile() && <br />}
     <Select
       containerName="EmpListBox"
       labelId="my_textEmp"

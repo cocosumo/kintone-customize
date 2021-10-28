@@ -1,10 +1,9 @@
-import { selectEmpID, selectShopID } from '../view/utilsDOM'
+import {getViewCode, selectEmpID, selectShopID} from '../view/utilsDOM';
 
 /**
  * 担当名のプルダウンが変更されたときの処理
- * @param {integer} view : 一覧表示をするID(viewID)
  */
-const selectEmpOnChangeHandler = (view) => {
+const selectEmpOnChangeHandler = () => {
   if (document.getElementById(selectEmpID).value === 'listall') {
     // 該当店舗の全てのレコードを表示
     const selectField = '店舗名'; // フィルタリング対象のフィールド名
@@ -15,7 +14,7 @@ const selectEmpOnChangeHandler = (view) => {
     }
     const query = `${selectField} like "${shop}"`;
     window.location.href = `${window.location.origin
-                        + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+                        + window.location.pathname}?view=${getViewCode()}&query=${encodeURI(query)}`;
   } else if (document.getElementById(selectEmpID).value === 'init') {
     // デフォルト値・何もしない
   } else {
@@ -25,7 +24,7 @@ const selectEmpOnChangeHandler = (view) => {
     const Lastname = member.substring(0, member.indexOf(' '));
     const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
     window.location.href = `${window.location.origin
-                         + window.location.pathname}?view=${view}&query=${encodeURI(query)}`;
+                         + window.location.pathname}?view=${getViewCode()}&query=${encodeURI(query)}`;
   }
 };
 

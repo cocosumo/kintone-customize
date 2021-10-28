@@ -1,0 +1,78 @@
+/* プルダウンの設定 */
+/* mobile設定 */
+@media screen and (max-width: 600px) {
+  .ListBoxGroup{ /* セレクトボックス全体の箱 */
+    display               : flex;       /* flexbox */
+    flex-wrap             : wrap;       /* flexアイテムを折り返す */
+    justify-content       : flex-start; /* 横位置左揃え */
+    align-items           : flex-start; /* 縦位置上揃え */
+    align-content         : flex-start; /* 縦位置上揃え(複数行) */
+    gap: 2px;
+  }
+
+  .ViewAdjustment{
+    height: 5px; /* セレクトボックスが上下にくっついて表示されるのを防ぐ */
+  }
+
+  .ShopListBox, .EmpListBox{ /* 各セレクト&ラベルを入れる箱 */
+    flex-basis            : auto;       /* flexアイテムの幅 */
+    align-items           : center;     /* 縦位置中央揃え */
+    align-content         : center;     /* 縦位置中央揃え(複数行) */
+    text-align            : center;     /* 横位置中央揃え */
+    border-radius         : 3px;        /* 角丸 */
+    padding               : 1px 5px;    /* 内側の余白 */
+    background            : #3498DB;  /* 背景色 */
+    width                 : 100%;       /* 横幅 */
+  }
+  
+  #my_textShop, #my_textEmp{ /* ラベル(セレクトボックス用) */
+    color                 : #f7f9fa;    /* 文字色 */
+    width                 : 20%;          /* flexアイテムの幅 */
+    height                : 25px;         /* 高さ */
+    text-align            : center;       /* 文字・縦位置中央揃え */
+  }
+
+  #my_selectShop, #my_selectEmp{ /* セレクトボックス本体 */
+    width                 : 75%;          /* flexアイテムの幅 */
+    border-radius         : 1px;          /* 角丸 */
+    border                : #f7f9fa8c;  /* ボーダー色 */
+    background            : #f7f9fa;    /* 背景色 */
+    color                 : #3498DB;    /* 文字色 */
+    height                : 25px;         /* 高さ */
+  }
+}
+
+/* desktop設定 */
+@media screen and (min-width: 600px) {
+  .ListBoxGroup{ /* セレクトボックス全体の箱 */
+    display               : flex;       /* flexbox */
+    flex-wrap             : wrap;       /* flexアイテムを折り返す */
+    justify-content       : flex-start; /* 横位置左揃え */
+    align-items           : center;     /* 縦位置中央揃え */
+    align-content         : center;     /* 縦位置中央揃え(複数行) */
+    height                : 48px;       /* 高さ */
+    gap: 5px;
+  }
+
+  .ShopListBox,.EmpListBox{ /* 各セレクト&ラベルを入れる箱 */
+    border-radius         : 3px;        /* 角丸 */
+    padding               : 1px 5px;    /* 内側の余白 */
+    background            : #3498DB;  /* 背景色 */
+    height: 44px;
+    display: flex;
+    align-items           : center;     /* 縦位置中央揃え */
+    align-content         : center;     /* 縦位置中央揃え(複数行) */
+  }
+
+  #my_textShop,#my_textEmp{ /* セレクトボックス用のラベル */
+    color                 : #f7f9fa;
+  }
+
+  #my_selectShop, #my_selectEmp{ /* セレクトボックス本体 */
+    border-radius         : 1px; /* 角丸 */
+    border                : #f7f9fa8c;
+    background: #f7f9fa;
+    color: #3498DB;
+    height: 38px;
+  }
+}

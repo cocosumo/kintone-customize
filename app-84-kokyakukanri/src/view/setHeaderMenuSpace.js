@@ -74,7 +74,10 @@ export const setHeaderMenuSpaceElementByVanillaJS = () => {
   kintoneHeader.append(formContainer);
 };
 
-/* 4. React 実行時間: 11ms */
+/**
+ * 4. React 実行時間: 11ms
+ * ReactでhtmlにSelectを追加する
+ */
 export const setHeaderMenuSpaceElementByReact = () => {
   ReactDOM.render(
     <FilterForm />,

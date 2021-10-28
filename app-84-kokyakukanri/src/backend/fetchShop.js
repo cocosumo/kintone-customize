@@ -26,6 +26,7 @@ export const fetchShops = () => fetchRecords(
  * @returns {string[]} 店舗リスト
  */
 export const fetchNormalizedShops = async () => (await fetchShops())
+  .records
   .map(({店舗名}) => 店舗名.value);
 
 /**

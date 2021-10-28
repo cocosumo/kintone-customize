@@ -3,7 +3,7 @@
     "scope":"ALL",
     "desktop":{
         "js":[
-            "./dist/js/customize.js"
+            "./dist/customize.js"
         ],
         "css":[
             "./dist/css/customize.css"
@@ -11,7 +11,7 @@
     },
     "mobile": {
         "js":[
-            "./dist/js/customize.js"
+            "./dist/customize.js"
         ],
         "css":[
             "./dist/css/customize.css"

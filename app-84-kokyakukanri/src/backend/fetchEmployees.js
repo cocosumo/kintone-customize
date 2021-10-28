@@ -38,6 +38,7 @@ export const fetchAgents = () => fetchRecords(
  * @returns  { Promise<Array.<{name: string, shop: string}>> } 社員の氏名と店舗
  */
 export const fetchNormalizedAgents = async () => (await fetchAgents())
+  .records
   .map(({
     文字列＿氏名,
     ルックアップ＿店舗名,
