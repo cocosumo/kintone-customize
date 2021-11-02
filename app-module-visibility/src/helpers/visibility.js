@@ -3,7 +3,6 @@ import {setFieldShown} from '../../../kintone-api/api';
 
 
 const resolveVisibility = (fieldsSettings, choice, isReverse = false) => {
-  console.log(fieldsSettings[choice], 'hwllo');
 
   if (fieldsSettings[choice]) {
     Object.entries(fieldsSettings[choice])
@@ -24,10 +23,14 @@ const resolveVisibility = (fieldsSettings, choice, isReverse = false) => {
 };
 
 export const setVisibility = (record) => {
-  console.log(record);
+
   Object.entries(settings)
     .forEach(([fieldCode, fieldSettings]) => {
       const choice = record[fieldCode].value;
       resolveVisibility(fieldSettings, choice);
     });
+};
+
+export const setVisibilityByChangedField = ({fieldCode, choice}) => {
+  resolveVisibility(settings[fieldCode], choice);
 };

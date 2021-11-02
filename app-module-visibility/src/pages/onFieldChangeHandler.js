@@ -1,8 +1,9 @@
-export const onFieldChangeHandler = (event) => {
-  const {changes: {field}} = event;
-  console.log(Object.getOwnPropertyNames(field));
-  field.disabled = true;
+import {getChangedFieldDetails} from '../helpers/utilities';
+import {setVisibilityByChangedField} from '../helpers/visibility';
 
+export const onFieldChangeHandler = (event) => {
+
+  setVisibilityByChangedField(getChangedFieldDetails(event));
 
   return event;
 };
