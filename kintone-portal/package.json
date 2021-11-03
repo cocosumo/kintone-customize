@@ -2,11 +2,10 @@
   "name": "app-117-dutycalendar",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "index.tsx",
   "scripts": {
     "start": "node scripts/npm-start.js",
-    "upload": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com/ --watch kintone-manifest.json",
-    "up": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com/ kintone-manifest.json",
+    "upload": ".\\node_modules\\.bin\\source-uploader --username Dev --domain 9kn7ykxqe9eb.cybozu.com --portalSrc kintone-manifest.json --watch",
     "develop": "npm run build -- --watch",
     "build": "webpack --mode development",
     "build:prod": "webpack --mode production",
@@ -31,6 +30,7 @@
     "eslint": "^8.0.0",
     "eslint-plugin-react": "^7.26.1",
     "fork-ts-checker-webpack-plugin": "^6.3.4",
+    "npm-run-all": "^4.1.5",
     "ts-loader": "^9.2.6",
     "typescript": "^4.4.4",
     "webpack": "^5.58.1",
@@ -40,6 +40,10 @@
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.4",
     "date-fns": "^2.25.0",
+    "kintone-source-uploader": "^2.1.2",
     "react": "^17.0.2"
+  },
+  "bin": {
+    "source-uploader": "./node_modules/.bin/source-uploader"
   }
 }

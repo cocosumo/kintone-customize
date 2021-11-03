@@ -1,8 +1,6 @@
+import {onIndexShowHandler} from './handlers/kintone/onIndexShowHandler';
+import {onPortalShowHandler} from './handlers/kintone/onPortalShowHandler';
+import {onIndexShow, onPortalShow} from './helpers/events';
 
-import onTest from './handlers/kintone/onTest';
-
-const onIndexShow : string[] = [
-  'portal.show',
-];
-
-kintone.events.on(onIndexShow, onTest);
+kintone.events.on(onPortalShow(), onPortalShowHandler);
+kintone.events.on(onIndexShow(), onIndexShowHandler);
