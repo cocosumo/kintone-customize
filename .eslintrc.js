@@ -37,6 +37,6 @@ module.exports = {
   rules: {
     'indent': 'off',
     '@typescript-eslint/indent': ['error'],
-    'react/jsx-filename-extension': [1, {'allow': 'as-needed'}]
+    'react/jsx-filename-extension': [1, {'extensions': ['.js', '.jsx', '.ts', '.tsx']}]
   },
 };
