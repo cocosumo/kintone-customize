@@ -9,7 +9,7 @@
     },
     "mobile": {
         "js": [
-
+            "dist/customize.js"
         ],
         "css": [
 

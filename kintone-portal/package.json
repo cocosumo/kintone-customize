@@ -22,11 +22,12 @@
     "@cybozu/eslint-config": "^15.0.0",
     "@kintone/customize-uploader": "^5.0.7",
     "@kintone/dts-gen": "^5.0.6",
-    "@types/react": "^17.0.29",
-    "@types/react-dom": "^17.0.9",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "babel-loader": "^8.2.2",
+    "dotenv-webpack": "^7.0.3",
     "eslint": "^8.0.0",
     "eslint-plugin-react": "^7.26.1",
     "fork-ts-checker-webpack-plugin": "^6.3.4",
@@ -37,13 +38,15 @@
     "webpack-cli": "^4.9.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.5.0",
+    "@emotion/styled": "^11.3.0",
+    "@kintone/rest-api-client": "^2.0.24",
+    "@mui/material": "^5.0.6",
     "@types/jest": "^27.0.2",
-    "@types/node": "^16.10.4",
+    "@types/node": "^16.11.6",
     "date-fns": "^2.25.0",
+    "dotenv": "^10.0.0",
     "kintone-source-uploader": "^2.1.2",
     "react": "^17.0.2"
-  },
-  "bin": {
-    "source-uploader": "./node_modules/.bin/source-uploader"
   }
 }

@@ -1,5 +1,7 @@
 /* Typescript */
 
+export const isMobile : boolean = (window.location.href).includes('k/m');
+
 export const onEdit : string[] = [
   'app.record.edit.show',
   'mobile.app.record.edit.show',
@@ -34,3 +36,9 @@ export const onCreateSubmitSuccess : string[] = [
 export const onEditOrCreate : string[] = onEdit.concat(onCreate);
 export const onSubmit : string[] = onEditSubmit.concat(onCreateSubmit);
 export const onSubmitSuccess : string[] = onEditSubmitSuccess.concat(onCreateSubmitSuccess);
+
+export const getPortalSpaceElement = () => (
+  isMobile
+    ? kintone.mobile.portal.getContentSpaceElement()
+    : kintone.portal.getContentSpaceElement()
+);
