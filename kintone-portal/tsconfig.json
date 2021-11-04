@@ -23,6 +23,8 @@
     "strict": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true
 
   },
   "files" : [
