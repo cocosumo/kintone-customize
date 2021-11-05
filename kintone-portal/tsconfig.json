@@ -28,11 +28,13 @@
 
   },
   "files" : [
-    "./node_modules/@kintone/dts-gen/kintone.d.ts"
+    "./node_modules/@kintone/dts-gen/kintone.d.ts",
+    "./fields.d.ts",
+    "./types.d.ts"
   ],
   "include": [
     "src/**/*"
-, "fields.d.ts", "utils.ts"  ],
+   ],
   "exclude": [
     "dist",
     "node_modules",

@@ -9,8 +9,7 @@ import {getRecordsByProxy} from './proxyAPI';
 const app : string = '40';
 
 
-export const getActiveAnnouncements = async () => {
-
+export const getActiveAnnouncements = async () : Promise<Announcements> => {
   return getRecordsByProxy({
     app: app,
     query:
@@ -19,4 +18,21 @@ export const getActiveAnnouncements = async () => {
         (ラジオ＿投稿期間 in ("いいえ"))
         )`
   });
+};
+
+export const getGroupedAnnouncements = async (): Promise<GroupAnnouncements | undefined> => {
+
+  return (await getActiveAnnouncements())
+    ?.reduce<GroupAnnouncements>(({news, events}, curr) => {
+
+    const {ドロップダウン＿種類: announcementType} = curr;
+
+    if (announcementType.value === 'お知らせ') {
+      news.push(curr);
+    } else if (announcementType.value === 'イベント') {
+      events.push(curr);
+    }
+
+    return {news, events};
+  }, {news: [], events: []});
 };

@@ -1,12 +1,15 @@
-/* eslint-disable no-unused-vars */
 declare namespace kintone.types {
   interface Fields {
-    title: kintone.fieldTypes.SingleLineText;
-    toDo: kintone.fieldTypes.DropDown;
-    startTime: kintone.fieldTypes.DateTime;
-    文字列__複数行_: kintone.fieldTypes.MultiLineText;
+    文字列＿タイトル: kintone.fieldTypes.SingleLineText;
+    リッチ＿内容: kintone.fieldTypes.RichText;
+    日時＿終了: kintone.fieldTypes.DateTime;
+    日時＿開始: kintone.fieldTypes.DateTime;
+    ドロップダウン＿種類: kintone.fieldTypes.DropDown;
+    所属: kintone.fieldTypes.DropDown;
+    ラジオ＿投稿期間: kintone.fieldTypes.RadioButton;
+    状態: kintone.fieldTypes.RadioButton;
 
-    onDuty: kintone.fieldTypes.UserSelect;
+    添付ファイル: kintone.fieldTypes.File;
   }
   interface SavedFields extends Fields {
     $id: kintone.fieldTypes.Id;

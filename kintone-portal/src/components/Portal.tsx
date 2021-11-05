@@ -1,15 +1,34 @@
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
+import {useEffect, useState} from 'react';
+import {getGroupedAnnouncements} from '../backend/announcement';
 import {Accordion} from './accordion/Accordion';
+import {AnnouncementsContainer} from './containers/AnnouncementsContainer';
+import {MainContainer} from './containers/MainContainer';
 
 
 export const Portal = () => {
+
+  const [data, setData] = useState<GroupAnnouncements | null>();
+
+  useEffect(() => {
+    getGroupedAnnouncements().then((resp) => {
+      setData(resp);
+    });
+  }, []);
+
   return (
-    <Container>
-      <Grid container spacing={6}>
-        <Accordion />
-        <Accordion />
-      </Grid>
-    </Container>
+    <MainContainer >
+      <AnnouncementsContainer>
+        <Accordion
+          title="NEWS"
+          subTitle="お知らせ"
+          data={data?.news}
+        />
+        <Accordion
+          title="EVENTS"
+          subTitle="イベント"
+          data={data?.events}
+        />
+      </AnnouncementsContainer>
+    </MainContainer>
   );
 };

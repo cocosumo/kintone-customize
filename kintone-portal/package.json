@@ -1,5 +1,5 @@
 {
-  "name": "app-117-dutycalendar",
+  "name": "app-portal",
   "version": "1.0.0",
   "description": "",
   "main": "index.tsx",
@@ -9,6 +9,7 @@
     "develop": "npm run build -- --watch",
     "build": "webpack --mode development",
     "build:prod": "webpack --mode production",
+    "dtsgen" : "npx kintone-dts-gen --base-url https://rdmuhwtt6gx7.cybozu.com --app-id 40",
     "lint": "eslint src/*"
   },
   "author": "",
@@ -41,6 +42,7 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@kintone/rest-api-client": "^2.0.24",
+    "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.0.6",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.6",
