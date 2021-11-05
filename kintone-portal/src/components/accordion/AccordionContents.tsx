@@ -9,7 +9,6 @@ const AccordionContents = ({contents} : AccordionContentsProps) => {
   return (
     <MUIAccordionDetails>
       <div dangerouslySetInnerHTML={{__html: contents}} />
-
     </MUIAccordionDetails>
   );
 };
