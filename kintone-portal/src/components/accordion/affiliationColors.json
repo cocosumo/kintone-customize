@@ -1,14 +1,14 @@
 {
   "ゆめてつ" : {
-    "bgcolor" : "#FC78D0"
+    "bgcolor" : "rgba(255,191,234,1)"
   },
   "ここすも" : {
-    "bgcolor" : "#FF600"
+    "bgcolor" : "rgba(255,96,0,1)"
   },
   "すてくら" : {
-    "bgcolor" : "#00CC00"
+    "bgcolor" : "rgba(0,204,0,1)"
   },
   "全員" : {
-    "bgcolor" : "#FFF293"
+    "bgcolor" : "rgba(255,242,147,1)"
   }
 }

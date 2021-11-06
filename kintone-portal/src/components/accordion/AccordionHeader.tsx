@@ -3,7 +3,8 @@ import MUIAccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import {fromISOToFullDate} from '../../helpers/time';
-import affiliationColors from './affiliationColors.json';
+import affiliateColors from './affiliationColors.json';
+import Chip from '@mui/material/Chip';
 
 interface AccordionHeaderProps {
   title : string,
@@ -11,28 +12,42 @@ interface AccordionHeaderProps {
   startDate: string
 }
 
-const getKeyValue = <T extends object, U extends keyof T>(key: U) => (obj: T) =>
-  obj[key];
 
 export const AccordionHeader = ({title, affiliate, startDate} : AccordionHeaderProps) => {
 
-  console.log(getKeyValue(affiliate)(affiliationColors));
+  const {bgcolor} = affiliateColors[affiliate as keyof typeof affiliateColors];
+  const gradientColor = `linear-gradient(12deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 63%, ${bgcolor} 100%)`;
+
+  console.log(bgcolor);
   return (
     <MUIAccordionSummary
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel1a-content"
       id="panel1a-header"
+      sx={{
+        background: gradientColor,
+        color: '#696969'
+      }}
     >
-      <Stack>
-        <Typography variant="caption">
-          {affiliate}
-        </Typography>
-        <Typography variant="h6" fontWeight={600}>
+
+      <Stack spacing={1}>
+
+        <Stack direction="row" spacing={2}>
+          <Chip
+            title={affiliate}
+            label={affiliate}
+            size="small"
+            sx={{bgcolor: bgcolor, color: '#808080'}}
+          />
+          <Typography variant="caption">
+            {fromISOToFullDate(startDate)}
+          </Typography>
+        </Stack>
+
+        <Typography variant="body1" fontWeight={600}>
           {title}
         </Typography>
-        <Typography variant="subtitle2">
-          {fromISOToFullDate(startDate)}
-        </Typography>
+
       </Stack>
 
     </MUIAccordionSummary>

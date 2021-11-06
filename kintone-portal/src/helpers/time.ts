@@ -6,7 +6,7 @@ export const fromISOToTime = (ISO : string) : string => {
 };
 
 export const fromISOToFullDate = (ISO: string) : string => {
-  return format(new Date(ISO), 'yyyy年M月d日(E) HH:mm', {locale: ja});
+  return format(new Date(ISO), 'yyyy.M.d', {locale: ja});
 };
 
 export default fromISOToTime;

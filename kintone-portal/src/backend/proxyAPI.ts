@@ -8,6 +8,7 @@ interface Params {
 
 export const getRecordsByProxy = async (params : Params) => {
   console.log(params.query);
+
   const headers = {
     'X-Cybozu-API-Token': AUTH,
     'Content-Type': 'application/json',
@@ -21,3 +22,28 @@ export const getRecordsByProxy = async (params : Params) => {
 
   return status === 200 ? records : message;
 };
+
+export const getFileByFileKey = async (fileKey: string) => {
+
+  const headers = {
+    'X-Cybozu-API-Token': AUTH,
+    'Content-Type': 'application/octet-stream',
+    'X-HTTP-Method-Override': 'GET',
+  };
+
+  const url = `https://${DOMAIN}/k/v1/file.json?fileKey=${fileKey}`;
+
+  const resp = await kintone.proxy(`${url}`, 'GET', headers, {});
+  const [fileBlob, status, responseHeaders] = resp;
+
+
+  const file = new Blob([fileBlob], {type: 'application/pdf'});
+  const fileURL = URL.createObjectURL(file);
+
+  window.open(fileURL);
+
+  console.log(fileURL, status, responseHeaders);
+
+
+};
+

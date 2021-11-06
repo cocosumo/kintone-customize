@@ -10,6 +10,7 @@ type AccordionProps = {
 }
 
 export const Accordion = ({title, subTitle, data} : AccordionProps) => {
+
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleChange =

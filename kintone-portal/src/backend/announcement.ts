@@ -8,6 +8,7 @@ import {getRecordsByProxy} from './proxyAPI';
 
 const app : string = '40';
 
+export const getAnnoucementsAppId = () : string => app;
 
 export const getActiveAnnouncements = async () : Promise<Announcements> => {
   return getRecordsByProxy({

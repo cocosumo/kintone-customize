@@ -1,4 +1,5 @@
 
+import {Typography} from '@mui/material';
 import MUIAccordionDetails from '@mui/material/AccordionDetails';
 
 interface AccordionContentsProps {
@@ -8,7 +9,9 @@ interface AccordionContentsProps {
 const AccordionContents = ({contents} : AccordionContentsProps) => {
   return (
     <MUIAccordionDetails>
-      <div dangerouslySetInnerHTML={{__html: contents}} />
+      <Typography>
+        <span dangerouslySetInnerHTML={{__html: contents}} />
+      </Typography>
     </MUIAccordionDetails>
   );
 };

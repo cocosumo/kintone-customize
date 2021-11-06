@@ -5,7 +5,7 @@ import AccordionHeader from './AccordionHeader';
 
 interface AccordionItemProps {
   expanded: boolean,
-  item : kintone.types.Fields,
+  item : kintone.types.SavedFields,
   onChange : (title: string)=>any
 }
 
@@ -20,16 +20,15 @@ export const AccordionItem = ({
     文字列＿タイトル: {value: title},
     日時＿開始: {value: startDate},
     リッチ＿内容: {value: contents},
-    添付ファイル: attachment
+    添付ファイル: attachment,
+    $id
   } = item;
-
-  console.log(attachment);
 
   return (
     <MUIAccordion expanded={expanded} onChange={onChange(title)}>
       <AccordionHeader {...{title, affiliate, startDate}} />
       <AccordionContents {...{contents}} />
-      <AccordionFooter {...{attachment}} />
+      <AccordionFooter {...{attachment, $id}} />
     </MUIAccordion>
   );
 };
