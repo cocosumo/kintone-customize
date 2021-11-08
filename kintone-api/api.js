@@ -136,8 +136,8 @@ export const getUserName = () => (kintone.getLoginUser()).name;
  * @param recordId {int} レコード―ID
  * @returns {string} レコードのリンク
  * */
-export const kintoneLink = ({ appId = getAppId(), recordId }) => {
-  const { protocol, hostname } = window.location;
+export const kintoneLink = ({appId = getAppId(), recordId}) => {
+  const {protocol, hostname} = window.location;
   return `${protocol}//${hostname}/${device()}/${appId}/${recordPath(recordId)}`;
 };
 

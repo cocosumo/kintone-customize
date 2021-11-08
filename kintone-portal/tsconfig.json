@@ -1,5 +1,14 @@
 {
   "compilerOptions": {
+    "target" :"ES6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedParameters": true,
@@ -10,21 +19,27 @@
     "declarationDir": "dist/types",
     "declaration": true,
     "jsx": "react-jsx",
-    "target": "es5",
-    "module": "es2015",
+    "module": "esnext",
     "strict": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true
+
   },
   "files" : [
-    "./node_modules/@kintone/dts-gen/kintone.d.ts"
+    "./node_modules/@kintone/dts-gen/kintone.d.ts",
+    "./fields.d.ts",
+    "./types.d.ts"
   ],
   "include": [
     "src/**/*"
-, "fields.d.ts"  ],
+   ],
   "exclude": [
     "dist",
     "node_modules",
     "*.js",
-    "*.jsx"
+    "*.jsx",
+    "**/legacy/*"
   ]
 }

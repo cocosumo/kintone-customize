@@ -32,7 +32,8 @@ module.exports = {
     '/dist/*.js',
     '**/vendor/*.js',
     '**/scripts/*',
-    'webpack.config.js'
+    'webpack.config.js',
+    '**/legacy/*'
   ],
   rules: {
     'indent': 'off',
