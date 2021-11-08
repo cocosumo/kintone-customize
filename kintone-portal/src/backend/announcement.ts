@@ -31,7 +31,7 @@ export const getActiveAnnouncements = async () : Promise<Announcements> => {
 };
 
 export const getGroupedAnnouncements = async (): Promise<GroupAnnouncements | undefined> => {
-  console.log(await getActiveAnnouncements());
+
   return (
     await getActiveAnnouncements()
   )?.reduce<GroupAnnouncements>(({news, events}, curr) => {
@@ -75,7 +75,6 @@ export const fetchFileURL = (fileKey: string) => {
 
 export const fetchURLByFileKey = (fileKey: string) : Promise<any> => {
   const url = `https://${getDomain()}/k/v1/file.json?fileKey=${fileKey}`;
-  console.log('hello', url);
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url);
@@ -83,7 +82,6 @@ export const fetchURLByFileKey = (fileKey: string) : Promise<any> => {
     xhr.responseType = 'blob';
     xhr.onload = function() {
       if (this.status >= 200 && this.status < 300) {
-        console.log('gekki');
         const blob = new Blob([xhr.response], {type: xhr.response.type});
         const fileURL = window.URL || window.webkitURL;
         const blobURL = fileURL.createObjectURL(blob);

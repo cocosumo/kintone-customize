@@ -40,7 +40,7 @@ body {
 .text-content div, .text-content p, .text-content span, .text-content img{
     word-wrap: break-word !important;
     width: 100% !important;
-    
+
 }
 
 .text-content pre {
@@ -105,7 +105,7 @@ body {
 }
 
 .inner.card{
-    
+
     border-radius: 1rem;
     overflow: hidden;
     margin-bottom: 8px;
@@ -125,7 +125,7 @@ body {
 
 .inner.card:hover{
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    
+
 }
 
 /* .inner.card {
@@ -178,7 +178,7 @@ body {
     .text-content {
         font-size: 16px;
         margin: 0px !important ;
-        
+
     }
     .gaia-mobile-v2-viewpanel-globalnavigationbar {
         background-color: black;

@@ -26,7 +26,7 @@ export const AccordionItem = ({
 
   return (
     <MUIAccordion expanded={expanded} onChange={onChange(title)}>
-      <AccordionHeader {...{title, affiliate, startDate}} />
+      <AccordionHeader {...{title, affiliate, startDate, attachment}} />
       <AccordionContents {...{contents}} />
       <AccordionFooter {...{attachment, $id}} />
     </MUIAccordion>

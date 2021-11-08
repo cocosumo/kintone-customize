@@ -4,7 +4,7 @@
             "dist/customize.js"
         ],
         "css": [
-
+            "dist/customize.css"
         ]
     },
     "mobile": {
@@ -12,7 +12,7 @@
             "dist/customize.js"
         ],
         "css": [
-
+            "dist/customize.css"
         ]
     }
 }

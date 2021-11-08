@@ -3,6 +3,7 @@ import {getGroupedAnnouncements} from '../backend/announcement';
 import {Accordion} from './accordion/Accordion';
 import {AnnouncementsContainer} from './containers/AnnouncementsContainer';
 import {MainContainer} from './containers/MainContainer';
+import './Portal.css';
 
 
 export const Portal = () => {

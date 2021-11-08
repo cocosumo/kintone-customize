@@ -6,22 +6,6 @@ import CardContent from '@mui/material/CardContent';
 import BGNews from './../../assets/topbar_news_withText.png';
 import BGEvents from './../../assets/topbar_events_withText.png';
 
-/* const titleStyle : SxProps = {
-  fontWeight: '600',
-  letterSpacing: '7px',
-  textAlign: 'center',
-  fontSize: '24px',
-  color: '#FFF'
-};
-
-const subtitleStyle : SxProps = {
-  textAlign: 'center',
-  fontSize: '14px',
-  fontWeight: '600',
-  letterSpacing: '3px',
-  color: '#FFF'
-}; */
-
 export const AccordionContainer = ({title, subTitle, children} : TitledContainer) => {
 
   const headerImage = title === 'NEWS' ? BGNews : BGEvents;
