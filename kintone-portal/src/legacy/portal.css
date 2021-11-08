@@ -1,0 +1,198 @@
+body {
+    background-color: #fafafa;
+}
+
+/* texts */
+
+.nounderline {
+    text-decoration: none !important
+}
+
+.container-fluid {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.target-group {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    white-space: normal;
+    display: block;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    white-space: normal;
+    display: block;
+}
+
+.title-date {
+    font-size: 14px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.text-content div, .text-content p, .text-content span, .text-content img{
+    word-wrap: break-word !important;
+    width: 100% !important;
+    
+}
+
+.text-content pre {
+    font-size: 16px !important;
+}
+
+
+.title-h1 {
+    color: #333;
+    display: block;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px #000000;
+    letter-spacing: 7px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+.title-h2 {
+    font-size: 18px;
+    letter-spacing: 4px;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* cards */
+
+.card, .ocean-portal-widget, .ocean-portal-index-header-name-wrapper {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex !important;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    width: 100%;
+}
+
+.card-body .content {
+    font-size: 18px !important;
+}
+
+/* buttons */
+
+.notification .bad {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+}
+
+.inner.card{
+    
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.inner.card .custom-card-header{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+/* .inner.card .custom-card-header .title{
+    margin-top: -6px;
+    text-shadow: 2px 2px #000000;
+} */
+
+
+
+.inner.card:hover{
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    
+}
+
+/* .inner.card {
+    animation: fadeIn 5s;
+    -webkit-animation: fadeIn 5s;
+    -moz-animation: fadeIn 5s;
+    -o-animation: fadeIn 5s;
+    -ms-animation: fadeIn 5s;
+  }
+  @keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+ */
+
+ a.btn-kintone {
+     background-color: transparent;
+ }
+
+.truncate {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.text-attachment {
+    padding: 0;
+    position: relative;
+    font-size: small;
+}
+
+.gaia-header-header {
+    height: 10px;
+    background-color: #4b4b4b !important;
+}
+
+.gaia-header-header-logo {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .title-date {
+        font-size: 10px;
+    }
+    .title {
+        font-size: 16px;
+    }
+    .text-content {
+        font-size: 16px;
+        margin: 0px !important ;
+        
+    }
+    .gaia-mobile-v2-viewpanel-globalnavigationbar {
+        background-color: black;
+    }
+    /*  .nooverflow {
+        overflow:hidden;
+    } */
+    .row img {
+        max-width: 100%;
+    }
+    .container {
+        padding-left: 0px !important;
+    }
+    .nooverflow img {
+        width: 100%;
+    }
+}

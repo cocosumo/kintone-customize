@@ -1,7 +1,6 @@
 
-type Announcements = kintone.types.SavedFields[] | undefined
 
-interface GroupAnnouncements {
-  news: kintone.types.SavedFields[],
-  events: kintone.types.SavedFields[]
+declare module '*.png' {
+  const value: any;
+  export default value;
 }

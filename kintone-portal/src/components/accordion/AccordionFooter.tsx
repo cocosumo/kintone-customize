@@ -5,36 +5,46 @@ import Chip from '@mui/material/Chip';
 import AttachmentIcon from '@mui/icons-material/Attachment';
 import AccordionActions from '@mui/material/AccordionActions';
 import {goToRecordPath} from '../../../../kintone-api/typedAPI';
-import env from './../../../env.json';
-import {getAnnoucementsAppId} from './../../backend/announcement';
-// import {getFileByFileKey} from '../../backend/proxyAPI';
-import {getFileWithXHR} from '../../helpers/kintone';
+import {fetchURLByFileKey, getAnnoucementsAppId} from './../../backend/announcement';
+import {getDomain} from '../../../utils';
+import {useEffect, useState} from 'react';
 
 
 const openRecord = (recordId: kintone.fieldTypes.Id) : void => {
   goToRecordPath({
     recordId: recordId.value,
     appId: getAnnoucementsAppId(),
-    domain: env.domain
+    domain: getDomain()
   });
 };
 
-const openAttachment = (fileKey : string) => {
-  console.log('Trying to open attachment.');
-  // getFileByFileKey(fileKey);
-  getFileWithXHR(fileKey);
-};
+
+
 
 const AttachmentChip = ({name, fileKey} : AttachmentChip) => {
+  const [fileURL, setFileURL] = useState<string | undefined>('_blank');
+
+  useEffect(()=>{
+    fetchURLByFileKey(fileKey).then((resp) => {
+      setFileURL(resp);
+    })
+  }, []);
+
   return (
     <Grid item xs="auto">
-      <Chip icon={<AttachmentIcon />} label={name} onClick={()=>openAttachment(fileKey)} />
+      <Chip
+        icon={<AttachmentIcon />}
+        label={name}
+        onClick={() => {
+          window.open(fileURL);
+        }}
+      />
     </Grid>
   );
 };
 
 const AccordionFooter = ({attachment, $id} : AccordionFooterProps) => {
-  console.log(attachment);
+
   return (
     <AccordionActions sx={{justifyContent: 'flex-start'}}>
       <Stack spacing={1}>

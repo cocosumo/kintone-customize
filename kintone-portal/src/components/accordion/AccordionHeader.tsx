@@ -18,7 +18,6 @@ export const AccordionHeader = ({title, affiliate, startDate} : AccordionHeaderP
   const {bgcolor} = affiliateColors[affiliate as keyof typeof affiliateColors];
   const gradientColor = `linear-gradient(12deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 63%, ${bgcolor} 100%)`;
 
-  console.log(bgcolor);
   return (
     <MUIAccordionSummary
       expandIcon={<ExpandMoreIcon />}

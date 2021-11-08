@@ -5,5 +5,5 @@ type Props = {
 
 interface TitledContainer extends Props {
   title: string,
-  subTitle: string
+  subTitle?: string
 }

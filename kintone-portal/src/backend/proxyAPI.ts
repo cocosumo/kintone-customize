@@ -1,13 +1,7 @@
 import {AUTH, DOMAIN} from '../../utils';
 
-interface Params {
-  app: string;
-  query?: string;
-}
 
-
-export const getRecordsByProxy = async (params : Params) => {
-  console.log(params.query);
+export const getRecordsByProxy = async (params : KintoneAPIBody) => {
 
   const headers = {
     'X-Cybozu-API-Token': AUTH,

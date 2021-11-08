@@ -39,6 +39,7 @@
     "dist",
     "node_modules",
     "*.js",
-    "*.jsx"
+    "*.jsx",
+    "**/legacy/*"
   ]
 }

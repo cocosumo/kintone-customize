@@ -9,7 +9,10 @@ interface AccordionContentsProps {
 const AccordionContents = ({contents} : AccordionContentsProps) => {
   return (
     <MUIAccordionDetails>
-      <Typography>
+      <Typography
+        overflow="hidden"
+        textOverflow="ellipsis"
+      >
         <span dangerouslySetInnerHTML={{__html: contents}} />
       </Typography>
     </MUIAccordionDetails>
