@@ -7,7 +7,9 @@ import AccordionActions from '@mui/material/AccordionActions';
 import {goToRecordPath} from '../../../../kintone-api/typedAPI';
 import {fetchURLByFileKey, getAnnoucementsAppId} from './../../backend/announcement';
 import {getDomain} from '../../../utils';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
+import PDFViewer from '../viewers/PDFViewer';
+// import PDFViewer2 from '../viewers/PDFViewer2';
 
 
 const openRecord = (recordId: kintone.fieldTypes.Id) : void => {
@@ -19,24 +21,22 @@ const openRecord = (recordId: kintone.fieldTypes.Id) : void => {
 };
 
 
+const AttachmentChip = ({name, fileKey, openPDFViewerHandler} : AttachmentChip) => {
+  // const [fileURL, setFileURL] = useState<string | undefined>('_blank');
 
-
-const AttachmentChip = ({name, fileKey} : AttachmentChip) => {
-  const [fileURL, setFileURL] = useState<string | undefined>('_blank');
-
-  useEffect(()=>{
+  /*   useEffect(()=>{
     fetchURLByFileKey(fileKey).then((resp) => {
       setFileURL(resp);
     })
   }, []);
-
+ */
   return (
     <Grid item xs="auto">
       <Chip
         icon={<AttachmentIcon />}
         label={name}
         onClick={() => {
-          window.open(fileURL);
+          openPDFViewerHandler(fileKey);
         }}
       />
     </Grid>
@@ -45,6 +45,16 @@ const AttachmentChip = ({name, fileKey} : AttachmentChip) => {
 
 const AccordionFooter = ({attachment, $id} : AccordionFooterProps) => {
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pdfURL, setPDFURL] = useState('');
+
+  const openPDFViewerHandler = (fileKey : string) => {
+    setIsModalOpen(true);
+    fetchURLByFileKey(fileKey).then((resp) => {
+      console.log(resp);
+      setPDFURL(resp);
+    });
+  };
   return (
     <AccordionActions sx={{justifyContent: 'flex-start'}}>
       <Stack spacing={1}>
@@ -56,13 +66,15 @@ const AccordionFooter = ({attachment, $id} : AccordionFooterProps) => {
         >
           {attachment.value
             .map(({name, fileKey}) => {
-              return <AttachmentChip key={name} {...{name, fileKey}} />;
+              return <AttachmentChip key={name} {...{name, fileKey, openPDFViewerHandler}} />;
             })}
         </Grid>
         <div>
           <Button variant="contained" onClick={()=>openRecord($id)}>本文を見る</Button>
+
         </div>
       </Stack>
+      <PDFViewer {...{isModalOpen, setIsModalOpen}} url={pdfURL} />
     </AccordionActions >
   );
 };

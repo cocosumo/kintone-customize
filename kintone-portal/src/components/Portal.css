@@ -5,10 +5,8 @@ html {
 body {
   height: 100%;
   margin: 0;
-  background: linear-gradient(rgb(255, 255, 255) 0%, rgb(161, 161, 161) 100%);
-  ;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-color: #fcffff !important;
+
 }
 
 div.gaia-header-header-logo {
