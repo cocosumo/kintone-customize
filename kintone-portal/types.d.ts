@@ -15,7 +15,7 @@ interface ModalProps extends Modal {
   children ?: React.ReactNode
 }
 
-interface PDFViewerProps extends Modal {
+interface FileViewerProps extends Modal {
 
   url: string
 }

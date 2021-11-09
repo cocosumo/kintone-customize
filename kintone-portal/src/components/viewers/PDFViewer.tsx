@@ -5,10 +5,15 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 import PDFViewerHeader from './PDFViewerHeader';
 import {Box} from '@mui/system';
 import './PDFViewer.css';
+import {Typography} from '@mui/material';
 
 interface PDFDocumentProxy {
   numPages: number
 }
+
+const PleaseWait = () => {
+  return <div>PLEASE WAIT</div>;
+};
 
 const initialScale = {scale: 1};
 
@@ -23,11 +28,9 @@ const reducer = (state : any, action: any) => {
   }
 };
 
-const PDFViewer = ({isModalOpen, setIsModalOpen, url} : PDFViewerProps) => {
+const PDFViewer = ({isModalOpen, setIsModalOpen, url} : FileViewerProps) => {
   const [numberOfPages, setNumberOfPages] = useState<number | null>();
   const [state, dispatchScale] = useReducer(reducer, initialScale);
-
-  // const [scale, setScale] = useState<number>(2);
 
   console.log(state);
   const onDocumentLoadSuccess = ({numPages} : PDFDocumentProxy) => {
@@ -40,26 +43,33 @@ const PDFViewer = ({isModalOpen, setIsModalOpen, url} : PDFViewerProps) => {
 
     <FullScreenModal
       {...{isModalOpen, setIsModalOpen}}
-      HeaderComponent={<PDFViewerHeader dispatch={dispatchScale} />}
+      HeaderComponent={
+        <PDFViewerHeader dispatch={dispatchScale} />
+      }
     >
       <Box >
+
         <Document
           file={url}
           onLoadSuccess={onDocumentLoadSuccess}
         >
-
           {[...Array(numberOfPages)].map((_, i) => {
             return (
-              <Page
-                scale={state.scale}
-                key={i}
-                pageIndex={i}
-              />);
-          })}
+              <div key={i}>
+                <Page
+                  loading={<PleaseWait />}
+                  scale={state.scale}
+                  pageIndex={i}
+                />
+                <Typography textAlign="center">ページ {numberOfPages} の {i + 1}</Typography>
+              </div>
+            );
+          }
+          )}
 
         </Document>
       </Box>
-      <p> {numberOfPages}</p>
+
     </FullScreenModal>);
 };
 

@@ -85,7 +85,7 @@ export const fetchURLByFileKey = (fileKey: string) : Promise<any> => {
         const blob = new Blob([xhr.response], {type: xhr.response.type});
         const fileURL = window.URL || window.webkitURL;
         const blobURL = fileURL.createObjectURL(blob);
-        resolve(blobURL);
+        resolve({URL: blobURL, type: xhr.response.type});
       }
       reject({
         status: this.status,

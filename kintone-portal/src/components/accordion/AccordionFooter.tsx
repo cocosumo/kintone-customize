@@ -9,6 +9,7 @@ import {fetchURLByFileKey, getAnnoucementsAppId} from './../../backend/announcem
 import {getDomain} from '../../../utils';
 import {useState} from 'react';
 import PDFViewer from '../viewers/PDFViewer';
+import ImageViewer from '../viewers/ImageViewer';
 // import PDFViewer2 from '../viewers/PDFViewer2';
 
 
@@ -22,14 +23,7 @@ const openRecord = (recordId: kintone.fieldTypes.Id) : void => {
 
 
 const AttachmentChip = ({name, fileKey, openPDFViewerHandler} : AttachmentChip) => {
-  // const [fileURL, setFileURL] = useState<string | undefined>('_blank');
 
-  /*   useEffect(()=>{
-    fetchURLByFileKey(fileKey).then((resp) => {
-      setFileURL(resp);
-    })
-  }, []);
- */
   return (
     <Grid item xs="auto">
       <Chip
@@ -46,15 +40,18 @@ const AttachmentChip = ({name, fileKey, openPDFViewerHandler} : AttachmentChip) 
 const AccordionFooter = ({attachment, $id} : AccordionFooterProps) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [pdfURL, setPDFURL] = useState('');
+  const [file, setFile] = useState({URL: '', type: ''});
 
   const openPDFViewerHandler = (fileKey : string) => {
     setIsModalOpen(true);
     fetchURLByFileKey(fileKey).then((resp) => {
       console.log(resp);
-      setPDFURL(resp);
+      setFile({URL: resp.URL, type: resp.type});
     });
   };
+
+  const isPDF = file.type.includes('pdf');
+
   return (
     <AccordionActions sx={{justifyContent: 'flex-start'}}>
       <Stack spacing={1}>
@@ -74,7 +71,8 @@ const AccordionFooter = ({attachment, $id} : AccordionFooterProps) => {
 
         </div>
       </Stack>
-      <PDFViewer {...{isModalOpen, setIsModalOpen}} url={pdfURL} />
+      {isPDF && <PDFViewer {...{isModalOpen, setIsModalOpen}} url={file.URL} />}
+      {!isPDF && <ImageViewer {...{isModalOpen, setIsModalOpen}} url={file.URL} />}
     </AccordionActions >
   );
 };
