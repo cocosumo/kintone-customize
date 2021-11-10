@@ -1,19 +1,12 @@
 import FullScreenModal from '../modals/FullScreenModal';
 import {useState, useReducer} from 'react';
-import {Document, Page, pdfjs} from 'react-pdf';
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+
 import PDFViewerHeader from './PDFViewerHeader';
-import {Box} from '@mui/system';
-import './PDFViewer.css';
-import {Typography} from '@mui/material';
 
-interface PDFDocumentProxy {
-  numPages: number
-}
+import PDFViewerAndroid from './PDFViewerAndroid';
+// import PDFViewerAllOtherDevice from './PDFViewerAllOtherDevice';
+// import {isAndroid} from '../../../utils';
 
-const PleaseWait = () => {
-  return <div>PLEASE WAIT</div>;
-};
 
 const initialScale = {scale: 1};
 
@@ -28,17 +21,17 @@ const reducer = (state : any, action: any) => {
   }
 };
 
+
 const PDFViewer = ({isModalOpen, setIsModalOpen, url} : FileViewerProps) => {
-  const [numberOfPages, setNumberOfPages] = useState<number | null>();
+  const [numberOfPages, setNumberOfPages] = useState<number>(0);
   const [state, dispatchScale] = useReducer(reducer, initialScale);
 
-  console.log(state);
   const onDocumentLoadSuccess = ({numPages} : PDFDocumentProxy) => {
     setNumberOfPages(numPages);
   };
 
 
-  console.log('hello');
+  const {scale} = state;
   return (
 
     <FullScreenModal
@@ -47,28 +40,9 @@ const PDFViewer = ({isModalOpen, setIsModalOpen, url} : FileViewerProps) => {
         <PDFViewerHeader dispatch={dispatchScale} />
       }
     >
-      <Box >
-
-        <Document
-          file={url}
-          onLoadSuccess={onDocumentLoadSuccess}
-        >
-          {[...Array(numberOfPages)].map((_, i) => {
-            return (
-              <div key={i}>
-                <Page
-                  loading={<PleaseWait />}
-                  scale={state.scale}
-                  pageIndex={i}
-                />
-                <Typography textAlign="center">ページ {numberOfPages} の {i + 1}</Typography>
-              </div>
-            );
-          }
-          )}
-
-        </Document>
-      </Box>
+      <PDFViewerAndroid {...{url, scale, numberOfPages, onDocumentLoadSuccess}} />
+      {/* {isAndroid && <PDFViewerAndroid {...{url, scale, numberOfPages, onDocumentLoadSuccess}} />}
+      {!isAndroid && <PDFViewerAllOtherDevice {...{url}} />} */}
 
     </FullScreenModal>);
 };

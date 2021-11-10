@@ -68,7 +68,6 @@ const AccordionFooter = ({attachment, $id} : AccordionFooterProps) => {
         </Grid>
         <div>
           <Button variant="contained" onClick={()=>openRecord($id)}>本文を見る</Button>
-
         </div>
       </Stack>
       {isPDF && <PDFViewer {...{isModalOpen, setIsModalOpen}} url={file.URL} />}
