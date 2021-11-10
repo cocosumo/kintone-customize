@@ -5,6 +5,7 @@ interface PDFDocumentProxy {
 interface PDFViewerAndroid {
   url : string,
   numberOfPages: number,
-  scale: number,
+  pdfWrapperWidth ?: number,
+  pdfWrapperHeight ?: number,
   onDocumentLoadSuccess : ({numPages} : PDFDocumentProxy)=>any
 }

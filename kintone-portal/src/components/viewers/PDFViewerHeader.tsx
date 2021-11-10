@@ -1,4 +1,4 @@
-
+/*
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
@@ -9,10 +9,6 @@ interface ButtonProps {
 
 }
 
-interface PDFViewHeaderProps {
-  dispatch: any
-  setIsModalOpen?: (isOpen: boolean)=>any
-}
 
 const ZoomIn = ({onClick} : ButtonProps) => (
   <IconButton size="large" color="primary" aria-label="zoom in" component="span" {...{onClick}}>
@@ -24,7 +20,7 @@ const ZoomOut = ({onClick} : ButtonProps) =>(
     <ZoomOutIcon />
   </IconButton>);
 
-const PDFViewerHeader = ({dispatch} : PDFViewHeaderProps) => {
+const PDFViewerHeader = () => {
   return (
 
     <Stack spacing={2} direction="row">
@@ -35,4 +31,4 @@ const PDFViewerHeader = ({dispatch} : PDFViewHeaderProps) => {
   );
 };
 
-export default PDFViewerHeader;
+export default PDFViewerHeader; */

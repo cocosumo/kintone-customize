@@ -40,13 +40,12 @@ const AttachmentChip = ({name, fileKey, openPDFViewerHandler} : AttachmentChip) 
 const AccordionFooter = ({attachment, $id} : AccordionFooterProps) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [file, setFile] = useState({URL: '', type: ''});
+  const [file, setFile] = useState({URL: '', type: '', size: 0});
 
   const openPDFViewerHandler = (fileKey : string) => {
     setIsModalOpen(true);
     fetchURLByFileKey(fileKey).then((resp) => {
-      console.log(resp);
-      setFile({URL: resp.URL, type: resp.type});
+      setFile({...resp});
     });
   };
 

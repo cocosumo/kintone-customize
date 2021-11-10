@@ -8,19 +8,26 @@ const PleaseWait = () => {
   return <div>PLEASE WAIT</div>;
 };
 
-const PDFViewerAndroid = ({url, numberOfPages, scale, onDocumentLoadSuccess} : PDFViewerAndroid) => {
+const PDFViewerAndroid = ({
+  url,
+  numberOfPages,
+  pdfWrapperWidth,
+  onDocumentLoadSuccess
+} : PDFViewerAndroid) => {
   return (
     <Document
       file={url}
       onLoadSuccess={onDocumentLoadSuccess}
+
     >
       {[...Array(numberOfPages)].map((_, i) => {
         return (
           <div key={i}>
             <Page
               loading={<PleaseWait />}
-              scale={scale}
-              pageIndex={i}
+              scale={1}
+              width={pdfWrapperWidth}
+              pageNumber={i + 1}
               renderTextLayer={false}
 
             />

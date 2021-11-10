@@ -1,16 +1,11 @@
 import FullScreenModal from '../modals/FullScreenModal';
-import {useState, useReducer} from 'react';
-
-import PDFViewerHeader from './PDFViewerHeader';
-
+import {useRef, useState} from 'react';
 import PDFViewerAndroid from './PDFViewerAndroid';
 // import PDFViewerAllOtherDevice from './PDFViewerAllOtherDevice';
 // import {isAndroid} from '../../../utils';
 
 
-const initialScale = {scale: 1};
-
-const reducer = (state : any, action: any) => {
+/* const reducer = (state : any, action: any) => {
   switch (action.type) {
     case 'increment':
       return {scale: state.scale + 0.2};
@@ -19,28 +14,38 @@ const reducer = (state : any, action: any) => {
     default:
       throw new Error();
   }
-};
+}; */
 
+
+type WrapperComponent = {
+  wrapperComponent: HTMLElement;
+}
+
+type TransformWrapper = {
+  instance: WrapperComponent;
+}
 
 const PDFViewer = ({isModalOpen, setIsModalOpen, url} : FileViewerProps) => {
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
-  const [state, dispatchScale] = useReducer(reducer, initialScale);
+  const pdfWrapperRef = useRef<TransformWrapper>();
+  // const [state, dispatchScale] = useReducer(reducer, initialScale);
 
   const onDocumentLoadSuccess = ({numPages} : PDFDocumentProxy) => {
+    console.log(numPages);
     setNumberOfPages(numPages);
   };
+  const pdfWrapperEl = pdfWrapperRef.current?.instance?.wrapperComponent;
+  const pdfWrapperWidth = pdfWrapperEl?.offsetWidth;
+  const pdfWrapperHeight = pdfWrapperEl?.offsetHeight || 400;
 
+  console.log(pdfWrapperWidth);
 
-  const {scale} = state;
   return (
 
     <FullScreenModal
-      {...{isModalOpen, setIsModalOpen}}
-      HeaderComponent={
-        <PDFViewerHeader dispatch={dispatchScale} />
-      }
+      {...{isModalOpen, setIsModalOpen, pdfWrapperRef}}
     >
-      <PDFViewerAndroid {...{url, scale, numberOfPages, onDocumentLoadSuccess}} />
+      <PDFViewerAndroid {...{url, numberOfPages, onDocumentLoadSuccess, pdfWrapperHeight, pdfWrapperWidth}} />
       {/* {isAndroid && <PDFViewerAndroid {...{url, scale, numberOfPages, onDocumentLoadSuccess}} />}
       {!isAndroid && <PDFViewerAllOtherDevice {...{url}} />} */}
 
