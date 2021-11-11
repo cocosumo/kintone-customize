@@ -1,0 +1,23 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background-color: #fcffff !important;
+
+}
+
+div.gaia-header-header-logo {
+  display: none;
+}
+
+div.gaia-header-header {
+  height: 8px;
+  background-color: #4b4b4b !important;
+}
+
+.gaia-mobile-v2-viewpanel-globalnavigationbar {
+  background-color: black;
+}

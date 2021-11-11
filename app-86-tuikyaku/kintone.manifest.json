@@ -3,6 +3,7 @@
     "scope":"ALL",
     "desktop":{
         "js":[
+            "https://js.cybozu.com/jquery/3.6.0/jquery.min.js",
             "./dist/customize.js"
         ],
         "css":[
@@ -11,6 +12,7 @@
     },
     "mobile": {
         "js":[
+            "https://js.cybozu.com/jquery/3.6.0/jquery.min.js",
             "./dist/customize.js"
         ],
         "css":[

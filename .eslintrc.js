@@ -32,11 +32,12 @@ module.exports = {
     '/dist/*.js',
     '**/vendor/*.js',
     '**/scripts/*',
-    'webpack.config.js'
+    'webpack.config.js',
+    '**/legacy/*'
   ],
   rules: {
     'indent': 'off',
     '@typescript-eslint/indent': ['error'],
-    'react/jsx-filename-extension': [1, {'allow': 'as-needed'}]
+    'react/jsx-filename-extension': [1, {'extensions': ['.js', '.jsx', '.ts', '.tsx']}]
   },
 };
