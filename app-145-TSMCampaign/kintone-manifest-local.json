@@ -1,0 +1,15 @@
+{
+  "app": "145",
+  "scope": "ALL",
+  "desktop": {
+      "js": [
+          "https://127.0.0.1:5500/dist/customize.js"
+      ],
+      "css": []
+  },
+  "mobile": {
+      "js": [
+          "https://127.0.0.1:5500/dist/customize.js"
+      ]
+  }
+}
