@@ -2,17 +2,17 @@
   "A" : {
     "表示" : {
       "show" :
-        ["A_F_1"]
+        ["Nested"]
     }
   },
-
-
-  "B" : {
-    "2" : {
-      "show" :
-        ["B_F_1"],
-      "hide": 
-        ["B_F_2", "B_F_3", "B_G_1"]
+  "Nested" : {
+    "sample1" : {
+      "show" :["A_F_1"],
+      "hide" : ["A_F_2"]
+    },
+    "sample2" : {
+      "show" :["A_F_2"],
+      "hide" : ["A_F_1"]
     }
   }
 

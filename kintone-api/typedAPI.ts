@@ -34,3 +34,22 @@ export const onCreateSubmitSuccess : string[] = [
 export const onEditOrCreate : string[] = onEdit.concat(onCreate);
 export const onSubmit : string[] = onEditSubmit.concat(onCreateSubmit);
 export const onSubmitSuccess : string[] = onEditSubmitSuccess.concat(onCreateSubmitSuccess);
+
+
+export const onFieldChange = (fields : string | string[]) : string[] =>
+  ([] as string[]).concat(fields).reduce(
+    (acc : string[], curr) : string[] => {
+      return acc.concat(
+        `app.record.edit.change.${curr}`,
+        `mobile.app.record.edit.change.${curr}`,
+        `app.record.create.change.${curr}`,
+        `mobile.app.record.create.change.${curr}`
+      );
+    }, [],
+  );
+
+export const getPortalSpaceElement = () => (
+  isMobile
+    ? kintone.mobile.portal.getContentSpaceElement()
+    : kintone.portal.getContentSpaceElement()
+);
