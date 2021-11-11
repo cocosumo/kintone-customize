@@ -12,4 +12,5 @@ interface AccordionFooterProps {
 interface AttachmentChip {
   name: string,
   fileKey: string
+  openPDFViewerHandler: (fileKey: string)=>void
 }

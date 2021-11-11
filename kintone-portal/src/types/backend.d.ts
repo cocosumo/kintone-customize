@@ -10,3 +10,14 @@ interface GroupAnnouncements {
   news: kintone.types.SavedFields[],
   events: kintone.types.SavedFields[]
 }
+
+interface FileObject {
+  URL: string,
+  type: string,
+  size: number
+}
+
+interface FileObject {
+  status?: string,
+  statusText?: string
+}

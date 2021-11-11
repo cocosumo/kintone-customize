@@ -73,7 +73,8 @@ export const fetchFileURL = (fileKey: string) => {
 
 };
 
-export const fetchURLByFileKey = (fileKey: string) : Promise<any> => {
+
+export const fetchURLByFileKey = (fileKey: string) : Promise<FileObject> => {
   const url = `https://${getDomain()}/k/v1/file.json?fileKey=${fileKey}`;
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -85,7 +86,12 @@ export const fetchURLByFileKey = (fileKey: string) : Promise<any> => {
         const blob = new Blob([xhr.response], {type: xhr.response.type});
         const fileURL = window.URL || window.webkitURL;
         const blobURL = fileURL.createObjectURL(blob);
-        resolve(blobURL);
+
+        resolve({
+          URL: blobURL,
+          type: xhr.response.type,
+          size: xhr.response.size
+        });
       }
       reject({
         status: this.status,
