@@ -27,20 +27,14 @@
     "strictNullChecks": true
 
   },
-  "files" : [
-    "./node_modules/@kintone/dts-gen/kintone.d.ts",
-    "./fields.d.ts",
-    "types/kintone.d.ts",
-  ],
   "include": [
-    "src/**/*"
+    "*/src/**/*"
    ],
   "exclude": [
     "dist",
     "node_modules",
     "*.js",
     "*.jsx",
-    "**/legacy/*",
-    "**/kintone-api/*"
+    "**/legacy/*"
   ]
 }

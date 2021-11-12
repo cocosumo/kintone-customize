@@ -3,18 +3,22 @@ type Fields = kintone.types.Fields
 
 interface SaveFields {
   record: kintone.types.SavedFields,
-  error?: string
+  error?: string,
+  type: string,
+  appId: string,
+  recordId: string
 }
 
 type AgentsTable = ここすも担当者 | ゆめてつ担当者
 
+interface TableRow {
+  id: string;
+  value: any
+}
 
 interface Table {
   type: 'SUBTABLE',
-  value: Array<{
-    id: string;
-    value: any
-  }>,
+  value: TableRow[],
   error?: string
 }
 

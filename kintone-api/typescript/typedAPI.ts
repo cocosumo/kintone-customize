@@ -75,3 +75,13 @@ export const getPortalSpaceElement = () => (
     ? kintone.mobile.portal.getContentSpaceElement()
     : kintone.portal.getContentSpaceElement()
 );
+
+
+export const onFieldChange = (fields : string[]) => [[] as string[]].concat(fields).reduce(
+  (acc, curr) : string[] => acc.concat(
+    `app.record.edit.change.${curr}`,
+    `mobile.app.record.edit.change.${curr}`,
+    `app.record.create.change.${curr}`,
+    `mobile.app.record.create.change.${curr}`,
+  ), [],
+);
