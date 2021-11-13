@@ -1,4 +1,9 @@
 {
+  "Root" : {
+    "sample1" : {
+      "show" :["A"]
+    }
+  },
   "A" : {
     "表示" : {
       "show" :
@@ -11,6 +16,11 @@
     }
   },
   "Nested2" : {
+    "sample1" : {
+      "show" :["Nested3"]
+    }
+  },
+  "Nested3" : {
     "sample1" : {
       "show" :["A_F_1"],
       "hide" : ["A_F_2"]
