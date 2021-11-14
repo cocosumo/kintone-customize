@@ -5,10 +5,11 @@ import {setFieldShown} from '../../../kintone-api/api';
 let _record = {}; // モジュール範囲で定義。
 
 /**
- *
- * @param {*} fieldsSettings
- * @param {string} choice, 選択肢に選択された値
- * @param {boolean} isReverse 選択肢の一番目の値の逆の設定のをする
+ * フィールドコード[fieldsSettings]の選択した項目[choise]によって、
+ * visibilitySettings.jsonに設定した通り、フィールドの表示/非表示を変更する
+ * @param {*} fieldsSettings 対象のフィールドコード
+ * @param {string} choice, 選択した項目名
+ * @param {boolean} isReverse 表示の反転の確認。設定の一つ目の反転
  * @param {boolean} isForceHide 設定に問わず、強制に非表示
  *
  * @returns void
@@ -23,7 +24,7 @@ const resolveVisibility = (fieldsSettings, choice, isReverse = false, isForceHid
 
     Object.entries(fieldsSettings[choice])
       .forEach(([key, fields]) => {
-        const isShow = key === 'show'; // キーはshowかどうか
+        const isShow = key === 'show'; // フィールドは設定ファイルにshowになっているかどうか
         let isVisible = isReverse ? !isShow : isShow; // 逆の設定にするかどうか
         isVisible = isForceHide ? false : isVisible; // 強制に非表示にするかどう、(nestedの場合)
 
@@ -57,26 +58,47 @@ const resolveVisibility = (fieldsSettings, choice, isReverse = false, isForceHid
 };
 
 /**
- * 設定ファイルのすべてを適用（量によって重いかもしれません）
- *
- * @param {object} record Kintoneのレコードオブジェクト
- * @returns void
- */
-
-export const setVisibility = (record) => {
-  _record = record;
-  Object.entries(settings)
-    .forEach(([fieldCode, fieldSettings]) => {
-      const choice = record[fieldCode].value;
-      resolveVisibility(fieldSettings, choice);
-    });
-};
-
-/**
- * 変わったフィールドだけ、設定を適用。
+ * フィールドの表示設定をする
  *
  * @param {object} event, kintoneの変更イベントオブジェクト
  * @returns void
+ */
+
+export const setVisibility = (event) => {
+  const {
+    record,
+    changes: {field},
+    type
+  } = event;
+
+  _record = record;
+
+  const isChange = type.includes('change.');
+
+  if (isChange) {
+    // 変更イベントの場合
+    const fieldCode = type.split('change.')[1];
+    const choice = field.value;
+    resolveVisibility(settings[fieldCode], choice);
+
+  } else {
+    // その他のイベント
+    Object.entries(settings)
+      .forEach(([fieldCode, fieldSettings]) => {
+        const choice = record[fieldCode].value;
+        resolveVisibility(fieldSettings, choice);
+      });
+  }
+};
+
+
+/**
+ * @deprecated
+ * フィールドの内容を変更した際に、フィールドの表示を変更する
+ *
+ * @param {object} event, kintoneの変更イベントオブジェクト
+ * @returns void
+ *
 */
 export const setVisibilityByChangedField = (event) => {
   const {
@@ -85,7 +107,7 @@ export const setVisibilityByChangedField = (event) => {
     type
   } = event;
 
-  _record = record;
+  _record = record; // モジュールのconstructor
 
   const fieldCode = type.split('change.')[1];
   const choice = field.value;
