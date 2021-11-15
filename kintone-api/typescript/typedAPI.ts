@@ -65,12 +65,14 @@ export const onCreateSubmitSuccess : string[] = [
   'mobile.app.record.create.submit.success',
 ];
 
+export const onIndexShow = [
+  'app.record.index.show',
+  'mobile.app.record.index.show',
+];
 
 export const onEditOrCreate : string[] = onEdit.concat(onCreate);
 export const onSubmit : string[] = onEditSubmit.concat(onCreateSubmit);
 export const onSubmitSuccess : string[] = onEditSubmitSuccess.concat(onCreateSubmitSuccess);
-
-
 
 export const onFieldChange = (fields : string | string[]) : string[] =>
   ([] as string[]).concat(fields).reduce(

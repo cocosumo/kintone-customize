@@ -1,4 +1,4 @@
-import {onIndexShow} from '../../kintone-api/api';
+import {onIndexShow} from '../../kintone-api/typescript/typedAPI';
 import onIndexShowHandler from './pages/onIndexShowHandler';
 
 (() => {
