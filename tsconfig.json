@@ -1,14 +1,5 @@
 {
   "compilerOptions": {
-    "target" :"ES6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedParameters": true,
@@ -18,6 +9,7 @@
     "noImplicitAny": true,
     "declarationDir": "dist/types",
     "declaration": true,
+    "target": "es6",
     "module": "es2015",
     "strict": true,
     "moduleResolution": "node"
