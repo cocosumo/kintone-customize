@@ -3,10 +3,10 @@
 import ReactDOM from 'react-dom';
 import BaikyakuSaitoHankyoKanriHyou from '../components/BaikyakuSaitoHankyoKanriHyou';
 
-const onIndexShowHandler = (event) => {
+const onIndexShowHandler = (event : IndexEvent) => {
 
   ReactDOM.render(
-    <BaikyakuSaitoHankyoKanriHyou {...{event}} />,
+    <BaikyakuSaitoHankyoKanriHyou event={event} />,
     document.getElementById('root')
   );
 };

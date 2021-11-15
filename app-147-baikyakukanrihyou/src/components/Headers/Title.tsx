@@ -1,7 +1,11 @@
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 
-const Title = ({children}) => {
+type Props = {
+  children: React.ReactNode,
+};
+
+const Title : React.FC<Props> = ({children}) => {
   return (
     <Typography
       textAlign="center"
