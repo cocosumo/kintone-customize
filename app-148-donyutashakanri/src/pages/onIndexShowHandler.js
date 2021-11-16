@@ -1,5 +1,4 @@
-import {Button} from '@mui/material';
-import PrintIcon from '@mui/icons-material/Print';
+import PrintButton from '../compornents/PrintButton';
 import ReactDOM from 'react-dom';
 import Table from '../compornents/Table';
 import Header from '../compornents/Header';
@@ -11,13 +10,14 @@ const onIndexShowHandler = (event) => {
   console.log(condition);
   console.log('Index Page');
 
+  // console.log('event', event);
   ReactDOM.render(
-    <Button
-      variant="contained"
-      startIcon={<PrintIcon />}
-    >
-      印刷
-    </Button>, document.getElementById('root'),
+    <div>
+      <PrintButton />
+      <Header area={event.viewName} />
+      <Table data={event.records} />
+    </div>
+    , document.getElementById('root')
   );
 
   /*
