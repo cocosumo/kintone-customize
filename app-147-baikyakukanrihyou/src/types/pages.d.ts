@@ -1,4 +1,6 @@
 interface IndexEvent {
   records: KintoneTypes.Data,
-  type: string
+  type: string,
+  viewType: string,
+  viewId: string
 }

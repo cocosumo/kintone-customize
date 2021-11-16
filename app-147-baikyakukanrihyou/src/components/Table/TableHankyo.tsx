@@ -8,29 +8,23 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Title from '../Headers/Title';
-import React from 'react';
 
-function createData(
-  store : string,
-  site: string,
-  date :string,
-  time: string,
-  incharge: string,
-  type: string,
-) {
-  return {store, site, date, time, incharge, type};
+import './TableHankyo.css';
+import Box from '@mui/system/Box';
+
+interface TableHankyoProps {
+  title: string
+  records: KintoneTypes.Data[]
 }
 
-const rows = [
-  createData('千種大久手店', 'イエウール', '2021-11-15', '9:00', '坪内 修', '一戸建て'),
 
-];
+const TableHankyo = ({title, records}: TableHankyoProps) => {
 
-const TableHankyo = React.forwardRef((_props, ref: any) => {
 
   return (
-    <div style={{'width': '100%'}} ref={ref}>
-      <Title>【豊田市エリア】 売却サイト反響管理表</Title>
+    <Box padding={1}>
+      <Title>【{title}】 売却サイト反響管理表</Title>
+
       <TableContainer sx={{width: '100%'}} component={Paper}>
         <Table sx={{width: '100%'}} aria-label="simple table">
           <TableHead>
@@ -48,28 +42,33 @@ const TableHankyo = React.forwardRef((_props, ref: any) => {
               <Cell>その他（中止等理由）</Cell>
             </TableRow>
           </TableHead>
+
           <TableBody>
-            {rows.map((row) => (
+            {records.map((row) => (
               <TableRow
-                key={row.site + row.date}
+                key={row.反響受付日.value + row.媒体サイト.value}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
               >
                 <Cell component="th" scope="row">
-                  {row.store}
+                  {row.受付店舗.value}
                 </Cell>
-                <Cell>{row.site}</Cell>
-                <Cell>{row.date}</Cell>
-                <Cell>{row.time}</Cell>
-                <Cell>{row.incharge}</Cell>
-                <Cell>{row.type}</Cell>
-
+                <Cell>{row.媒体サイト.value}</Cell>
+                <Cell>{row.反響受付日.value}</Cell>
+                <Cell>{row.受付時刻.value}</Cell>
+                <Cell>{row.営業担当.value}</Cell>
+                <Cell>{row.種別.value}</Cell>
+                <Cell>{row.査定先住所.value}</Cell>
+                <Cell>{row.課金対象.value}</Cell>
+                <Cell>{row.反響対応.value}</Cell>
+                <Cell>{row.媒介獲得日.value}</Cell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+      <footer />
+    </Box>
   );
-});
+};
 
 export default TableHankyo;

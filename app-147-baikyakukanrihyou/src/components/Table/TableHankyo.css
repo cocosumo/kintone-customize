@@ -1,0 +1,11 @@
+
+footer {
+  margin-top: 50px;
+}
+
+@media print {
+  footer {
+    page-break-after: always;
+
+  }
+}

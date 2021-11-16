@@ -1,23 +1,26 @@
 import Grid from '@mui/material/Grid';
-import {useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {useReactToPrint} from 'react-to-print';
 import PrintButton from './Buttons/PrintButton';
-
 import PropTypes from 'prop-types';
-import TableHankyo from './Table/TableHankyo';
+import {fetchBaikyakuHankyoGroupByArea} from '../backend/baikyakuHankyo';
+import AreaPage from './Pages/AreaPages';
 
-interface BaikyakuSaitoHankyoKanriHyouProps {
-  event: IndexEvent,
-}
 
-const BaikyakuSaitoHankyoKanriHyou = ({event} : BaikyakuSaitoHankyoKanriHyouProps) => {
-  const {type} = event;
+const BaikyakuSaitoHankyoKanriHyou = () => {
+  const [groupedRecords, setGroupedRecords] = useState<GroupedRecords | null>(null);
+
+  useEffect(()=> {
+    fetchBaikyakuHankyoGroupByArea()
+      .then((resp : GroupedRecords) => {
+        setGroupedRecords(resp);
+      });
+  }, []);
+
+
   const handlePrint = useReactToPrint({
-
     content: () => componentRef.current,
   });
-
-  console.log(event, type, 'hello');
 
   const componentRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +37,9 @@ const BaikyakuSaitoHankyoKanriHyou = ({event} : BaikyakuSaitoHankyoKanriHyouProp
         <PrintButton onPrint={handlePrint} />
       </Grid>
       <Grid item>
-        <TableHankyo ref={componentRef} />
+        <div style={{'width': '100%'}} ref={componentRef}>
+          {groupedRecords && <AreaPage {...{groupedRecords}} />}
+        </div>
       </Grid>
     </Grid>
   );

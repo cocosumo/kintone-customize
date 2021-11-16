@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -27,11 +29,30 @@ module.exports = {
         test: /\.(js)x?$/,
         loader: 'babel-loader',
         exclude: /node_modules/
-      }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: path.resolve(__dirname, 'dist'),
+            },
+          },
+          'css-loader',
+        ],
+      },
     ],
   },
 
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // all options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+      ignoreOrder: false, // Enable to remove warnings about conflicting order
+    }),
   ],
 };

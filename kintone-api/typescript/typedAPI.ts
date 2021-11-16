@@ -92,3 +92,4 @@ export const getPortalSpaceElement = () => (
     : kintone.portal.getContentSpaceElement()
 
 );
+

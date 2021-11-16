@@ -1,17 +1,17 @@
 declare namespace KintoneTypes {
   interface Data {
-    文字列__1行_: kintone.fieldTypes.SingleLineText;
-    ラジオボタン: kintone.fieldTypes.RadioButton;
+    媒体サイト: kintone.fieldTypes.SingleLineText;
+    受付時刻: kintone.fieldTypes.Time;
     営業担当: kintone.fieldTypes.SingleLineText;
     受付店舗: kintone.fieldTypes.SingleLineText;
-    時刻: kintone.fieldTypes.Time;
-    文字列__複数行_: kintone.fieldTypes.MultiLineText;
+    その他備考: kintone.fieldTypes.MultiLineText;
+    反響受付日: kintone.fieldTypes.Date;
     種別: kintone.fieldTypes.DropDown;
-    ルックアップ_0: kintone.fieldTypes.SingleLineText;
-    日付: kintone.fieldTypes.Date;
-    日付_2: kintone.fieldTypes.Date;
+    課金対象: kintone.fieldTypes.RadioButton;
+    媒介獲得日: kintone.fieldTypes.Date;
+    査定先住所: kintone.fieldTypes.SingleLineText;
 
-    チェックボックス: kintone.fieldTypes.CheckBox;
+    反響対応: kintone.fieldTypes.CheckBox;
   }
   interface SavedData extends Data {
     $id: kintone.fieldTypes.Id;
