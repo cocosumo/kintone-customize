@@ -1,6 +1,12 @@
-const Header = (props) => {
-  const {children} = props;
-  return <h1>{props.area}</h1>;
+import PropTypes from 'prop-types';
+
+const Header = ({area}) => {
+  // const {children} = props;
+  return <h1>{area}</h1>;
+};
+
+Header.propTypes = {
+  area: PropTypes.string
 };
 
 export default Header;

@@ -2,3 +2,25 @@
 #root{
   text-align:center;
 }
+
+/* まとめて指定する場合 */
+table {
+  margin: 3px auto;    /* 上下3px 左右auto */
+}
+
+Table tr th {
+  border:1px solid #000000;
+}
+
+Table tr td {
+  border:1px solid #000000;
+  width:150px;
+}
+
+.print_pages{
+  /*A4縦*/
+  width: 172mm;
+  height: 251mm;
+  page-break-after: always;
+
+}
