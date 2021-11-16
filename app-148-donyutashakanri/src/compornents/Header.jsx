@@ -2,7 +2,10 @@ import PropTypes from 'prop-types';
 
 const Header = ({area}) => {
   // const {children} = props;
-  return <h1>{area}</h1>;
+  let title = {area};
+  title = title.area.substr(1, title.area.length - 1);
+
+  return <h1>{title}</h1>;
 };
 
 Header.propTypes = {
