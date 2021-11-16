@@ -2,10 +2,9 @@ import TableHankyo from '../Table/TableHankyo';
 
 
 const AreaPage = ({groupedRecords = {}}: any) => {
-  console.log(groupedRecords, 'grouped');
+
   const Pages = Object.entries<any>(groupedRecords)
     .map(([key, value]) => {
-      console.log(value);
       return (
         <TableHankyo
           records={value}
@@ -15,8 +14,7 @@ const AreaPage = ({groupedRecords = {}}: any) => {
     });
 
   return (
-    <>{Pages}
-    </>
+    <>{Pages}</>
   );
 };
 

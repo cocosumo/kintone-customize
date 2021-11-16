@@ -1,11 +1,10 @@
 
-footer {
-  margin-top: 50px;
-}
 
 @media print {
-  footer {
+  html, body {
+    height: 99% !important;
+  }
+  footer.page-break {
     page-break-after: always;
-
   }
 }

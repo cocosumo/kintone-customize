@@ -1,12 +1,12 @@
 import TableCell, {TableCellProps} from '@mui/material/TableCell';
 
 
-const Cell = (props : TableCellProps) => {
+const CellHeader = (props : TableCellProps) => {
   return (
     <TableCell
-      width={props.width}
       sx={{
         padding: 1,
+        fontWeight: 600
       }}
       {...props}
     >
@@ -14,4 +14,4 @@ const Cell = (props : TableCellProps) => {
     </TableCell>);
 };
 
-export default Cell;
+export default CellHeader;

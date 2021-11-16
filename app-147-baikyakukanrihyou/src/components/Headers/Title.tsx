@@ -10,7 +10,6 @@ const Title : React.FC<Props> = ({children}) => {
     <Typography
       textAlign="center"
       variant="h4"
-      my={1}
     >{children}
     </Typography>
   );

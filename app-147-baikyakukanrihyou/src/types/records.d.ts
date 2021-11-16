@@ -1,5 +1,5 @@
 interface FetchedRecords {
-  records : KintoneTypes.Data[]
+  records : KintoneTypes.SavedData[]
 }
 
 interface GroupedRecords {
