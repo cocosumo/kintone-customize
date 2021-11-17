@@ -4,9 +4,13 @@ import TableCell, {TableCellProps} from '@mui/material/TableCell';
 const Cell = (props : TableCellProps) => {
   return (
     <TableCell
-      width={props.width}
       sx={{
-        padding: 1,
+        p: '4px',
+        fontSize: 12,
+        width: 'fit-content',
+        maxWidth: '150px',
+        wordBreak: 'normal',
+        overflowWrap: 'break-word'
       }}
       {...props}
     >

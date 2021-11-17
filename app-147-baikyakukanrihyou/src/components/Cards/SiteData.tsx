@@ -15,9 +15,10 @@ const SiteData = ({records}: SiteDataProps) => {
 
   return (
     <Grid
+      className="sites-data"
       margin={6}
       container
-      spacing={2}
+      spacing={4}
     >{
         Object.entries(groupBySite).map<any>(([site, siteRecords]) => {
           return (

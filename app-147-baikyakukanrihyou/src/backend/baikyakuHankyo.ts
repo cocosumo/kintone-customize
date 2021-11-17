@@ -1,15 +1,23 @@
 import {fetchRecords} from './../../../kintone-api/typescript/fetchRecordsTS';
 import {fetchGroupedAreas} from './shops';
+import startOfMonth from 'date-fns/startOfMonth';
+import endOfMonth from 'date-fns/endOfMonth';
 
 const appId : number | null = 147;
 let _area = {};
 
-const fetchRecordsByYear = async () : Promise<KintoneTypes.SavedData[]> => {
-  return (await fetchRecords({appId: appId, condition: ''})).records;
+const fetchRecordsByDate = async (reportDate : Date) : Promise<KintoneTypes.SavedData[]> => {
+  const monthStart = startOfMonth(reportDate).toISOString();
+  const monthEnd = endOfMonth(reportDate).toISOString();
+  console.log(monthStart, monthEnd);
+  return (await fetchRecords({
+    appId: appId,
+    condition: `反響受付日 >= "${monthStart}" and 反響受付日 <= "${monthEnd}"`
+  })).records;
 };
 
-export const fetchBaikyakuHankyoGroupByArea = async () => {
-  const [baikyakuHankyo, areas] = await Promise.all([fetchRecordsByYear(), fetchGroupedAreas()]);
+export const fetchBaikyakuHankyoGroupByArea = async (reportDate : Date) => {
+  const [baikyakuHankyo, areas] = await Promise.all([fetchRecordsByDate(reportDate), fetchGroupedAreas()]);
 
   const groupedByArea = baikyakuHankyo.reduce<any>((accu, curr) => {
     const {受付店舗: store} = curr;
@@ -31,4 +39,4 @@ export const fetchBaikyakuHankyoGroupByArea = async () => {
 
 export const getAreas = () => _area;
 
-export default fetchRecordsByYear;
+export default fetchRecordsByDate;

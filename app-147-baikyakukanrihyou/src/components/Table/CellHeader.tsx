@@ -5,7 +5,7 @@ const CellHeader = (props : TableCellProps) => {
   return (
     <TableCell
       sx={{
-        padding: 1,
+        p: '4px',
         fontWeight: 600
       }}
       {...props}

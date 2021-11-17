@@ -1,11 +1,11 @@
 
-import Card from '@mui/material/Card';
+
 import Grid from '@mui/material/Grid';
 import Typhography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
-import CardContent from '@mui/material/CardContent';
 import {groupRecordsByField} from '../../helpers/utils';
+import './SiteCard.css';
 
 interface SiteCardProps {
   site : string,
@@ -33,18 +33,14 @@ const SiteCard = ({site, siteRecords} : SiteCardProps) => {
 
   return (
     <Grid item>
-      <Card sx={{minHeight: '140px'}}>
-        <CardContent>
-          <Typhography variant="h6">{site}</Typhography>
-          <Divider />
+      <div className="site-card">
+        <Typhography variant="caption" >{site}</Typhography>
+        <Divider />
 
-          <Stack mt={2} direction="column">
-            {countPerSite}
-          </Stack>
-
-
-        </CardContent>
-      </Card>
+        <Stack mt={1} direction="column">
+          {countPerSite}
+        </Stack>
+      </div>
     </Grid>
   );
 };
