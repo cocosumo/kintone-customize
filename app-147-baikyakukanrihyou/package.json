@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "node scripts/npm-start.js",
-    "upload": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com/ --watch kintone-manifest.json",
+    "upload": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com/ --watch kintone.manifest.json",
     "upload:local": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com/ kintone.manifest-local.json",
     "develop": "npm run build -- --watch",
     "build": "webpack --mode development",
@@ -41,9 +41,11 @@
     "webpack-cli": "^4.9.0"
   },
   "dependencies": {
+    "@date-io/date-fns": "^2.11.0",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.1.0",
+    "@mui/lab": "^5.0.0-alpha.54",
     "@mui/material": "^5.1.0",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.4",
