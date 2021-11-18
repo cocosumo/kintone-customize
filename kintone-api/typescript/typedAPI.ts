@@ -90,7 +90,6 @@ export const getPortalSpaceElement = () => (
   isMobile
     ? kintone.mobile.portal.getContentSpaceElement()
     : kintone.portal.getContentSpaceElement()
-
 );
 
 
