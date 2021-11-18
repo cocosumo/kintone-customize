@@ -40,15 +40,6 @@ const Table = ({area, data}) => {
   );
 };
 
-/*
-        <section className="print_pages">
-          <Header area={area} /><br />
-          <span className="subTitle"> 導入他社数一覧 </span>
-          <table className="donyutashasu_list">
-            {newTable2}
-          </table>
-        </section>
-*/
 
 Table.propTypes = {
   area: PropTypes.string,
