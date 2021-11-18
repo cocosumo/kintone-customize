@@ -110,7 +110,7 @@ export const getPrintViewHeader = () => {
 /**
  * アプリのIDを取得
  * */
-export const getAppId = () => {
+export const getAppId = () : number => {
   const url = window.location.href;
   return url.includes('k/m')
     ? kintone.mobile.app.getId()
