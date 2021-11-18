@@ -1,6 +1,8 @@
 import TableHankyo from '../Table/TableHankyo';
+import TableSummary from '../Table/TableSummary';
+
 interface AreaPageProps {
-  groupedRecords: {[key: string] : any},
+  groupedRecords: {[key: string] : any}, // by area
   reportDate : Date | null
 }
 
@@ -18,7 +20,10 @@ const AreaPage = ({groupedRecords = {}, reportDate}: AreaPageProps) => {
     });
 
   return (
-    <>{Pages}</>
+    <>
+      {Pages}
+      <TableSummary groupedRecords={groupedRecords} />
+    </>
   );
 };
 

@@ -4,7 +4,10 @@ import startOfMonth from 'date-fns/startOfMonth';
 import endOfMonth from 'date-fns/endOfMonth';
 
 const appId : number | null = 147;
+
+// API実行回数節約するために モジュール範囲に格納。
 let _area = {};
+let _records : KintoneTypes.SavedData[] = [];
 
 const fetchRecordsByDate = async (reportDate : Date) : Promise<KintoneTypes.SavedData[]> => {
   const monthStart = startOfMonth(reportDate).toISOString();
@@ -33,10 +36,12 @@ export const fetchBaikyakuHankyoGroupByArea = async (reportDate : Date) => {
   }, {});
 
   _area = groupedByArea;
+  _records = baikyakuHankyo;
 
   return groupedByArea;
 };
 
-export const getAreas = () => _area;
+export const getGroupedAreas = () => _area;
+export const getHankyoRecords = () => _records;
 
 export default fetchRecordsByDate;

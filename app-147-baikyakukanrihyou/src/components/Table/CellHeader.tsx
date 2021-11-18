@@ -1,14 +1,18 @@
 import TableCell, {TableCellProps} from '@mui/material/TableCell';
 
+interface CellHeaderProps extends TableCellProps {
+  alignRight?: boolean
+}
 
-const CellHeader = (props : TableCellProps) => {
+const CellHeader = (props : CellHeaderProps) => {
+
   return (
     <TableCell
       sx={{
         p: '4px',
-        fontWeight: 600
+        textAlign: props.alignRight ? 'right' : 'left',
+        fontWeight: 600,
       }}
-      {...props}
     >
       {props.children}
     </TableCell>);
