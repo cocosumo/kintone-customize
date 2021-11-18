@@ -1,6 +1,5 @@
 
 import PropTypes from 'prop-types';
-import React, {useRef} from 'react';
 import Header from '../compornents/Header';
 
 const Table = ({area, data}) => {
@@ -17,7 +16,7 @@ const Table = ({area, data}) => {
 
   return (
     <>
-      <article className="print-area" ref={useRef()}>
+      <article className="print-area">
         <Header area={area} /><br />
         <span className="subTitle"> 課金一覧 </span>
         <section className="print_pages">

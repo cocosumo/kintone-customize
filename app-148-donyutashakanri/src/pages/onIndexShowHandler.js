@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom';
 import App from '../compornents/App';
 import './index.css';
-import React, {useRef} from 'react';
 
 /* eslint-disable no-unused-vars */
 const onIndexShowHandler = (event) => {

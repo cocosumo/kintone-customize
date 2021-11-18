@@ -29,7 +29,7 @@ const YearMonthPicker = ({reportDate, setReportDate}) => {
 
 YearMonthPicker.propTypes = {
   reportDate: PropTypes.object,
-  setReportDate: PropTypes.object
+  setReportDate: PropTypes.func
 };
 
 export default YearMonthPicker;
