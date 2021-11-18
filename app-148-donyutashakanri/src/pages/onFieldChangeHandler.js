@@ -1,10 +1,10 @@
 import {getChangedFieldDetails} from '../helpers/utilities';
-import {setValueByApplyPeriod} from '../helpers/setValues';
+import {setVisibilityByChangedField} from '../helpers/visibility';
 
 export const onFieldChangeHandler = (event) => {
 
   console.log('フィールド変更時のevent', event);
-  setValueByApplyPeriod(getChangedFieldDetails(event));
+  setVisibilityByChangedField(getChangedFieldDetails(event));
 
   return event;
 };

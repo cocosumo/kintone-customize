@@ -1,4 +1,5 @@
 import {setFieldShown} from '../../../kintone-api/api';
+import {setVisibility} from '../helpers/visibility';
 
 const onEditOrCreateHandler = ({record}) => {
 
@@ -6,7 +7,9 @@ const onEditOrCreateHandler = ({record}) => {
   console.log('record', record);
 
   setFieldShown('適用年月', false); // フィールド「適用年月」を非表示にする
+  setFieldShown('ダミー', false);
 
+  setVisibility(record);
   return {record};
 };
 

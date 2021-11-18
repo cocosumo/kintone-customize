@@ -57,6 +57,11 @@ export const onIndexShow = [
   'mobile.app.record.index.show',
 ];
 
+export const onReportShow = [
+  'app.report.show',
+  'mobile.app.report.show',
+];
+
 /**
 * フィールド値を変化イベント
 * @param {string|array} fields フィルドコード
