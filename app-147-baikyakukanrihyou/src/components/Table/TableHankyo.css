@@ -19,10 +19,6 @@
     page-break-before: always;
   }
 
-  .sites-data {
-    margin-bottom: 0 !important;
-  }
-
   footer.page-break {
     page-break-after: avoid;
   }

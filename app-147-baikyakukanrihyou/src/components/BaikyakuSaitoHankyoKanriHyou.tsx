@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import {useEffect, useRef, useState} from 'react';
 import {useReactToPrint} from 'react-to-print';
 import PrintButton from './Buttons/PrintButton';
-import PropTypes from 'prop-types';
+
 import {fetchBaikyakuHankyoGroupByArea} from '../backend/baikyakuHankyo';
 import AreaPage from './Pages/ReportPages';
 import YearMonthPicker from './DatePickers/YearMonthPicker';
@@ -56,7 +56,3 @@ const BaikyakuSaitoHankyoKanriHyou = () => {
 };
 
 export default BaikyakuSaitoHankyoKanriHyou;
-
-BaikyakuSaitoHankyoKanriHyou.propTypes = {
-  event: PropTypes.object
-};

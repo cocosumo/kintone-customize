@@ -27,7 +27,7 @@ const TableHankyo = ({title, records, reportDate}: TableHankyoProps) => {
   return (
     <Box className="area-container" margin={2} overflow="hidden">
       <Title>{titleComponent}</Title>
-
+      <SiteData {...{records}} />
       <TableContainer sx={{width: '100%'}}>
         <Table sx={{width: '100%'}} aria-label="simple table">
           <TableHead>
@@ -48,27 +48,37 @@ const TableHankyo = ({title, records, reportDate}: TableHankyoProps) => {
           </TableHead>
 
           <TableBody>
-            {records.map((row, idx) => (
-              <TableRow
-                key={row.$id.value}
-                sx={{'&:last-child td, &:last-child th': {border: 0}}}
-              >
-                <Cell>{idx + 1}</Cell>
-                <Cell component="th" scope="row">
-                  {row.受付店舗.value}
-                </Cell>
-                <Cell >{row.媒体サイト.value}</Cell>
-                <Cell>{row.反響受付日.value}</Cell>
-                <Cell>{row.受付時刻.value}</Cell>
-                <Cell>{row.営業担当.value}</Cell>
-                <Cell>{row.種別.value}</Cell>
-                <Cell>{row.査定先住所.value}</Cell>
-                <Cell>{row.課金対象.value}</Cell>
-                <Cell>{row.反響対応.value.join(', ')}</Cell>
-                <Cell>{row.媒介獲得日.value}</Cell>
-                <Cell />
-              </TableRow>
-            ))}
+            {records.map((row, idx) => {
+
+              const baitaiSite = () => {
+                const {媒体サイト, 媒体サイト名} = row;
+                if (媒体サイト名.value.length) {
+                  return <>{媒体サイト.value} <br /> {媒体サイト名.value}</>;
+                }
+                return 媒体サイト.value;
+              };
+
+              return (
+                <TableRow
+                  key={row.$id.value}
+                  sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                >
+                  <Cell>{idx + 1}</Cell>
+                  <Cell component="th" scope="row">
+                    {row.受付店舗.value}
+                  </Cell>
+                  <Cell >{baitaiSite()}</Cell>
+                  <Cell>{row.反響受付日.value}</Cell>
+                  <Cell>{row.受付時刻.value}</Cell>
+                  <Cell>{row.営業担当.value}</Cell>
+                  <Cell>{row.種別.value}</Cell>
+                  <Cell>{row.査定先住所.value}</Cell>
+                  <Cell>{row.課金対象.value}</Cell>
+                  <Cell>{row.反響対応.value.join(', ')}</Cell>
+                  <Cell>{row.媒介獲得日.value}</Cell>
+                  <Cell />
+                </TableRow>);
+            })}
           </TableBody>
           <tfoot>
             <tr >
@@ -77,7 +87,7 @@ const TableHankyo = ({title, records, reportDate}: TableHankyoProps) => {
           </tfoot>
         </Table>
       </TableContainer>
-      <SiteData {...{records}} />
+
       <footer className="page-break" />
     </Box>
   );

@@ -70,7 +70,7 @@ const TableSummary = ({groupedRecords}:TableSummaryProps) => {
 
   return (
     <Box className="area-container" margin={2} overflow="hidden">
-      <Title>反響概要</Title>
+      <Title>反響件数一覧</Title>
 
       <TableContainer sx={{width: '100%'}}>
         <Table sx={{width: '100%'}} aria-label="simple table">

@@ -93,3 +93,16 @@ export const getPortalSpaceElement = () => (
 
 );
 
+
+/**
+* 要素を表示・非表示
+* @param fieldCode {string} 要素のフィールドコード
+* @param isShown {boolean} trueは表示、falseは非表示
+*/
+export const setFieldShown = (fieldCode : string, isShown : boolean) => {
+  if (isMobile) {
+    kintone.mobile.app.record.setFieldShown(fieldCode, isShown);
+  } else {
+    kintone.app.record.setFieldShown(fieldCode, isShown);
+  }
+};

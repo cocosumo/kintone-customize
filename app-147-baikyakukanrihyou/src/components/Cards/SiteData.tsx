@@ -12,13 +12,12 @@ const SiteData = ({records}: SiteDataProps) => {
 
   const groupBySite = groupRecordsByField(records, '媒体サイト');
 
-
   return (
     <Grid
       className="sites-data"
-      margin={6}
+      margin={2}
       container
-      spacing={4}
+      spacing={2}
     >{
         Object.entries(groupBySite).map<any>(([site, siteRecords]) => {
           return (
