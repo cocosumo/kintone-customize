@@ -5,7 +5,7 @@ const Header = ({area}) => {
   let title = {area};
   title = title.area.substr(1, title.area.length - 1);
 
-  return <h1>{title}</h1>;
+  return (<span className="mainTitle">{title}</span>);
 };
 
 Header.propTypes = {

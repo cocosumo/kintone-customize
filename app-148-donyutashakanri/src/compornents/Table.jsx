@@ -20,7 +20,18 @@ const Table = ({area, data}) => {
     );
   });
 
-  const newTable2 = '仮置き';
+  /* const newTable2 = (
+    <tbody>
+      <tr key="dummyH1">
+        <td key="dummyH2">入力サイト名</td>
+      </tr>
+      <tr key="dummy">
+        <td key="dummy2">仮置き</td>
+      </tr>
+    </tbody>
+  ); */
+
+  // const newTable2 = crossTotalling(data);
   const componentRef = useRef();
 
   return (
@@ -31,8 +42,8 @@ const Table = ({area, data}) => {
       />
 
       <article className="print-area" ref={componentRef}>
-        <Header area={area} />
-        <h2> 課金一覧 </h2>
+        <Header area={area} /><br />
+        <span className="subTitle"> 課金一覧 </span>
         <section className="print_pages">
           <table className="kakin_list">
             <thead>
@@ -54,14 +65,15 @@ const Table = ({area, data}) => {
   );
 };
 
-/*       <h2> 導入他社数一覧 </h2>
-      <section className="print_pages">
-        <table className="donyutashasu_list">
-          <tbody>
+/*
+        <section className="print_pages">
+          <Header area={area} /><br />
+          <span className="subTitle"> 導入他社数一覧 </span>
+          <table className="donyutashasu_list">
             {newTable2}
-          </tbody>
-        </table>
-      </section> */
+          </table>
+        </section>
+*/
 
 Table.propTypes = {
   area: PropTypes.string,

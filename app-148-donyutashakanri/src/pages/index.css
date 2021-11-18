@@ -3,6 +3,16 @@
   text-align:center;
 }
 
+.subTitle{
+  font-size: 20px;
+  font-weight: bold; 
+}
+
+.mainTitle{
+  font-size: 24px;
+  font-weight: bold; 
+}
+
 section{
   width: 100%;
 }
@@ -21,10 +31,14 @@ Table tr td {
 }
 
 @media print{
-  /* 印刷用CSSの定義を指定する */
-  /* .contents-actionmenu-gaia{display:none;}
-  .gaia-header.gaia-header-fixed{display:none;}
-  button{display:none;} */
+  .print-area{
+    text-align:center;
+  }
+
+  table tr th, table tr td{
+    text-align: center;
+    vertical-align: middle;
+  }
 
   .print_pages{page-break-after: always;}
 
