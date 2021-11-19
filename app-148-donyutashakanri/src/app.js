@@ -1,9 +1,11 @@
 import {onEditOrCreate, onFieldChange, onIndexShow, onReportShow} from '../../kintone-api/api';
 import onIndexShowHandler from './pageShowHandlers/onIndexShowHandler';
 import onEditOrCreateHandler from './pageShowHandlers/onEditOrCreateHandler';
-import {onFieldChangeHandler} from './pageShowHandlers/onFieldChangeHandler';
+
 import onReportShowHandler from './pageShowHandlers/onReportShowHandler';
-import fieldsWithVisibilitySideEffect from './helpers/visibilitySettings.json';
+
+import visibilitySettings from './../src/helpers/visibilitySettings.json';
+import {setVisibility} from '../../app-module-visibility/src/helpers/visibility';
 
 
 (() => {
@@ -11,7 +13,10 @@ import fieldsWithVisibilitySideEffect from './helpers/visibilitySettings.json';
 
   kintone.events.on(onEditOrCreate, onEditOrCreateHandler);
 
-  // kintone.events.on(onFieldChange(Object.keys(fieldsWithVisibilitySideEffect)), onFieldChangeHandler);
+  kintone.events.on(
+    onFieldChange(Object.keys(visibilitySettings)).concat(onEditOrCreate),
+    (event) => setVisibility(event, visibilitySettings)
+  );
 
   kintone.events.on(onReportShow, onReportShowHandler);
 })();

@@ -1,8 +1,9 @@
 
-import settings from './visibilitySettings.json';
+// import settings from './visibilitySettings.json';
 import {setFieldShown} from '../../../kintone-api/api';
 
-let _record = {}; // モジュール範囲で定義。
+let __record = {}; // モジュール範囲で定義。
+let __settings;
 
 /**
  * フィールドコード[fieldsSettings]の選択した項目[choise]によって、
@@ -30,12 +31,12 @@ const resolveVisibility = (fieldsSettings, choice, isReverse = false, isForceHid
 
         // ﾌﾟﾛﾊﾟﾃｨないのフィールドの設定を適用する。
         fields.forEach(fieldCode => {
-          const nested = settings[fieldCode];
+          const nested = __settings[fieldCode];
 
           // 入れ子があるかどうかチェックする
           if (nested) {
             const isHideNest = isForceHide ? isForceHide : !isVisible; // 当要素は入れ子だと、ルート要素をもとに表示設定を適用する。
-            resolveVisibility(nested, _record[fieldCode].value, false, isHideNest); // 再起、入れ子が検知されないまで。
+            resolveVisibility(nested, __record[fieldCode].value, false, isHideNest); // 再起、入れ子が検知されないまで。
           }
 
           setFieldShown(fieldCode, isVisible); // 表示設定
@@ -64,14 +65,17 @@ const resolveVisibility = (fieldsSettings, choice, isReverse = false, isForceHid
  * @returns void
  */
 
-export const setVisibility = (event) => {
+export const setVisibility = (event, settings) => {
+
   const {
     record,
     changes: {field},
     type
   } = event;
 
-  _record = record;
+  __record = record;
+  __settings = settings;
+
 
   const isChange = type.includes('change.');
 
@@ -79,11 +83,11 @@ export const setVisibility = (event) => {
     // 変更イベントの場合
     const fieldCode = type.split('change.')[1];
     const choice = field.value;
-    resolveVisibility(settings[fieldCode], choice);
+    resolveVisibility(__settings[fieldCode], choice);
 
   } else {
     // その他のイベント
-    Object.entries(settings)
+    Object.entries(__settings)
       .forEach(([fieldCode, fieldSettings]) => {
         const choice = record[fieldCode].value;
         resolveVisibility(fieldSettings, choice);
@@ -107,10 +111,10 @@ export const setVisibilityByChangedField = (event) => {
     type
   } = event;
 
-  _record = record; // モジュールのconstructor
+  __record = record; // モジュールのconstructor
 
   const fieldCode = type.split('change.')[1];
   const choice = field.value;
 
-  resolveVisibility(settings[fieldCode], choice);
+  resolveVisibility(__settings[fieldCode], choice);
 };

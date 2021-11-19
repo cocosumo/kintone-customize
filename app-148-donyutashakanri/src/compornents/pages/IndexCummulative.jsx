@@ -22,10 +22,6 @@ const IndexCummulative = () => {
   const sites = Object.keys(groupBySite);
   const fiscalYear = fiscalYearRange(reportDate);
 
-  const generateCummulative = () => {
-    // calculate cummulative and return as object
-  };
-
 
   return (
     <div>

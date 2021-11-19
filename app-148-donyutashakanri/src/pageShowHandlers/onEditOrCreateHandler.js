@@ -1,5 +1,4 @@
 import {setFieldShown} from '../../../kintone-api/api';
-import {setVisibility} from '../helpers/visibility';
 
 const onEditOrCreateHandler = ({record}) => {
 
