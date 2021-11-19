@@ -7,9 +7,8 @@ const onEditOrCreateHandler = ({record}) => {
   console.log('record', record);
 
   setFieldShown('適用年月', false); // フィールド「適用年月」を非表示にする
-  setFieldShown('ダミー', false);
 
-  setVisibility(record);
+  // setVisibility(record);
   return {record};
 };
 

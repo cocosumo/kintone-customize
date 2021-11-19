@@ -6,8 +6,10 @@ module.exports = {
     jquery: true
   },
   extends: [
+    'plugin:import/recommended',
     '@cybozu',
     '@cybozu/eslint-config/presets/react-typescript',
+    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
 
@@ -40,7 +42,15 @@ module.exports = {
     'indent': 'off',
     '@typescript-eslint/indent': ['error'],
     'react/jsx-filename-extension': [1, {'extensions': ['.js', '.jsx', '.ts', '.tsx']}],
-    'no-unused-vars': ['error', {'vars': 'all', 'args': 'after-used', 'ignoreRestSiblings': false}]
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error']
 
   },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.jsx', '.js', '.ts', '.tsx', '.css', '.json'],
+      },
+    },
+  }
 };

@@ -24,8 +24,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noImplicitThis": true,
-    "strictNullChecks": true
-
+    "strictNullChecks": true,
+    "noEmit": true
   },
   "include": [
     "*/src/**/*"

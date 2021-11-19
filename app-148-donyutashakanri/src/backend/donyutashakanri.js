@@ -1,8 +1,7 @@
 
 
-import startOfMonth from 'date-fns/startOfMonth';
-import endOfMonth from 'date-fns/endOfMonth';
 import {fetchAllRecords} from './../../../kintone-api/fetchRecords';
+import {fiscalYearRange} from '../helpers/time';
 
 
 const _appId = 148;
@@ -16,22 +15,23 @@ let _records;
  *
  * @todo このモジュールをReactのContextに変える。
  */
-const fetchDonyutashaRecordsByDate = (reportDate) => {
-  const monthStart = startOfMonth(reportDate).toISOString();
-  const monthEnd = endOfMonth(reportDate).toISOString();
+const fetchDonyutashaRecordsByDate = async (reportDate) => {
+
+  const fiscalYear = fiscalYearRange(reportDate);
 
   _records = (await fetchAllRecords({
     appId: _appId,
-    condition: `反響受付日 >= "${monthStart}" and 反響受付日 <= "${monthEnd}"`
+    filterCond: `適用年月 >= "${fiscalYear.start.toISOString()}" and 適用年月 <= "${fiscalYear.end.toISOString()}"`
   })).records;
 
   return _records;
 };
 
+
 /**
  * レコードをを取得
  *
- * @returns レコード配列。
+ * @returns {KintoneTypes.Data[]} レコード配列。
  */
 export const getDonyuTashaRecords = () => _records;
 

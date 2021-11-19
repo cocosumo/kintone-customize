@@ -1,9 +1,9 @@
 
 import PropTypes from 'prop-types';
-import Header from '../compornents/Header';
+import Header from './Header';
 
-const Table = ({area, data}) => {
-  const newTable = data.map(({エリア店舗名, 媒体サイト名, 導入他社数, 課金額, 適用年月, レコード番号})=>{
+const Table = ({area, data, componentRef}) => {
+  const newTable = data.map(({エリア店舗名, 媒体サイト名, 導入他社数, 課金額, レコード番号})=>{
     return (
       <tr key={レコード番号.value}>
         <td key={[レコード番号.value, '01'].join()}>{エリア店舗名.value}</td>
@@ -15,7 +15,7 @@ const Table = ({area, data}) => {
   });
 
   return (
-    <>
+    <div ref={componentRef}>
       <article className="print-area">
         <Header area={area} /><br />
         <span className="subTitle"> 課金一覧 </span>
@@ -35,14 +35,15 @@ const Table = ({area, data}) => {
           </table>
         </section>
       </article>
-    </>
+    </div>
   );
 };
 
 
 Table.propTypes = {
   area: PropTypes.string,
-  data: PropTypes.array
+  data: PropTypes.array,
+  componentRef: PropTypes.object
 };
 
 export default Table;

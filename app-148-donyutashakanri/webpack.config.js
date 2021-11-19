@@ -2,18 +2,20 @@ const path = require('path');
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // hello
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   plugins: [
+    new ForkTsCheckerWebpackPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // all options are optional
       filename: '[name].css',
       chunkFilename: '[id].css',
       ignoreOrder: false, // Enable to remove warnings about conflicting order
-    }),
+    })
   ],
 
   entry: {
@@ -26,7 +28,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.json', '.jsx'],
+    extensions: ['.js', '.json','.ts','.tsx' ,'.jsx'],
   },
 
   module: {
@@ -43,6 +45,7 @@ module.exports = {
           'css-loader',
         ],
       },
+      { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
@@ -58,15 +61,13 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/inline',
-      },
+      { test: /\.(ts|tsx)$/, loader: 'ts-loader' },
     ],
   },
 
   optimization: {
     minimizer: [
+      new ForkTsCheckerWebpackPlugin(),
       '...',
       new CssMinimizerPlugin(),
     ],
