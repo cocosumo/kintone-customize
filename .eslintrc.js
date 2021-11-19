@@ -6,10 +6,13 @@ module.exports = {
     jquery: true
   },
   extends: [
+    'plugin:import/recommended',
     '@cybozu',
     '@cybozu/eslint-config/presets/react-typescript',
+    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
+
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -38,6 +41,16 @@ module.exports = {
   rules: {
     'indent': 'off',
     '@typescript-eslint/indent': ['error'],
-    'react/jsx-filename-extension': [1, {'extensions': ['.js', '.jsx', '.ts', '.tsx']}]
+    'react/jsx-filename-extension': [1, {'extensions': ['.js', '.jsx', '.ts', '.tsx']}],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error']
+
   },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.jsx', '.js', '.ts', '.tsx', '.css', '.json'],
+      },
+    },
+  }
 };

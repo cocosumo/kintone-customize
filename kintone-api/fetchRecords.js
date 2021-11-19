@@ -41,7 +41,7 @@ export const fetchRecords = ({
 };
 
 /**
- * 再起で取得
+ * 再起で取得 １万件まで
  *
  * @param {object} _params リクエストオブジェクト
  * @returns {object[]} kintone records
@@ -50,12 +50,14 @@ export const fetchAllRecords = (_params) => {
   const MAX_READ_LIMIT = 500;
 
   const params = _params || {};
-  const app = params.appId || getAppId();
   const {
     filterCond,
     sortConds,
     fields,
   } = params;
+
+
+  const app = params.appId || getAppId();
   const limit = params.limit || -1;
   const offset = params.offset || 0;
   let mydata = params.data;

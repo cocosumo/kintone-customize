@@ -1,0 +1,17 @@
+.custom-title {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+}
+
+
+
+@media print {
+  #report-view-gaia {
+    page-break-after: avoid;
+  }
+
+  #crosstable-gaia {
+    border: unset
+  }
+}

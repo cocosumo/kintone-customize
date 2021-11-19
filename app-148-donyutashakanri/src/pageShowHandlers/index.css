@@ -1,0 +1,45 @@
+
+#root{
+  text-align:center;
+}
+
+.subTitle{
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.mainTitle{
+  font-size: 36px;
+  font-weight: bold;
+}
+
+section{
+  width: 100%;
+}
+/* .kakin_list */
+table{
+  margin: 3px auto;    /* 上下3px 左右auto */
+}
+
+Table tr th {
+  border:1px solid #000000;
+  width: 150px;
+}
+
+Table tr td {
+  border:1px solid #000000;
+}
+
+@media print{
+  .print-area{
+    text-align:center;
+  }
+
+  table tr th, table tr td{
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .print_pages{page-break-after: always;}
+
+}

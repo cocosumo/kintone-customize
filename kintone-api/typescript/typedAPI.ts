@@ -65,12 +65,14 @@ export const onCreateSubmitSuccess : string[] = [
   'mobile.app.record.create.submit.success',
 ];
 
+export const onIndexShow = [
+  'app.record.index.show',
+  'mobile.app.record.index.show',
+];
 
 export const onEditOrCreate : string[] = onEdit.concat(onCreate);
 export const onSubmit : string[] = onEditSubmit.concat(onCreateSubmit);
 export const onSubmitSuccess : string[] = onEditSubmitSuccess.concat(onCreateSubmitSuccess);
-
-
 
 export const onFieldChange = (fields : string | string[]) : string[] =>
   ([] as string[]).concat(fields).reduce(
@@ -88,5 +90,18 @@ export const getPortalSpaceElement = () => (
   isMobile
     ? kintone.mobile.portal.getContentSpaceElement()
     : kintone.portal.getContentSpaceElement()
-
 );
+
+
+/**
+* 要素を表示・非表示
+* @param fieldCode {string} 要素のフィールドコード
+* @param isShown {boolean} trueは表示、falseは非表示
+*/
+export const setFieldShown = (fieldCode : string, isShown : boolean) => {
+  if (isMobile) {
+    kintone.mobile.app.record.setFieldShown(fieldCode, isShown);
+  } else {
+    kintone.app.record.setFieldShown(fieldCode, isShown);
+  }
+};

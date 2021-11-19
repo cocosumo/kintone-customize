@@ -1,0 +1,46 @@
+import PropTypes from 'prop-types';
+import IndexStores from './pages/IndexStores';
+import IndexCummulative from './pages/IndexCummulative';
+import ReactToPrint from 'react-to-print';
+import PrintButton from './PrintButton';
+
+
+import Stack from '@mui/material/Stack';
+import {Container} from '@mui/material';
+import {useRef} from 'react';
+
+const App = ({event}) => {
+  const componentRef = useRef();
+
+
+  const {viewId} = event;
+  const isCummulativeView = viewId === 5533648;
+
+  return (
+    <Container>
+      <Stack mt={2} spacing={2}>
+
+        <div>
+          <ReactToPrint
+            trigger={() => <PrintButton onClick={window.print} />}
+            content={() => componentRef.current}
+          />
+        </div>
+
+
+        {!isCummulativeView && <IndexStores {...{event, componentRef}} />}
+
+        {isCummulativeView && <IndexCummulative {...{componentRef}} /> }
+
+
+      </Stack>
+    </Container>
+  );
+};
+
+App.propTypes = {
+  event: PropTypes.object,
+};
+
+
+export default App;

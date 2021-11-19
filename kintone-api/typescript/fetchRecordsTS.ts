@@ -1,9 +1,10 @@
-import {getAppId} from './api';
+import {getAppId} from './typedAPI';
+declare const kintone : any;
 
 interface KintoneAPIBody {
-  condition : '',
-  appId :typeof getAppId,
-  fields : Array<{}>,
+  condition?: string,
+  appId :number | null,
+  fields?: object[],
 }
 
 export const fetchRecords = ({

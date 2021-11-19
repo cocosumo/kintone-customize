@@ -1,0 +1,29 @@
+.area-container {
+  border: 2px solid black;
+  padding: 24px;
+}
+
+.table-footer {
+  font-size: 8px;
+  color: lightgray;
+}
+
+@page {
+  margin: 10mm 5% 10% 5%;
+}
+
+@media print {
+  .area-container {
+    border: unset;
+    padding: unset;
+    page-break-before: always;
+  }
+
+  footer.page-break {
+    page-break-after: avoid;
+  }
+
+  .area-container:last-child {
+    page-break-after: avoid;
+  }
+}
