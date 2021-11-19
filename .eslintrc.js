@@ -10,6 +10,7 @@ module.exports = {
     '@cybozu/eslint-config/presets/react-typescript',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
+
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -38,6 +39,8 @@ module.exports = {
   rules: {
     'indent': 'off',
     '@typescript-eslint/indent': ['error'],
-    'react/jsx-filename-extension': [1, {'extensions': ['.js', '.jsx', '.ts', '.tsx']}]
+    'react/jsx-filename-extension': [1, {'extensions': ['.js', '.jsx', '.ts', '.tsx']}],
+    'no-unused-vars': ['error', {'vars': 'all', 'args': 'after-used', 'ignoreRestSiblings': false}]
+
   },
 };

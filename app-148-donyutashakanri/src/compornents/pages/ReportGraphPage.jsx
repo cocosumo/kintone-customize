@@ -1,24 +1,27 @@
 import Stack from '@mui/material/Stack';
-import {Printd} from 'printd';
+import printHtmlBlock from 'print-html-block';
+import PrintButton from '../PrintButton';
+
+import './ReportGraphPage.css';
+
+const elSelectorToPrint = '#report-view-gaia';
 
 const ReportGraphPage = () => {
 
-
-  const d = new Printd();
   const handlePrint = () => {
-    d.print(document.getElementById('report-view-gaia'));
+    printHtmlBlock(elSelectorToPrint, {importStyle: true});
   };
-
 
   return (
     <Stack
       justifyContent="center"
       alignContent="center"
     >
-      <button onClick={handlePrint}>Print this out!</button>
+      <PrintButton onClick={handlePrint} />
 
     </Stack>
   );
 };
 
 export default ReportGraphPage;
+

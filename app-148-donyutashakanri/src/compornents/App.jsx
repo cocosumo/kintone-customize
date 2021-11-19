@@ -4,10 +4,14 @@ import Table from './Table';
 import ReactToPrint from 'react-to-print';
 import PrintButton from './PrintButton';
 
-import React, {useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import {isSameMonth, parseISO} from 'date-fns';
+import {Grid} from '@mui/material';
+
 
 const App = ({event}) => {
+
+  console.log(event);
 
   const componentRef = useRef();
   const [reportDate, setReportDate] = useState(new Date());
@@ -22,7 +26,7 @@ const App = ({event}) => {
   console.log('data', data);
 
   return (
-    <>
+    <Grid>
       <ReactToPrint
         trigger={() => <PrintButton onClick={window.print} />}
         content={() => componentRef.current}
@@ -36,7 +40,7 @@ const App = ({event}) => {
       <div ref={componentRef}>
         <Table area={event.viewName} data={data} />
       </div>
-    </>
+    </Grid>
   );
 };
 
