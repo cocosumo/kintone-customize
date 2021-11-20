@@ -18,6 +18,7 @@ const YearPicker = ({reportDate, setReportDate}) => {
           label="年度"
           value={reportDate}
           openTo="year"
+          inputFormat="yyyy年"
           views={['year']}
           onChange={changeHandler}
           renderInput={(params) => <TextField {...params} />}

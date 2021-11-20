@@ -1,7 +1,9 @@
 import {onEditOrCreate, onFieldChange, onIndexShow, onReportShow} from '../../kintone-api/api';
 import onIndexShowHandler from './pageShowHandlers/onIndexShowHandler';
 import onEditOrCreateHandler from './pageShowHandlers/onEditOrCreateHandler';
+
 import onReportShowHandler from './pageShowHandlers/onReportShowHandler';
+
 import visibilitySettings from './../src/helpers/visibilitySettings.json';
 import {setVisibility} from '../../app-module-visibility/src/helpers/visibility';
 
