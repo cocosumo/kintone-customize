@@ -1,0 +1,10 @@
+{
+  "name": "@yumetetsu/ui",
+  "version": "1.0.0",
+  "private": true,
+  "module": "build/ui.bundle.min.js", 
+    "scripts": {
+        "build": "webpack --config webpack.prod.js",
+        "build-watch": "webpack --config webpack.prod.js --watch"
+    }
+}
