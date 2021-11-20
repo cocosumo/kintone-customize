@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
 import AttachmentIcon from '@mui/icons-material/Attachment';
 import AccordionActions from '@mui/material/AccordionActions';
-import {goToRecordPath} from '../../../../kintone-api/typedAPI';
+import {goToRecordPath} from '../../../../kintone-api/typescript/typedAPI';
 import {fetchURLByFileKey, getAnnoucementsAppId} from './../../backend/announcement';
 import {getDomain} from '../../../utils';
 import {useState} from 'react';

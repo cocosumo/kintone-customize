@@ -1,5 +1,5 @@
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {isMobile} from '../../../../kintone-api/typedAPI';
+import {isMobile} from '../../../../kintone-api/typescript/typedAPI';
 
 
 interface BaseThemeProps {
