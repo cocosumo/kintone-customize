@@ -9,7 +9,6 @@ import {parseISO} from 'date-fns';
 import {Stack} from '@mui/material';
 import Title from '../typhograhies/Title';
 import PropTypes from 'prop-types';
-import CellHead from './../../../../app-147-baikyakukanrihyou/src/components/Table/CellHeader';
 
 
 const IndexCummulative = ({componentRef}) => {
@@ -38,8 +37,8 @@ const IndexCummulative = ({componentRef}) => {
           <table>
             <thead>
               <tr>
-                <CellHead>月</CellHead>
-                {sites.map((key)=><CellHead key={key}>{key}</CellHead>)}
+                <th>月</th>
+                {sites.map((key)=><th key={key}>{key}</th>)}
               </tr>
             </thead>
             <tbody>
@@ -50,7 +49,7 @@ const IndexCummulative = ({componentRef}) => {
                 return (
                   <tr key={month}>
 
-                    <CellHead>{month}</CellHead>
+                    <th>{month}</th>
 
                     {sites.map((site)=>{
                       return <td key={site}>{value[site]}</td>;
@@ -68,7 +67,7 @@ const IndexCummulative = ({componentRef}) => {
 };
 
 IndexCummulative.propTypes = {
-  componentRef: PropTypes.instanceOf(Element)
+  componentRef: PropTypes.any
 };
 
 export default IndexCummulative;

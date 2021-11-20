@@ -64,7 +64,7 @@ export const onReportShow = [
 
 /**
 * フィールド値を変化イベント
-* @param {string|array} fields フィルドコード
+* @param {string|string[]} fields フィルドコード
 * @returns {array} イベントの配列
 */
 export const onFieldChange = (fields) => [].concat(fields).reduce(
