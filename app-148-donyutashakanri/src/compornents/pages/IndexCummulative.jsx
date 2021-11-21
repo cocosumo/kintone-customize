@@ -9,6 +9,7 @@ import {parseISO} from 'date-fns';
 import {Stack} from '@mui/material';
 import Title from '../typhograhies/Title';
 import PropTypes from 'prop-types';
+import {CellHeader} from '@yumetetsu/ui';
 
 
 const IndexCummulative = ({componentRef}) => {
@@ -38,7 +39,7 @@ const IndexCummulative = ({componentRef}) => {
             <thead>
               <tr>
                 <th>月</th>
-                {sites.map((key)=><th key={key}>{key}</th>)}
+                {sites.map((key)=><CellHeader key={key}>{key}</CellHeader>)}
               </tr>
             </thead>
             <tbody>

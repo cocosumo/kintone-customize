@@ -62,13 +62,13 @@
         "webpack-dev-server": "^3.11.2"
     },
     "dependencies": {
-        "@date-io/date-fns": "^2.11.0",
-        "@emotion/styled": "^11.6.0",
         "@emotion/react": "^11.6.0",
-        "@kintone/dts-gen": "^5.0.10",
+        "@emotion/styled": "^11.6.0",
         "@mui/icons-material": "^5.1.0",
         "@mui/lab": "^5.0.0-alpha.55",
-        "@mui/material": "^5.1.0",
+        "@mui/material": "^5.1.1",
+        "@date-io/date-fns": "^2.11.0",
+        "@kintone/dts-gen": "^5.0.10",
         "@types/jest": "^27.0.2",
         "@types/node": "^16.10.4",
         "fork-ts-checker-webpack-plugin": "^6.4.0",
