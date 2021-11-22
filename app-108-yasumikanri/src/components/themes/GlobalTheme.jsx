@@ -1,6 +1,10 @@
-import { ThemeProvider, createTheme } from '@mui/material';
+import {ThemeProvider, createTheme} from '@mui/material';
+import {isMobile} from '../../../../kintone-api/api';
 
 const theme = createTheme({
+  typography: {
+    htmlFontSize: isMobile() ? 10 : 12
+  },
   components: {
     MuiSnackbar: {
       styleOverrides: {
@@ -15,7 +19,7 @@ const theme = createTheme({
   },
 });
 
-const GlobalTheme = ({ children }) => (
+const GlobalTheme = ({children}) => (
   <ThemeProvider theme={theme}>
     {children}
   </ThemeProvider>
