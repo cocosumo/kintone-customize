@@ -12,7 +12,8 @@
     "upload:prod": ".\\node_modules\\.bin\\source-uploader --username RPA03 --domain rdmuhwtt6gx7.cybozu.com --portalSrc kintone-manifest.json --watch",
     "deploy": "node scripts/npm-deploy.js",
     "dtsgen": "npx kintone-dts-gen --base-url https://rdmuhwtt6gx7.cybozu.com --app-id 40",
-    "lint": "eslint src/*"
+    "lint": "eslint src/*",
+    "install:all": "npm install --prefix ./../../kintone-customize && pm install --prefix ./../common/ui && npm install"
   },
   "author": "",
   "license": "ISC",
@@ -64,6 +65,7 @@
     "kintone-source-uploader": "^2.1.2",
     "pdf-viewer-reactjs": "^2.2.3",
     "pdfjs-dist": "^2.10.377",
+    "print-html-block": "^2.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

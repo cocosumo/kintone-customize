@@ -1,7 +1,8 @@
-import {renderPrint} from './customElements';
+import {renderPrint} from './reportDOMhelpers';
 
 
-const onReportShowHandler = () => {
+const onReportShowHandler = (event: any) => {
+  console.log(event);
   renderPrint();
 
 };

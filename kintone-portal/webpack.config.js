@@ -37,17 +37,13 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: "style-loader" },
           {
-            loader: "css-loader",
+            loader: MiniCssExtractPlugin.loader,
             options: {
-              sourceMap: true,
-              modules: {
-                localIdentName: "[local]___[hash:base64:5]",
-              }
-
+              publicPath: path.resolve(__dirname, 'dist'),
             },
           },
+          'css-loader',
         ],
       },
     ],
@@ -61,7 +57,7 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
       ignoreOrder: false, // Enable to remove warnings about conflicting order
-    }),
+    })
   ],
 
   optimization: {
