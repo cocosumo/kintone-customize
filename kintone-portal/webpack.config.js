@@ -37,13 +37,17 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
+          { loader: "style-loader" },
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: "css-loader",
             options: {
-              publicPath: path.resolve(__dirname, 'dist'),
+              sourceMap: true,
+              modules: {
+                localIdentName: "[local]___[hash:base64:5]",
+              }
+
             },
           },
-          'css-loader',
         ],
       },
     ],

@@ -1,7 +1,7 @@
 
 
-import {getPortalSpaceElement} from '../../../../kintone-api/typescript/typedAPI';
-import {Portal} from '../../components/Portal';
+import {getPortalSpaceElement} from '../../../../../kintone-api/typescript/typedAPI';
+import {Portal} from '../../../components/Portal';
 import ReactDOM from 'react-dom';
 
 const rederPortal = () => {

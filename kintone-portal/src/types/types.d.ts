@@ -1,4 +1,5 @@
 
+declare module '*.css';
 
 interface Modal {
   isModalOpen : boolean,
