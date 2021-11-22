@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import Table from '../Table';
+import PerStoreTable from '../Table/PerStoreTable';
 import {isSameMonth, parseISO} from 'date-fns';
 import Stack from '@mui/material/Stack';
 import YearMonthPicker from '../datepickers/YearMonthPicker';
 import {useState} from 'react';
 
 
-const IndexAllStores = ({event, componentRef}) => {
+const IndexStores = ({event, componentRef}) => {
 
   const [reportDate, setReportDate] = useState(new Date());
   console.log('reportDate', reportDate);
@@ -27,16 +27,16 @@ const IndexAllStores = ({event, componentRef}) => {
         setReportDate={setReportDate}
       />
 
-      <Table area={event.viewName} data={data} componentRef={componentRef} />
+      <PerStoreTable area={event.viewName} data={data} componentRef={componentRef} />
     </Stack>
 
 
   );
 };
 
-export default IndexAllStores;
+export default IndexStores;
 
-IndexAllStores.propTypes = {
+IndexStores.propTypes = {
   event: PropTypes.object,
   componentRef: PropTypes.object
 };

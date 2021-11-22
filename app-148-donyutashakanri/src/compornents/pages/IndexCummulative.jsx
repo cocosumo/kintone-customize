@@ -25,6 +25,9 @@ const IndexCummulative = ({componentRef}) => {
 
 
   const groupBySite = groupRecordsByField(records, '媒体サイト名');
+
+  console.log('グループ出力テスト', groupBySite);
+
   const sites = Object.keys(groupBySite);
   const fiscalYear = fiscalYearRange(reportDate);
   const cummulative = generateCummulative(fiscalYear.start, fiscalYear.end, groupBySite);

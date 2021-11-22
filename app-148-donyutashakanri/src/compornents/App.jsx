@@ -3,7 +3,7 @@ import IndexStores from './pages/IndexStores';
 import IndexCummulative from './pages/IndexCummulative';
 import ReactToPrint from 'react-to-print';
 import PrintButton from './PrintButton';
-
+import IndexAllStores from './pages/IndexAllStores';
 
 import Stack from '@mui/material/Stack';
 import {Container} from '@mui/material';
@@ -12,9 +12,9 @@ import {useRef} from 'react';
 const App = ({event}) => {
   const componentRef = useRef();
 
-
   const {viewId} = event;
   const isCummulativeView = viewId === 5533648;
+  const isAllShopsView = viewId === 5533614;
 
   return (
     <Container>
@@ -28,10 +28,11 @@ const App = ({event}) => {
         </div>
 
 
-        {!isCummulativeView && <IndexStores {...{event, componentRef}} />}
+        {!(isCummulativeView || isAllShopsView) && <IndexStores {...{event, componentRef}} />}
 
         {isCummulativeView && <IndexCummulative {...{componentRef}} /> }
 
+        {isAllShopsView && <IndexAllStores {...{event, componentRef}} />}
 
       </Stack>
     </Container>
