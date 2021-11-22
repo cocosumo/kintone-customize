@@ -1,17 +1,17 @@
 import Zoom from '@mui/material/Zoom';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
-import { deleteRedundantType } from '../../backend/yasumiKanri';
+import {deleteRedundantType} from '../../backend/yasumiKanri';
 import swapArrayLocs from '../../helpers/utils';
 import TypeIcon from './TypeIcon';
-import { getKintoneDuration } from '../../helpers/converters';
+import {getKintoneDuration} from '../../helpers/converters';
 
-const DayContent = ({ dayRecords }) => {
+const DayContent = ({dayRecords}) => {
   let dayToRender = [...dayRecords];
   let shouldAnim = false;
 
   /* Clean duplicates */
-  const redundantDayOrdinary = dayRecords.filter(({ type }) => type === 'day-ordinary');
+  const redundantDayOrdinary = dayRecords.filter(({type}) => type === 'day-ordinary');
 
   if (redundantDayOrdinary.length > 1) {
     deleteRedundantType(redundantDayOrdinary);
@@ -31,7 +31,7 @@ const DayContent = ({ dayRecords }) => {
       <TypeIcon
         siblings={dayToRender.length}
         key={record.type + record.id}
-        {...{ record }}
+        {...{record}}
       />
     ),
   );
