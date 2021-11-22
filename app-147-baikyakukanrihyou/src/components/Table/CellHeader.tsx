@@ -1,6 +1,7 @@
-import TableCell, {TableCellProps} from '@mui/material/TableCell';
+/* eslint-disable import/named */
+import TableCell, {TableCellBaseProps} from '@mui/material/TableCell';
 
-interface CellHeaderProps extends TableCellProps {
+interface CellHeaderProps extends TableCellBaseProps {
   alignRight?: boolean
 }
 

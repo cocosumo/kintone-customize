@@ -31,6 +31,10 @@ Table tr td {
 }
 
 @media print{
+  @page {
+    margin: 10%; /* 仮に設定ｗ */
+  }
+
   .print-area{
     text-align:center;
   }
