@@ -1,25 +1,23 @@
 import PropTypes from 'prop-types';
-import getSiteLists from '../../helpers/getSiteLists';
+import {groupRecordsByField} from '../../../../app-147-baikyakukanrihyou/src/helpers/utils';
+import {CellHeader} from '@yumetetsu/ui';
 
-const AllStoreTable = ({targetDate, data, componentRef}) => {
+const AllStoresTable = ({reportDate, data, componentRef}) => {
+  // 媒体サイト毎に、データを再編する
+  const groupBySite = groupRecordsByField(data, '媒体サイト名');
+  console.log('groupBySiteの確認', groupBySite); // chk
 
-  // 媒体サイトの一覧を取得する
-  const siteList = getSiteLists();
-
-  console.log('siteLists', siteList);
-
-  const vartype = typeof siteList;
-  console.log('vartype: ', vartype);
-
-  console.log('配列要素数', siteList.length);
-
-  // 媒体サイト毎にフィルタリングする
-  siteList.forEach(element => {
-    console.log(element);
-  });
+  const sites = Object.keys(groupBySite);
+  // console.log('★sites', sites);
+  const newTable2 = () => {
+    return (
+      sites.map((key)=><CellHeader key={key}>{key}</CellHeader>)
+    );
+  };
+  console.log('newTable2', newTable2);
 
   // レコードデータの置換処理
-  const newTable = data.map(({エリア店舗名, 媒体サイト名, 導入他社数, 課金額, レコード番号})=>{
+  const newTable = groupBySite.map(({エリア店舗名, 媒体サイト名, 導入他社数, 課金額, レコード番号})=>{
     return (
       <tr key={レコード番号.value}>
         <td key={[レコード番号.value, '01'].join()}>{媒体サイト名.value}</td>
@@ -30,8 +28,8 @@ const AllStoreTable = ({targetDate, data, componentRef}) => {
     );
   });
 
-  const newMonth = targetDate.getMonth() + 1;
-  const newYear = targetDate.getFullYear();
+  const newMonth = reportDate.getMonth() + 1;
+  const newYear = reportDate.getFullYear();
 
 
   return (
@@ -60,10 +58,10 @@ const AllStoreTable = ({targetDate, data, componentRef}) => {
 };
 
 
-AllStoreTable.propTypes = {
-  targetDate: PropTypes.object,
+AllStoresTable.propTypes = {
+  reportDate: PropTypes.object,
   data: PropTypes.array,
   componentRef: PropTypes.object
 };
 
-export default AllStoreTable;
+export default AllStoresTable;

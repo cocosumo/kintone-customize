@@ -6,17 +6,17 @@ import YearMonthPicker from '../datepickers/YearMonthPicker';
 import {useState} from 'react';
 
 
-const IndexStores = ({event, componentRef}) => {
+const IndexPerStore = ({event, componentRef}) => {
 
   const [reportDate, setReportDate] = useState(new Date());
-  console.log('reportDate', reportDate);
+  // console.log('reportDate', reportDate);
 
   // recordsの更新 filtering
   const data = event.records.filter(({適用年月}) => isSameMonth(reportDate, parseISO(適用年月.value)));
 
-  const vartype = typeof reportDate;
+  /* const vartype = typeof reportDate;
   console.log('vartype: ', vartype);
-  console.log('data', data);
+  console.log('data', data); */
 
   return (
 
@@ -34,9 +34,9 @@ const IndexStores = ({event, componentRef}) => {
   );
 };
 
-export default IndexStores;
+export default IndexPerStore;
 
-IndexStores.propTypes = {
+IndexPerStore.propTypes = {
   event: PropTypes.object,
   componentRef: PropTypes.object
 };
