@@ -21,7 +21,7 @@ const IndexAllStores = ({event, componentRef}) => {
         setReportDate={setReportDate}
       />
 
-      <AllStoresTable targetDate={reportDate} data={data} componentRef={componentRef} />
+      <AllStoresTable reportDate={reportDate} data={data} componentRef={componentRef} />
     </Stack>
 
 
