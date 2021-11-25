@@ -1,8 +1,8 @@
 
 import PropTypes from 'prop-types';
-import Header from './Header';
+import Header from '../Header';
 
-const Table = ({area, data, componentRef}) => {
+const PerStoreTable = ({area, data, componentRef}) => {
   const newTable = data.map(({エリア店舗名, 媒体サイト名, 導入他社数, 課金額, レコード番号})=>{
     return (
       <tr key={レコード番号.value}>
@@ -40,10 +40,10 @@ const Table = ({area, data, componentRef}) => {
 };
 
 
-Table.propTypes = {
+PerStoreTable.propTypes = {
   area: PropTypes.string,
   data: PropTypes.array,
   componentRef: PropTypes.object
 };
 
-export default Table;
+export default PerStoreTable;
