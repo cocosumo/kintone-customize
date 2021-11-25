@@ -36,7 +36,7 @@ export const createContainer = (
 
 
 /**
- * Restructure kintone records that is grouped by site into matrix of cummulative values of 導入他社数
+ * Restructure kintone records that is grouped by site into matrix of 導入他社数 values
  * where Y-axis = months, and X-axis = sites.
  *
  * @param startDate starting date.
@@ -45,11 +45,11 @@ export const createContainer = (
  * @param data Holds the resulting data.
  * @returns returns the restructured data.
  */
-export const generateCummulative = (
+export const generateTotal = (
   startDate : Date,
   endDate : Date,
   groupedRecordsBySite : {[site : string] : KintoneTypes.SavedData[]},
-  data : GroupedRecords[] = []
+  data : GroupedRecords[] = [],
 ) => {
 
   if (startDate.getTime() < endDate.getTime()) {
@@ -67,16 +67,9 @@ export const generateCummulative = (
         return {...accu, ...{[site]: values}};
       }, {});
 
-    const prevRecord = data[data.length - 1];
-    if (prevRecord) {
-      Object.keys(valuesPerSite).forEach(siteName => {
-        valuesPerSite[siteName] += Object.values<any>(prevRecord)[0][siteName];
-      });
-    }
-
     data.push({[startDate.toISOString()]: valuesPerSite});
 
-    generateCummulative(
+    generateTotal(
       addMonths(startDate, 1),
       endDate,
       groupedRecordsBySite,
