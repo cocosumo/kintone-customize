@@ -111,3 +111,4 @@ dist
 *.sh
 *.xlsx
 *.pem
+**/build/*
