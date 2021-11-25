@@ -1,0 +1,15 @@
+.table {
+  border: 1px solid black;
+}
+
+.cellheader {
+  color: gray;
+}
+
+.cell {
+  color: black
+}
+
+.row {
+  color: black;
+}

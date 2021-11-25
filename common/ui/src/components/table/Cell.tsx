@@ -1,10 +1,10 @@
 
 // import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
-import styles from './cellHeader.module.css';
+import styles from './cell.module.css';
 
 
-const CellHeader = (props) => {
+const CellHeader = (props : Props) => {
 
   return (
     <th className={styles.cellheader}>
