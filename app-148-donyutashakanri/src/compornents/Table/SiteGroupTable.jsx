@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import {CellHeader} from '@yumetetsu/ui';
 
 const SiteGroupTable = ({site, records}) => {
 
@@ -7,36 +8,38 @@ const SiteGroupTable = ({site, records}) => {
   console.log('records', records);
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th> サイト名 </th>
-          {fields.map(fieldname => {
-            return <th key={fieldname}>{fieldname}</th>;
-          })}
-        </tr>
-      </thead>
-      <tbody>
-        {
-          records.map((record, index) =>{
-            return (
-              <tr key={site + record['エリア店舗名'].value}>
-                {
-                  (index === 0) &&
-                  <td rowSpan={rowSpan}>
-                    {site}
-                  </td>
-                }
-                {fields.map(fieldname => {
-                  return <td key={fieldname}>{record[fieldname].value}</td>;
-                })
-                }
-              </tr>
-            );
-          })
-        }
-      </tbody>
-    </table>
+    <article className="print_pages">
+      <table className="print-table">
+        <thead>
+          <tr>
+            <CellHeader> サイト名 </CellHeader>
+            {fields.map(fieldname => {
+              return <CellHeader key={fieldname}>{fieldname}</CellHeader>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {
+            records.map((record, index) =>{
+              return (
+                <tr key={site + record['エリア店舗名'].value}>
+                  {
+                    (index === 0) &&
+                    <td rowSpan={rowSpan}>
+                      {site}
+                    </td>
+                  }
+                  {fields.map(fieldname => {
+                    return <td key={fieldname}>{record[fieldname].value}</td>;
+                  })
+                  }
+                </tr>
+              );
+            })
+          }
+        </tbody>
+      </table>
+    </article>
   );
 };
 

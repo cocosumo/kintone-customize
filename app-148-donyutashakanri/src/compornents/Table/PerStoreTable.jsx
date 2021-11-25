@@ -1,6 +1,7 @@
 
 import PropTypes from 'prop-types';
 import Header from '../Header';
+import {CellHeader} from '@yumetetsu/ui';
 
 const PerStoreTable = ({area, data, componentRef}) => {
   const newTable = data.map(({エリア店舗名, 媒体サイト名, 導入他社数, 課金額, レコード番号})=>{
@@ -20,13 +21,13 @@ const PerStoreTable = ({area, data, componentRef}) => {
         <Header area={area} /><br />
         <span className="subTitle"> 課金一覧 </span>
         <section className="print_pages">
-          <table className="kakin_list">
+          <table className="print-table">
             <thead>
               <tr>
-                <th> 店舗名 </th>
-                <th> 媒体サイト名 </th>
-                <th> 導入他社数 </th>
-                <th> 課金額 </th>
+                <CellHeader> 店舗名 </CellHeader>
+                <CellHeader> 媒体サイト名 </CellHeader>
+                <CellHeader> 導入他社数 </CellHeader>
+                <CellHeader> 課金額 </CellHeader>
               </tr>
             </thead>
             <tbody>

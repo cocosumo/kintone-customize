@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import IndexPerStore from './pages/IndexPerStore';
-import IndexCummulative from './pages/IndexCummulative';
+import IndexPerSite from './pages/IndexPerSite';
 import ReactToPrint from 'react-to-print';
 import PrintButton from './PrintButton';
 import IndexAllStores from './pages/IndexAllStores';
@@ -30,7 +30,7 @@ const App = ({event}) => {
 
         {!(isCummulativeView || isAllShopsView) && <IndexPerStore {...{event, componentRef}} />}
 
-        {isCummulativeView && <IndexCummulative {...{componentRef}} /> }
+        {isCummulativeView && <IndexPerSite {...{componentRef}} /> }
 
         {isAllShopsView && <IndexAllStores {...{event, componentRef}} />}
 
