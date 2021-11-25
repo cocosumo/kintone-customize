@@ -26,7 +26,7 @@ export const Cell = (props : Props) => {
   const componentStyles = `${border} ${cellPadding} ` + props.className;
 
   return (
-    <td className={componentStyles}>
+    <td className={componentStyles} {...props}>
       {props.children}
     </td>);
 };
