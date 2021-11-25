@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import YearPicker from '../datepickers/YearPicker';
 import fetchDonyutashaRecordsByDate from '../../backend/donyutashakanri';
-import {groupRecordsByField} from './../../../../app-147-baikyakukanrihyou/src/helpers/utils';
+import {groupRecordsByField} from '../../../../app-147-baikyakukanrihyou/src/helpers/utils';
 import './../../pageShowHandlers/index.css';
 import {fiscalYearRange} from '../../helpers/time';
-import {generateCummulative} from '../../helpers/utilities';
+import {generateTotal} from '../../helpers/utilities';
 import {parseISO} from 'date-fns';
 import {Stack} from '@mui/material';
 import Title from '../typhograhies/Title';
@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import {CellHeader} from '@yumetetsu/ui';
 
 
-const IndexCummulative = ({componentRef}) => {
+const IndexPerSite = ({componentRef}) => {
 
   const [records, setRecords] = useState([]);
   const [reportDate, setReportDate] = useState(new Date());
@@ -29,14 +29,15 @@ const IndexCummulative = ({componentRef}) => {
   console.log('グループ出力テスト', groupBySite);
 
   const sites = Object.keys(groupBySite);
+
   const fiscalYear = fiscalYearRange(reportDate);
-  const cummulative = generateCummulative(fiscalYear.start, fiscalYear.end, groupBySite);
+  const cummulative = generateTotal(fiscalYear.start, fiscalYear.end, groupBySite);
 
   return (
     <Stack spacing={2}>
       <YearPicker {...{setReportDate, reportDate}} />
       <Stack spacing={2} ref={componentRef}>
-        <Title>導入他社数累計一覧</Title>
+        <Title>導入他社数一覧</Title>
         <div>
           <table>
             <thead>
@@ -70,8 +71,8 @@ const IndexCummulative = ({componentRef}) => {
 
 };
 
-IndexCummulative.propTypes = {
+IndexPerSite.propTypes = {
   componentRef: PropTypes.any
 };
 
-export default IndexCummulative;
+export default IndexPerSite;
