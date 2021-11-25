@@ -5,7 +5,7 @@ export const Table = (props: Props) =>{
 
   const componentStyles = `${border} ${marginAuto} ` + props.className;
 
-  return <table className={componentStyles}>{props.children}</table>;
+  return <table className={componentStyles} {...props}>{props.children}</table>;
 };
 
 export const CellHeader = (props : Props) => {
@@ -15,7 +15,7 @@ export const CellHeader = (props : Props) => {
   const componentStyles = `${border} ${cellPadding} ` + props.className;
 
   return (
-    <th className={componentStyles}>
+    <th className={componentStyles} {...props}>
       {props.children}
     </th>);
 };
@@ -41,7 +41,7 @@ export const Row = (props : Props) => {
 export const TableBody = (props : Props) => {
   const componentStyles = props.className;
   return (
-    <tbody className={componentStyles}>
+    <tbody className={componentStyles} {...props}>
       {props.children}
     </tbody>);
 };
@@ -55,7 +55,7 @@ export const TableHead = (props : Props) => {
 
 export const TableFoot = (props : Props) => {
   return (
-    <tfoot className={props.className}>
+    <tfoot className={props.className} {...props}>
       {props.children}
     </tfoot>);
 };
