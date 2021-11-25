@@ -1,18 +1,18 @@
 import {useEffect, useState} from 'react';
 import YearPicker from '../datepickers/YearPicker';
 import fetchDonyutashaRecordsByDate from '../../backend/donyutashakanri';
-import {groupRecordsByField} from './../../../../app-147-baikyakukanrihyou/src/helpers/utils';
+import {groupRecordsByField} from '../../../../app-147-baikyakukanrihyou/src/helpers/utils';
 import './../../pageShowHandlers/index.css';
 import {fiscalYearRange} from '../../helpers/time';
-import {generateCummulative} from '../../helpers/utilities';
+import {generateTotal} from '../../helpers/utilities';
 import {parseISO} from 'date-fns';
 import {Stack} from '@mui/material';
 import Title from '../typhograhies/Title';
 import PropTypes from 'prop-types';
-import {CellHeader} from '@yumetetsu/ui';
+import {CellHeader, Cell, Table, Row, TableHead, TableBody} from '@yumetetsu/ui';
 
 
-const IndexCummulative = ({componentRef}) => {
+const IndexPerSite = ({componentRef}) => {
 
   const [records, setRecords] = useState([]);
   const [reportDate, setReportDate] = useState(new Date());
@@ -25,41 +25,45 @@ const IndexCummulative = ({componentRef}) => {
 
 
   const groupBySite = groupRecordsByField(records, '媒体サイト名');
+
+  console.log('グループ出力テスト', groupBySite);
+
   const sites = Object.keys(groupBySite);
+
   const fiscalYear = fiscalYearRange(reportDate);
-  const cummulative = generateCummulative(fiscalYear.start, fiscalYear.end, groupBySite);
+  const cummulative = generateTotal(fiscalYear.start, fiscalYear.end, groupBySite);
 
   return (
     <Stack spacing={2}>
       <YearPicker {...{setReportDate, reportDate}} />
       <Stack spacing={2} ref={componentRef}>
-        <Title>導入他社数累計一覧</Title>
+        <Title>導入他社数一覧</Title>
         <div>
-          <table>
-            <thead>
-              <tr>
-                <th>月</th>
+          <Table>
+            <TableHead>
+              <Row>
+                <CellHeader>月</CellHeader>
                 {sites.map((key)=><CellHeader key={key}>{key}</CellHeader>)}
-              </tr>
-            </thead>
-            <tbody>
+              </Row>
+            </TableHead>
+            <TableBody>
               {cummulative.map(data => {
                 const [key, value] = Object.entries(data)[0];
                 const month = parseISO(key).getMonth() + 1;
 
                 return (
-                  <tr key={month}>
+                  <Row key={month}>
 
-                    <th>{month}</th>
+                    <Cell>{month}</Cell>
 
                     {sites.map((site)=>{
-                      return <td key={site}>{value[site]}</td>;
+                      return <Cell key={site}>{value[site]}</Cell>;
                     })}
 
-                  </tr>);
+                  </Row>);
               })}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </Stack>
     </Stack>
@@ -67,8 +71,8 @@ const IndexCummulative = ({componentRef}) => {
 
 };
 
-IndexCummulative.propTypes = {
+IndexPerSite.propTypes = {
   componentRef: PropTypes.any
 };
 
-export default IndexCummulative;
+export default IndexPerSite;

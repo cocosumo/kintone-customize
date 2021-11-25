@@ -4,6 +4,13 @@
   font-size: 2rem;
 }
 
+.gaia-report-crosstable-row-total {
+  display:none;
+}
+
+.gaia-report-crosstable tr td {
+  width: 150px
+}
 
 
 @media print {

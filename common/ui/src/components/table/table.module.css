@@ -1,0 +1,13 @@
+
+.border {
+  color: black;
+  border: 1px solid black;
+}
+
+.marginAuto {
+  margin: auto
+}
+
+.cellPadding {
+  padding: 4px;
+}
