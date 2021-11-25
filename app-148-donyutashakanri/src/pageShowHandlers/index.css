@@ -16,34 +16,38 @@
 section{
   width: 100%;
 }
-/* .kakin_list */
-table{
+
+.print-table{
   margin: 3px auto;    /* 上下3px 左右auto */
 }
 
-Table tr th {
-  border:1px solid #000000;
+.print-table tr th {
+  border: 1px solid #000000;
   width: 150px;
 }
 
-Table tr td {
+.print-table tr td {
   border:1px solid #000000;
 }
 
 @media print{
   @page {
     margin: 10%; /* 仮に設定ｗ */
+    /* size:portrait; *//* 縦向き印刷 */
+    /* size:landscape; *//* 横向き印刷 */
   }
 
-  .print-area{
+  .print-area{ 
     text-align:center;
   }
 
-  table tr th, table tr td{
+  .print-table tr th, .print-table tr td{
     text-align: center;
     vertical-align: middle;
   }
 
-  .print_pages{page-break-after: always;}
+  .print_pages{
+    page-break-after: always;
+  }
 
 }
