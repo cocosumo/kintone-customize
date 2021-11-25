@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {CellHeader} from '@yumetetsu/ui';
+import {CellHeader, Row, Table, TableHead, TableBody, Cell} from '@yumetetsu/ui';
 
 const SiteGroupTable = ({site, records}) => {
 
@@ -9,36 +9,36 @@ const SiteGroupTable = ({site, records}) => {
 
   return (
     <article className="print_pages">
-      <table className="print-table">
-        <thead>
-          <tr>
+      <Table>
+        <TableHead>
+          <Row>
             <CellHeader> サイト名 </CellHeader>
             {fields.map(fieldname => {
               return <CellHeader key={fieldname}>{fieldname}</CellHeader>;
             })}
-          </tr>
-        </thead>
-        <tbody>
+          </Row>
+        </TableHead>
+        <TableBody>
           {
             records.map((record, index) =>{
               return (
-                <tr key={site + record['エリア店舗名'].value}>
+                <Row key={site + record['エリア店舗名'].value}>
                   {
                     (index === 0) &&
-                    <td rowSpan={rowSpan}>
+                    <Cell rowSpan={rowSpan}>
                       {site}
-                    </td>
+                    </Cell>
                   }
                   {fields.map(fieldname => {
-                    return <td key={fieldname}>{record[fieldname].value}</td>;
+                    return <Cell key={fieldname}>{record[fieldname].value}</Cell>;
                   })
                   }
-                </tr>
+                </Row>
               );
             })
           }
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </article>
   );
 };

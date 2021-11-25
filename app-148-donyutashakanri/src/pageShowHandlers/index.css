@@ -17,8 +17,9 @@ section{
   width: 100%;
 }
 
+/* 共有コンポーネント(common/ui = @yumetetsu/ui)の設定を使用する
 .print-table{
-  margin: 3px auto;    /* 上下3px 左右auto */
+  margin: 3px auto;
 }
 
 .print-table tr th {
@@ -29,6 +30,7 @@ section{
 .print-table tr td {
   border:1px solid #000000;
 }
+*/
 
 @media print{
   @page {
@@ -37,17 +39,21 @@ section{
     /* size:landscape; *//* 横向き印刷 */
   }
 
+  .mainTitle, .subTitle {
+    display: table-header-group;
+  }
+
   .print-area{ 
     text-align:center;
   }
 
   .print-table tr th, .print-table tr td{
-    text-align: center;
-    vertical-align: middle;
+    /*text-align: center;
+    vertical-align: middle;*/
   }
-
+/*
   .print_pages{
     page-break-after: always;
   }
-
+*/
 }
