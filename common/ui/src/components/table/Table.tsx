@@ -1,26 +1,39 @@
 import styles from './table.module.css';
 
 export const Table = ({children}: Props) =>{
-  return <table className={styles.table}>{children}</table>;
+  const {border, marginAuto} = styles;
+
+  const componentStyles = `${border} ${marginAuto}`;
+
+  return <table className={componentStyles}>{children}</table>;
 };
 
 export const CellHeader = (props : Props) => {
+
+  const {border, cellPadding} = styles;
+
+  const componentStyles = `${border} ${cellPadding}`;
+
   return (
-    <th className={styles.cellheader}>
+    <th className={componentStyles}>
       {props.children}
     </th>);
 };
 
 export const Cell = (props : Props) => {
+  const {border, cellPadding} = styles;
+
+  const componentStyles = `${border} ${cellPadding}`;
+
   return (
-    <td className={styles.cell}>
+    <td className={componentStyles}>
       {props.children}
     </td>);
 };
 
 export const Row = (props : Props) => {
   return (
-    <tr>
+    <tr className={styles.border}>
       {props.children}
     </tr>);
 };

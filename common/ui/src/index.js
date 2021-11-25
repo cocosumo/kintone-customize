@@ -7,5 +7,6 @@ export {
   Table,
   TableBody,
   TableHead,
-  TableFoot
+  TableFoot,
+  Row
 } from './components/table/Table';

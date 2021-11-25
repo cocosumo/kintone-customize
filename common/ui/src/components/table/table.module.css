@@ -1,15 +1,13 @@
-.table {
+
+.border {
+  color: black;
   border: 1px solid black;
 }
 
-.cellheader {
-  color: gray;
+.marginAuto {
+  margin: auto
 }
 
-.cell {
-  color: black
-}
-
-.row {
-  color: black;
+.cellPadding {
+  padding: 4px;
 }
