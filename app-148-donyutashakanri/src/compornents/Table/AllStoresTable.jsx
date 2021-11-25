@@ -7,9 +7,11 @@ const AllStoresTable = ({reportDate, data, componentRef}) => {
   // 媒体サイト毎に、データを再編する
   const groupBySite = groupRecordsByField(data, '媒体サイト名');
   // console.log('サイト毎のグループ配列の出力確認', groupBySite); // chk
-  const sites = Object.keys(groupBySite); // サイト名の配列を作成(sites)
+  // const sites = Object.keys(groupBySite); // サイト名の配列を作成(sites)
   const newMonth = getMonth(reportDate) + 1;
   const newYear = getYear(reportDate);
+
+  console.log('groupBySite', groupBySite);
 
   return (
     <div ref={componentRef}>
@@ -17,7 +19,11 @@ const AllStoresTable = ({reportDate, data, componentRef}) => {
         <span className="mainTitle"> {newYear}年{newMonth}月 全店舗 </span><br />
         <span className="subTitle"> 課金一覧 </span>
         <section className="print_pages">
-          <SiteGroupTable groupBySite={groupBySite} sites={sites} componentRef={componentRef} />
+
+          {Object.entries(groupBySite).map(([key, value]) => {
+            return <SiteGroupTable key={key} site={key} records={value} />;
+          })}
+
         </section>
       </article>
     </div>

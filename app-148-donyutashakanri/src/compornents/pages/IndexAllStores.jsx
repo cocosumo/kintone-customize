@@ -11,6 +11,7 @@ const IndexAllStores = ({event, componentRef}) => {
 
   // recordsの更新 filtering
   const data = event.records.filter(({適用年月}) => isSameMonth(reportDate, parseISO(適用年月.value)));
+  console.log('data', data);
 
   return (
 
