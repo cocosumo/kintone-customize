@@ -1,18 +1,18 @@
 import styles from './table.module.css';
 
-export const Table = ({children}: Props) =>{
+export const Table = (props: Props) =>{
   const {border, marginAuto} = styles;
 
-  const componentStyles = `${border} ${marginAuto}`;
+  const componentStyles = `${border} ${marginAuto} ` + props.className;
 
-  return <table className={componentStyles}>{children}</table>;
+  return <table className={componentStyles}>{props.children}</table>;
 };
 
 export const CellHeader = (props : Props) => {
 
   const {border, cellPadding} = styles;
 
-  const componentStyles = `${border} ${cellPadding}`;
+  const componentStyles = `${border} ${cellPadding} ` + props.className;
 
   return (
     <th className={componentStyles}>
@@ -23,7 +23,7 @@ export const CellHeader = (props : Props) => {
 export const Cell = (props : Props) => {
   const {border, cellPadding} = styles;
 
-  const componentStyles = `${border} ${cellPadding}`;
+  const componentStyles = `${border} ${cellPadding} ` + props.className;
 
   return (
     <td className={componentStyles}>
@@ -39,22 +39,23 @@ export const Row = (props : Props) => {
 };
 
 export const TableBody = (props : Props) => {
+  const componentStyles = props.className;
   return (
-    <tbody>
+    <tbody className={componentStyles}>
       {props.children}
     </tbody>);
 };
 
 export const TableHead = (props : Props) => {
   return (
-    <thead>
+    <thead className={props.className}>
       {props.children}
     </thead>);
 };
 
 export const TableFoot = (props : Props) => {
   return (
-    <tfoot>
+    <tfoot className={props.className}>
       {props.children}
     </tfoot>);
 };
