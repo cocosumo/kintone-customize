@@ -31,7 +31,7 @@ const PDFViewer = ({isModalOpen, setIsModalOpen, url} : FileViewerProps) => {
         isModalOpen,
         setIsModalOpen,
         pdfWrapperRef,
-        HeaderComponent: <IconButton color="primary"><CloudDownloadIcon /></IconButton>
+        HeaderComponent: <IconButton onClick={()=> window.open(url)} color="primary"><CloudDownloadIcon /></IconButton>
       }}
     >
       <PDFViewerAndroid {...{url, numberOfPages, onDocumentLoadSuccess, pdfWrapperHeight, pdfWrapperWidth}} />
