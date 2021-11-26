@@ -44,11 +44,12 @@ export default function FullScreenModal({
         aria-describedby="alert-dialog-description"
         fullWidth
         maxWidth="lg"
+        sx={{height: '100%'}}
 
       >
         <DialogTitle id="alert-dialog-title" >
           <Stack
-            justifyContent="flex-end"
+            justifyContent="space-between"
             direction="row"
             divider={<Divider orientation="vertical" flexItem />}
           >
@@ -62,13 +63,13 @@ export default function FullScreenModal({
           </Stack>
 
         </DialogTitle>
-        {/*   <DialogContent > */}
+
         <TransformWrapper maxPositionY={355} ref={pdfWrapperRef}>
           <TransformComponent>
             {children}
           </TransformComponent>
         </TransformWrapper>
-        {/* </DialogContent> */}
+
         <DialogActions>
           <Button variant="contained" onClick={closeHandler}>
             閉じる

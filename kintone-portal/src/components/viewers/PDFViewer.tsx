@@ -1,20 +1,8 @@
 import FullScreenModal from '../modals/FullScreenModal';
 import {useRef, useState} from 'react';
 import PDFViewerAndroid from './PDFViewerAndroid';
-// import PDFViewerAllOtherDevice from './PDFViewerAllOtherDevice';
-// import {isAndroid} from '../../../utils';
-
-
-/* const reducer = (state : any, action: any) => {
-  switch (action.type) {
-    case 'increment':
-      return {scale: state.scale + 0.2};
-    case 'decrement':
-      return {scale: state.scale > 0.4 ? state.scale - 0.2 : state.scale};
-    default:
-      throw new Error();
-  }
-}; */
+import Button from '@mui/material/Button';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 
 type WrapperComponent = {
@@ -43,11 +31,14 @@ const PDFViewer = ({isModalOpen, setIsModalOpen, url} : FileViewerProps) => {
   return (
 
     <FullScreenModal
-      {...{isModalOpen, setIsModalOpen, pdfWrapperRef}}
+      {...{
+        isModalOpen,
+        setIsModalOpen,
+        pdfWrapperRef,
+        HeaderComponent: <Button startIcon={<CloudDownloadIcon />} />
+      }}
     >
       <PDFViewerAndroid {...{url, numberOfPages, onDocumentLoadSuccess, pdfWrapperHeight, pdfWrapperWidth}} />
-      {/* {isAndroid && <PDFViewerAndroid {...{url, scale, numberOfPages, onDocumentLoadSuccess}} />}
-      {!isAndroid && <PDFViewerAllOtherDevice {...{url}} />} */}
 
     </FullScreenModal>);
 };
