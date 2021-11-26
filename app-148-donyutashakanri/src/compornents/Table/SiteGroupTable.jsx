@@ -4,39 +4,35 @@ import {CellHeader, Row, Table, TableHead, TableBody, Cell} from '@yumetetsu/ui'
 const SiteGroupTable = ({site, records}) => {
 
   const fields = ['エリア店舗名', '導入他社数', '課金額'];
-  const rowSpan = records.length;
   console.log('records', records);
 
   return (
     <section className="print_pages" key="課金一覧">
-      <Table>
+      <Table key={site} className="siteTable">
         <TableHead>
           <Row>
-            <CellHeader> サイト名 </CellHeader>
+            <CellHeader colSpan="3"> {site} </CellHeader>
+          </Row>
+          <Row>
             {fields.map(fieldname => {
               return <CellHeader key={fieldname}>{fieldname}</CellHeader>;
             })}
           </Row>
         </TableHead>
         <TableBody>
-          {
-            records.map((record, index) =>{
-              return (
-                <Row key={site + record['エリア店舗名'].value}>
-                  {
-                    (index === 0) &&
-                    <Cell rowSpan={rowSpan}>
-                      {site}
-                    </Cell>
-                  }
-                  {fields.map(fieldname => {
-                    return <Cell key={fieldname}>{record[fieldname].value}</Cell>;
-                  })
-                  }
-                </Row>
-              );
-            })
-          }
+
+          {records.map((record) =>{
+            return (
+
+              <Row key={site + record['エリア店舗名'].value}>
+                {fields.map(fieldname => {
+                  return <Cell key={fieldname}>{record[fieldname].value}</Cell>;
+                })
+                }
+              </Row>
+
+            );
+          })}
         </TableBody>
       </Table>
     </section>

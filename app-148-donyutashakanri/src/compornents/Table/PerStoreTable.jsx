@@ -20,21 +20,19 @@ const PerStoreTable = ({area, data, componentRef}) => {
       <article className="print-area">
         <Header area={area} /><br />
         <span className="subTitle"> 課金一覧 </span>
-        <section className="print_pages">
-          <Table>
-            <TableHead>
-              <Row>
-                <CellHeader> 店舗名 </CellHeader>
-                <CellHeader> 媒体サイト名 </CellHeader>
-                <CellHeader> 導入他社数 </CellHeader>
-                <CellHeader> 課金額 </CellHeader>
-              </Row>
-            </TableHead>
-            <TableBody>
-              {newTable}
-            </TableBody>
-          </Table>
-        </section>
+        <Table>
+          <TableHead>
+            <Row>
+              <CellHeader> 店舗名 </CellHeader>
+              <CellHeader> 媒体サイト名 </CellHeader>
+              <CellHeader> 導入他社数 </CellHeader>
+              <CellHeader> 課金額 </CellHeader>
+            </Row>
+          </TableHead>
+          <TableBody>
+            {newTable}
+          </TableBody>
+        </Table>
       </article>
     </div>
   );

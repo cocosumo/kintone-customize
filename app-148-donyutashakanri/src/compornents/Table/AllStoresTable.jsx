@@ -15,12 +15,30 @@ const AllStoresTable = ({reportDate, data, componentRef}) => {
 
   return (
     <div ref={componentRef}>
-      <article className="print-area">
-        <span className="mainTitle"> {newYear}年{newMonth}月 全店舗 </span><br />
-        <span className="subTitle"> 課金一覧 </span>
-        {Object.entries(groupBySite).map(([key, value]) => {
-          return <SiteGroupTable key={key} site={key} records={value} />;
-        })}
+      <article>
+        <table className="print-area">
+          <thead>
+            <tr>
+              <th>
+                <span className="mainTitle"> {newYear}年{newMonth}月 全店舗 </span>
+              </th>
+            </tr>
+            <tr>
+              <th>
+                <span className="subTitle"> 課金一覧 </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <div className="flex-view">
+                {Object.entries(groupBySite).map(([key, value]) => {
+                  return <SiteGroupTable key={key} site={key} records={value} />;
+                })}
+              </div>
+            </tr>
+          </tbody>
+        </table>
       </article>
     </div>
   );
