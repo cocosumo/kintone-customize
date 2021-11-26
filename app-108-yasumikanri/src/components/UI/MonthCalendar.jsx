@@ -60,7 +60,7 @@ const MonthCalendar = ({
 
       />
       <Confirmation
-        question="通常休みは全て削除されます。本当にリセットしますか？"
+        question={<>当月、通常休みは全て削除されます。<br />本当にリセットしますか？</>}
         open={confirmation.isOpen}
         setOpen={setConfirmation}
         actionOnYes={clearHandler}

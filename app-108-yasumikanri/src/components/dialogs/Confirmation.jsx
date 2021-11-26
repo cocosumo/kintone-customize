@@ -49,7 +49,7 @@ const Confirmation = ({question, open, setOpen, actionOnYes}) => {
 export default Confirmation;
 
 Confirmation.propTypes = {
-  question: PropTypes.string.isRequired,
+  question: PropTypes.node.isRequired,
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func,
   actionOnYes: PropTypes.func
