@@ -1,51 +1,34 @@
 import PropTypes from 'prop-types';
-import {CellHeader, Row, Table, TableHead, TableBody, Cell} from '@yumetetsu/ui';
+import {Row, Cell} from '@yumetetsu/ui';
 
-const SiteGroupTable = ({site, records}) => {
+const SiteGroupTable = ({site, records, fields}) => {
 
-  const fields = ['エリア店舗名', '導入他社数', '課金額'];
   const rowSpan = records.length;
-  console.log('records', records);
 
   return (
-    <article className="print_pages">
-      <Table>
-        <TableHead>
-          <Row>
-            <CellHeader> サイト名 </CellHeader>
-            {fields.map(fieldname => {
-              return <CellHeader key={fieldname}>{fieldname}</CellHeader>;
-            })}
-          </Row>
-        </TableHead>
-        <TableBody>
+    records.map((record, index) => {
+      return (
+        <Row key={site + record['エリア店舗名'].value}>
           {
-            records.map((record, index) =>{
-              return (
-                <Row key={site + record['エリア店舗名'].value}>
-                  {
-                    (index === 0) &&
-                    <Cell rowSpan={rowSpan}>
-                      {site}
-                    </Cell>
-                  }
-                  {fields.map(fieldname => {
-                    return <Cell key={fieldname}>{record[fieldname].value}</Cell>;
-                  })
-                  }
-                </Row>
-              );
-            })
+            (index === 0) &&
+            <td rowSpan={rowSpan} selectName="putTogether">
+              {site}
+            </td>
           }
-        </TableBody>
-      </Table>
-    </article>
+          {fields.map(fieldname => {
+            return <Cell key={fieldname}>{record[fieldname].value}</Cell>;
+          })
+          }
+        </Row>
+      );
+    })
   );
 };
 
 SiteGroupTable.propTypes = {
   site: PropTypes.string,
-  records: PropTypes.array
+  records: PropTypes.array,
+  fields: PropTypes.array
 };
 
 export default SiteGroupTable;

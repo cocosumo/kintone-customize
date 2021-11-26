@@ -17,6 +17,7 @@ section{
   width: 100%;
 }
 
+
 /* 共有コンポーネント(common/ui = @yumetetsu/ui)の設定を使用する
 .print-table{
   margin: 3px auto;
@@ -37,6 +38,10 @@ section{
     margin: 10%; /* 仮に設定ｗ */
     /* size:portrait; *//* 縦向き印刷 */
     /* size:landscape; *//* 横向き印刷 */
+  }
+
+  table tr td, .putTogether{
+    page-break-inside: avoid;
   }
 
   .mainTitle, .subTitle {
