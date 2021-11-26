@@ -1,7 +1,7 @@
 import FullScreenModal from '../modals/FullScreenModal';
 import {useRef, useState} from 'react';
 import PDFViewerAndroid from './PDFViewerAndroid';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 
@@ -16,26 +16,22 @@ type TransformWrapper = {
 const PDFViewer = ({isModalOpen, setIsModalOpen, url} : FileViewerProps) => {
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
   const pdfWrapperRef = useRef<TransformWrapper>();
-  // const [state, dispatchScale] = useReducer(reducer, initialScale);
+  console.log(url);
 
   const onDocumentLoadSuccess = ({numPages} : PDFDocumentProxy) => {
-    console.log(numPages);
     setNumberOfPages(numPages);
   };
   const pdfWrapperEl = pdfWrapperRef.current?.instance?.wrapperComponent;
   const pdfWrapperWidth = pdfWrapperEl?.offsetWidth;
   const pdfWrapperHeight = pdfWrapperEl?.offsetHeight || 400;
 
-  console.log(pdfWrapperWidth);
-
   return (
-
     <FullScreenModal
       {...{
         isModalOpen,
         setIsModalOpen,
         pdfWrapperRef,
-        HeaderComponent: <Button startIcon={<CloudDownloadIcon />} />
+        HeaderComponent: <IconButton color="primary"><CloudDownloadIcon /></IconButton>
       }}
     >
       <PDFViewerAndroid {...{url, numberOfPages, onDocumentLoadSuccess, pdfWrapperHeight, pdfWrapperWidth}} />
