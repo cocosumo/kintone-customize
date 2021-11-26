@@ -3,6 +3,7 @@ const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -55,4 +56,6 @@ module.exports = {
       ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
   ],
+
+
 };
