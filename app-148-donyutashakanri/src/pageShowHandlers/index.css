@@ -1,4 +1,3 @@
-
 #root{
   text-align:center;
 }
@@ -16,7 +15,6 @@
 section{
   width: 100%;
 }
-
 
 /* 共有コンポーネント(common/ui = @yumetetsu/ui)の設定を使用する
 .print-table{
@@ -40,21 +38,25 @@ section{
     /* size:landscape; *//* 横向き印刷 */
   }
 
-  table tr td, .putTogether{
+  table {
     page-break-inside: avoid;
   }
 
-  .mainTitle, .subTitle {
-    display: table-header-group;
+  .mainTitle, .subTitle {    
+    text-align:center;
   }
 
-  .print-area{ 
+  .print-area { 
     text-align:center;
   }
 
   .print-table tr th, .print-table tr td{
-    /*text-align: center;
-    vertical-align: middle;*/
+    text-align: center;
+    vertical-align: middle;
+  }
+  	
+  .style:after {
+    content: "課金一覧";
   }
 /*
   .print_pages{
