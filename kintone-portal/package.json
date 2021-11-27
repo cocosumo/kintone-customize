@@ -63,6 +63,7 @@
     "date-fns": "^2.25.0",
     "dotenv": "^10.0.0",
     "kintone-source-uploader": "^2.1.2",
+    "magic-snowflakes": "^6.0.0",
     "pdf-viewer-reactjs": "^2.2.3",
     "pdfjs-dist": "^2.10.377",
     "print-html-block": "^2.0.0",

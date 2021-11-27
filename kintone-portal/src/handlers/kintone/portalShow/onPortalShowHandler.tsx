@@ -4,6 +4,7 @@ import {getPortalSpaceElement} from '../../../../../kintone-api/typescript/typed
 import {Portal} from '../../../components/Portal';
 import ReactDOM from 'react-dom';
 
+
 const rederPortal = () => {
   console.log(getPortalSpaceElement());
   ReactDOM.render(<Portal />, getPortalSpaceElement());
