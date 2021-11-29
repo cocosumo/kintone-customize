@@ -1,6 +1,6 @@
 
 type Props = {
-  children: React.ReactNode
+  children?: React.ReactNode
 };
 
 interface TitledContainer extends Props {

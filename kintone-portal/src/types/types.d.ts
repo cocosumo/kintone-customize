@@ -1,4 +1,6 @@
 
+declare module '*.css';
+declare module 'print-html-block';
 
 interface Modal {
   isModalOpen : boolean,
