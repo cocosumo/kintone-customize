@@ -57,7 +57,7 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
       ignoreOrder: false, // Enable to remove warnings about conflicting order
-    }),
+    })
   ],
 
   optimization: {

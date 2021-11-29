@@ -4,10 +4,13 @@ import {Accordion} from './accordion/Accordion';
 import {AnnouncementsContainer} from './containers/AnnouncementsContainer';
 import {MainContainer} from './containers/MainContainer';
 import './Portal.css';
-
+import Snowflakes from 'magic-snowflakes';
+const snowflakes = new Snowflakes({
+  count: 8, // 100 snowflakes. Default: 50
+});
 
 export const Portal = () => {
-
+  snowflakes.start();
   const [data, setData] = useState<GroupAnnouncements | null>();
 
   useEffect(() => {
