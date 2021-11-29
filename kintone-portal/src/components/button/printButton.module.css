@@ -1,0 +1,19 @@
+.toolBarButton {
+  display: inline-block;
+  box-sizing: border-box;
+  margin-right: 8px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #e3e7e8;
+  background-color: #f7f9fa;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  padding-top: 8px;
+  color: gray;
+}
+
+.toolBarButton:hover {
+  color: #3498db;
+}
+
+

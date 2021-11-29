@@ -1,5 +1,9 @@
 import {AUTH, DOMAIN} from '../../utils';
 
+/**
+ * @deprecated
+ * @param fileKey
+ */
 export const getFileWithXHR = (fileKey: string) => {
   const url = `https://${DOMAIN}/k/v1/file.json?fileKey=${fileKey}`;
   const xhr = new XMLHttpRequest();
