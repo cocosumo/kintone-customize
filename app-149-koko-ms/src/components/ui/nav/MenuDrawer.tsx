@@ -122,7 +122,6 @@ export default function ResponsiveDrawer(props: Props) {
         component="main"
         sx={{flexGrow: 1, p: 3, width: {sm: `calc(100% - ${drawerWidth}px)`}}}
       >
-        <Toolbar sx={{height: '300px'}} />
         <img src={Construction} alt="construction" />
       </Box>
     </Box>
