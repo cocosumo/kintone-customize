@@ -1,74 +1,71 @@
 import {useEffect, useState} from 'react';
-import YearPicker from '../datepickers/YearPicker';
-import fetchDonyutashaRecordsByDate from '../../backend/donyutashakanri';
+import YearMonthPicker from '../datepickers/YearMonthPicker';
+import {fetchDonyutashaRecords} from '../../backend/donyutashakanri';
 import {groupRecordsByField} from '../../../../app-147-baikyakukanrihyou/src/helpers/utils';
 import './../../pageShowHandlers/index.css';
-import {fiscalYearRange} from '../../helpers/time';
-import {generateTotal} from '../../helpers/utilities';
-import {parseISO} from 'date-fns';
+// import {fiscalYearRange} from '../../helpers/time';
+// import {generateTotal} from '../../helpers/utilities';
+import {subYears} from 'date-fns';
 import {Stack} from '@mui/material';
-import Title from '../typhograhies/Title';
 import PropTypes from 'prop-types';
-import {CellHeader, Cell, Table, Row, TableHead, TableBody} from '@yumetetsu/ui';
-
+import MultiSelect from '../select/MultiSelect';
+import DonyuTashaTable from '../Table/DonyuTashaTable';
 
 const IndexPerSite = ({componentRef}) => {
 
   const [records, setRecords] = useState([]);
-  const [reportDate, setReportDate] = useState(new Date());
+  /* const [reportDate, setReportDate] = useState(new Date()); */
+  const [queryForm, setQueryForm] = useState({endDate: new Date(), startDate: subYears(new Date(), 1), shops: []});
 
   useEffect(()=>{
-    fetchDonyutashaRecordsByDate(reportDate).then(resp => {
+    fetchDonyutashaRecords(queryForm).then(resp => {
+      console.log('test', resp, queryForm);
       setRecords(resp);
     });
-  }, [reportDate]);
+  }, [queryForm]);
 
+  const groupByArea = groupRecordsByField(records, 'エリア');
 
-  const groupBySite = groupRecordsByField(records, '媒体サイト名');
+  console.log('グループ出力テスト', groupByArea);
 
-  console.log('グループ出力テスト', groupBySite);
+  const area = Object.keys(groupByArea);
 
-  const sites = Object.keys(groupBySite);
+  const isStoreSelected = Boolean(queryForm.shops.length);
+  const setStartDate = (startDate) => {
+    setQueryForm({...queryForm, startDate: startDate});
+  };
 
-  const fiscalYear = fiscalYearRange(reportDate);
-  const cummulative = generateTotal(fiscalYear.start, fiscalYear.end, groupBySite);
+  const setEndDate = (endDate) => {
+    setQueryForm({...queryForm, endDate});
+  };
+
+  const updateSelectedStores = (selectedStores) => {
+    /* setQueryForm(Object.assign(queryForm, {shops:selectedStores})); 1行下と同じ*/
+    setQueryForm({...queryForm, shops: selectedStores});
+  };
+
 
   return (
     <Stack spacing={2}>
-      <YearPicker {...{setReportDate, reportDate}} />
+      <YearMonthPicker setReportDate={setStartDate} reportDate={queryForm.startDate} label="開始年月" />
+      <YearMonthPicker setReportDate={setEndDate} reportDate={queryForm.endDate} label="終了年月" />
+      <MultiSelect
+        options={area}
+        label="店舗"
+        placeholder={isStoreSelected ? '店舗名' : '全店舗'}
+        setOptions={updateSelectedStores}
+      />
       <Stack spacing={2} ref={componentRef}>
-        <Title>導入他社数一覧</Title>
         <div>
-          <Table>
-            <TableHead>
-              <Row>
-                <CellHeader>月</CellHeader>
-                {sites.map((key)=><CellHeader key={key}>{key}</CellHeader>)}
-              </Row>
-            </TableHead>
-            <TableBody>
-              {cummulative.map(data => {
-                const [key, value] = Object.entries(data)[0];
-                const month = parseISO(key).getMonth() + 1;
+          {Object.entries(groupByArea).map(([key, value]) => {
+            console.log(key, value);
+            return <DonyuTashaTable key={key} records={value} title={key} startDate={queryForm.startDate} endDate={queryForm.endDate} />;
+          })}
 
-                return (
-                  <Row key={month}>
-
-                    <Cell>{month}</Cell>
-
-                    {sites.map((site)=>{
-                      return <Cell key={site}>{value[site]}</Cell>;
-                    })}
-
-                  </Row>);
-              })}
-            </TableBody>
-          </Table>
         </div>
       </Stack>
     </Stack>
   );
-
 };
 
 IndexPerSite.propTypes = {

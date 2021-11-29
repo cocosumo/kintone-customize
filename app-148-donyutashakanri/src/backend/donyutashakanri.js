@@ -35,4 +35,22 @@ const fetchDonyutashaRecordsByDate = async (reportDate) => {
  */
 export const getDonyuTashaRecords = () => _records;
 
+/**
+ * レコードを取得する。
+ *
+ * @param {Date} reportDate
+ * @returns {KintoneTypes.Data[]} レコード配列
+ *
+ * @todo このモジュールをReactのContextに変える。
+ */
+export const fetchDonyutashaRecords = async (queryForm) => {
+
+  _records = (await fetchAllRecords({
+    appId: _appId,
+    filterCond: `適用年月 >= "${queryForm.startDate.toISOString()}" and 適用年月 <= "${queryForm.endDate.toISOString()}"`
+  })).records;
+
+  return _records;
+};
+
 export default fetchDonyutashaRecordsByDate;
