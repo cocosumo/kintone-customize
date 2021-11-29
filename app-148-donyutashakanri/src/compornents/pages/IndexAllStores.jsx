@@ -20,6 +20,7 @@ const IndexAllStores = ({event, componentRef}) => {
       <YearMonthPicker
         reportDate={reportDate}
         setReportDate={setReportDate}
+        label="年月"
       />
 
       <AllStoresTable reportDate={reportDate} data={data} componentRef={componentRef} />

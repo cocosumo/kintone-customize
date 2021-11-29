@@ -25,6 +25,7 @@ const IndexPerStore = ({event, componentRef}) => {
       <YearMonthPicker
         reportDate={reportDate}
         setReportDate={setReportDate}
+        label="年月"
       />
 
       <PerStoreTable area={event.viewName} data={data} componentRef={componentRef} />
