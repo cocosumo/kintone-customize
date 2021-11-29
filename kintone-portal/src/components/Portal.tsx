@@ -5,6 +5,8 @@ import {AnnouncementsContainer} from './containers/AnnouncementsContainer';
 import {MainContainer} from './containers/MainContainer';
 import './Portal.css';
 import Snowflakes from 'magic-snowflakes';
+import FloatingActionButtons from './fab/FloatingActionButton';
+
 const snowflakes = new Snowflakes({
   count: 8, // 100 snowflakes. Default: 50
 });
@@ -32,6 +34,8 @@ export const Portal = () => {
           subTitle="イベント"
           data={data?.events}
         />
+        {/* todo Add help button
+         <FloatingActionButtons /> */}
       </AnnouncementsContainer>
     </MainContainer>
   );
