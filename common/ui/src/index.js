@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 // export {CellHeader} from './components/table/CellHeader';
 
+
 export {
   CellHeader,
   Cell,
@@ -10,3 +11,4 @@ export {
   TableFoot,
   Row
 } from './components/table/Table';
+
