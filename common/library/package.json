@@ -42,7 +42,7 @@
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1"
   },
-  "main": "babel.config.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lorenzras/kintone-customize.git"

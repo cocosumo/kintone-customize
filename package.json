@@ -28,7 +28,6 @@
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.15.0",
     "@cybozu/eslint-config": "^15.0.0",
-    "@kintone/customize-uploader": "^5.0.7",
     "@kintone/dts-gen": "^5.0.6",
     "@types/react": "^17.0.29",
     "@types/react-dom": "^17.0.9",
@@ -48,7 +47,6 @@
   "dependencies": {
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.4",
-    "app-portal": "file:kintone-portal",
     "date-fns": "^2.25.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"

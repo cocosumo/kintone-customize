@@ -19,7 +19,7 @@ module.exports = {
   ],
 
   entry: {
-    index: { import: "./src/index.ts" },
+    index: { import: "./src/index.js" },
   },
 
   output: {

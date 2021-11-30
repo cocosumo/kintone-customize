@@ -2,16 +2,18 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "sourceMap": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "module": "commonjs",
-    "target": "es6",
+    "target": "ESNEXT",
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "strictNullChecks": true,
     "allowJs": true,
-    "lib": ["es5", "es6", "dom", "dom.iterable"]
+    "lib": ["es5", "es6", "dom", "dom.iterable"],
+    "baseUrl": "./types"
   },
   "include": ["./src/**/*", "./node_modules/@kintone/dts-gen/kintone.d.ts"],
+
   "rules": {
     "quotemark": [true, "single"]
   }
