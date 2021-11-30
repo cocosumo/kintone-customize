@@ -2,27 +2,18 @@ import PropTypes from 'prop-types';
 import Title from '../typhograhies/Title';
 import {CellHeader, Cell, Table, Row, TableHead, TableBody} from '@yumetetsu/ui';
 import {groupRecordsByField} from '../../../../app-147-baikyakukanrihyou/src/helpers/utils';
-// import {parseISO} from 'date-fns';
-// import { generateTotal } from '../../helpers/utilities';
+import {parseISO} from 'date-fns';
+import {generateTotal} from '../../helpers/utilities';
+// import {fiscalYearRange} from '../../helpers/time';
 
 const DonyuTashaTable = ({records, title, startDate, endDate}) => {
-
   const groupBysites = groupRecordsByField(records, '媒体サイト名');
   const sites = Object.keys(groupBysites);
-
-  const startYear = startDate.getFullYear();
-  const startMonth = startDate.getMonth() + 1;
-  const endYear = endDate.getFullYear();
-  const endMonth = endDate.getMonth();
-  console.log('開始年月', startYear, '年', startMonth, '月');
-  console.log('終了年月', endYear, '年', endMonth, '月');
-
-  // const fiscalYear = fiscalYearRange(reportDate);
-  // const cummulative = generateTotal(fiscalYear.start, fiscalYear.end, groupByArea);
+  const cummulative = generateTotal(startDate, endDate, groupBysites);
 
   return (
     <>
-      <Title>{title} 導入他社数一覧</Title>
+      <Title>{title} 導入他社数一覧</Title><br />
       <Table>
         <TableHead>
           <Row>
@@ -32,24 +23,28 @@ const DonyuTashaTable = ({records, title, startDate, endDate}) => {
           </Row>
         </TableHead>
         <TableBody>
-          {console.log('records', records)}
-          {/* cummulative.map(data => { */
-            records.map((data) => {
-            const [key, value] = Object.entries(data)[0]; */
+          { cummulative.map((data) => {
+            // console.log('data', data);
+            const [key, value] = Object.entries(data)[0];
+            const reportYear = parseISO(key).getFullYear();
+            const reportMonth = parseISO(key).getMonth() + 1;
+            // console.log('key', reportYear + '年' + reportMonth + '月' + title);
 
-              return (
-                <Row key={startYear + startMonth}>
-                  <Cell>{startYear}</Cell>
-                  <Cell>{startMonth}</Cell>
+            return (
+              <Row key={reportYear + '年' + reportMonth + '月' + title}>
+                <Cell>{reportYear}</Cell>
+                <Cell>{reportMonth}</Cell>
 
-                  {sites.map((site)=>{
-                    return <Cell key={site}>{value[site]}</Cell>;
-                  })}
+                {sites.map((site)=>{
+                  return <Cell key={site}>{value[site]}</Cell>;
+                })}
 
-                </Row>);
-            })}
+              </Row>);
+          })}
         </TableBody>
       </Table>
+      <br />
+      <br />
     </>
   );
 };
