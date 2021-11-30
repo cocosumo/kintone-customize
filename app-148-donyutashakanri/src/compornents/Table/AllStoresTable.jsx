@@ -31,9 +31,11 @@ const AllStoresTable = ({reportDate, data, componentRef}) => {
           </thead>
           <tbody>
             <tr>
-              {Object.entries(groupBySite).map(([key, value]) => {
-                return <SiteGroupTable key={key} site={key} records={value} />;
-              })}
+              <td>
+                {Object.entries(groupBySite).map(([key, value]) => {
+                  return <SiteGroupTable key={key} site={key} records={value} />;
+                })}
+              </td>
             </tr>
           </tbody>
         </table>
