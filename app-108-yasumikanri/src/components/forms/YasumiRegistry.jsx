@@ -72,6 +72,7 @@ const YasumiRegistry = () => {
     const {currentStart} = view;
     currentMonth.current = JSDToLux(currentStart);
     maxYasumi.current = await getYasumiCount(currentMonth.current);
+    console.log(maxYasumi, 'maxYasumi');
     refetchData({
       currentMonth,
       maxYasumi,
