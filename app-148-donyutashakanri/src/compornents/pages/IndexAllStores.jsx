@@ -1,16 +1,25 @@
 import PropTypes from 'prop-types';
+import {useEffect, useState} from 'react';
 import AllStoresTable from '../Table/AllStoresTable';
 import {isSameMonth, parseISO} from 'date-fns';
 import Stack from '@mui/material/Stack';
 import YearMonthPicker from '../datepickers/YearMonthPicker';
-import {useState} from 'react';
+import {fetchAllDonyutashaRecords} from '../../backend/donyutashakanri';
 
-const IndexAllStores = ({event, componentRef}) => {
+const IndexAllStores = ({componentRef}) => {
 
+  const [records, setRecords] = useState([]); // recordsを空配列で初期化
   const [reportDate, setReportDate] = useState(new Date());
 
+  useEffect(() => {
+    fetchAllDonyutashaRecords().then(resp => {
+      // console.log('test', resp, queryForm);
+      setRecords(resp);
+    });
+  }, [reportDate]);
+
   // recordsの更新 filtering
-  const data = event.records.filter(({適用年月}) => isSameMonth(reportDate, parseISO(適用年月.value)));
+  const data = records.filter(({適用年月}) => isSameMonth(reportDate, parseISO(適用年月.value)));
   // console.log('data', data);
 
   return (

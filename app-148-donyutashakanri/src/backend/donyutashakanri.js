@@ -53,4 +53,20 @@ export const fetchDonyutashaRecords = async (queryForm) => {
   return _records;
 };
 
+/**
+ * レコードを取得する。
+ *
+ * @returns {KintoneTypes.Data[]} レコード配列
+ *
+ * @todo このモジュールをReactのContextに変える。
+ */
+export const fetchAllDonyutashaRecords = async () => {
+
+  _records = (await fetchAllRecords({
+    appId: _appId,
+  })).records;
+
+  return _records;
+};
+
 export default fetchDonyutashaRecordsByDate;

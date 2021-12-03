@@ -12,40 +12,52 @@ const DonyuTashaTable = ({records, title, startDate, endDate}) => {
   const cummulative = generateTotal(startDate, endDate, groupBysites);
 
   return (
-    <>
-      <Title>{title} 導入他社数一覧</Title><br />
-      <Table>
-        <TableHead>
-          <Row>
-            <CellHeader>年</CellHeader>
-            <CellHeader>月</CellHeader>
-            {sites.map((key)=><CellHeader key={key}>{key}</CellHeader>)}
-          </Row>
-        </TableHead>
-        <TableBody>
-          { cummulative.map((data) => {
-            // console.log('data', data);
-            const [key, value] = Object.entries(data)[0];
-            const reportYear = parseISO(key).getFullYear();
-            const reportMonth = parseISO(key).getMonth() + 1;
-            // console.log('key', reportYear + '年' + reportMonth + '月' + title);
+    <article>
+      <table className="print-area">
+        <tbody>
+          <tr>
+            <th>
+              <Title>{title} 導入他社数一覧</Title><br />
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <Table>
+                <TableHead>
+                  <Row>
+                    <CellHeader>年</CellHeader>
+                    <CellHeader>月</CellHeader>
+                    {sites.map((key)=><CellHeader key={key}>{key}</CellHeader>)}
+                  </Row>
+                </TableHead>
+                <TableBody>
+                  { cummulative.map((data) => {
+                    // console.log('data', data);
+                    const [key, value] = Object.entries(data)[0];
+                    const reportYear = parseISO(key).getFullYear();
+                    const reportMonth = parseISO(key).getMonth() + 1;
+                    // console.log('key', reportYear + '年' + reportMonth + '月' + title);
 
-            return (
-              <Row key={reportYear + '年' + reportMonth + '月' + title}>
-                <Cell>{reportYear}</Cell>
-                <Cell>{reportMonth}</Cell>
+                    return (
+                      <Row key={reportYear + '年' + reportMonth + '月' + title}>
+                        <Cell>{reportYear}</Cell>
+                        <Cell>{reportMonth}</Cell>
 
-                {sites.map((site)=>{
-                  return <Cell key={site}>{value[site]}</Cell>;
-                })}
+                        {sites.map((site)=>{
+                          return <Cell key={site}>{value[site]}</Cell>;
+                        })}
 
-              </Row>);
-          })}
-        </TableBody>
-      </Table>
+                      </Row>);
+                  })}
+                </TableBody>
+              </Table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <br />
       <br />
-    </>
+    </article>
   );
 };
 

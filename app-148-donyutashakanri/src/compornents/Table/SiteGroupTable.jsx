@@ -4,7 +4,7 @@ import {CellHeader, Row, Table, TableHead, TableBody, Cell} from '@yumetetsu/ui'
 const SiteGroupTable = ({site, records}) => {
 
   const fields = ['エリア店舗名', '導入他社数', '課金額'];
-  console.log('records', records);
+  // console.log('records', records);
 
   return (
     <section className="print_pages" key="課金一覧">
