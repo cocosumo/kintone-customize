@@ -9,8 +9,15 @@ import CocoLogo from './../../assets/logo-cocosumo-system.png';
 interface CocoAppBarProps extends Props {
   handleDrawerToggle: any,
   drawerWidth: number,
-}
 
+}
+/**
+ *
+ * @param param0
+ * @returns
+ * @deprecated
+ *
+ */
 const CocoAppBar = ({handleDrawerToggle, drawerWidth}: CocoAppBarProps) => {
   return (
     <AppBar
