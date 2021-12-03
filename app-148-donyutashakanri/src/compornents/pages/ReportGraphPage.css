@@ -4,14 +4,22 @@
   font-size: 2rem;
 }
 
+/* 改行なし、セル幅指定
+.gaia-report-crosstable-groupname, .gaia-report-crosstable-groupvalue {
+  white-space: normal;
+  width: 150px;
+  padding: 5px;
+}
+*/
+
 .gaia-report-crosstable-row-total {
   display:none;
 }
 
-.gaia-report-crosstable tr td {
-  width: 150px
+.gaia-report-crosstable-groupnamesum, .gaia-report-crosstable-total {
+  /* 合計列の非表示設定 */
+  display: none;
 }
-
 
 @media print {
   #report-view-gaia {

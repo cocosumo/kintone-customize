@@ -1,6 +1,6 @@
-
 #root{
   text-align:center;
+  margin:auto
 }
 
 .subTitle{
@@ -13,41 +13,31 @@
   font-weight: bold;
 }
 
-section{
+.print-area {
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
 }
 
-.print-table{
-  margin: 3px auto;    /* 上下3px 左右auto */
+.siteTable{
+  display: inline-block;
+  width: 400px;
+  margin: 10%;
 }
 
-.print-table tr th {
-  border: 1px solid #000000;
-  width: 150px;
-}
-
-.print-table tr td {
-  border:1px solid #000000;
+.print_pages {
+  display: inline-block;
+  width: 300px;  
+  vertical-align: top;
 }
 
 @media print{
   @page {
     margin: 10%; /* 仮に設定ｗ */
-    /* size:portrait; *//* 縦向き印刷 */
-    /* size:landscape; *//* 横向き印刷 */
   }
 
-  .print-area{ 
-    text-align:center;
-  }
-
-  .print-table tr th, .print-table tr td{
+  table {
     text-align: center;
-    vertical-align: middle;
+    page-break-inside: avoid;
   }
-
-  .print_pages{
-    page-break-after: always;
-  }
-
 }

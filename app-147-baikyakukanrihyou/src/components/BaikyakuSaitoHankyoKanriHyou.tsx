@@ -5,23 +5,24 @@ import PrintButton from './Buttons/PrintButton';
 
 import {fetchBaikyakuHankyoGroupByArea} from '../backend/baikyakuHankyo';
 import AreaPage from './Pages/ReportPages';
-import YearMonthPicker from './DatePickers/YearMonthPicker';
+// import YearMonthPicker from './DatePickers/YearMonthPicker';
+import MonthAndStore from './forms/MonthAndStore';
 
 
 const BaikyakuSaitoHankyoKanriHyou = () => {
   const [groupedRecords, setGroupedRecords] = useState<GroupedRecords | null>(null);
-  const [reportDate, setReportDate] = useState<Date | null>(
-    new Date(),
-  );
+  const [monthAndStore, setMonthAndStore] = useState<MonthAndStoreForm>(
+    {reportDate: new Date(), stores: []});
 
   useEffect(()=> {
+    const {reportDate} = monthAndStore;
     if (reportDate) {
       fetchBaikyakuHankyoGroupByArea(reportDate)
         .then((resp : GroupedRecords) => {
           setGroupedRecords(resp);
         });
     }
-  }, [reportDate]);
+  }, [monthAndStore]);
 
 
   const handlePrint = useReactToPrint({
@@ -30,7 +31,7 @@ const BaikyakuSaitoHankyoKanriHyou = () => {
 
   const componentRef = useRef<HTMLDivElement>(null);
 
-
+  console.log(monthAndStore.stores, 'stores');
   return (
     <Grid
       container
@@ -44,11 +45,19 @@ const BaikyakuSaitoHankyoKanriHyou = () => {
         <PrintButton onPrint={handlePrint} />
       </Grid>
       <Grid item>
-        {reportDate && <YearMonthPicker {...{reportDate, setReportDate}} />}
+        {groupedRecords && <MonthAndStore {...{monthAndStore, setMonthAndStore, groupedRecords}} />}
       </Grid>
       <Grid item>
         <div style={{'width': '100%'}} ref={componentRef}>
-          {groupedRecords && <AreaPage {...{reportDate, groupedRecords}} />}
+          {
+            groupedRecords &&
+            <AreaPage {...{
+              reportDate: monthAndStore.reportDate,
+              groupedRecords,
+              stores: monthAndStore.stores
+            }}
+            />
+          }
         </div>
       </Grid>
     </Grid>

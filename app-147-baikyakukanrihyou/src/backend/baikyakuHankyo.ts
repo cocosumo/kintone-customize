@@ -30,8 +30,6 @@ export const fetchBaikyakuHankyoGroupByArea = async (reportDate : Date) => {
       current.push(curr);
       return {...accu, ...{[areas[store.value]]: current}};
     }
-
-    console.log(store.value, 'geel');
     return {...accu, ...{[areas[store.value]]: [curr]}};
   }, {});
 

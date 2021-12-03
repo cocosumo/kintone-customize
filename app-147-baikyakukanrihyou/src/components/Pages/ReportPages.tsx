@@ -4,13 +4,18 @@ import TableSummary from '../Table/TableSummary';
 interface AreaPageProps {
   groupedRecords: {[key: string] : any}, // by area
   reportDate : Date | null
+  stores?: string[]
 }
 
-const AreaPage = ({groupedRecords = {}, reportDate}: AreaPageProps) => {
+const AreaPage = ({groupedRecords = {}, reportDate, stores}: AreaPageProps) => {
+
+  const isStoresSelected = Boolean(stores?.length);
 
   const Pages = Object.entries<any>(groupedRecords)
     .map(([key, value]) => {
+      const isRender = !isStoresSelected || stores?.includes(key);
       return (
+        isRender &&
         <TableHankyo
           reportDate={reportDate}
           records={value}
