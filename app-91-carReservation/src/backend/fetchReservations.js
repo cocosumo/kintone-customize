@@ -1,4 +1,4 @@
-import { getAppId } from '../../../kintone-api/api';
+import {getAppId} from '../../../kintone-api/api';
 
 const fetchReservations = (condition = '') => {
   const body = {
