@@ -16,12 +16,8 @@ const onEditOrCreateSubmitHandler = async (event) => {
 
   if (開始.value && 終了.value) {
     conflictReservations = await getConflictReservations(record, true);
-
     isWithConflict = conflictReservations.records.length > 0;
   }
-
-
-  console.log('conflictssss', conflictReservations);
 
   const isValid = !isWithConflict && isValidTimeDuration(開始.value, 終了.value);
 
