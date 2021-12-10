@@ -1,9 +1,9 @@
-import { getCarNumbers, getCars } from '../backend/fetchCars';
-import { fetchConflictByDate } from '../backend/fetchReservations';
-import getUniqueValues, { arrayDiff } from '../helper/recordOperations';
+import {getCarNumbers, getCars} from '../backend/fetchCars';
+import {fetchConflictByDate} from '../backend/fetchReservations';
+import getUniqueValues, {arrayDiff} from '../helper/recordOperations';
 import isValidTimeDuration from '../helper/validations/isValidTimeDuration';
 
-const resolveAvailableCars = ({ records }) => {
+const resolveAvailableCars = ({records}) => {
   const allCarNumbers = getCarNumbers();
   const unavailableCars = getUniqueValues(records, '号車');
   const availableCars = arrayDiff(allCarNumbers, unavailableCars);
@@ -28,8 +28,8 @@ const showAvailableCars = async (start, end) => {
 };
 
 const getAvailableCars = (event) => {
-  const { record } = event;
-  const { 開始: start, 終了: end } = record;
+  const {record} = event;
+  const {開始: start, 終了: end} = record;
   const result = showAvailableCars(start, end);
 
   return result;

@@ -6,6 +6,7 @@
     "scripts": {
         "start": "node scripts/npm-start.js",
         "upload": "kintone-customize-uploader --base-url rdmuhwtt6gx7.cybozu.com --watch ./kintone.manifest.json",
+        "upload:local": "kintone-customize-uploader --base-url rdmuhwtt6gx7.cybozu.com --watch ./kintone.manifest-local.json",
         "develop": "npm run build -- --watch",
         "build": "webpack",
         "test": "cd ..",
@@ -49,10 +50,15 @@
         "webpack-dev-server": "^3.11.2"
     },
     "dependencies": {
+        "@emotion/react": "^11.7.0",
+        "@emotion/styled": "^11.6.0",
+        "@mui/material": "^5.2.3",
         "luxon": "^2.0.1",
         "react": "^17.0.2",
+        "react-animations": "^1.0.0",
         "react-dnd": "^11.1.3",
         "react-dom": "^17.0.2",
+        "react-spring": "^9.3.2",
         "sweetalert2": "^11.0.18"
     }
 }

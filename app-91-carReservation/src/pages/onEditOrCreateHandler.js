@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import fetchCars from '../backend/fetchCars';
-import { getSpaceElement } from '../../../kintone-api/api';
+import {getSpaceElement} from '../../../kintone-api/api';
 import AvailableCarsV2 from '../components/containers/AvailableCarsV2';
 
 const renderAvailableCarsContainer = async (record) => {
@@ -14,7 +14,7 @@ const renderAvailableCarsContainer = async (record) => {
 };
 
 const onEditOrCreateHandler = (event) => {
-  const { record } = event;
+  const {record} = event;
   renderAvailableCarsContainer(record);
   console.log(event.type);
 
