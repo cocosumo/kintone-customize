@@ -1,0 +1,1 @@
+export const INDEX_RESERVATION_STATUS = 5533776;
