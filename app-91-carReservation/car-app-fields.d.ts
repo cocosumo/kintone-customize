@@ -1,5 +1,5 @@
 declare namespace kintone.types {
-  interface CarAppFields {
+  export interface CarAppFields {
     Text_0: kintone.fieldTypes.SingleLineText;
     店舗: kintone.fieldTypes.SingleLineText;
     文字列__1行__1: kintone.fieldTypes.SingleLineText;
@@ -11,8 +11,8 @@ declare namespace kintone.types {
     号車: kintone.fieldTypes.SingleLineText;
     日付: kintone.fieldTypes.Date;
     履歴: {
-      type: "SUBTABLE";
-      value: {
+      type: 'SUBTABLE';
+      value: Array<{
         id: string;
         value: {
           文字列__1行__2: kintone.fieldTypes.SingleLineText;
@@ -20,10 +20,10 @@ declare namespace kintone.types {
           ドロップダウン: kintone.fieldTypes.DropDown;
           日付_0: kintone.fieldTypes.Date;
         };
-      }[];
+      }>;
     };
   }
-  interface SavedCarAppFields extends CarAppFields {
+  export interface SavedCarAppFields extends CarAppFields {
     $id: kintone.fieldTypes.Id;
     $revision: kintone.fieldTypes.Revision;
     更新者: kintone.fieldTypes.Modifier;
