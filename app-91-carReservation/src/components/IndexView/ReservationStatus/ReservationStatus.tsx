@@ -5,7 +5,7 @@ import {useState, useEffect} from 'react';
 import fetchCars from '../../../backend/fetchCars';
 
 import CarSelect from './CarSelect';
-import ReservationCalendar from './ReservationCalendar';
+import ReservationCalendar from './ReservationCalendar/ReservationCalendar';
 
 
 export default function ReservationStatus() {
