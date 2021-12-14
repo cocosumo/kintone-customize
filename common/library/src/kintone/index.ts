@@ -1,5 +1,6 @@
 /* Typescript */
 
+
 interface AppRecord {
   recordId: string,
   appId?: string,
@@ -86,17 +87,46 @@ export const onFieldChange = (fields : string | string[]) : string[] =>
     }, [],
   );
 
-export const getPortalSpaceElement = () => (
+/**
+ * @returns Portal Space Element
+ */
+export const getPortalSpaceElement = () : HTMLElement | null => (
   isMobile
     ? kintone.mobile.portal.getContentSpaceElement()
     : kintone.portal.getContentSpaceElement()
 );
 
+/** * Index view ****/
+
+/**
+ * Index view
+ * kintone...getHeaderMenuSpaceElement() may only be used on PC
+ * so on mobile, this function will return kintone...getHeaderSpaceElement()
+ * @returns Returns blank element in index view menu
+ */
+export const getHeaderMenuSpaceElement = () : HTMLElement | null => (
+  isMobile
+    ? kintone.mobile.app.getHeaderSpaceElement()
+    : kintone.app.getHeaderMenuSpaceElement()
+);
+
+
+/**
+ * Index view
+ * @returns Returns blank element in index view body
+ */
+export const getHeaderSpaceElement = () : HTMLElement | null => (
+  isMobile
+    ? kintone.mobile.app.getHeaderSpaceElement()
+    : kintone.app.getHeaderSpaceElement()
+);
+
 
 /**
 * 要素を表示・非表示
-* @param fieldCode {string} 要素のフィールドコード
-* @param isShown {boolean} trueは表示、falseは非表示
+* @param fieldCode  要素のフィールドコード
+* @param isShown  trueは表示、falseは非表示
+* @returns void
 */
 export const setFieldShown = (fieldCode : string, isShown : boolean) => {
   if (isMobile) {

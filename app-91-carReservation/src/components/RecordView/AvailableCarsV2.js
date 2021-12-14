@@ -1,10 +1,10 @@
 import {useState} from 'react';
-import Message from './../UI/Message';
+import Message from '../UI/Message';
 import Table from '../../../../kintone-api/components/UI/Table';
 import getConflictReservations from '../../helper/getConflictReservations';
 import {onFieldChange} from '../../../../kintone-api/api';
 import isValidTimeDuration from '../../helper/validations/isValidTimeDuration';
-import {extractBasicCarDetails, toArray} from './../../helper/recordOperations';
+import {extractBasicCarDetails, toArray} from '../../helper/recordOperations';
 
 
 // import {showInvalidDatesError} from '../../helper/showAlert';
@@ -25,7 +25,7 @@ const AvailableCarsV2 = (props) => {
       record: availableCarsRecord,
     } = event;
     const {開始, 終了, 期間} = availableCarsRecord;
-    console.log(開始.value, 終了.value, event);
+
 
     const isValid = isValidTimeDuration(開始.value, 終了.value);
     if (isValid) {

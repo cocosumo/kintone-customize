@@ -10,7 +10,8 @@
     "develop": "npm run build -- --watch",
     "build": "webpack --mode development",
     "build:prod": "webpack --mode production",
-    "lint": "eslint src/*"
+    "lint": "eslint src/*",
+    "dts-gen": "npx kintone-dts-gen --base-url https://rdmuhwtt6gx7.cybozu.com --type-name AppFields -o app-fields.d.ts"
   },
   "author": "",
   "license": "ISC",
