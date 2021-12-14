@@ -1,12 +1,13 @@
 .react-transform-component, .react-transform-wrapper{
-  width: 100% !important;
+
   height: 100% !important;
+  width: 100% !important;
   justify-content: center;
 }
 
 
-
+/*
 .react-transform-element {
   width: 100% !important;
   height: 100% !important;
-}
+} */

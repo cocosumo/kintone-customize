@@ -29,6 +29,7 @@ const AttachmentChip = ({name, fileKey, openPDFViewerHandler} : AttachmentChip) 
       <Chip
         icon={<AttachmentIcon />}
         label={name}
+        sx={{maxWidth: '70vw'}}
         onClick={() => {
           openPDFViewerHandler(fileKey);
         }}
