@@ -50,7 +50,6 @@ export default function FullScreenModal({
           justifyContent="space-between"
           direction="row"
         >
-
           <Stack spacing={2} direction="row">
             {HeaderComponent}
           </Stack>
