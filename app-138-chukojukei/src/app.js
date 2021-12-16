@@ -6,7 +6,7 @@ import {onFieldChangeHandler} from './pages/onFieldChangeHandler';
 import {complexityProcess} from './helpers/complexityProcess';
 
 // 複雑な設定が必要なフィールド名のみ、処理を分けるために配列化する
-const complexityFields = ['_000_02_土地・測量図'];
+const complexityFields = ['_dummy_fieldName'];
 
 kintone.events.on(onIndexShow, onIndexShowHandler);
 
