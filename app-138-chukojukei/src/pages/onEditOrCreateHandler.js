@@ -1,10 +1,11 @@
-import {setVisibility} from '../helpers/visibility';
+import {setVisibility} from '../../../app-module-visibility/src/helpers/visibility';
+import fieldsWithVisibilitySideEffect from '../helpers/visibilitySettings.json';
 
-const onEditOrCreateHandler = ({record}) => {
+const onEditOrCreateHandler = (event) => {
 
-  setVisibility(record);
+  setVisibility(event, fieldsWithVisibilitySideEffect);
 
-  return {record};
+  return event;
 };
 
 export default onEditOrCreateHandler;
