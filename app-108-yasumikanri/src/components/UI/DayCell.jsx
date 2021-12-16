@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { isWithinMonth, JSDToLux } from '../../helpers/time';
+import {isWithinMonth, JSDToLux} from '../../helpers/time';
 import DayContent from './DayContent';
 import DayHeader from './DayHeader';
 
@@ -9,7 +10,7 @@ const DayCell = ({
   yasumiRecords,
   currentMonth,
 }) => {
-  const { date, dayNumberText } = args;
+  const {date, dayNumberText} = args;
   const luxDate = JSDToLux(date);
   const cellDate = luxDate.toISODate();
   const isRenderDate = isWithinMonth(currentMonth.current, luxDate);
@@ -22,12 +23,12 @@ const DayCell = ({
 
   return (
 
-    <Box style={{ margin: 'auto 0 auto 0', width: '100%' }}>
-      <DayHeader {...{ isRenderDate, dayNumberText }} />
+    <Box style={{margin: 'auto 0 auto 0', width: '100%'}}>
+      <DayHeader {...{isRenderDate, dayNumberText}} />
 
-      <Button style={{ padding: 0, minWidth: '100%' }}>
-        <Box sx={{ width: '100%', height: 60 }}>
-          {isExist && (<DayContent {...{ dayRecords }} />)}
+      <Button style={{padding: 0, minWidth: '100%'}}>
+        <Box sx={{width: '100%', height: 60}}>
+          {isExist && (<DayContent {...{dayRecords}} />)}
         </Box>
       </Button>
 

@@ -1,9 +1,9 @@
-import { Alert, Button, AlertTitle } from '@mui/material';
+import {Alert, Button, AlertTitle} from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import DescriptionIcon from '@mui/icons-material/Description';
-import { getKintoneDuration, getKintoneStatus, getKintoneType } from '../../../helpers/converters';
-import { toLocaleDate } from '../../../helpers/time';
-import { recordPath } from '../../../../../kintone-api/api';
+import {getKintoneDuration, getKintoneStatus, getKintoneType} from '../../../helpers/converters';
+import {toLocaleDate} from '../../../helpers/time';
+import {recordPath} from '../../../../../kintone-api/api';
 
 const onActionClick = (id) => {
   window.open(`${recordPath(id)}&mode=show`, '_blank');
@@ -25,7 +25,7 @@ const EditRecordSnackbar = ({
   editRecordSnack,
   setEditRecordSnack,
 }) => {
-  const { isOpen, data, date } = editRecordSnack;
+  const {isOpen, data, date} = editRecordSnack;
   const {
     id, type, duration, status,
   } = data;
@@ -38,7 +38,7 @@ const EditRecordSnackbar = ({
       return;
     }
 
-    setEditRecordSnack((prev) => ({ ...prev, isOpen: false }));
+    setEditRecordSnack((prev) => ({...prev, isOpen: false}));
   };
 
   const action = (
@@ -48,7 +48,7 @@ const EditRecordSnackbar = ({
       color="primary"
       startIcon={<DescriptionIcon />}
       onClick={() => onActionClick(id)}
-      sx={{ minWidth: 80 }}
+      sx={{minWidth: 80}}
     >
       詳細
     </Button>
@@ -58,14 +58,14 @@ const EditRecordSnackbar = ({
     <div>
       <Snackbar
         key={message}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
         open={isOpen}
         autoHideDuration={3000}
         transitionDuration={500}
         onClose={handleClose}
       >
-        <Alert sx={{ fontSize: 14 }} onClose={handleClose} variant="filled" severity={severityType} action={action}>
-          <AlertTitle sx={{ fontSize: 16 }}>{`${toLocaleDate(date)}(${getKintoneDuration(duration)})`}</AlertTitle>
+        <Alert sx={{fontSize: 14}} onClose={handleClose} variant="filled" severity={severityType} action={action}>
+          <AlertTitle sx={{fontSize: 16}}>{`${toLocaleDate(date)}(${getKintoneDuration(duration)})`}</AlertTitle>
           {message}
         </Alert>
       </Snackbar>

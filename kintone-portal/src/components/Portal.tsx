@@ -5,6 +5,8 @@ import {AnnouncementsContainer} from './containers/AnnouncementsContainer';
 import {MainContainer} from './containers/MainContainer';
 import './Portal.css';
 
+// import FloatingActionButtons from './fab/FloatingActionButton';
+
 
 export const Portal = () => {
 
@@ -29,6 +31,8 @@ export const Portal = () => {
           subTitle="イベント"
           data={data?.events}
         />
+        {/* todo Add help button
+         <FloatingActionButtons /> */}
       </AnnouncementsContainer>
     </MainContainer>
   );

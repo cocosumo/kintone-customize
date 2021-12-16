@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "ESNEXT",
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "allowJs": true,
+    "lib": ["es5", "es6", "dom", "dom.iterable"],
+    "baseUrl": "./types"
+  },
+  "files": [
+    "./node_modules/@kintone/dts-gen/kintone.d.ts",
+  ],
+  "include": [
+    "src/**/*",
+   ],
+  "exclude": [
+    "./dist/**/*"
+  ],
+
+  "rules": {
+    "quotemark": [true, "single"]
+  }
+}

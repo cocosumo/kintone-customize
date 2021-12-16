@@ -15,7 +15,7 @@ const requestBody : KintoneAPIBody = {
   app: app,
   query:
     `状態 in ("公開") and (
-      (ラジオ＿投稿期間 in ("はい") and 日時＿開始 < TODAY() and 日時＿終了 > TODAY()) or
+      (ラジオ＿投稿期間 in ("はい") and 日時＿開始 <= TODAY() and 日時＿終了 >= TODAY()) or
       (ラジオ＿投稿期間 in ("いいえ"))
       ) order by 日時＿開始 desc`
 };
@@ -48,7 +48,11 @@ export const getGroupedAnnouncements = async (): Promise<GroupAnnouncements | un
   }, {news: [], events: []});
 };
 
-/* Deprecated */
+
+/**
+ * @deprecated
+ * @param fileKey
+ */
 export const fetchFileURL = (fileKey: string) => {
   const url = `https://${getDomain()}/k/v1/file.json?fileKey=${fileKey}`;
   const xhr = new XMLHttpRequest();
@@ -73,7 +77,8 @@ export const fetchFileURL = (fileKey: string) => {
 
 };
 
-export const fetchURLByFileKey = (fileKey: string) : Promise<any> => {
+
+export const fetchURLByFileKey = (fileKey: string) : Promise<FileObject> => {
   const url = `https://${getDomain()}/k/v1/file.json?fileKey=${fileKey}`;
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -85,7 +90,12 @@ export const fetchURLByFileKey = (fileKey: string) : Promise<any> => {
         const blob = new Blob([xhr.response], {type: xhr.response.type});
         const fileURL = window.URL || window.webkitURL;
         const blobURL = fileURL.createObjectURL(blob);
-        resolve(blobURL);
+
+        resolve({
+          URL: blobURL,
+          type: xhr.response.type,
+          size: xhr.response.size
+        });
       }
       reject({
         status: this.status,

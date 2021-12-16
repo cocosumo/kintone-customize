@@ -1,4 +1,4 @@
-import {getAppId} from '../../../kintone-api/typedAPI';
+import {getAppId} from '../../../kintone-api/typescript/typedAPI';
 
 
 export const fetchRecords = ({

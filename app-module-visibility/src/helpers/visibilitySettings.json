@@ -1,18 +1,29 @@
 {
+  "Root" : {
+    "sample1" : {
+      "show" :["A"]
+    }
+  },
   "A" : {
     "表示" : {
       "show" :
-        ["A_F_1"]
+        ["Nested1"]
     }
   },
-
-
-  "B" : {
-    "2" : {
-      "show" :
-        ["B_F_1"],
-      "hide": 
-        ["B_F_2", "B_F_3", "B_G_1"]
+  "Nested1" : {
+    "sample1" : {
+      "show" :["Nested2"]
+    }
+  },
+  "Nested2" : {
+    "sample1" : {
+      "show" :["Nested3"]
+    }
+  },
+  "Nested3" : {
+    "sample1" : {
+      "show" :["A_F_1"],
+      "hide" : ["A_F_2"]
     }
   }
 

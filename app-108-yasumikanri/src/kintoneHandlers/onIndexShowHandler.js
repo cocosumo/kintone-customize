@@ -1,5 +1,5 @@
-import { render } from 'react-dom';
-import { getEmployeeNumber, getEmployeeRole } from '../backend/user';
+import {render} from 'react-dom';
+import {getEmployeeNumber, getEmployeeRole} from '../backend/user';
 
 import YasumiRegistry from '../components/forms/YasumiRegistry';
 import GlobalTheme from '../components/themes/GlobalTheme';
@@ -19,9 +19,11 @@ const renderRegistration = async () => {
 };
 
 const onIndexShowHandler = (event) => {
-  const { viewId } = event;
+  const {viewId} = event;
 
-  if (viewId === registrationViewId) { renderRegistration(); }
+  if (viewId === registrationViewId) {
+    renderRegistration();
+  }
 };
 
 export default onIndexShowHandler;

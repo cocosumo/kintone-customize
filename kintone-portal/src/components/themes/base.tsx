@@ -1,4 +1,5 @@
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {isMobile} from '../../../../kintone-api/typescript/typedAPI';
 
 
 interface BaseThemeProps {
@@ -8,6 +9,7 @@ interface BaseThemeProps {
 const theme = createTheme({
   typography: {
     // Tell MUI what the font-size on the html element is.
+    htmlFontSize: isMobile ? 10 : 14,
     fontFamily: '\'メイリオ\',\'Hiragino Kaku Gothic ProN\',Meiryo,sans-serif',
     caption: {
       color: '#808080'

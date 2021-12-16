@@ -1,0 +1,43 @@
+#root{
+  text-align:center;
+  margin:auto
+}
+
+.subTitle{
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.mainTitle{
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.print-area {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.siteTable{
+  display: inline-block;
+  width: 400px;
+  margin: 10%;
+}
+
+.print_pages {
+  display: inline-block;
+  width: 300px;  
+  vertical-align: top;
+}
+
+@media print{
+  @page {
+    margin: 10%; /* 仮に設定ｗ */
+  }
+
+  table {
+    text-align: center;
+    page-break-inside: avoid;
+  }
+}
