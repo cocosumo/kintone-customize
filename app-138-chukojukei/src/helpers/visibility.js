@@ -1,60 +1,120 @@
-import settings from './visibilitySettings.json';
+
+// import settings from './visibilitySettings.json';
 import {setFieldShown} from '../../../kintone-api/api';
 
+let __record = {}; // モジュール範囲で定義。
+let __settings;
 
 /**
  * フィールドコード[fieldsSettings]の選択した項目[choise]によって、
  * visibilitySettings.jsonに設定した通り、フィールドの表示/非表示を変更する
- * @param {String} fieldsSettings 対象のフィールドコード
- * @param {String} choice 選択した項目名
- * @param {Boolean} isReverse 表示の反転の確認 true=表示, false=非表示
+ * @param {*} fieldsSettings 対象のフィールドコード
+ * @param {string} choice, 選択した項目名
+ * @param {boolean} isReverse 表示の反転の確認。設定の一つ目の反転
+ * @param {boolean} isForceHide 設定に問わず、強制に非表示
+ *
+ * @returns void
  */
-const resolveVisibility = (fieldsSettings, choice, isReverse = false) => {
+const resolveVisibility = (fieldsSettings, choice, isReverse = false, isForceHide = false) => {
 
-  console.log('fieldsSettings[choice]', fieldsSettings[choice]);
   if (fieldsSettings[choice]) {
+    // 設定ファイルに[show/hide]があるとき、
+
+    // hideやshowなどのプロパティ―をループする
+    // 必要に応じて無効化やエラーメッセージなどのﾌﾟﾛﾊﾟﾃｨを追加出来るロジックになってます。
+
     Object.entries(fieldsSettings[choice])
       .forEach(([key, fields]) => {
-        const isShow = key === 'show'; // key === 'show' ならtrue,違えばfalseが代入される
-        const isVisible = isReverse ? !isShow : isShow;
+        const isShow = key === 'show'; // フィールドは設定ファイルにshowになっているかどうか
+        let isVisible = isReverse ? !isShow : isShow; // 逆の設定にするかどうか
+        isVisible = isForceHide ? false : isVisible; // 強制に非表示にするかどう、(nestedの場合)
+
+        // ﾌﾟﾛﾊﾟﾃｨないのフィールドの設定を適用する。
         fields.forEach(fieldCode => {
-          setFieldShown(fieldCode, isVisible);
-          /* ★★★ 要検討 ★★★ */
-          /* if (isVisible) {
-            console.log('再起検討', fieldCode);
-            // chkFieldShown(fieldCode); // 表示した項目の選択内容によって、再表示する項目がないか確認する
-          } */
+          const nested = __settings[fieldCode];
+
+          // 入れ子があるかどうかチェックする
+          if (nested) {
+            const isHideNest = isForceHide ? isForceHide : !isVisible; // 当要素は入れ子だと、ルート要素をもとに表示設定を適用する。
+            resolveVisibility(nested, __record[fieldCode].value, false, isHideNest); // 再起、入れ子が検知されないまで。
+          }
+
+          setFieldShown(fieldCode, isVisible); // 表示設定
         });
+
       });
   } else {
+    // 設定ファイルに[show/hide]が無かったとき、
+
+    /*
+    再起。これで選択が変わった際の表示・非表示を両方設定しなくても、一番目の設定の逆を適用
+     */
     resolveVisibility(
       fieldsSettings,
       Object.keys(fieldsSettings)[0],
-      true
+      true,
+      isForceHide
     );
   }
 };
 
 /**
- * CALL元：onEditOrCreateHandler
- * 編集or作成画面で、フィールドの表示設定をする
- * @param {*} record アプリのレコード一覧
+ * フィールドの表示設定をする
+ *
+ * @param {object} event, kintoneの変更イベントオブジェクト
+ * @returns void
  */
-export const setVisibility = (record) => {
 
-  Object.entries(settings)
-    .forEach(([fieldCode, fieldSettings]) => {
-      const choice = record[fieldCode].value;
-      resolveVisibility(fieldSettings, choice);
-    });
+export const setVisibility = (event, settings) => {
+
+  const {
+    record,
+    changes: {field},
+    type
+  } = event;
+
+  __record = record;
+  __settings = settings;
+
+
+  const isChange = type.includes('change.');
+
+  if (isChange) {
+    // 変更イベントの場合
+    const fieldCode = type.split('change.')[1];
+    const choice = field.value;
+    resolveVisibility(__settings[fieldCode], choice);
+
+  } else {
+    // その他のイベント
+    Object.entries(__settings)
+      .forEach(([fieldCode, fieldSettings]) => {
+        const choice = record[fieldCode].value;
+        resolveVisibility(fieldSettings, choice);
+      });
+  }
 };
 
+
 /**
- * CALL元：onFieldChangeHandler
+ * @deprecated
  * フィールドの内容を変更した際に、フィールドの表示を変更する
- * @param {string} param0 = fieldCode : 変更されたフィールドのフィールドコード
- * @param {string} param1 = choice : 選択した項目名
- */
-export const setVisibilityByChangedField = ({fieldCode, choice}) => {
-  resolveVisibility(settings[fieldCode], choice);
+ *
+ * @param {object} event, kintoneの変更イベントオブジェクト
+ * @returns void
+ *
+*/
+export const setVisibilityByChangedField = (event) => {
+  const {
+    record,
+    changes: {field},
+    type
+  } = event;
+
+  __record = record; // モジュールのconstructor
+
+  const fieldCode = type.split('change.')[1];
+  const choice = field.value;
+
+  resolveVisibility(__settings[fieldCode], choice);
 };
