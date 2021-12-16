@@ -19,6 +19,10 @@
   width: 100%;
 }
 
+.print-area tr th,.print-area tr td{
+  text-align: center;
+}
+
 .siteTable{
   display: inline-block;
   width: 400px;
@@ -29,6 +33,10 @@
   display: inline-block;
   width: 300px;  
   vertical-align: top;
+}
+
+.gaia-mobile-app-customview-pager {
+  display: none; /* mobile版,(すべて)以外の一覧のページおくりを非表示にする */
 }
 
 @media print{

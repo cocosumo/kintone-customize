@@ -20,19 +20,19 @@ const App = ({event}) => {
     <Container>
       <Stack mt={2} spacing={2}>
 
+        {!(window.navigator.userAgent.includes('kintone_mobile')) &&
         <div>
           <ReactToPrint
             trigger={() => <PrintButton onClick={window.print} />}
             content={() => componentRef.current}
           />
-        </div>
-
+        </div>}
 
         {!(isCummulativeView || isAllShopsView) && <IndexPerStore {...{event, componentRef}} />}
 
         {isCummulativeView && <IndexPerSite {...{componentRef}} /> }
 
-        {isAllShopsView && <IndexAllStores {...{event, componentRef}} />}
+        {isAllShopsView && <IndexAllStores {...{componentRef}} />}
 
       </Stack>
     </Container>
