@@ -62,14 +62,16 @@ const resolveVisibility = (fieldsSettings, choice, isReverse = false, isForceHid
  * フィールドの表示設定をする
  *
  * @param {object} event, kintoneの変更イベントオブジェクト
+ * @param {object} settings,
  * @returns void
  */
 
 export const setVisibility = (event, settings) => {
 
+  console.log(event);
   const {
     record,
-    changes: {field},
+    changes,
     type
   } = event;
 
@@ -81,6 +83,7 @@ export const setVisibility = (event, settings) => {
 
   if (isChange) {
     // 変更イベントの場合
+    const {field} = changes;
     const fieldCode = type.split('change.')[1];
     const choice = field.value;
     resolveVisibility(__settings[fieldCode], choice);
