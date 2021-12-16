@@ -68,7 +68,6 @@ const resolveVisibility = (fieldsSettings, choice, isReverse = false, isForceHid
 
 export const setVisibility = (event, settings) => {
 
-  console.log(event);
   const {
     record,
     changes,
