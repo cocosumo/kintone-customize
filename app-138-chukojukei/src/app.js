@@ -6,13 +6,14 @@ import {onFieldChangeHandler} from './pages/onFieldChangeHandler';
 import {complexityProcess} from './helpers/complexityProcess';
 
 // 複雑な設定が必要なフィールド名のみ、処理を分けるために配列化する
-const complexityFields = ['_dummy_fieldName'];
+const complexityFields = [
+  '_103_003_01_1', '_103_003_01_4', '_103_003_01_8'
+];
 
 kintone.events.on(onIndexShow, onIndexShowHandler);
-
 
 kintone.events.on(onEditOrCreate, onEditOrCreateHandler);
 kintone.events.on(onFieldChange(Object.keys(fieldsWithVisibilitySideEffect)), onFieldChangeHandler);
 
-kintone.events.on(onFieldChange(complexityFields), complexityProcess); // onFieldChangeの引数は、objやarrayも可
+kintone.events.on(onFieldChange(complexityFields), complexityProcess); // 複雑なフィールドの表示設定
 
