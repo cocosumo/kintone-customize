@@ -6,7 +6,7 @@ import {visibleChecks} from '../helpers/complexityProcess';
 const onEditOrCreateHandler = (event) => {
 
   setVisibility(event, fieldsWithVisibilitySideEffect);
-  visibleChecks(event);
+  visibleChecks(event); // 複雑なフィールド表示の、初回チェック用
 
   setFieldShown('_103_08_容積率a', false); // フィールド「_103_08_容積率a」を非表示にする
 
