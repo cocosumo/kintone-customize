@@ -7,7 +7,8 @@ import {complexityProcess} from './helpers/complexityProcess';
 
 // 複雑な設定が必要なフィールド名のみ、処理を分けるために配列化する
 const complexityFields = [
-  '_103_003_01_1', '_103_003_01_4', '_103_003_01_8'
+  '_101_01_甲区_所有権関係', '_101_01_乙区_所有権関係', '_103_02_9', '_103_02_10_1',
+  '_202_未定1', '_202_未定2', '_202_未定3', '_202_未定4', '_202_未定5', '_202_未定6'
 ];
 
 kintone.events.on(onIndexShow, onIndexShowHandler);
@@ -16,4 +17,3 @@ kintone.events.on(onEditOrCreate, onEditOrCreateHandler);
 kintone.events.on(onFieldChange(Object.keys(fieldsWithVisibilitySideEffect)), onFieldChangeHandler);
 
 kintone.events.on(onFieldChange(complexityFields), complexityProcess); // 複雑なフィールドの表示設定
-
