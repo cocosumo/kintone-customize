@@ -22,6 +22,22 @@ export const setConditionInterlocking = (fieldCode, choice, record) => {
  * @param {string} TargetField : 表示を切り替えるフィールド
  * @param {Boolean} isShown : choiceにcauseが含まれる場合の、TargetFieldのvisibleの設定値
  */
+export const setVisibleChkBox = (choice, cause, TargetField, isShown = true) => {
+  if (choice.indexOf(cause) !== -1) {
+    setFieldShown(TargetField, isShown);
+  } else {
+    setFieldShown(TargetField, !isShown);
+  }
+};
+
+/**
+ * 対象：ラジオボタン
+ * 特定の値が選択された時に、フィールドの表示を切り替える
+ * @param {string} choice : 選択された項目
+ * @param {string} cause : フィールドの表示切り替え要因となる選択肢
+ * @param {string} TargetField : 表示を切り替えるフィールド
+ * @param {Boolean} isShown : choiceにcauseが含まれる場合の、TargetFieldのvisibleの設定値
+ */
 export const setVisibleRadio = (choice, cause, TargetField, isShown = true) => {
   if (choice.indexOf(cause) !== -1) {
     setFieldShown(TargetField, isShown);
@@ -36,11 +52,13 @@ export const setVisibleRadio = (choice, cause, TargetField, isShown = true) => {
  * @param {string} cause : スペースフィールドの表示切り替え要因となる選択肢
  * @param {string} spaceID : 表示を切り替えるスペースフィールドのID
  */
-export const setReplacement = (choice, cause, spaceID) => {
+export const setReplacement = (choice, cause, spaceID, TargetField, isShown = true) => {
   const spaceName = kintone.app.record.getSpaceElement(spaceID);
   if (choice.indexOf(cause) !== -1) {
-    spaceName.parentNode.style.display = '';
+    setFieldShown(TargetField, isShown);
+    spaceName.parentNode.style.display = isShown ? 'none' : '';
   } else {
-    spaceName.parentNode.style.display = 'none';
+    setFieldShown(TargetField, !isShown);
+    spaceName.parentNode.style.display = !isShown ? 'none' : '';
   }
 };

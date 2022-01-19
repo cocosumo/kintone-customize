@@ -11,10 +11,15 @@ const onEditOrCreateHandler = (event) => {
   setFieldShown('_103_02_9_4sub1', false);
   setFieldShown('_103_10_2_1sub1', false);
   setFieldShown('_103_10_3_1sub2', false);
-  for (let i = 1; i <= 6; i++) {
+  for (let i = 1; i <= 6; i++) { // 2-02 売買代金の設定用
     const spaceName = kintone.app.record.getSpaceElement('spc_202_' + i);
     spaceName.parentNode.style.display = 'none';
-    console.log('init表示 繰り返しidx=', i, ' スペース名 =', spaceName);
+  }
+  for (let j = 1; j <= 6; j++) { // 1-12 .飲用水・電気・ガス等の設定用
+    if (j !== 2 && j !== 6) { // 2.電気,6.雨水は配管設定が無い為、飛ばす
+      const spaceName = kintone.app.record.getSpaceElement('spc_112_0' + j);
+      spaceName.parentNode.style.display = 'none';
+    }
   }
 
   return event;
