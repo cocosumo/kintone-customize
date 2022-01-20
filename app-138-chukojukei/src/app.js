@@ -4,6 +4,8 @@ import onIndexShowHandler from './pages/onIndexShowHandler';
 import fieldsWithVisibilitySideEffect from './helpers/visibilitySettings.json';
 import {onFieldChangeHandler} from './pages/onFieldChangeHandler';
 import {complexityProcess} from './helpers/complexityProcess';
+// import {citationInput} from './helpers/citationInput';
+import {citationSellerInfo} from './helpers/citationSellerInfo';
 
 // 複雑な設定が必要なフィールド名のみ、処理を分けるために配列化する
 const complexityFields = [
@@ -20,3 +22,4 @@ kintone.events.on(onEditOrCreate, onEditOrCreateHandler);
 kintone.events.on(onFieldChange(Object.keys(fieldsWithVisibilitySideEffect)), onFieldChangeHandler);
 
 kintone.events.on(onFieldChange(complexityFields), complexityProcess); // 複雑なフィールドの表示設定
+kintone.events.on(onFieldChange('_000_00_売主_レコード番号'), citationSellerInfo); // 売主顧客情報に紐づいた情報転記
