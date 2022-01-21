@@ -26,4 +26,4 @@ kintone.events.on(onFieldChange(Object.keys(fieldsWithVisibilitySideEffect)), on
 kintone.events.on(onFieldChange(complexityFields), complexityProcess); // 複雑なフィールドの表示設定
 kintone.events.on(onFieldChange('_000_00_買主_レコード番号'), citationBuyerInfo); // 買主顧客情報に紐づいた情報転記
 kintone.events.on(onFieldChange('_000_00_売主_レコード番号'), citationSellerInfo); // 売主顧客情報に紐づいた情報転記
-kintone.events.on(onFieldChange('_000_00_物件管理物件番号'), citationRealEstateInfo); // 物件管理情報に紐づいた情報転記
+kintone.events.on(onFieldChange('_000_00_物件_レコード番号'), citationRealEstateInfo); // 物件管理情報に紐づいた情報転記
