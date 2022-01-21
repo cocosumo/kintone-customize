@@ -1,19 +1,25 @@
 
-// 別アプリからの情報の引用設定を行う
+/**
+ * 顧客管理から、買主情報の引用設定を行う
+ * @param {*} event
+ */
 export const citationBuyerInfo = (event) =>{
   // kintoneAPIを利用して、顧客情報管理から情報を転記する
   const {
     record,
   } = event;
-
-  const appId = 84;
   const recordId = record['_000_00_買主_レコード番号'].value;
-  const param = {
-    app: appId,
-    id: recordId,
-  };
 
-  getBuyerInfo(param); // 売主のレコード取得情報処理(顧客管理より)
+  if (recordId) {
+    const appId = 84;
+    const param = {
+      app: appId,
+      id: recordId,
+    };
+
+    // kintoneAPIを利用して、物件管理から情報を転記する
+    getBuyerInfo(param);
+  }
 };
 
 
