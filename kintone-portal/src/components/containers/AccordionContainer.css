@@ -1,0 +1,24 @@
+.MuiTypography-root.announce_title {
+  color: #fff;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.54);
+  text-align: center;
+  font-family: 'Times New Roman';
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+.MuiTypography-root.announce_subtitle {
+  text-align: 'center';
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.8em;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.54)
+}
+
+.MuiChip-root.announcement_count {
+  color: rgb(202, 202, 202);
+  background-color: rgba(0, 0, 0, 0.54);
+  font-size: 8px;
+}
+

@@ -15,7 +15,6 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "noUnusedLocals": true,
-    "noImplicitAny": true,
     "declarationDir": "dist/types",
     "declaration": true,
     "jsx": "react-jsx",

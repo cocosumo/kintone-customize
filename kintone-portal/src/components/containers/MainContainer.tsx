@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import PropTypes from 'prop-types';
-
 import BaseTheme from '../themes/base';
+import {Props} from './Props.type';
 
 export const MainContainer = ({children}: Props) =>
   (

@@ -4,7 +4,7 @@ import {useState} from 'react';
 
 
 type AccordionProps = {
-  title : string,
+  title : 'NEWS' | 'EVENTS',
   subTitle: string
   data: Announcements
 }
@@ -19,7 +19,7 @@ export const Accordion = ({title, subTitle, data} : AccordionProps) => {
   };
 
   return (
-    <AccordionContainer title={title} subTitle={subTitle}>
+    <AccordionContainer title={title} subTitle={subTitle} dataCount={data?.length.toString()}>
       {data?.map(item=>{
         const announcementTitle = item.文字列＿タイトル.value;
         return (

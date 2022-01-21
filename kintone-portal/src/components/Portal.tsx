@@ -31,8 +31,6 @@ export const Portal = () => {
           subTitle="イベント"
           data={data?.events}
         />
-        {/* todo Add help button
-         <FloatingActionButtons /> */}
       </AnnouncementsContainer>
     </MainContainer>
   );
