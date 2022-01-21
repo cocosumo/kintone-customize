@@ -30,7 +30,7 @@ const HeaderAccordionWithBG = ({headerImage, title, subTitle, dataCount} : Heade
       expandIcon={<ExpandMoreIcon fontSize="large" />}
       sx={{overflow: 'hidden',
         backgroundImage: `url(${headerImage})`,
-        backgroundSize: '120% auto',
+        backgroundSize: '110% auto',
         backgroundPosition: 'center'
       }}
     >
@@ -40,6 +40,7 @@ const HeaderAccordionWithBG = ({headerImage, title, subTitle, dataCount} : Heade
         <Typography
           component="div"
           className="announce_title"
+          variant="h4"
           gutterBottom={false}
         >
           {title}

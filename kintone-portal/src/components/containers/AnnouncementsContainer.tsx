@@ -8,7 +8,7 @@ export const AnnouncementsContainer = ({children} : Props) => {
     <Grid
       container
       justifyContent="space-around"
-
+      rowSpacing={2}
     >
       {children}
     </Grid>

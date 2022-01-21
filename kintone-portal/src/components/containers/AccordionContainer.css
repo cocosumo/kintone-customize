@@ -4,7 +4,7 @@
   text-align: center;
   font-family: 'Times New Roman';
   font-weight: 700;
-  font-size: 1.5em;
+  /* font-size: 1.5em; */
 }
 
 .MuiTypography-root.announce_subtitle {
@@ -18,7 +18,7 @@
 
 .MuiChip-root.announcement_count {
   color: rgb(202, 202, 202);
-  background-color: rgba(0, 0, 0, 0.54);
+  background-color: rgba(0, 0, 0, 0.411);
   font-size: 8px;
 }
 
