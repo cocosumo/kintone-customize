@@ -3,10 +3,11 @@ html {
 }
 
 body {
-  height: 100%;
-  margin: 0;
-  background-color: #fcffff !important;
+  background-color: #fffbfb;
+}
 
+.app-index-container-gaia {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 div.gaia-header-header-logo {

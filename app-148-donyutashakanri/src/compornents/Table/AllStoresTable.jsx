@@ -31,11 +31,11 @@ const AllStoresTable = ({reportDate, data, componentRef}) => {
           </thead>
           <tbody>
             <tr>
-              <div className="flex-view">
+              <td>
                 {Object.entries(groupBySite).map(([key, value]) => {
                   return <SiteGroupTable key={key} site={key} records={value} />;
                 })}
-              </div>
+              </td>
             </tr>
           </tbody>
         </table>

@@ -1,3 +1,5 @@
-export const onIndexShowHandler = (event : any) => {
-  console.log(event, 'haller');
+export const onIndexShowHandler = () => {
+
+  console.log('WELCOME!');
+  // console.log(event, 'haller');
 };

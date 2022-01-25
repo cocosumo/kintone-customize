@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target" :"ES6",
+    "outDir": "./built",
     "lib": [
       "dom",
       "dom.iterable",
@@ -25,19 +26,18 @@
     "resolveJsonModule": true,
     "noImplicitThis": true,
     "strictNullChecks": true
-
   },
   "files" : [
-    "./node_modules/@kintone/dts-gen/kintone.d.ts",
-    "./fields.d.ts",
-    "./types.d.ts"
+    "./node_modules/@kintone/dts-gen/kintone.d.ts", // npm i @kintone/dts-gen
   ],
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "./app-fields.d.ts" // npm run dts-gen -- -u USER -p PASS
    ],
   "exclude": [
     "dist",
     "node_modules",
+    "./built/**/*",
     "*.js",
     "*.jsx",
     "**/legacy/*"

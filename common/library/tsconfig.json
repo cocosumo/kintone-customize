@@ -12,7 +12,15 @@
     "lib": ["es5", "es6", "dom", "dom.iterable"],
     "baseUrl": "./types"
   },
-  "include": ["./src/**/*", "./node_modules/@kintone/dts-gen/kintone.d.ts"],
+  "files": [
+    "./node_modules/@kintone/dts-gen/kintone.d.ts",
+  ],
+  "include": [
+    "src/**/*",
+   ],
+  "exclude": [
+    "./dist/**/*"
+  ],
 
   "rules": {
     "quotemark": [true, "single"]

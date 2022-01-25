@@ -5,7 +5,7 @@ import DatePicker from '@mui/lab/DatePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import TextField from '@mui/material/TextField';
 
-const YearMonthPicker = ({reportDate, setReportDate}) => {
+const YearMonthPicker = ({reportDate, setReportDate, label}) => {
 
   const changeHandler = (newValue) => {
     setReportDate(newValue);
@@ -15,7 +15,7 @@ const YearMonthPicker = ({reportDate, setReportDate}) => {
     <div>
       <LocalizationProvider dateAdapter={AdapterDateFns} locale={ja}>
         <DatePicker
-          label="年月"
+          label={label}
           value={reportDate}
           openTo="month"
           inputFormat="yyyy年MM月"
@@ -30,7 +30,8 @@ const YearMonthPicker = ({reportDate, setReportDate}) => {
 
 YearMonthPicker.propTypes = {
   reportDate: PropTypes.object,
-  setReportDate: PropTypes.func
+  setReportDate: PropTypes.func,
+  label: PropTypes.string
 };
 
 export default YearMonthPicker;
