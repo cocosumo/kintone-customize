@@ -8,10 +8,10 @@ import CustomerManagementMenu from './menus/CustomerManagementMenu';
 import ContractMenu from './menus/ContractMenu';
 import SystemMenu from './menus/SystemMenu';
 
-export default function CocoMenuDrawer() {
+export default function CocoMenu() {
   return (
     <div>
-      <KintoneButton />
+
       <Divider />
       <List>
         <CustomerMenu />
@@ -20,6 +20,8 @@ export default function CocoMenuDrawer() {
       </List>
       <Divider />
       <SystemMenu />
+      <Divider />
+      <KintoneButton />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-declare module '@yumetetsu/libary';
+declare module '*'
 declare module '*.css'
 declare module '*.jpg'
 declare module '*.jpeg'

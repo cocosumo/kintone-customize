@@ -1,5 +1,4 @@
 
-
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import {isMobile} from '@yumetetsu/library';
 
@@ -9,9 +8,19 @@ const background = '#434343';
 const darkTheme = createTheme({
   typography: {
     // Tell MUI what's the font-size on the html element is.
-    htmlFontSize: isMobile ? 10 : 14,
+    htmlFontSize: isMobile ? 10 : 18,
   },
   components: {
+    MuiInputBase: {
+      styleOverrides: {
+
+        root: {
+
+          backgroundColor: 'white'
+
+        }
+      }
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {

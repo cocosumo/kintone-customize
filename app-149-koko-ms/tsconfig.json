@@ -2,14 +2,15 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "sourceMap": true,
-    "noImplicitAny": false,
     "module": "commonjs",
     "target": "es6",
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "strictNullChecks": true,
     "allowJs": true,
-    "lib": ["es5", "es6", "dom", "dom.iterable"]
+    "lib": ["es5", "es6", "dom", "dom.iterable"],
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true
   },
   "include": [
     "./src/**/*",
