@@ -58,7 +58,7 @@ export const AccordionContainer = ({title, subTitle, dataCount, children} : Titl
   const headerImage : string = isNews ? BGNews : BGEvents;
 
   return (
-    <Grid item md={6} xs={12} px={2} pb={1} >
+    <Grid item xs={12} md={7} px={2} pb={1} >
       <MUIAccordion expanded={expanded} onChange={()=> setExpanded(!expanded)}>
         <HeaderAccordionWithBG {...{headerImage, title, subTitle, dataCount}} />
         <MUIAccordionDetails>

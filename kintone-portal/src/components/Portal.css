@@ -22,3 +22,9 @@ div.gaia-header-header {
 .gaia-mobile-v2-viewpanel-globalnavigationbar {
   background-color: black;
 }
+
+.ocean-portal-body-right {
+  position: absolute;
+  top: 145px;
+  left: 60%;
+}
