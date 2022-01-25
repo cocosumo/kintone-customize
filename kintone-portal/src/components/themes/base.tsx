@@ -15,6 +15,7 @@ const theme = createTheme({
       color: '#808080'
     }
   },
+
 });
 
 export default function BaseTheme({children} : BaseThemeProps) {

@@ -1,5 +1,6 @@
 import Grid from '@mui/material/Grid';
 import PropTypes from 'prop-types';
+import {Props} from './Props.type';
 
 
 export const AnnouncementsContainer = ({children} : Props) => {
@@ -7,7 +8,7 @@ export const AnnouncementsContainer = ({children} : Props) => {
     <Grid
       container
       justifyContent="space-around"
-
+      rowSpacing={2}
     >
       {children}
     </Grid>
