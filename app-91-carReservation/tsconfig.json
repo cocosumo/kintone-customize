@@ -28,16 +28,16 @@
     "strictNullChecks": true
   },
   "files" : [
-    "./node_modules/@kintone/dts-gen/kintone.d.ts", // npm i @kintone/dts-gen
+    "./node_modules/@kintone/dts-gen/kintone.d.ts",
   ],
   "include": [
     "src/**/*",
-    "./app-fields.d.ts" // npm run dts-gen -- -u USER -p PASS
+    "car-app-fields.d.ts",
+    "fields.d.ts"
    ],
   "exclude": [
     "dist",
     "node_modules",
-    "./built/**/*",
     "*.js",
     "*.jsx",
     "**/legacy/*"

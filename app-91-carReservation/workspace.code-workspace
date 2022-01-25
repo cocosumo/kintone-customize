@@ -4,7 +4,7 @@
 			"path": "."
 		},
 		{
-			"path": ".."
+			"path": "..\\app-00-template-typescript"
 		}
 	],
 	"settings": {}

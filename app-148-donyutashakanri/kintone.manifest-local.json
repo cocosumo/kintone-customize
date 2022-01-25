@@ -3,18 +3,18 @@
     "scope": "ALL",
     "desktop": {
         "js": [
-            "https://127.0.0.1:5500/app-148-donyutashakanri/dist/customize.js"
+            "https://127.0.0.1:5500/dist/customize.js"
         ],
         "css": [
-            "https://127.0.0.1:5500/app-148-donyutashakanri/dist/customize.css"
+            "https://127.0.0.1:5500/dist/customize.css"
         ]
     },
     "mobile": {
         "js": [
-            "https://127.0.0.1:5500/app-148-donyutashakanri/dist/customize.js"
+            "https://127.0.0.1:5500/dist/customize.js"
         ],
         "css": [
-            "https://127.0.0.1:5500/app-148-donyutashakanri/dist/customize.css"
+            "https://127.0.0.1:5500/dist/customize.css"
         ]
     }
 }
