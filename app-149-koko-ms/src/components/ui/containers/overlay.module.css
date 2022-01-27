@@ -9,4 +9,5 @@
   background-color: white; /* Black background with opacity */
   z-index: 20; /* Specify a stack order in case you're using a different order for other elements */
   cursor: pointer; /* Add a pointer on hover */
+  overflow: auto;
 }

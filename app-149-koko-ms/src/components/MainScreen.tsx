@@ -4,9 +4,11 @@ import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import {useMediaQuery} from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import PersistentDesktopDrawer from './PersistentDesktopDrawer';
-import PersistentAppBar from './PersistentAppBar';
-import UnderConstruction from '../../ui/contents/UnderConstruction';
+import PersistentAppBar from './appBars/PersistentAppBar';
+import PersistentDesktopDrawer from './nav/persistentNav/PersistentDesktopDrawer';
+import MainContentRouter from './contents/MainContentRouter';
+// import UnderConstruction from '../../ui/contents/UnderConstruction';
+
 const drawerWidth = 240;
 
 const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})<{
@@ -37,7 +39,7 @@ const DrawerHeader = styled('div')(({theme}) => ({
   justifyContent: 'flex-end',
 }));
 
-export default function PersistentNav() {
+export default function MainScreen() {
   const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
@@ -56,7 +58,7 @@ export default function PersistentNav() {
       <PersistentDesktopDrawer {...{handleDrawerClose, open, drawerWidth}} />
       <Main open={open}>
         <DrawerHeader />
-        <UnderConstruction />
+        <MainContentRouter />
       </Main>
     </Box>
   );

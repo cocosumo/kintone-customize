@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import Toolbar from '@mui/material/Toolbar';
 import CocoLogo from './../../assets/logo-cocosumo-system.png';
+import {Link} from 'react-router-dom';
 
 interface CocoAppBarProps extends Props {
   handleDrawerToggle: any,
@@ -37,7 +38,9 @@ const CocoAppBar = ({handleDrawerToggle, drawerWidth}: CocoAppBarProps) => {
         >
           <MenuIcon />
         </IconButton>
-        <img height="40px" src={CocoLogo} alt="" />
+        <Link to="/">
+          <img height="40px" src={CocoLogo} alt="" />
+        </Link>
       </Toolbar>
     </AppBar>
   );

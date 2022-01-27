@@ -1,13 +1,14 @@
 /* eslint-disable import/named */
-import Toolbar from '@mui/material/Toolbar';
+// import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import CocoLogo from './../../../assets/logo-cocosumo-system.png';
+import CocoLogo from './../../assets/logo-cocosumo-system.png';
 import {styled, useTheme} from '@mui/material/styles';
 import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
 import {Stack, Typography, useMediaQuery} from '@mui/material';
-import SearchField from '../../ui/textfield/SearchField';
-import HelpIcon from '@mui/icons-material/Help';
+import {Link} from 'react-router-dom';
+// import SearchField from '../../ui/textfield/SearchField';
+// import HelpIcon from '@mui/icons-material/Help';
 
 
 interface AppBarProps extends MuiAppBarProps {
@@ -52,13 +53,15 @@ export default function PersistentAppBar({handleDrawerOpen}: AppBarProps) {
           >
             <MenuIcon />
           </IconButton>
-          <img height="40px" src={CocoLogo} alt="" />
+          <Link to="/"> <img height="40px" src={CocoLogo} alt="" /></Link>
+
         </Stack>
         {!isSmallScreen &&
-        <><SearchField />
-          <Typography>{kintone.getLoginUser().name} </Typography>
-          <HelpIcon />
-        </> }
+        <div>
+          {/* <SearchField /> */}
+          <Typography>{kintone.getLoginUser().name}</Typography>
+
+        </div> }
 
 
       </Stack>

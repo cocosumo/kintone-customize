@@ -2,6 +2,7 @@
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import {isMobile} from '@yumetetsu/library';
 
+
 const background = '#434343';
 
 
@@ -42,6 +43,13 @@ const darkTheme = createTheme({
           ':hover': {
             background: background
           }
+        }
+      }
+    },
+    MuiListItemText: {
+      styleOverrides: {
+        root: {
+          color: 'rgba(0, 0, 0, 0.87)'
         }
       }
     }

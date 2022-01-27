@@ -9,6 +9,7 @@ import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import {Link} from 'react-router-dom';
 
 
 export default function CustomerMenu() {
@@ -24,17 +25,19 @@ export default function CustomerMenu() {
         <ListItemIcon>
           <PermIdentityIcon />
         </ListItemIcon>
-        <ListItemText primary="顧客情報" />
+        <ListItemText primary="顧客" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{pl: 4}}>
-            <ListItemIcon>
-              <AppRegistrationIcon />
-            </ListItemIcon>
-            <ListItemText primary="新規登録" />
-          </ListItemButton>
+          <Link to="customer/register">
+            <ListItemButton sx={{pl: 4}}>
+              <ListItemIcon>
+                <AppRegistrationIcon />
+              </ListItemIcon>
+              <ListItemText primary="新規登録" />
+            </ListItemButton>
+          </Link>
           <ListItemButton sx={{pl: 4}}>
             <ListItemIcon>
               <PersonSearchIcon />
