@@ -14,9 +14,7 @@ const darkTheme = createTheme({
   components: {
     MuiInputBase: {
       styleOverrides: {
-
         root: {
-
           backgroundColor: 'white'
 
         }
@@ -46,10 +44,24 @@ const darkTheme = createTheme({
         }
       }
     },
+    MuiFormLabel: {
+      styleOverrides: {
+        asterisk: {
+          color: '#db3131',
+        }
+      }
+    },
     MuiListItemText: {
       styleOverrides: {
         root: {
           color: 'rgba(0, 0, 0, 0.87)'
+        }
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        caption: {
+          color: '#d4d7d7'
         }
       }
     }

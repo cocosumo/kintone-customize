@@ -6,7 +6,7 @@ import InputMemoDialog from '../../../ui/dialogs/InputMemoDialog';
 
 export default function Notes() {
   /* TODO: Get from database */
-  const notes = ['メール', '電話', '来店', '訪問'];
+  const notes = ['顧客情報', '打ち合わせ', '契約内容', '工事場所情報', '問い合わせ', 'その他'];
 
   return (
     <Paper>

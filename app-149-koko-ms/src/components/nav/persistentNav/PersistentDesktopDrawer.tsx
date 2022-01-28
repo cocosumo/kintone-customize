@@ -1,7 +1,7 @@
 
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
-import CocoMenu from '../CocoMenu';
+import MainMenu from '../MainMenu';
 import {styled, useTheme} from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -53,7 +53,7 @@ export default function PersistentDesktopDrawer({drawerWidth, handleDrawerClose,
       </DrawerHeader>
       <Divider />
 
-      <CocoMenu />
+      <MainMenu />
     </Drawer>
   );
 }

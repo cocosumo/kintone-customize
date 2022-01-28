@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import {Box} from '@mui/system';
 import {useState} from 'react';
-import DatePicker from '../ui/datetimepickers/DatePicker';
+import SeparatedDatePicker from '../ui/datetimepickers/SeparatedDatePicker';
 
 interface ContactFieldProps {
   label: string,
@@ -82,7 +82,7 @@ export default function CustomerRegistrationForm({isLinkedCustomer} : CustomerRe
           </FormControl>
         </Grid>
         <Grid item xs={12} md={8}>
-          <DatePicker label="生年月日" />
+          <SeparatedDatePicker />
         </Grid>
         {isLinkedCustomer &&
         <Grid item xs={12}>

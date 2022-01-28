@@ -1,5 +1,5 @@
 import Drawer from '@mui/material/Drawer';
-import CocoMenu from './CocoMenu';
+import MainMenu from './MainMenu';
 
 interface DesktopNavProps {
   drawerWidth: number
@@ -15,7 +15,7 @@ export default function DesktopNav({drawerWidth}: DesktopNavProps) {
       }}
       open
     >
-      <CocoMenu />
+      <MainMenu />
     </Drawer>
   );
 }

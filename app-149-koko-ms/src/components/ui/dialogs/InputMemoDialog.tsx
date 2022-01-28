@@ -7,21 +7,65 @@ import {useState} from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import BasicSelect from '../selects/BasicSelect';
-import {Stack} from '@mui/material';
+import {
+  Stack,
+  Box,
+  FormControl,
+  FormHelperText,
+} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Caption from '../typohraphies/Caption';
+import LabeledCheckBox from '../checkboxes/LabeledCheckBox';
 
 const options = [
-  {text: 'メール'},
-  {text: '電話'},
-  {text: '来店'},
-  {text: '訪問'},
+  {text: '顧客情報'},
+  {text: '打ち合わせ'},
+  {text: '契約内容'},
+  {text: '工事場所情報'},
+  {text: '問い合わせ'},
+  {text: 'その他'},
 
 ];
 
+interface AgentsCheckValues {
+  [key: string] : boolean
+}
+
+const AgentCheckbox = () => {
+  const [agents, setAgents] = useState<AgentsCheckValues>({
+    'ここすも営業': true,
+    'ここすも工事': true,
+    'ゆめてつAG': true
+  });
+
+
+  return (
+    <FormControl>
+      <FormHelperText>{'<通知する担当者を選択してください>'}</FormHelperText>
+      <Box pl={2} borderRadius={2} border="1px solid #d4d7d7">
+        <Stack direction="row" justifyContent="space-around">
+          {Object.entries(agents).map(([key, value]) => {
+
+            return (
+              <LabeledCheckBox
+                key={key}
+                label={key}
+                checked={value}
+                setCheckedHandler={()=>setAgents((prev)=> ({...prev, [key]: !prev[key]}))}
+              />);
+          })}
+
+
+        </Stack>
+      </Box>
+    </FormControl>
+  );
+};
+
 export default function InputMemoDialog() {
   const [open, setOpen] = useState(false);
-
+  const [isNotify, setIsNotify] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -46,6 +90,7 @@ export default function InputMemoDialog() {
         </DialogTitle>
         <DialogContent>
           <Stack spacing={2} p={1}>
+            <Stack direction="row" justifyContent="end">顧客名：田中一郎</Stack>
             <BasicSelect label="登録内容" options={options} />
             <TextField
               label="メモ"
@@ -53,6 +98,15 @@ export default function InputMemoDialog() {
               variant="outlined"
               multiline
             />
+            <Stack direction="row" justifyContent="space-between">
+
+              <LabeledCheckBox label="担当者に通知する" checked={isNotify} setCheckedHandler={()=>setIsNotify(prev=> !prev)} />
+              <Stack>
+                <Caption text="作成日時：2022.1.28T12:10" />
+                <Caption text="作成者：健太郎" />
+              </Stack>
+            </Stack>
+            {isNotify && <AgentCheckbox />}
           </Stack>
         </DialogContent>
         <DialogActions>

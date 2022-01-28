@@ -5,10 +5,12 @@
     "main": "index.js",
     "scripts": {
         "start": "node scripts/npm-start.js",
-        "upload": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com --watch ./kintone.manifest.json",
         "upload:local": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com ./kintone.manifest-local.json",
-        "develop": "npm run build -- --watch",
+        "upload:staging": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com --watch ./kintone.manifest-staging.json",
+        "upload:prod": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com --watch ./kintone.manifest.json",
+        "dev": "npm run build -- --watch",
         "build": "webpack",
+        "deploy": "npm run build:prod && npm run upload:prod",
         "build:prod": "webpack --mode production",
         "dtsgen": "npx @kintone/dts-gen --base-url https://rdmuhwtt6gx7.cybozu.com/ --app-id 148 --type-name Data --namespace KintoneTypes -o src/types/Data.d.ts"
     },

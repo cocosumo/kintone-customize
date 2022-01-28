@@ -1,9 +1,9 @@
 import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import NordicWalkingIcon from '@mui/icons-material/NordicWalking';
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 import {Stack, Typography, Grid} from '@mui/material';
+import Caption from '../typohraphies/Caption';
 import {format} from 'date-fns';
 interface NoteProps {
   type: string
@@ -32,14 +32,10 @@ export default function Note({type}:NoteProps) {
       <Grid container item xs={3} justifyContent="center" ><Icon {...{type}} /></Grid>
       <Grid item xs={9}>
         <Stack spacing={2}>
-          <Stack direction="row" justifyContent="space-between">
-            <Typography variant="subtitle1">{type}</Typography>
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <AccessTimeIcon fontSize="small" /><Typography fontSize={12} color="#BCBBA"> {testDate}</Typography>
-            </Stack>
-          </Stack>
+          <Typography variant="subtitle1">{type}</Typography>
           <Stack>
-            <Typography variant="caption">無論岡田さんを立脚ろそう変化に申しあるがたこういう師範私か意見がという小講義たうたたて、ある十月も私か世の中ところのありから、ネルソンさんののに人のこれ</Typography>
+            <Typography variant="body1">無論岡田さんを立脚ろそう変化に申しあるがたこういう師範私か意見がという小講義たうたたて、ある十月も私か世の中ところのありから、ネルソンさんののに人のこれ</Typography>
+            <Caption text={testDate} />
           </Stack>
         </Stack>
       </Grid>

@@ -1,5 +1,5 @@
 import Drawer from '@mui/material/Drawer';
-import CocoMenu from './CocoMenu';
+import MainMenu from './MainMenu';
 
 interface MobilNavProps {
   mobileOpen: boolean,
@@ -21,7 +21,7 @@ export default function MobileNav({mobileOpen, handleDrawerToggle, drawerWidth}:
         '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
       }}
     >
-      <CocoMenu />
+      <MainMenu />
     </Drawer>
   );
 }

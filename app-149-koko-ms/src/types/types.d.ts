@@ -10,7 +10,7 @@ interface Props {
 }
 
 type Option = {
-  key?: string,
+  key?: string | number,
   text: string
 };
 

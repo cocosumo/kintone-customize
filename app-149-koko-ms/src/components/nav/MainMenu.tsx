@@ -7,7 +7,7 @@ import CustomerMenu from './menus/CustomerMenu';
 import ContractMenu from './menus/ContractMenu';
 import SystemMenu from './menus/SystemMenu';
 
-export default function CocoMenu() {
+export default function MainMenu() {
   return (
     <div>
 
