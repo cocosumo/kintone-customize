@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\app-98-nippou"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "app-98-nippou"
+	}
+}

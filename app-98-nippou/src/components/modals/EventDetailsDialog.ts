@@ -10,11 +10,17 @@ import Typography from '@mui/material/Typography';
 import CircleIcon from '@mui/icons-material/Circle';
 import DescriptionIcon from '@mui/icons-material/Description';
 
-import { createTheme, ThemeProvider } from '@mui/material';
-import { reduceEvent } from '../../helpers/DOM';
-import { timeTo24Format } from '../../helpers/Time';
-import { getActionTypeData } from '../../backend/fetchSettings';
-import { EditButton, CloseButton, DeleteButton } from '../UI/MaterialActionButtons';
+import {createTheme, ThemeProvider} from '@mui/material';
+import {reduceEvent} from '../../helpers/DOM';
+import {timeTo24Format} from '../../helpers/Time';
+import {getActionTypeData} from '../../backend/fetchSettings';
+import {EditButton, CloseButton, DeleteButton} from '../UI/MaterialActionButtons';
+
+interface TitleBarPros {
+  onClose: ()=>{},
+  onDelete: ()=>{},
+  onEdit: ()=>{}
+}
 
 const theme = createTheme();
 theme.typography.h5 = {
@@ -30,8 +36,9 @@ theme.typography.subtitle1 = {
   },
 };
 
-const TitleBar = ({ onClose, onDelete, onEdit }) => (
-  <DialogTitle sx={{ py: 1, pr: 1 }}>
+const TitleBar = ({onClose, onDelete, onEdit} : TitleBarPros) => {
+  return (
+  <DialogTitle sx={{py: 1, pr: 1}}>
     <Grid
       container
       direction="row"
@@ -43,21 +50,22 @@ const TitleBar = ({ onClose, onDelete, onEdit }) => (
       <CloseButton onClick={onClose} />
     </Grid>
   </DialogTitle>
-);
+)
+};
 
-const TimeRange = ({ startTime, endTime }) => (
-  <Typography sx={{ display: 'block', pt: 0.25 }} variant="subtitle1">
+const TimeRange = ({startTime, endTime}) => (
+  <Typography sx={{display: 'block', pt: 0.25}} variant="subtitle1">
     {timeTo24Format(startTime)}
     ～
     {timeTo24Format(endTime)}
   </Typography>
 );
 
-const Content = ({ startTime, endTime, actionType }) => {
-  const { bgColor } = getActionTypeData(actionType);
+const Content = ({startTime, endTime, actionType}) => {
+  const {bgColor} = getActionTypeData(actionType);
 
   return (
-    <Grid sx={{ color: '#3c4043' }} container direction="row">
+    <Grid sx={{color: '#3c4043'}} container direction="row">
       <Grid>
         <CircleIcon sx={{
           color: bgColor, mt: 0.5, fontSize: '1.5em', mr: 2,
@@ -74,10 +82,10 @@ const Content = ({ startTime, endTime, actionType }) => {
   );
 };
 
-const Description = ({ actionDetails }) => (
-  <Grid sx={{ color: '#3c4043', mt: 2 }} container direction="row">
+const Description = ({actionDetails}) => (
+  <Grid sx={{color: '#3c4043', mt: 2}} container direction="row">
     <Grid>
-      <DescriptionIcon sx={{ mt: 0.5, fontSize: '1', mr: 2 }} />
+      <DescriptionIcon sx={{mt: 0.5, fontSize: '1', mr: 2}} />
     </Grid>
     <Grid>
       <Typography variant="h6">
@@ -87,7 +95,7 @@ const Description = ({ actionDetails }) => (
   </Grid>
 );
 
-const EventDetailsDialog = ({ selectedTime, onDetailsClose }) => {
+const EventDetailsDialog = ({selectedTime, onDetailsClose}) => {
   const selectedId = selectedTime?.id;
   const selectedFCEvent = reduceEvent(selectedTime);
   const {
@@ -95,15 +103,15 @@ const EventDetailsDialog = ({ selectedTime, onDetailsClose }) => {
   } = selectedFCEvent;
 
   const onCloseHandler = (event) => {
-    onDetailsClose({ closeMethod: 'cancel', event });
+    onDetailsClose({closeMethod: 'cancel', event});
   };
 
   const onDeleteHandler = (event) => {
-    onDetailsClose({ closeMethod: 'delete', data: { id: selectedId } }, event);
+    onDetailsClose({closeMethod: 'delete', data: {id: selectedId}}, event);
   };
 
   const onEditHandler = (event) => {
-    onDetailsClose({ closeMethod: 'edit' }, event);
+    onDetailsClose({closeMethod: 'edit'}, event);
   };
 
   const notEmptyActionDetails = Boolean(actionDetails);
