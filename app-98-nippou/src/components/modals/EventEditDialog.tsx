@@ -11,8 +11,9 @@ import {Grid, DialogTitle} from '@mui/material';
 import EventInputForm from '../forms/EventInputForm';
 import {reduceEvent} from '../../helpers/DOM';
 import {CloseButton} from '../UI/MaterialActionButtons';
-import {ISOtoDATE} from '../../helpers/Time';
+import {convISOtoDATE} from '../../helpers/Time';
 import {getOptions} from '../../backend/fetchSettings';
+import { DateTime } from 'luxon';
 
 interface onFormCloseParam {
   closeMethod : string,
@@ -34,9 +35,10 @@ const EventEditDialog = ({
   const selectedFCEvent = reduceEvent(selectedTime);
   const selectedId = selectedTime?.id;
   const isEventPressed = Boolean(selectedId);
-  const initialEndTime = ISOtoDATE(selectedFCEvent.endTime);
+  const initialEndTime = convISOtoDATE(selectedFCEvent.endTime);
+  const initialStartTime = convISOtoDATE(selectedFCEvent.startTime)
 
-  const [startTime, setStartTime] = useState(ISOtoDATE(selectedFCEvent.startTime));
+  const [startTime, setStartTime] = useState<DateTime>(initialStartTime);
   const [endTime, setEndTime] = useState(initialEndTime);
   const [actionType, setActionType] = useState(
     selectedFCEvent.actionType || getOptions()[0].type,
@@ -46,7 +48,7 @@ const EventEditDialog = ({
 
   const changeStartTimeHandler = (value) => {
     if (!value) {
-      setStartTime(null);
+      setStartTime(initialStartTime);
     } else {
       setStartTime(value);
       if (!value.invalid && value > endTime) {

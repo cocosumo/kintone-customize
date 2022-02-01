@@ -7,15 +7,27 @@ import TimePicker from '@mui/lab/TimePicker';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 
-import { useState } from 'react';
+import {useState} from 'react';
 
-import { timeTo24Format } from '../../helpers/Time';
-import { isMobile } from '../../../../kintone-api/api';
+import {timeTo24Format} from '../../helpers/Time';
+import {isMobile} from '../../../../kintone-api/api';
+import {DateTime} from 'luxon';
+
+interface MaterialTimePickerProps {
+  id: string,
+  value: DateTime,
+  label: string,
+  minTime: DateTime,
+  maxTime: DateTime,
+  onChange : any,
+  isRequired?: boolean,
+  setErrorFields: any,
+}
 
 const MaterialTimePicker = ({
   id, value, label, minTime, maxTime, onChange, isRequired, setErrorFields,
-}) => {
-  const [error, setError] = useState();
+}: MaterialTimePickerProps) => {
+  const [error, setError] = useState<string | null>(null);
 
   const errorHandler = (reason) => {
     switch (reason) {
@@ -34,7 +46,7 @@ const MaterialTimePicker = ({
     }
 
     setErrorFields((prev) => {
-      const temp = { ...prev };
+      const temp = {...prev};
       if (reason) {
         temp[label] = label;
         return temp;
@@ -44,7 +56,7 @@ const MaterialTimePicker = ({
     });
   };
   return (
-    <Box sx={{ minWidth: 120, marginTop: '1em' }}>
+    <Box sx={{minWidth: 120, marginTop: '1em'}}>
       <FormControl fullWidth>
         <LocalizationProvider dateAdapter={AdapterLuxon}>
           <TimePicker
@@ -61,17 +73,17 @@ const MaterialTimePicker = ({
             showToolbar
             renderInput={(params) => (
               <TextField
-                id={id}
+                id={`${id}`}
                 variant="standard"
                 required={isRequired}
-                InputLabelProps={{ style: { fontSize: 16 } }}
+                InputLabelProps={{style: {fontSize: 16}}}
                 helperText={error}
                 {...params}
               />
             )}
             minTime={minTime}
             maxTime={maxTime}
-            InputProps={{ style: { fontSize: 20 } }}
+            InputProps={{style: {fontSize: 20}}}
           />
         </LocalizationProvider>
       </FormControl>

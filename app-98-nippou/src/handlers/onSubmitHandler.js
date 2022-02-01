@@ -1,6 +1,6 @@
-import { timeTo24Format } from '../helpers/Time';
+import {timeTo24Format} from '../helpers/Time';
 
-const fieldValue = (type, value) => ({ type, value });
+const fieldValue = (type, value) => ({type, value});
 
 const convertToKintoneTable = (value, name) => {
   const result = value.map(({
@@ -25,8 +25,8 @@ const updateTable = (origContents, newEvents, name) => {
 };
 
 const onSubmitHandler = (event, newEvents, name) => {
-  const { record } = event;
-  const { [`${name}Table`]: { value: subTable } } = record;
+  const {record} = event;
+  const {[`${name}Table`]: {value: subTable}} = record;
 
   updateTable(subTable, newEvents, name);
 

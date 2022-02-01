@@ -1,9 +1,9 @@
-import { dateTimeISO, isPast } from './Time';
-import { getActionTypeData } from '../backend/fetchSettings';
+import {dateTimeISO, isPast} from './Time';
+import {getActionTypeData} from '../backend/fetchSettings';
 
 export const resolveTitle = (event) => {
-  const { type: eventType, record } = event;
-  const { scheduleType, reportDate } = record;
+  const {type: eventType, record} = event;
+  const {scheduleType, reportDate} = record;
 
   if (eventType.includes('edit')) {
     return `${scheduleType.value}を編集中です。`;
@@ -14,15 +14,15 @@ export const resolveTitle = (event) => {
 const kintoneToFCEvents = (record, isPlan, name) => {
   if (!record) return [];
   const {
-    [`${name}Table`]: { value: subTable = [] },
-    [`${name}Date`]: { value: date },
+    [`${name}Table`]: {value: subTable = []},
+    [`${name}Date`]: {value: date},
   } = record;
 
-  const fcEvents = subTable.filter(({ value }) => {
-    const { [`${name}ActionType`]: actionType } = value;
+  const fcEvents = subTable.filter(({value}) => {
+    const {[`${name}ActionType`]: actionType} = value;
     return Boolean((actionType.value || '').length);
   }).map(
-    ({ value }) => {
+    ({value}) => {
       const {
         [`${name}ActionType`]: actionType,
         [`${name}StartTime`]: startTime,
@@ -32,7 +32,7 @@ const kintoneToFCEvents = (record, isPlan, name) => {
 
       const buildIdString = (actionType.value + startTime.value + endTime.value).replace(/:/g, '');
       const data = getActionTypeData(actionType.value);
-      const { bgColor, color } = data;
+      const {bgColor, color} = data;
       return {
         id: buildIdString,
         title: actionType.value,
@@ -51,6 +51,6 @@ const kintoneToFCEvents = (record, isPlan, name) => {
   return fcEvents;
 };
 
-export const confirmedActions = (allEvents) => allEvents.filter(({ isPlan }) => !isPlan);
+export const confirmedActions = (allEvents) => allEvents.filter(({isPlan}) => !isPlan);
 
 export default kintoneToFCEvents;
