@@ -1,10 +1,10 @@
+import { DateTime } from 'luxon';
 import MateriaTimePicker from '../UI/MaterialTimePicker';
 import MaterialSelect from '../UI/MaterialSelect';
 import './form.css';
 import MaterialText from '../UI/MaterialText';
-import {luxonTime} from '../../helpers/Time';
-import {getOptions} from '../../backend/fetchSettings';
-import {DateTime} from 'luxon';
+import { luxonTime } from '../../helpers/Time';
+import { getOptions } from '../../backend/fetchSettings';
 
 /**
  * Prop => Event Object
@@ -57,8 +57,8 @@ const EventInputForm = ({
         id="startTime"
         value={startTime}
         label="開始"
-        minTime={luxonTime({hour: 8})}
-        maxTime={luxonTime({hour: 20})}
+        minTime={luxonTime({ hour: 8 })}
+        maxTime={luxonTime({ hour: 20 })}
         onChange={onChangeStartTime}
         setErrorFields={setErrorFields}
         isRequired
@@ -67,8 +67,8 @@ const EventInputForm = ({
         id="endTime"
         label="終了"
         value={endTime}
-        minTime={luxonTime({hour: (startTime?.hour || 9), minute: (startTime?.minute || 0)})}
-        maxTime={luxonTime({hour: 20})}
+        minTime={luxonTime({ hour: (startTime?.hour || 9), minute: (startTime?.minute || 0) })}
+        maxTime={luxonTime({ hour: 20 })}
         onChange={onChangeEndTime}
         setErrorFields={setErrorFields}
       />

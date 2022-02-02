@@ -1,6 +1,7 @@
-import {timeTo24Format} from '../helpers/Time';
+import { timeTo24Format } from '../helpers/Time';
+import { KintoneTable } from '../types/globals';
 
-const fieldValue = (type, value) => ({type, value});
+const fieldValue = (type, value) => ({ type, value });
 
 const convertToKintoneTable = (value, name) => {
   const result = value.map(({
@@ -18,15 +19,21 @@ const convertToKintoneTable = (value, name) => {
   return result;
 };
 
-const updateTable = (origContents, newEvents, name) => {
+const updateTable = (origContents : KintoneTable, newEvents, name) => {
   const newContents = convertToKintoneTable(newEvents, name);
   origContents.splice(0, origContents.length);
   newContents.forEach((el) => origContents.push(el));
+  if (origContents.length > 0) {
+    origContents.sort((a, b) => +(a.value[`${name}StartTime`].value.replace(':', '')) - +(b.value[`${name}StartTime`].value.replace(':', '')));
+  }
+
+  console.log(+(origContents[0].value[`${name}StartTime`].value.replace(':', '')));
+  // console.log(Date.parse(origContents[0].value[`${name}Table`].value), name);
 };
 
 const onSubmitHandler = (event, newEvents, name) => {
-  const {record} = event;
-  const {[`${name}Table`]: {value: subTable}} = record;
+  const { record } = event;
+  const { [`${name}Table`]: { value: subTable } } = record;
 
   updateTable(subTable, newEvents, name);
 
