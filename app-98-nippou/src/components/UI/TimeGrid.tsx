@@ -5,6 +5,16 @@ import jaLocale from '@fullcalendar/core/locales/ja';
 import interactionPlugin from '@fullcalendar/interaction';
 import './TimeGrid.css';
 
+interface TimeGridProps {
+  selectedDate: string,
+  didMountHandler: ()=>void,
+  onClickTime: ()=>void,
+  onClickEvent: ()=>void,
+  eventChange: ()=>void,
+  events: ()=>void,
+
+}
+
 const TimeGrid = ({
   selectedDate,
   didMountHandler,
@@ -12,7 +22,7 @@ const TimeGrid = ({
   onClickEvent,
   eventChange,
   events,
-}) => (
+} : TimeGridProps) => (
   <FullCalendar
     locale={jaLocale}
     plugins={[timeGridPlugin, interactionPlugin]}

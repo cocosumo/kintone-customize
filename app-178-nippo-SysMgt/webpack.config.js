@@ -18,7 +18,7 @@ module.exports = {
   ],
 
   entry: {
-    customize: './src/app.js',
+    customize: './src/app.ts',
   },
 
   output: {
