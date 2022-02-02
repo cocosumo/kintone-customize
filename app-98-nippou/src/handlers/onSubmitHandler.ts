@@ -26,9 +26,6 @@ const updateTable = (origContents : KintoneTable, newEvents, name) => {
   if (origContents.length > 0) {
     origContents.sort((a, b) => +(a.value[`${name}StartTime`].value.replace(':', '')) - +(b.value[`${name}StartTime`].value.replace(':', '')));
   }
-
-  console.log(+(origContents[0].value[`${name}StartTime`].value.replace(':', '')));
-  // console.log(Date.parse(origContents[0].value[`${name}Table`].value), name);
 };
 
 const onSubmitHandler = (event, newEvents, name) => {
