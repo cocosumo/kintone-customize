@@ -10,5 +10,5 @@ import onEditOrCreateHandler from '../../app-98-nippou/src/handlers/pages/onEdit
   kintone.events.on(onCreate, onCreateHandler);
   kintone.events.on(onEdit, onEditHandler);
   kintone.events.on(onDetailEditCreate, onDetailEditCreateHandler);
-  kintone.events.on(onEditOrCreate, onEditOrCreateHandler);
+  kintone.events.on(onEditOrCreate, (event)=>onEditOrCreateHandler(event, 178));
 })();

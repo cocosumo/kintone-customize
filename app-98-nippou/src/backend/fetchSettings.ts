@@ -1,11 +1,11 @@
 import { getEnvAppId } from '../helpers/env';
 
-const settingsId = 82;
+const settingsAppId = 82;
 
-const fetchSettings = () => {
+const fetchSettings = (appId: number | null = null) => {
   const body = {
-    app: settingsId,
-    query: `コード="${getEnvAppId()}"`,
+    app: settingsAppId,
+    query: `コード="${appId || getEnvAppId()}"`,
   };
 
   return kintone.api(
@@ -15,7 +15,7 @@ const fetchSettings = () => {
   );
 };
 
-export const getSettings = (key) => JSON.parse(localStorage.getItem(key));
+export const getSettings = (key) => JSON.parse(localStorage.getItem(key) || '{}');
 
 export const getOptions = () => getSettings('選択肢');
 

@@ -7,9 +7,11 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
+    'airbnb-typescript',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    project: './tsconfig.json',
     ecmaFeatures: {
       jsx: true,
     },
@@ -18,10 +20,12 @@ module.exports = {
   },
   plugins: [
     'react',
-    '@typescript-eslint',
     'import',
+    '@typescript-eslint',
+
   ],
   rules: {
+
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/function-component-definition': [
@@ -32,6 +36,7 @@ module.exports = {
       },
     ],
     'import/no-unresolved': 'error',
+
   },
   settings: {
     'import/parsers': {
@@ -44,4 +49,13 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        'no-undef': 'off',
+        'no-unused-vars': 'off',
+      },
+    },
+  ],
 };

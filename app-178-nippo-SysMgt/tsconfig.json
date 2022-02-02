@@ -18,5 +18,8 @@
   ],
   "rules": {
     "quotemark": [true, "single"]
+  },
+  "globals": {
+    "kintone": false
   }
 }
