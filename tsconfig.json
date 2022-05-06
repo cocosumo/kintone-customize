@@ -27,8 +27,11 @@
     "strictNullChecks": true,
     "noEmit": true
   },
+  "files": [
+    "./node_modules/@kintone/dts-gen/kintone.d.ts"
+  ],
   "include": [
-    "*/src/**/*"
+    "*/src/**/*",
    ],
   "exclude": [
     "dist",
