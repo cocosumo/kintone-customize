@@ -31,7 +31,7 @@ const generateMessage = (event: KintoneEvent) => {
 
   } = record;
 
-  const title = '[title](*)付帯収益バトル報告です(*)[/title]';
+  const title = '[title](*)行動量バトル(*)[/title]';
   const content = `
   契約日\t\t: \t${contractDate}
   担当者名\t: \t${agents
