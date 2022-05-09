@@ -1,7 +1,7 @@
 declare namespace KintoneTypes195 {
   interface Record {
     契約日: kintone.fieldTypes.Date;
-    ポイント: kintone.fieldTypes.Number;
+    point: kintone.fieldTypes.Number;
     種類: kintone.fieldTypes.SingleLineText;
     案件: {
       type: 'SUBTABLE';
@@ -19,6 +19,9 @@ declare namespace KintoneTypes195 {
         value: {
           チーム: kintone.fieldTypes.SingleLineText;
           担当者名: kintone.fieldTypes.SingleLineText;
+          percent: kintone.fieldTypes.DropDown;
+          percent_1: kintone.fieldTypes.Calc;
+          personal_point: kintone.fieldTypes.Calc;
         };
       }>;
     };

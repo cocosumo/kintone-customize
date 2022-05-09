@@ -27,7 +27,6 @@ const generateMessage = (event: KintoneEvent) => {
     担当者: {value: agents},
     種類: {value: type},
     案件: {value: projects},
-    ポイント: {value: points},
 
   } = record;
 
@@ -35,10 +34,9 @@ const generateMessage = (event: KintoneEvent) => {
   const content = `
   契約日\t\t: \t${contractDate}
   担当者名\t: \t${agents
-    .map(({value: {チーム: team, 担当者名: agName}}) => `${agName.value} (${team.value})`)
+    .map(({value: {チーム: team, 担当者名: agName, personal_point}}) => `${agName.value} (${team.value}) ${personal_point.value}pt`)
     .join('、')}
   種類\t\t: \t${type}
-  ポイント\t: \t${points}
   お客様名\t: \t${projects.map(prj => prj.value.契約者名.value).join('、')}
   `;
   const link = `https://rdmuhwtt6gx7.cybozu.com/k/${appId}/show#record=${recordId}`;
