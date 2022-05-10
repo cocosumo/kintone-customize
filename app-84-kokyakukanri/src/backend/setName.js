@@ -26,6 +26,7 @@ export const setSelectName = () => {
   if ((url.indexOf('query=') === -1) && (url.indexOf('q=') === -1)) {
     flg1st = true;
     selectName = kintone.getLoginUser().name;
+    selectName = selectName.replace('　', ' ');
     selectNameL = selectName.substring(0, selectName.indexOf(' '));
     selectNameF = selectName.slice(selectName.indexOf(' ') + 1);
     selectName = selectNameL.concat(' ', selectNameF);

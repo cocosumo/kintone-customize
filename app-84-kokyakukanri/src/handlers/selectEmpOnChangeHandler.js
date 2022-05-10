@@ -19,7 +19,8 @@ const selectEmpOnChangeHandler = () => {
     // デフォルト値・何もしない
   } else {
     const selectField = '担当名'; // フィルタリング対象のフィールド名
-    const member = document.getElementById(selectEmpID).value;
+    let member = document.getElementById(selectEmpID).value;
+    member = member.replace('　', ' ');
     const Firstname = member.slice(member.indexOf(' ') + 1);
     const Lastname = member.substring(0, member.indexOf(' '));
     const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
