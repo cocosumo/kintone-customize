@@ -1,4 +1,3 @@
-import sendResultToChatWork from '../actions/sendResultToChatWork';
 
 export interface KintoneEvent {
   record: KintoneTypes195.SavedRecord,
@@ -7,7 +6,7 @@ export interface KintoneEvent {
   error: string,
 }
 
-const onEditOrCreateSubmitSuccessHandler = (event: KintoneEvent) => {
+const onCreateOrEditSubmitHandler = (event: KintoneEvent) => {
 
   const {record: {
     担当者: ag
@@ -19,13 +18,11 @@ const onEditOrCreateSubmitSuccessHandler = (event: KintoneEvent) => {
     return accu + +curr.value.percent_1.value;
   }, 0);
 
-  if (totalPoints > 10) {
-    alert(totalPoints);
+  if (totalPoints !== 10) {
     event.error = '割合の合計を１０にしてください';
   }
 
-  sendResultToChatWork(event);
   return event;
 };
 
-export default onEditOrCreateSubmitSuccessHandler;
+export default onCreateOrEditSubmitHandler;

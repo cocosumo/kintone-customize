@@ -1,4 +1,5 @@
 // import {numberWithCommas} from '../../../kintone-api/utilities';
+import {format, parseISO} from 'date-fns';
 import {KintoneEvent} from '../eventHandlers/onEditOrCreateSubmitSuccessHandler';
 
 /*
@@ -27,20 +28,21 @@ const generateMessage = (event: KintoneEvent) => {
     担当者: {value: agents},
     種類: {value: type},
     案件: {value: projects},
-    ポイント: {value: points},
 
   } = record;
 
-  const title = '[title](*)付帯収益バトル報告です(*)[/title]';
-  const content = `
-  契約日\t\t: \t${contractDate}
-  担当者名\t: \t${agents
-    .map(({value: {チーム: team, 担当者名: agName}}) => `${agName.value} (${team.value})`)
-    .join('、')}
-  種類\t\t: \t${type}
-  ポイント\t: \t${points}
-  お客様名\t: \t${projects.map(prj => prj.value.契約者名.value).join('、')}
-  `;
+  const title = '[title](*)行動量バトル(*)[/title]';
+  const agentsPoints = agents
+    .filter(item=>Boolean(item.value.担当者名.value))
+    .map(({value: {チーム: team, 担当者名: agName, personal_point}}) => `${agName.value} (${team.value}) ${personal_point.value}pt`)
+    .join('\n');
+  const content = `契約日：${format(parseISO(contractDate), 'yyyy年M月d日')}
+
+担当者[hr]${agentsPoints}[hr]
+
+種類: ${type}
+お客様名: ${projects.map(prj => prj.value.契約者名.value).join('、')}`;
+
   const link = `https://rdmuhwtt6gx7.cybozu.com/k/${appId}/show#record=${recordId}`;
 
 

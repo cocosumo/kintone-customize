@@ -7,7 +7,7 @@ import generateMessage from './generateMessage';
 * 6732051  本番
 */
 
-const cwToken = '7bc795ef967064f642aa70956cde3cad';
+const cwToken = 'f6c34edbfa786f85d5165d322b0f6dd0';
 const roomId = '6732051';
 
 const sendResultToChatWork = (event: KintoneEvent) => {

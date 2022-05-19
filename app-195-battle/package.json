@@ -5,8 +5,8 @@
     "main": "src/app.js",
     "scripts": {
         "start": "node scripts/npm-start.js",
-        "upload": "kintone-customize-uploader --base-url rdmuhwtt6gx7.cybozu.com --watch ./kintone.prod.json",
-        "upload:local": "kintone-customize-uploader --base-url rdmuhwtt6gx7.cybozu.com --watch ./kintone.local.json",
+        "upload": "kintone-customize-uploader --base-url rdmuhwtt6gx7.cybozu.com ./kintone.prod.json",
+        "upload:local": "kintone-customize-uploader --base-url rdmuhwtt6gx7.cybozu.com ./kintone.local.json",
         "develop": "npm run build -- --watch",
         "build": "webpack",
         "build:prod": "webpack --mode production",
