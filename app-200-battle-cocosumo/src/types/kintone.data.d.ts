@@ -1,30 +1,10 @@
 declare namespace KintoneTypes195 {
   interface Record {
-    契約日: kintone.fieldTypes.Date;
-    point: kintone.fieldTypes.Number;
-    種類: kintone.fieldTypes.SingleLineText;
-    案件: {
-      type: 'SUBTABLE';
-      value: Array<{
-        id: string;
-        value: {
-          契約者名: kintone.fieldTypes.SingleLineText;
-        };
-      }>;
-    };
-    担当者: {
-      type: 'SUBTABLE';
-      value: Array<{
-        id: string;
-        value: {
-          チーム: kintone.fieldTypes.SingleLineText;
-          担当者名: kintone.fieldTypes.SingleLineText;
-          percent: kintone.fieldTypes.DropDown;
-          percent_1: kintone.fieldTypes.Calc;
-          personal_point: kintone.fieldTypes.Calc;
-        };
-      }>;
-    };
+    配布エリア: kintone.fieldTypes.SingleLineText;
+    担当者名: kintone.fieldTypes.SingleLineText;
+    てまき種類: kintone.fieldTypes.DropDown;
+    行動日: kintone.fieldTypes.Date;
+    枚数: kintone.fieldTypes.Number;
   }
   interface SavedRecord extends Record {
     $id: kintone.fieldTypes.Id;

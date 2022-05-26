@@ -5,10 +5,11 @@ import generateMessage from './generateMessage';
 * 225800073 test
 * 213232379 RPA
 * 6732051  本番
+* 20262611 cocosumo
 */
 
 const cwToken = 'f6c34edbfa786f85d5165d322b0f6dd0';
-const roomId = '6732051';
+const roomId = '20262611';
 
 const sendResultToChatWork = (event: KintoneEvent) => {
   const message = generateMessage(event);
