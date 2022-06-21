@@ -1,0 +1,46 @@
+{
+  "name": "app-117-dutycalendar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "node scripts/npm-start.js",
+    "upload": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com/ --watch kintone-manifest.json",
+    "up": "kintone-customize-uploader --base-url https://rdmuhwtt6gx7.cybozu.com/ kintone-manifest.json",
+    "develop": "npm run build -- --watch",
+    "build": "webpack --mode development",
+    "build:prod": "webpack --mode production",
+    "lint": "eslint src/*",
+    "dts-gen": "npx kintone-dts-gen --base-url https://rdmuhwtt6gx7.cybozu.com --type-name AppFields -o app-fields.d.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.15.0",
+    "@cybozu/eslint-config": "^15.0.0",
+    "@kintone/customize-uploader": "^5.0.7",
+    "@kintone/dts-gen": "^5.0.6",
+    "@types/react": "^17.0.29",
+    "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "babel-loader": "^8.2.2",
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.26.1",
+    "fork-ts-checker-webpack-plugin": "^6.3.4",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.4",
+    "webpack": "^5.58.1",
+    "webpack-cli": "^4.9.0"
+  },
+  "dependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.4",
+    "date-fns": "^2.25.0",
+    "react": "^17.0.2"
+  }
+}
