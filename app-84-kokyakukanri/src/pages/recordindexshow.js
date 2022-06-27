@@ -43,7 +43,7 @@ const recordindexshow = (event) => {
   }
 
   setViewCode(event.viewId); // 一覧viewIDの保存
-  setHeaderMenuSpaceElementByReact(); // プルダウンメニューの要素を設定する
+  setHeaderMenuSpaceElementByReact(); // プルダウンメニューの要素を配置する
   getHeaderSpaceElement().append('※[担当名]には[店長][主任][営業]の方を表示しています\n');
   setSelectName(); // 担当名に表示する氏名の取り出しをする
   // console.log('1-1 経過時間(秒)：', (((Date.now()) / 1000) - app86DateTimeD));

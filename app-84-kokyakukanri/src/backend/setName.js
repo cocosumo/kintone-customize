@@ -30,7 +30,7 @@ export const setSelectName = () => {
     selectNameF = selectName.slice(selectName.indexOf(' ') + 1);
     selectName = selectNameL.concat(' ', selectNameF);
     affShop = 'init';
-    // console.log('ユーザ名の取得 :', selectName);
+    // console.log('【初回】ユーザ名の取得 :', selectName);
   } else {
     // URLにプルダウンで指定したqueryが含まれる場合の処理
     flg1st = false;
@@ -38,6 +38,7 @@ export const setSelectName = () => {
     if (resultPos !== -1) { // URLに'担当名'が含まれるとき
       // ここから：絞り込み条件の氏名を取り出す 「query=担当名 like "苗字" and 担当名 like "名前"」
       selectName = url.slice(resultPos + 10); // 10=読み飛ばす文字数
+      // console.log('【2回目以降】URLに担当名が含まれるとき', selectName);
       resultPos = selectName.indexOf('担当名');
       selectNameL = selectName.substring(0, resultPos - 6);
       selectName = selectName.slice(resultPos + 10);
@@ -49,6 +50,7 @@ export const setSelectName = () => {
       affShop = url.slice(resultPos + 10); // 10=読み飛ばす文字数
       affShop = `${affShop.substring(0, affShop.indexOf('"'))}店`;
       selectName = 'init';
+      // console.log('【2回目以降】URLに店舗名が含まれるとき', affShop);
     } else {
       // ユーザがプルダウン以外で絞り込み表示している場合
       // 処理は実行しない
