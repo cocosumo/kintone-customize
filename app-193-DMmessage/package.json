@@ -11,7 +11,7 @@
     "build": "webpack --mode development",
     "build:prod": "webpack --mode production",
     "lint": "eslint src/*",
-    "dts-gen": "npx kintone-dts-gen --base-url https://rdmuhwtt6gx7.cybozu.com --type-name AppFields -o app-fields.d.ts"
+    "dts-gen": "npx kintone-dts-gen --base-url https://rdmuhwtt6gx7.cybozu.com --type-name AppFields -o app-fields.d.ts --app-id 193"
   },
   "author": "",
   "license": "ISC",
@@ -40,7 +40,9 @@
   "dependencies": {
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.4",
+    "css-minimizer-webpack-plugin": "^4.0.0",
     "date-fns": "^2.25.0",
+    "mini-css-extract-plugin": "^2.6.1",
     "react": "^17.0.2"
   }
 }

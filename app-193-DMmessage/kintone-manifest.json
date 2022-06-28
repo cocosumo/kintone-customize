@@ -3,7 +3,7 @@
   "scope": "ALL",
   "desktop": {
       "js": [
-          "dist/customize.js"
+          "https://127.0.0.1:5500/dist/customize.js"
       ],
       "css": []
   },

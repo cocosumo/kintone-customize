@@ -6,7 +6,7 @@ const renderReactTest = () => {
   ReactDOM.render(<TestComponent />, kintone.app.getHeaderSpaceElement());
 };
 
-const onTest = (event : kintone.types.SavedFields) => {
+const onTest = (event : kintone.types.SavedAppFields) => {
   console.log('Test Success');
 
   renderReactTest();

@@ -1,19 +1,21 @@
 declare namespace kintone.types {
   interface AppFields {
-    備考: kintone.fieldTypes.SingleLineText;
-    店舗: kintone.fieldTypes.SingleLineText;
-    終了: kintone.fieldTypes.DateTime;
-    開始: kintone.fieldTypes.DateTime;
-    号車: kintone.fieldTypes.SingleLineText;
-    期間: kintone.fieldTypes.Calc;
+    mail_top: kintone.fieldTypes.MultiLineText;
+    mail_url: kintone.fieldTypes.Link;
+    mail_title: kintone.fieldTypes.SingleLineText;
+    customerType: kintone.fieldTypes.DropDown;
+    sendStatus: kintone.fieldTypes.RadioButton;
+    mail_number: kintone.fieldTypes.SingleLineText;
+    mail_main: kintone.fieldTypes.MultiLineText;
+    日付: kintone.fieldTypes.Date;
   }
-  export interface SavedAppFields extends AppFields {
+  interface SavedAppFields extends AppFields {
     $id: kintone.fieldTypes.Id;
     $revision: kintone.fieldTypes.Revision;
-    申請者: kintone.fieldTypes.Creator;
     更新者: kintone.fieldTypes.Modifier;
+    作成者: kintone.fieldTypes.Creator;
     レコード番号: kintone.fieldTypes.RecordNumber;
-    申請日時: kintone.fieldTypes.CreatedTime;
     更新日時: kintone.fieldTypes.UpdatedTime;
+    作成日時: kintone.fieldTypes.CreatedTime;
   }
 }
