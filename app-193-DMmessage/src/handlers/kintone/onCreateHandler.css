@@ -1,3 +1,19 @@
 .urlArea{
-  background: #f00;
+  vertical-align: bottom;
+  margin: 10px;
+}
+
+.urlLabel{ /* .urlArea内のラベル */
+  margin: 10px;
+}
+
+.urlArea>input{
+  display: inline-block;
+  margin: 10px;
+  width: 70%;
+}
+
+.urlArea>button{
+  display: inline-block;
+  margin: 10px;
 }
