@@ -36,10 +36,14 @@ export const urlSetting = () => {
  * @param btnstr ボタンに表示するテキスト
  * @returns ボタンエレメント
  */
-export const buttonSetting = (btnstr: string) => {
+export const buttonSetting = (
+  btnstr: string,
+  spaceName: string,
+  className: string,
+) => {
   // スペースフィールド：buttonAreaの取得
-  const space = kintone.app.record.getSpaceElement('urlArea') as HTMLElement;
-  // space.classList.add('buttonArea');
+  const space = kintone.app.record.getSpaceElement(spaceName) as HTMLElement;
+  space.classList.add(className);
 
   // 取得ボタンを作成する
   const btn = document.createElement('button');

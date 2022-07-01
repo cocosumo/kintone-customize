@@ -1,5 +1,4 @@
 import gettingUrl from '../gettingUrl';
-import './onCreateHandler.css';
 
 /**
  * 「レコードを追加する」際の処理
