@@ -3,14 +3,14 @@
   margin: 10px;
 }
 
-.urlLabel{ /* .urlArea内のラベル */
+#urlInput>label{ /* .urlArea内のラベル */
   margin: 10px;
 }
 
-.urlArea>input{
+#urlInput>input{
   display: inline-block;
   margin: 10px;
-  width: 70%;
+  width: 80%;
 }
 
 .urlArea>button{
