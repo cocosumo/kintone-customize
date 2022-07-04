@@ -3,15 +3,18 @@
   "scope": "ALL",
   "desktop": {
       "js": [
-          "https://127.0.0.1:5500/dist/customize.js"
+        "./dist/customize.js"
       ],
       "css": [
-        "https://127.0.0.1:5500/dist/customize.css"
+        "./dist/customize.css"
       ]
   },
   "mobile": {
       "js": [
-          "dist/customize.js"
+        "./dist/customize.js"
+      ],
+      "css": [
+        "./dist/customize.css"
       ]
   }
 }
