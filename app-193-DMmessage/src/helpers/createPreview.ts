@@ -1,4 +1,5 @@
 import './createPreview.css';
+import displayChange from './displayChange';
 
 /**
  * プレビューボタンが押されたら、モーダルウィンドウにプレビューを表示する
@@ -12,6 +13,7 @@ const createPreview = (
   // スペースフィールド：previewの取得
   const modal = kintone.app.record.getSpaceElement('forDebag') as HTMLElement;
   modal.classList.add('modal');
+  displayChange(modal, false);
   const modalContent = document.createElement('div');
   modalContent.id = 'modal';
 
@@ -38,7 +40,8 @@ const createPreview = (
     const record = kintone.app.record.get();
     const mailMain = record.record.mail_main.value;
     elem.innerHTML = mailMain;
-    modal.style.display = 'block';
+    // modal.style.display = 'block';
+    displayChange(modal, true);
   };
   btn.addEventListener('click', modalOpen);
 
@@ -46,7 +49,8 @@ const createPreview = (
 
   // バツ印がクリックされた時
   const modalClose = () => {
-    modal.style.display = 'none';
+    // modal.style.display = 'none';
+    displayChange(modal, false);
   };
   buttonClose.addEventListener('click', modalClose);
 
@@ -54,7 +58,8 @@ const createPreview = (
   // モーダルコンテンツ以外がクリックされた時
   const outsideClose = (e: any) => {
     if (e.target === modal) {
-      modal.style.display = 'none';
+      // modal.style.display = 'none';
+      displayChange(modal, false);
     }
   };
   addEventListener('click', outsideClose);

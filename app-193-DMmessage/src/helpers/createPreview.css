@@ -1,6 +1,20 @@
+/* .modalVisible {  
+  -moz-display: block;
+  -webkit-display: block;
+  display: block;  
+}
+
+.modalUnvisible{  
+  -moz-display: none;
+  -webkit-display: none;
+  display: none;  
+} */
 
 .modal {
-  display: none;
+  -moz-display: none;
+  -webkit-display: none;
+  display: none;  
+
   position: fixed;
   z-index: 50;
   left: 0;
