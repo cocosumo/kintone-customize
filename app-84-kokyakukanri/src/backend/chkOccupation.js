@@ -9,5 +9,10 @@ export default function chkOccupation(lists, targetName) {
   // 絞り込み表示対象者の所属店舗を設定する
   let targetShop = lists.find(item => item.name === targetName);
   targetShop = (targetShop === undefined) ? 'init' : targetShop.shop;
-  return targetShop;
+  if (targetShop !== 'init') {
+    return targetShop;
+  }
+  const newName = targetName.replace(' ', '　');
+  targetShop = lists.find(item => item.name === newName);
+  return (targetShop === undefined) ? 'init' : targetShop.shop;
 }

@@ -112,6 +112,10 @@ export function setview() {
     // console.log('初回ではない かつ 営業職:', affShop, ' ', selectName);
     document.getElementById(selectShopID).value = affShop;
     document.getElementById(selectEmpID).value = selectName;
+    if (document.getElementById(selectEmpID).value !== selectName) {
+      selectName = selectName.replace(' ', '　');
+      document.getElementById(selectEmpID).value = selectName;
+    }
   }
 }
 

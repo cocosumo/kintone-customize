@@ -5,7 +5,7 @@ import {getViewCode, selectEmpID, selectShopID} from '../view/utilsDOM';
  */
 const selectEmpOnChangeHandler = () => {
   if (document.getElementById(selectEmpID).value === 'listall') {
-    // 該当店舗の全てのレコードを表示
+    // 「全レコードを表示」が選択された場合 -> 該当店舗の全てのレコードを表示
     const selectField = '店舗名'; // フィルタリング対象のフィールド名
     let shop = document.getElementById(selectShopID).value;
     if (shop.indexOf('店') !== -1) {
@@ -16,12 +16,17 @@ const selectEmpOnChangeHandler = () => {
     window.location.href = `${window.location.origin
                         + window.location.pathname}?view=${getViewCode()}&query=${encodeURI(query)}`;
   } else if (document.getElementById(selectEmpID).value === 'init') {
-    // デフォルト値・何もしない
+    // デフォルト値が選択された場合 -> 何もしない
   } else {
+    // 個人が選択された場合
     const selectField = '担当名'; // フィルタリング対象のフィールド名
-    const member = document.getElementById(selectEmpID).value;
+    let member = document.getElementById(selectEmpID).value;
+    // console.log('選択された社員：：', member);
+    member = member.replace('　', ' ');
     const Firstname = member.slice(member.indexOf(' ') + 1);
+    // console.log('苗字：：', Firstname);
     const Lastname = member.substring(0, member.indexOf(' '));
+    // console.log('名前：：', Lastname);
     const query = `${selectField} like "${Lastname}" and ${selectField} like "${Firstname}"`;
     window.location.href = `${window.location.origin
                          + window.location.pathname}?view=${getViewCode()}&query=${encodeURI(query)}`;
