@@ -30,6 +30,7 @@ const buttonMotion = (
       // 更新処理(onclick内だと、kintone.events.onとは別メモリのため、get/set使用可)
       const record = kintone.app.record.get();
       record.record.mail_main.value = mailContent;
+      record.record.urlBackup.value = url;
       kintone.app.record.set(record);
     }
   };

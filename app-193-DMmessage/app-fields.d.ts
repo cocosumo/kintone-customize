@@ -1,7 +1,6 @@
 declare namespace kintone.types {
   interface AppFields {
-    mail_top: kintone.fieldTypes.MultiLineText;
-    mail_url: kintone.fieldTypes.Link;
+    urlBackup: kintone.fieldTypes.SingleLineText;
     mail_title: kintone.fieldTypes.SingleLineText;
     customerType: kintone.fieldTypes.DropDown;
     sendStatus: kintone.fieldTypes.RadioButton;

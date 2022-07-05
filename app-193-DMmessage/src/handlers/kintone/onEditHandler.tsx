@@ -1,6 +1,6 @@
 import gettingUrl from '../gettingUrl';
 
-const onEditHandler = (event : kintone.types.SavedAppFields) => {
+const onEditHandler = (event : IEvent) => {
   console.log('onEdit Test');
   gettingUrl(event);
 

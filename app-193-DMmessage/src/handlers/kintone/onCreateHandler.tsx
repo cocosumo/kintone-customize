@@ -5,7 +5,7 @@ import gettingUrl from '../gettingUrl';
  * @param event kintoneアプリのフィールド
  * @returns kintoneアプリのフィールド
  */
-const onCreateHandler = (event: kintone.types.SavedAppFields) => {
+const onCreateHandler = (event: IEvent) => {
   console.log('onCreate Test');
   gettingUrl(event);
 

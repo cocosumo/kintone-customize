@@ -1,7 +1,9 @@
 /**
  * スペースフィールドに、URLの入力エリアを設置する
  */
-export const urlSetting = () => {
+export const urlSetting = (event: {
+  record :kintone.types.SavedAppFields
+}) => {
   // スペースフィールド：urlAreaの取得
   const space = kintone.app.record.getSpaceElement('urlArea') as HTMLElement;
   space.classList.add('urlArea');
@@ -17,6 +19,9 @@ export const urlSetting = () => {
   inputLabel.classList.add('urlLabel');
 
   const inputArea = document.createElement('input');
+  console.log('event', event);
+  inputArea.value = event.record.urlBackup.value ?? '';
+
 
   const elem = document.createElement('div');
   elem.id = 'urlInput';
