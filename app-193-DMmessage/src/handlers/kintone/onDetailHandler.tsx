@@ -1,5 +1,6 @@
 import {isMobile, setFieldShown} from '../../../../kintone-api/api';
 import createPreview from '../../helpers/createPreview';
+import sidebarHide from '../../helpers/sidebarHide';
 import './onDetailHandler.css';
 
 const getHeaderMenuSpaceElement = () => (
@@ -15,6 +16,9 @@ const getHeaderMenuSpaceElement = () => (
  */
 const onDetailHandler = (event: kintone.types.SavedAppFields) => {
   console.log('onDetail Test');
+
+  // サイドバー(コメント・変更履歴)を非表示にする
+  sidebarHide();
 
   // URLのバックアップフィールドを非表示にする
   setFieldShown('urlBackup', false);
