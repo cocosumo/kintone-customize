@@ -1,4 +1,5 @@
 import axios from 'axios';
+import extractText from './extractText';
 
 /**
  * ボタンが押された際に、URLからHTMLソースを取得する
@@ -25,8 +26,9 @@ const buttonMotion = (
       }
 
       // urlの内容(=メール本文)を取得する
-      const mailContent = await axios.get(url).then(res => res.data) as string;
+      let mailContent = await axios.get(url).then(res => res.data) as string;
 
+      mailContent = extractText(mailContent);
       // 更新処理(onclick内だと、kintone.events.onとは別メモリのため、get/set使用可)
       const record = kintone.app.record.get();
       record.record.mail_main.value = mailContent;
