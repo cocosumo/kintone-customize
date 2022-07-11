@@ -1,9 +1,9 @@
-.urlArea{
+/* .preview{
   vertical-align: bottom;
   margin: 10px;
 }
 
-#urlInput>label{ /* .urlArea内のラベル */
+#urlInput>label{
   margin: 10px;
 }
 
@@ -13,11 +13,11 @@
   width: 80%;
 }
 
-.urlArea>button{
+.preview>button{
   display: inline-block;
   margin: 10px;
 }
 
 .showPreview{
   text-align: right;
-}
+} */
