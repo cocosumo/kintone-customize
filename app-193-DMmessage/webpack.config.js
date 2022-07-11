@@ -40,7 +40,7 @@ module.exports = {
               publicPath: path.resolve(__dirname, 'dist'),
             },
           },
-          'css-loader',
+            "css-loader", "postcss-loader",
         ],
       },
     ],
