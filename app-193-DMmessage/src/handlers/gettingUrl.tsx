@@ -3,15 +3,17 @@ import buttonMotion from '../helpers/buttonMotion';
 import {buttonSetting, urlSetting} from '../helpers/elementSetting';
 import urlClear from '../helpers/urlClear';
 import {setFieldShown} from '../../../kintone-api/api';
-import {previewSpaceID} from '..';
 import {createRoot} from 'react-dom/client';
 import SpaceComponent from '../components/SpaceComponent';
+import {previewSpaceID} from '../constantDefinition';
 
-export const renderReactTest = () => {
+/**
+ * preview用スペースフィールドにスペース用コンポーネントを設置する
+ */
+export const renderReactPreview = () => {
   const container = kintone.app.record.getSpaceElement(previewSpaceID) as HTMLElement;
   const root = createRoot(container); // createRoot(container!) if you use TypeScript
   root.render(<SpaceComponent />);
-  // ReactDOM.render(<TestComponent />, kintone.app.getHeaderSpaceElement());
 };
 
 const gettingUrl = (event: IEvent) => {

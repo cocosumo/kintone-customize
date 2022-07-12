@@ -1,12 +1,14 @@
+import {previewSpaceID} from '..';
+
 /**
  * スペースフィールドに、URLの入力エリアを設置する
  */
 export const urlSetting = (event: {
   record :kintone.types.SavedAppFields
 }) => {
-  // スペースフィールド：urlAreaの取得
-  const space = kintone.app.record.getSpaceElement('urlArea') as HTMLElement;
-  space.classList.add('urlArea');
+  // スペースフィールド：previewの取得
+  const space = kintone.app.record.getSpaceElement(previewSpaceID) as HTMLElement;
+  space.classList.add('m-2.5');
 
   // URLの入力エリアを作成する
   const inputExplan = document.createElement('label');
@@ -19,7 +21,7 @@ export const urlSetting = (event: {
   inputLabel.classList.add('urlLabel');
 
   const inputArea = document.createElement('input');
-  console.log('event', event);
+  inputArea.classList.add('w-4/5');
   inputArea.value = event.record.urlBackup.value ?? '';
 
 

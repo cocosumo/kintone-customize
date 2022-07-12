@@ -1,4 +1,4 @@
-import './createPreview.css';
+import {previewClassName, previewSpaceID} from '../constantDefinition';
 import displayChange from './displayChange';
 
 /**
@@ -6,16 +6,16 @@ import displayChange from './displayChange';
  * @param btn HTMLButtonElement: プレビューボタン
  */
 const createPreview = (
-  btn: HTMLButtonElement,
+  // btn: HTMLButtonElement,
 ) => {
-  // btn.onclick = async () => {
   // モーダルウィンドウにプレビューを表示する
   // スペースフィールド：previewの取得
-  const modal = kintone.app.record.getSpaceElement('forDebag') as HTMLElement;
+  const modal = kintone.app.record.getSpaceElement(previewSpaceID) as HTMLElement;
   modal.classList.add('modal');
-  displayChange(modal, false);
+  displayChange(modal, true);
   const modalContent = document.createElement('div');
   modalContent.id = 'modal';
+  console.log('createPreview', modal);
 
   // モーダルのヘッダを作成する
   const head = document.createElement('div');
@@ -24,19 +24,20 @@ const createPreview = (
   <span class="modalClose">×</span>`;
 
   // モーダルの内容を設定する
-  // const br = document.createElement('br');
   const elem = document.createElement('div');
-  elem.id = 'modal-body';
+  elem.id = previewClassName;
   // console.log('メール本文', elem);
 
-  // スペースフィールドにボタンを設定する
+  // スペースフィールドにモーダルのヘッダを設定する
   modalContent.appendChild(head);
   modalContent.appendChild(elem);
-
   modal.appendChild(modalContent);
 
+  // メール本文が変更されたとき
+  console.log('プレビュー更新処理を実装する');
+
   // プレビューボタンが押されたとき
-  const modalOpen = () => {
+  /* const modalOpen = () => {
     const record = kintone.app.record.get();
     const mailMain = record.record.mail_main.value;
     elem.innerHTML = mailMain;
@@ -62,9 +63,7 @@ const createPreview = (
       displayChange(modal, false);
     }
   };
-  addEventListener('click', outsideClose);
-  // };
-
+  addEventListener('click', outsideClose); */
 };
 
 export default createPreview;

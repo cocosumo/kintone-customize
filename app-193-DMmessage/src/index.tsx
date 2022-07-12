@@ -8,6 +8,9 @@ import onEditHandler from './handlers/kintone/onEditHandler';
   'mobile.app.record.index.show',
 ]; */
 
+export const previewSpaceID = 'preview';
+export const previewClassName = 'mail-body';
+
 const onEdit : string[] = [
   'app.record.edit.show',
   'mobile.app.record.edit.show',
@@ -27,3 +30,5 @@ const onDetail : string[] = [
 kintone.events.on(onEdit, onEditHandler);
 kintone.events.on(onCreate, onCreateHandler);
 kintone.events.on(onDetail, onDetailHandler);
+// 文字列(複数行)のため、kintoneのfieldchangeの対象外
+// kintone.events.on(onFieldChange('mail_main'), onFieldChangeHandler);
