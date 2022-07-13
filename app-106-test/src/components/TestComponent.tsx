@@ -7,7 +7,7 @@
 */
 
 const TestComponent = () => (
-  <h1 className="text-3xl text-amber-900 text-center">
+  <h1 className="text-3xl text-amber-600 text-center text">
     環境準備成功！おめでとうございます！いいもの作りましょう！！
   </h1>
 );
