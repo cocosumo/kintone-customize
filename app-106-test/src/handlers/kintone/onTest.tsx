@@ -1,9 +1,10 @@
+import { createRoot } from 'react-dom/client';
 import TestComponent from '../../components/TestComponent';
-import ReactDOM from 'react-dom';
 
 const renderReactTest = () => {
-
-  ReactDOM.render(<TestComponent />, kintone.app.getHeaderSpaceElement());
+  const container = kintone.app.getHeaderSpaceElement();
+  const root = createRoot(container!);
+  root.render(<TestComponent />);
 };
 
 const onTest = (event : KintoneEvent) => {

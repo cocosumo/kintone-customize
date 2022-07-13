@@ -1,9 +1,8 @@
-
-declare namespace kintone.types {
-  interface AppFields {
+declare namespace App {
+  interface Fields {
     文字列__1行__0: kintone.fieldTypes.SingleLineText;
   }
-  interface SavedAppFields extends AppFields {
+  interface SavedFields extends Fields {
     $id: kintone.fieldTypes.Id;
     $revision: kintone.fieldTypes.Revision;
     更新者: kintone.fieldTypes.Modifier;

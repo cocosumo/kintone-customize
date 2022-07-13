@@ -25,11 +25,11 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noImplicitThis": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "importHelpers": true,
   },
-  "files" : [
-    "./node_modules/@kintone/dts-gen/kintone.d.ts", // npm i @kintone/dts-gen
-    //"./src/types/app-fields.d.ts"
+  "files": [
+    "./node_modules/@kintone/dts-gen/kintone.d.ts"
   ],
   "include": [
     "src/**/*",
@@ -42,5 +42,8 @@
     "*.js",
     "*.jsx",
     "**/legacy/*"
-  ]
+  ],
+  "rules": {
+    "quotemark": [true, "single"]
+  }
 }

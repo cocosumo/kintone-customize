@@ -1,10 +1,2 @@
-
-
-const onSubmitSuccessHandler = (event : KintoneEvent) => {
-
-  // const {record: {title}} = event;
-
-  return event;
-};
-
+const onSubmitSuccessHandler = (event : KintoneEvent) => event;
 export default onSubmitSuccessHandler;
