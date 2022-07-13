@@ -1,4 +1,3 @@
-
 /*
 ただの例です。
 実際はチームでコーディング規約を統一させるのがベストですが、
@@ -7,17 +6,10 @@
 ある程度慣れたら、規約を明確にしましょう。
 */
 
-const TestComponent = () => {
-  return (
-    <h1 style={{
-      'width': '100%',
-      'textAlign': 'center',
-      'color': 'red',
-      'fontWeight': 'bold'
-    }}
-    >
-      環境準備成功！おめでとうございます！いいもの作りましょう！！
-    </h1>);
-};
+const TestComponent = () => (
+  <h1 className="tw-text-3xl">
+    環境準備成功！おめでとうございます！いいもの作りましょう！！
+  </h1>
+);
 
 export default TestComponent;

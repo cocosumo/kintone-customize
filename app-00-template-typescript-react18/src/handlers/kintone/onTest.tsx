@@ -1,6 +1,5 @@
 import { createRoot } from 'react-dom/client';
 import TestComponent from '../../components/TestComponent';
-import '../../styles/index.css';
 
 const renderReactTest = () => {
   const container = kintone.app.getHeaderSpaceElement();

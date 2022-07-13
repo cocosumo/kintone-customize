@@ -1,8 +1,6 @@
 
 const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-
 
 module.exports = {
   entry: {
@@ -29,20 +27,11 @@ module.exports = {
         test: /\.(js)x?$/,
         loader: 'babel-loader',
         exclude: /node_modules/
-      },
-      {
-        test: /\.css$/,
-        use: [
-            MiniCssExtractPlugin.loader,
-            "css-loader",
-            "postcss-loader",
-        ],
-    },
+      }
     ],
   },
 
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
-    new MiniCssExtractPlugin(),
   ],
 };
