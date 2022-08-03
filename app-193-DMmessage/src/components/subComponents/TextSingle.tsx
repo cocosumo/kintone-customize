@@ -1,13 +1,15 @@
 import {TextField} from '@mui/material';
+import {ChangeEventHandler} from 'react';
 
-const TextSingle = ({Sentence}: Props) => {
+const TextSingle = ({label, value, OnChangeFunc}: Props) => {
   return (
     <TextField
-      label={Sentence}
+      label={label}
       size="small"
+      value={value}
+      onChange={OnChangeFunc}
       sx={{
         width: '60%',
-        margin: '4px',
         backgroundColor: '#ffffff',
         font: '#333333'
       }}
@@ -15,7 +17,9 @@ const TextSingle = ({Sentence}: Props) => {
   );
 };
 interface Props{
-  Sentence: string
+  label: string
+  value: string
+  OnChangeFunc: ChangeEventHandler
 }
 
 export default TextSingle;

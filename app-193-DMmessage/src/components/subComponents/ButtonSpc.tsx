@@ -1,12 +1,14 @@
 import {Button} from '@mui/material';
 
-const ButtonSpc = ({Sentence}: Props) => {
+const ButtonSpc = ({Sentence, onClick}: Props) => {
   return (
     <Button
       variant="outlined"
+      size="small"
+      onClick={onClick}
       sx={{
-        fontSize: '16px',
-        margin: '4px',
+        fontSize: '12px',
+        margin: '0px 8px 0px 0px',
       }}
     >
       {Sentence}
@@ -14,7 +16,8 @@ const ButtonSpc = ({Sentence}: Props) => {
   );
 };
 interface Props{
-  Sentence: string
+  Sentence: string,
+  onClick: VoidFunction
 }
 
 export default ButtonSpc;

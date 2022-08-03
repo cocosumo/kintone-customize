@@ -1,21 +1,30 @@
-import {TextField} from '@mui/material';
+import {TextareaAutosize} from '@mui/material';
 
 const TextMultiline = ({Sentence}: Props) => {
+  console.log('マルチラインテキスト ::', Sentence);
   return (
-    <TextField
+    <>
+      <TextareaAutosize
+        maxRows={15}
+        aria-label="maximum height"
+        placeholder="ここにメールのHTMLソースが表示されます。"
+        value={Sentence}
+        style={{width: 500}}
+      />
+      {/* <TextField
       multiline
       label={Sentence}
       size="small"
       sx={{
         width: '60%',
-        margin: '4px',
         backgroundColor: '#ffffff',
         font: '#333333'
       }}
-    />
+    /> */}
+    </>
   );
 };
-interface Props{
+interface Props {
   Sentence: string
 }
 

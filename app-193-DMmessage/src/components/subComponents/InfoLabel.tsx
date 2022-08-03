@@ -10,7 +10,7 @@ const InfoLabel = ({Sentence}: Props) => {
         width: {sm: `calc(100% - 16px)`},
         color: '#333333',
         fontSize: '16px',
-        margin: '4px',
+        padding: '0px'
       }}
     >
       {Sentence}

@@ -3,9 +3,12 @@ import '../index.css';
 import PreviewCard from './PreviewCard';
 import TextMultiline from './subComponents/TextMultiline';
 
-const MailArea = () => {
+interface Props {
+  mailObj: MailObj,
+}
+
+const MailArea = ({mailObj}: Props) => {
   console.log('urlinput');
-  const mailMain = '';
 
   return (
     <Grid
@@ -13,13 +16,18 @@ const MailArea = () => {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      spacing={2}
+      spacing={1}
+      margin="16px"
     >
-      <Grid item xs={12} md={12}>
-        <TextMultiline Sentence="メール本文" />
+      <Grid item xs={12} md={6}>
+        <TextMultiline
+          Sentence={mailObj.mailMain}
+        />
       </Grid>
-      <Grid item xs={12} md={12}>
-        <PreviewCard html={mailMain} />
+      <Grid item xs={12} md={6}>
+        <PreviewCard
+          html={mailObj.mailMain}
+        />
       </Grid>
     </Grid>
   );

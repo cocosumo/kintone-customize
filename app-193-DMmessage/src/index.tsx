@@ -8,9 +8,6 @@ import onEditHandler from './handlers/kintone/onEditHandler';
   'mobile.app.record.index.show',
 ]; */
 
-export const previewSpaceID = 'preview';
-export const previewClassName = 'mail-body';
-
 const onEdit : string[] = [
   'app.record.edit.show',
   'mobile.app.record.edit.show',

@@ -1,4 +1,4 @@
-import {previewSpaceID} from '..';
+import {previewSpaceID} from '../constantDefinition';
 
 /**
  * スペースフィールドに、URLの入力エリアを設置する
