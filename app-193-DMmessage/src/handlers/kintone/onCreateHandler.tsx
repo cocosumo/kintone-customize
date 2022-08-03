@@ -1,4 +1,6 @@
-import gettingUrl from '../gettingUrl';
+// import gettingUrl from '../gettingUrl';
+import gettingDM from '../gettingDM';
+
 
 /**
  * 「レコードを追加する」際の処理
@@ -7,7 +9,8 @@ import gettingUrl from '../gettingUrl';
  */
 const onCreateHandler = (event: IEvent) => {
   console.log('onCreate Test');
-  gettingUrl(event);
+  // gettingUrl(event);
+  gettingDM();
 
   return event;
 };
