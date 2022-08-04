@@ -1,9 +1,17 @@
 import {TextField} from '@mui/material';
 import {ChangeEventHandler} from 'react';
 
-const TextSingle = ({label, value, OnChangeFunc}: Props) => {
+interface Props{
+  label: string
+  value: string
+  OnChangeFunc?: ChangeEventHandler
+  disabled?: boolean
+}
+
+const TextSingle = ({label, value, OnChangeFunc, disabled = false}: Props) => {
   return (
     <TextField
+      disabled={disabled}
       label={label}
       size="small"
       value={value}
@@ -16,10 +24,5 @@ const TextSingle = ({label, value, OnChangeFunc}: Props) => {
     />
   );
 };
-interface Props{
-  label: string
-  value: string
-  OnChangeFunc: ChangeEventHandler
-}
 
 export default TextSingle;

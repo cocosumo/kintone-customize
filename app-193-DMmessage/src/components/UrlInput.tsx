@@ -12,6 +12,11 @@ interface Props {
   setMailObj: React.Dispatch<SetStateAction<MailObj>>,
 }
 
+/**
+ * URLの入力エリアと各種ボタンを表示する
+ * @param param0 mailObj, setMailObj
+ * @returns URLの入力エリアと各種ボタン
+ */
 const UrlInput = ({mailObj, setMailObj}: Props) => {
   console.log('urlinput');
 
@@ -37,7 +42,7 @@ const UrlInput = ({mailObj, setMailObj}: Props) => {
   };
 
   const getBtnClick = async () => {
-    console.log(mailObj.mailUrl, 'buttonMotion相当の処理を追加する');
+    console.log('getBtnClick');
     // buttonMotion相当の処理を追加する
     const url = mailObj.mailUrl ?? '';
     let mailContent = mailObj.mailMain ?? '';
@@ -62,7 +67,7 @@ const UrlInput = ({mailObj, setMailObj}: Props) => {
   };
 
   const clrBtnClick = () => {
-    console.log(mailObj.mailUrl, 'クリアボタンが押されたときの処理を実装する');
+    console.log('clrBtnClick');
     // [クリア]ボタンが押されたときの処理
     const record = kintone.app.record.get();
     record.record.mail_main.value = '';
@@ -76,7 +81,7 @@ const UrlInput = ({mailObj, setMailObj}: Props) => {
     });
   };
 
-  console.log('mailObj', mailObj);
+  // console.log('mailObj', mailObj);
 
   return (
     <Grid

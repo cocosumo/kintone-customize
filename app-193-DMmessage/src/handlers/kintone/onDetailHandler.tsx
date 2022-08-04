@@ -1,6 +1,7 @@
-import {setFieldShown} from '../../../../kintone-api/api'; // isMobile
-import createPreview from '../../helpers/createPreview';
+// import {setFieldShown} from '../../../../kintone-api/api'; // isMobile
+// import createPreview from '../../helpers/createPreview';
 import sidebarHide from '../../helpers/sidebarHide';
+import gettingDM from '../gettingDM';
 
 /* const getHeaderMenuSpaceElement = () => (
   isMobile()
@@ -16,12 +17,12 @@ import sidebarHide from '../../helpers/sidebarHide';
 const onDetailHandler = (event: IEvent) => {
   console.log('onDetail Test');
 
-  // サイドバー(コメント・変更履歴)を非表示にする
-  sidebarHide();
+  sidebarHide(); // サイドバー(コメント・変更履歴)を非表示にする
+  gettingDM(event);
 
   // バックアップフィールドを非表示にする
-  setFieldShown('urlBackup', false);
-  setFieldShown('mail_main', false);
+  // setFieldShown('urlBackup', false);
+  // setFieldShown('mail_main', false);
 
   // プレビューボタンを作成する
   // const btn = document.createElement('button');
@@ -32,7 +33,7 @@ const onDetailHandler = (event: IEvent) => {
   // getHeaderMenuSpaceElement()?.classList.add('detailPreview');
 
   // モーダルの作成
-  createPreview();
+  // createPreview();
 
   return event;
 };

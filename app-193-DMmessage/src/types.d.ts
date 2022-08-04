@@ -1,5 +1,6 @@
 interface IEvent {
-  record :kintone.types.SavedAppFields
+  record :kintone.types.SavedAppFields,
+  type :string
 }
 
 interface MailObj {

@@ -10,7 +10,7 @@ import gettingDM from '../gettingDM';
 const onCreateHandler = (event: IEvent) => {
   console.log('onCreate Test');
   // gettingUrl(event);
-  gettingDM();
+  gettingDM(event);
 
   return event;
 };
