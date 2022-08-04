@@ -4,6 +4,7 @@ interface IEvent {
 }
 
 interface MailObj {
+  mailTitle: string,
   mailUrl :string,
   mailMain : string
 }

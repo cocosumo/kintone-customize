@@ -3,6 +3,7 @@ import {renderReactPreview} from './reactRender';
 
 const gettingDM = (event: IEvent) => {
   // バックアップフィールドを非表示にする
+  setFieldShown('mail_title', false);
   setFieldShown('urlBackup', false);
   setFieldShown('mail_main', false);
 

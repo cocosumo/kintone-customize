@@ -1,7 +1,8 @@
-// import {setFieldShown} from '../../../../kintone-api/api'; // isMobile
+import {setFieldShown} from '../../../../kintone-api/api'; // isMobile
 // import createPreview from '../../helpers/createPreview';
 import sidebarHide from '../../helpers/sidebarHide';
-import gettingDM from '../gettingDM';
+// import gettingDM from '../gettingDM';
+import {renderReactPreview} from '../reactRender';
 
 /* const getHeaderMenuSpaceElement = () => (
   isMobile()
@@ -18,7 +19,10 @@ const onDetailHandler = (event: IEvent) => {
   // console.log('onDetail Test');
 
   sidebarHide(); // サイドバー(コメント・変更履歴)を非表示にする
-  gettingDM(event);
+  // gettingDM(event);
+
+  setFieldShown('mail_main', false);
+  renderReactPreview(event); // スペースフィールドにプレビューHTMLを設置する
 
   // バックアップフィールドを非表示にする
   // setFieldShown('urlBackup', false);
