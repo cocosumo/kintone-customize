@@ -1,12 +1,26 @@
-import {Card} from '@mui/material';
+import {Box} from '@mui/material';
 
-const PreviewCard = ({html}: Props) => {
-  return (
-    <Card variant="outlined">{html}</Card>
-  );
-};
 interface Props {
   html: string
 }
+
+const PreviewCard = ({html}: Props) => {
+  return (
+    <Box
+      overflow="auto"
+      sx={{
+        width: 500,
+        height: 350,
+      }}
+    >
+      <div
+        dangerouslySetInnerHTML={{
+          __html: html
+        }}
+      />
+
+    </Box>
+  );
+};
 
 export default PreviewCard;
