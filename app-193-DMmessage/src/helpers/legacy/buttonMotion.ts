@@ -1,5 +1,5 @@
 import axios from 'axios';
-import extractText from './extractText';
+import extractText from '../extractText';
 
 /**
  * ボタンが押された際に、URLからHTMLソースを取得する
