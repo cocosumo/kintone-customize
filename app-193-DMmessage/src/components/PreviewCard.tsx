@@ -1,4 +1,4 @@
-import {Box} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 
 interface Props {
   html: string
@@ -6,20 +6,28 @@ interface Props {
 
 const PreviewCard = ({html}: Props) => {
   return (
-    <Box
-      overflow="auto"
-      sx={{
-        width: 500,
-        height: 350,
-      }}
-    >
-      <div
-        dangerouslySetInnerHTML={{
-          __html: html
+    <>
+      <Typography variant="caption" gutterBottom component="div">
+        メール本文のプレビュー
+      </Typography>
+      <Box
+        overflow="auto"
+        sx={{
+          width: 550,
+          height: 350,
+          border: '1px solid grey',
+          borderColor: '#d8d8d8',
+          borderRadius: '4px'
         }}
-      />
+      >
+        <div
+          dangerouslySetInnerHTML={{
+            __html: html
+          }}
+        />
 
-    </Box>
+      </Box>
+    </>
   );
 };
 
