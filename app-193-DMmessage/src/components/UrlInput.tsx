@@ -18,10 +18,10 @@ interface Props {
  * @returns URLの入力エリアと各種ボタン
  */
 const UrlInput = ({mailObj, setMailObj}: Props) => {
-  console.log('urlinput');
+  // console.log('urlinput');
 
   const urlChange = (e: any) => {
-    console.log('urlChange', e.target.value);
+    // console.log('urlChange', e.target.value);
     let url = e.target.value;
     if (url.includes('raw')) {
       // urlをそのまま使用する
@@ -42,7 +42,7 @@ const UrlInput = ({mailObj, setMailObj}: Props) => {
   };
 
   const getBtnClick = async () => {
-    console.log('getBtnClick');
+    // console.log('getBtnClick');
     // buttonMotion相当の処理を追加する
     const url = mailObj.mailUrl ?? '';
     let mailContent = mailObj.mailMain ?? '';
@@ -67,14 +67,15 @@ const UrlInput = ({mailObj, setMailObj}: Props) => {
   };
 
   const clrBtnClick = () => {
-    console.log('clrBtnClick');
+    // console.log('clrBtnClick');
     // [クリア]ボタンが押されたときの処理
     const record = kintone.app.record.get();
     record.record.mail_main.value = '';
     record.record.urlBackup.value = '';
     kintone.app.record.set(record);
-    setMailObj(() => {
+    setMailObj((prev: MailObj) => {
       return {
+        ...prev,
         mailMain: '',
         mailUrl: ''
       };
@@ -90,7 +91,7 @@ const UrlInput = ({mailObj, setMailObj}: Props) => {
       justifyContent="center"
       alignItems="center"
       spacing={1}
-      margin="16px"
+      margin="0px 0px 0px 16px"
     >
       <Grid item xs={12} md={12}>
         <InfoLabel Sentence="GitHubからメール本文のHTMLソースを取得する" />

@@ -7,7 +7,7 @@ import sidebarHide from '../../helpers/sidebarHide';
  * @returns kintoneアプリのフィールド
  */
 const onEditHandler = (event : IEvent) => {
-  console.log('onEdit Test');
+  // console.log('onEdit Test');
 
   sidebarHide(); // サイドバー(コメント・変更履歴)を非表示にする
   gettingDM(event);

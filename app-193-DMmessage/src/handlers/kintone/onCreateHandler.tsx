@@ -8,7 +8,7 @@ import gettingDM from '../gettingDM';
  * @returns kintoneアプリのフィールド
  */
 const onCreateHandler = (event: IEvent) => {
-  console.log('onCreate Test');
+  // console.log('onCreate Test');
   // gettingUrl(event);
   gettingDM(event);
 

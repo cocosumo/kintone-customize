@@ -15,7 +15,7 @@ const createPreview = (
   displayChange(modal, true);
   const modalContent = document.createElement('div');
   modalContent.id = 'modal';
-  console.log('createPreview', modal);
+  // console.log('createPreview', modal);
 
   // モーダルのヘッダを作成する
   const head = document.createElement('div');
@@ -34,7 +34,7 @@ const createPreview = (
   modal.appendChild(modalContent);
 
   // メール本文が変更されたとき
-  console.log('プレビュー更新処理を実装する');
+  // console.log('プレビュー更新処理を実装する');
 
   // プレビューボタンが押されたとき
   /* const modalOpen = () => {

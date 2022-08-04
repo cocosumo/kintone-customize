@@ -13,7 +13,7 @@ interface Props {
  * @returns
  */
 const ViewingURL = ({mailObj}: Props) => {
-  console.log('ViewingURL');
+  // console.log('ViewingURL');
 
   return (
     <Grid
@@ -22,7 +22,7 @@ const ViewingURL = ({mailObj}: Props) => {
       justifyContent="center"
       alignItems="center"
       spacing={1}
-      margin="16px"
+      margin="0px 0px 0px 16px"
     >
       <Grid item xs={12} md={12}>
         <InfoLabel Sentence="GitHubのURL" />

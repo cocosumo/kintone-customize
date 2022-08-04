@@ -15,7 +15,7 @@ import gettingDM from '../gettingDM';
  * @returns kintoneアプリのフィールド
  */
 const onDetailHandler = (event: IEvent) => {
-  console.log('onDetail Test');
+  // console.log('onDetail Test');
 
   sidebarHide(); // サイドバー(コメント・変更履歴)を非表示にする
   gettingDM(event);

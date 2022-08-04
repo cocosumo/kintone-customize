@@ -7,7 +7,7 @@ import TextMultiline from './subComponents/TextMultiline';
 interface Props {
   mailObj: MailObj,
   setMailObj: React.Dispatch<SetStateAction<MailObj>>,
-  viewOnly: boolean,
+  viewOnly?: boolean,
 }
 
 /**
@@ -16,7 +16,7 @@ interface Props {
  * @returns
  */
 const MailArea = ({mailObj, setMailObj, viewOnly = false}: Props) => {
-  console.log('urlinput');
+  // console.log('urlinput');
   const mailContentChange = (e:any) => {
     setMailObj((prev: MailObj) => {
       return {
@@ -33,7 +33,7 @@ const MailArea = ({mailObj, setMailObj, viewOnly = false}: Props) => {
       justifyContent="center"
       alignItems="center"
       spacing={1}
-      margin="16px"
+      margin="8px 0px 0px 16px"
     >
       <Grid item xs={12} md={6}>
         <TextMultiline
