@@ -16,14 +16,19 @@ interface Props {
  * @returns
  */
 const MailArea = ({mailObj, setMailObj, viewOnly = false}: Props) => {
-  // console.log('urlinput');
-  const mailContentChange = (e:any) => {
+  const mailContentChange = (e: any) => {
     setMailObj((prev: MailObj) => {
       return {
         ...prev,
         mailMain: e.target.value
       };
     });
+  };
+
+  const mailChangeBlur = (e: any) => {
+    const record = kintone.app.record.get();
+    record.record.mail_main.value = e.target.value;
+    kintone.app.record.set(record);
   };
 
   return (
@@ -41,6 +46,7 @@ const MailArea = ({mailObj, setMailObj, viewOnly = false}: Props) => {
           Sentence={mailObj.mailMain}
           viewOnly={viewOnly}
           onChange={mailContentChange}
+          onBlur={mailChangeBlur}
         />
       </Grid>
       <Grid item xs={12} md={6}>

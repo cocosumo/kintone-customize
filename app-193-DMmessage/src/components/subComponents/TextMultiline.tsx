@@ -7,9 +7,10 @@ interface Props {
   Sentence: string
   viewOnly?: boolean
   onChange: ChangeEventHandler
+  onBlur: any
 }
 
-const TextMultiline = ({label, Sentence, viewOnly = false, onChange}: Props) => {
+const TextMultiline = ({label, Sentence, viewOnly = false, onChange, onBlur}: Props) => {
   // console.log('マルチラインテキスト ::', Sentence);
   return (
     <>
@@ -30,6 +31,7 @@ const TextMultiline = ({label, Sentence, viewOnly = false, onChange}: Props) => 
         size="small"
         rows={15}
         onChange={onChange}
+        onBlur={onBlur}
         sx={{
           width: '500px',
           backgroundColor: '#ffffff',
