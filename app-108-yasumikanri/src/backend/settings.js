@@ -52,7 +52,7 @@ const getYasumiCount = async (luxonDate) => {
   const yasumiDays = yasumiDaysSetting
     ? JSON.parse(yasumiDaysSetting?.value.設定値.value)[month]
     : 0;
-  return (yasumiDays || calcYasumiDays(luxonDate)) + (employeeRole === 'サポート' ? 1 : 0);
+  return (yasumiDays || calcYasumiDays(luxonDate)) + (employeeRole === 'サポート' || employeeRole === '経理' ? 1 : 0);
 };
 
 export default getYasumiCount;
