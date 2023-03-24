@@ -3,7 +3,8 @@ module.exports = {
   env: {
     browser: true,
     es2020: true,
-    jquery: true
+    jquery: true,
+    jest: true
   },
   extends: [
     'plugin:import/recommended',
