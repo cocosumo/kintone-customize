@@ -44,7 +44,8 @@ module.exports = {
     '@typescript-eslint/indent': ['error'],
     'react/jsx-filename-extension': [1, {'extensions': ['.js', '.jsx', '.ts', '.tsx']}],
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error']
+    '@typescript-eslint/no-unused-vars': ['error'],
+    'linebreak-style': 'off',
 
   },
   settings: {
