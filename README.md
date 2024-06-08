@@ -4,6 +4,9 @@ DON'T USE THIS FOR NEW KINTONE CUSTOMIZATIONS.
 CREATE NEW REPOSITORY FOR EACH APP CUSTOMIZATION INSTEAD.
 
 This is due to observed short life cycle of kintone customization that defeats the benefits of monorepo.
+Continuing monorepo approach will lead to more weight from unused codes and dependencies, and more complex build process.
+
+
 
 # kintone-customize
 
