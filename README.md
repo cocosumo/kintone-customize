@@ -12,9 +12,6 @@ Sutekura
 
 ## Contributing
 
-Some customizations here are deprecated. 
-Please create new repository for each app customization instead.
-
 - NodeJS 16^
 - Install packages for root, and for each packages.
 - When depency error appears while installing packages, follow instructions in the console. 
