@@ -3,6 +3,8 @@
 DON'T USE THIS FOR NEW KINTONE CUSTOMIZATIONS.
 CREATE NEW REPOSITORY FOR EACH APP CUSTOMIZATION INSTEAD.
 
+This is due to observed short life cycle of kintone customization that defeats the benefits of monorepo.
+
 # kintone-customize
 
 Yumetetsu
@@ -21,8 +23,9 @@ eg.
 npm i --legacy-peer-deps.
 ```
 
+It can be formally resolved by updating related packages, but it is better to create a new repository.
+
 - eslint rules has been updated, so it is natural that eslint errors will appear from unmaintained codes. 
 Instead of fixing, it is recommended to create new repository for each app customization.
 
-It can be resolved by updating related packages, but creating a new repository is more recommended.
-This is due to observed short life cycle of kintone customization that defeats the benefits of monorepo.
+
