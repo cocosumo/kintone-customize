@@ -21,7 +21,7 @@ Please create new repository for each app customization instead.
 eg. 
 
 ```
-use npm i --legacy-peer-deps.
+npm i --legacy-peer-deps.
 ```
 
 It can be resolved by updating related packages, but creating a new repository is more recommended.
