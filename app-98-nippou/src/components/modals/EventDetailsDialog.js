@@ -16,11 +16,6 @@ import {timeTo24Format} from '../../helpers/Time';
 import {getActionTypeData} from '../../backend/fetchSettings';
 import {EditButton, CloseButton, DeleteButton} from '../UI/MaterialActionButtons';
 
-interface TitleBarPros {
-  onClose: ()=>{},
-  onDelete: ()=>{},
-  onEdit: ()=>{}
-}
 
 const theme = createTheme();
 theme.typography.h5 = {
@@ -36,21 +31,21 @@ theme.typography.subtitle1 = {
   },
 };
 
-const TitleBar = ({onClose, onDelete, onEdit} : TitleBarPros) => {
+const TitleBar = ({onClose, onDelete, onEdit}) => {
   return (
-  <DialogTitle sx={{py: 1, pr: 1}}>
-    <Grid
-      container
-      direction="row"
-      justifyContent="flex-end"
-      alignItems="baseline"
-    >
-      <EditButton onClick={onEdit} />
-      <DeleteButton onClick={onDelete} />
-      <CloseButton onClick={onClose} />
-    </Grid>
-  </DialogTitle>
-)
+    <DialogTitle sx={{py: 1, pr: 1}}>
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-end"
+        alignItems="baseline"
+      >
+        <EditButton onClick={onEdit} />
+        <DeleteButton onClick={onDelete} />
+        <CloseButton onClick={onClose} />
+      </Grid>
+    </DialogTitle>
+  );
 };
 
 const TimeRange = ({startTime, endTime}) => (

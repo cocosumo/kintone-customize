@@ -1,15 +1,15 @@
-import { useContext, useState, useRef } from 'react';
+import {useContext, useState, useRef} from 'react';
 import TimeGrid from './TimeGrid';
-import { onFieldChange } from '../../../../kintone-api/api';
-import { EventsContext } from '../../store/EventsProvider';
-import { deleteEventById, replaceEvent, scrollTo } from '../../helpers/DOM';
-import { timeTo24Format } from '../../helpers/Time';
+import {onFieldChange} from '../../../../kintone-api/api';
+import {EventsContext} from '../../store/EventsProvider';
+import {deleteEventById, replaceEvent, scrollTo} from '../../helpers/DOM';
+import {timeTo24Format} from '../../helpers/Time';
 
-import EventEditDialog from '../modals/EventEditDialog';
-import { EventDetailsPopper } from '../poppers/EventDetailsPopper';
-import { getActionTypeData } from '../../backend/fetchSettings';
+import EventEditDialog from './../modals/EventEditDialog';
+import {EventDetailsPopper} from '../poppers/EventDetailsPopper';
+import {getActionTypeData} from '../../backend/fetchSettings';
 
-const MaterialReport = ({ selectedDate, actionOptions }) => {
+const MaterialReport = ({selectedDate, actionOptions}) => {
   const [reportDate, setReportDate] = useState(selectedDate);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -21,7 +21,7 @@ const MaterialReport = ({ selectedDate, actionOptions }) => {
 
   // const scheduleType = isPast(reportDate) ? '当日何をしましたか。' : '予定を登録しますね。';
 
-  const onDateChangeHandler = ({ record }) => {
+  const onDateChangeHandler = ({record}) => {
     const rd = record.reportDate.value;
     setReportDate(rd);
   };
@@ -61,7 +61,7 @@ const MaterialReport = ({ selectedDate, actionOptions }) => {
     const oldEventId = info.id || info.oldEvent?.id;
     const colorDate = getActionTypeData(eventTitle);
 
-    const { bgColor, color } = colorDate;
+    const {bgColor, color} = colorDate;
 
     const newEvent = {
       id: buildIdString,
@@ -90,7 +90,7 @@ const MaterialReport = ({ selectedDate, actionOptions }) => {
     setAllEvents(reducedEvents);
   };
 
-  const onFormCloseHandler = ({ closeMethod, data }) => {
+  const onFormCloseHandler = ({closeMethod, data}) => {
     scrollTo(pageY);
     switch (closeMethod) {
       case 'save':
@@ -105,7 +105,7 @@ const MaterialReport = ({ selectedDate, actionOptions }) => {
     setIsFormOpen(false);
   };
 
-  const onDetailsCloseHandler = ({ closeMethod, data }) => {
+  const onDetailsCloseHandler = ({closeMethod, data}) => {
     switch (closeMethod) {
       case 'delete':
         deleteEventHandler(data.id);
@@ -123,13 +123,13 @@ const MaterialReport = ({ selectedDate, actionOptions }) => {
   return (
     <>
       {isDetailsOpen && (
-      <EventDetailsPopper
-        id="eventDetails"
-        open={isDetailsOpen}
-        anchorEl={anchorEl}
-        onDetailsClose={onDetailsCloseHandler}
-        selectedTime={selectedTime}
-      />
+        <EventDetailsPopper
+          id="eventDetails"
+          open={isDetailsOpen}
+          anchorEl={anchorEl}
+          onDetailsClose={onDetailsCloseHandler}
+          selectedTime={selectedTime}
+        />
       )}
       <TimeGrid
         selectedDate={reportDate}
@@ -141,11 +141,11 @@ const MaterialReport = ({ selectedDate, actionOptions }) => {
       />
       {isFormOpen
       && (
-      <EventEditDialog
-        open={isFormOpen}
-        onFormClose={onFormCloseHandler}
-        selectedTime={selectedTime}
-      />
+        <EventEditDialog
+          open={isFormOpen}
+          onFormClose={onFormCloseHandler}
+          selectedTime={selectedTime}
+        />
       )}
 
     </>

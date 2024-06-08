@@ -19,7 +19,7 @@ const TimeGrid = ({
     initialView="timeGridDay"
     initialDate={selectedDate}
     slotMinTime="07:30:00"
-    slotMaxTime="21:00:00"
+    slotMaxTime="23:00:00"
     validRange={{
       start: selectedDate,
       end: selectedDate,
@@ -38,8 +38,8 @@ const TimeGrid = ({
     eventLongPressDelay={1000}
     businessHours={{
       daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
-      startTime: '8:00',
-      endTime: '20:00',
+      startTime: '7:00',
+      endTime: '23:00',
     }}
     eventConstraint="businessHours"
     selectConstraint="businessHours"
