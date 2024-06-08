@@ -18,8 +18,8 @@ const TimeGrid = ({
     plugins={[timeGridPlugin, interactionPlugin]}
     initialView="timeGridDay"
     initialDate={selectedDate}
-    slotMinTime="07:30:00"
-    slotMaxTime="23:00:00"
+    slotMinTime="07:30"
+    slotMaxTime="23:00"
     validRange={{
       start: selectedDate,
       end: selectedDate,

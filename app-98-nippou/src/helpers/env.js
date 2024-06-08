@@ -1,6 +1,6 @@
 import {getAppId} from '../../../kintone-api/api';
 
-export const isStaging = true;
+export const isStaging = false;
 export const stagingAppId = 111;
 export const prodId = 98;
 
